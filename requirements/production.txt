@@ -1,0 +1,19 @@
+# Package Requirements for Production
+
+dj-database-url == 0.2.1
+dj-redis-url == 0.1.4
+Django == 1.5
+django-braces == 1.0.0
+django-configurations == 0.1
+django-model-utils == 1.2.0
+django-storages == 1.1.7
+django-tastypie == 0.9.14
+gevent == 0.13.8
+greenlet == 0.4.0
+gunicorn == 0.17.2
+hiredis == 0.1.1
+Pillow == 2.0.0
+psycogreen == 1.0
+psycopg2 == 2.4.6
+raven == 3.1.17
+South == 0.7.6
