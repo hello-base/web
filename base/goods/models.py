@@ -10,6 +10,7 @@ class Source(models.Model):
 class Good(models.Model):
 	romanized_name = models.CharField(max_length=200)
 	name = models.CharField(max_length=200)
+	price = models.IntegerField(blank=True)
 	event = models.ForeignKey(Event, blank=True)
 	source = models.ForeignKey(Source, blank=True)
 	available_from = models.DateField(blank=True)
