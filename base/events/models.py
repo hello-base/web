@@ -6,14 +6,13 @@ class Event(models.Model):
 	url = models.URLField(blank=True)
 	start_date = models.DateField(blank=True)
 	end_date = models.DateField(blank=True)
-	performances = models.ForeignKey(Performance)
 
 
 class Performance(models.Model):
 	day = models.DateField()
 	start_time = models.TimeField(blank=True)
 	end_time = models.TimeField(blank=True)
-	venues = models.ForeignKey(Venue, blank=True)
+	event = models.ForeignKey(Event)
 
 
 class Venue(models.Model):
@@ -21,4 +20,4 @@ class Venue(models.Model):
 	name = models.CharField(max_length=200)
 	location = models.CharField(max_length=200)
 	country = models.CharField(max_length=200, blank=True)
-
+	performance = models.ForeignKey(Performance)
