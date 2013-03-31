@@ -3,7 +3,7 @@ from django.db import models
 class Event(models.Model):
 	romanized_name = models.CharField(max_length=200)
 	name = models.CharField(max_lenth=200)
-	url = models.URLField(blank=True)
+	info_link = models.URLField(blank=True)
 	start_date = models.DateField(blank=True)
 	end_date = models.DateField(blank=True)
 
@@ -21,3 +21,4 @@ class Venue(models.Model):
 	location = models.CharField(max_length=200)
 	country = models.CharField(max_length=200, blank=True)
 	performance = models.ForeignKey(Performance)
+	# Country field only filled if outside US (maybe unnecessary).
