@@ -12,6 +12,7 @@ gevent == 0.13.8
 greenlet == 0.4.0
 gunicorn == 0.17.2
 hiredis == 0.1.1
+ohashi == 0.0.11
 Pillow == 2.0.0
 psycogreen == 1.0
 psycopg2 == 2.4.6
