@@ -4,10 +4,13 @@ class Show(models.Model):
 	romanized_name = models.CharField(max_length=200)
 	name = models.CharField(max_length=200)
 	description = models.TextField(blank=True)
-	aired_from = models.DateField(blank=True)
-	aired_until = models.DateField(blank=True)
-	start_time = models.DateTimeField(blank=True)
-	end_time = models.DateTimeField(blank=True)
+	aired_from = models.DateField(blank=True, null=True)
+	aired_until = models.DateField(blank=True, null=True)
+	
+class TimeSlot(models.Model):
+	start_time = models.DateTimeField(blank=True, null=True)
+	end_time = models.DateTimeField(blank=True, null=True)
+	show = models.ForeignKey(Show)
 	# Aired from/until only for HelloPro shows.
 	# Start/end time only for HelloPro shows (to derrive in Episodes model).
 
@@ -15,9 +18,9 @@ class Show(models.Model):
 class Episode(models.Model):
 	romanized_name = models.CharField(blank=True)
 	name = models.CharField(blank=True)
-	number = models.IntegerField(blank=True)
+	number = models.IntegerField(blank=True, null=True)
 	air_date = models.DateField()
-	record_date = models.DateField(blank=True)
+	record_date = models.DateField(blank=True, null=True)
 	synopsis = models.TextField(blank=True)
 	video_link = models.URLField(blank=True)
 	show = models.ForeignKey(Show)
@@ -35,10 +38,10 @@ class Magazine(models.Model):
 class Issue(models.Model):
 	magazine = models.ForeignKey(Magazine, related_name='issues') # default: issue_set
 	volume_number = models.IntegerField()
-	release_date = models.DateField(blank=True)
+	release_date = models.DateField(blank=True, null=True)
 	catalog_number = models.CharField(blank=True)
 	cover = models.ImageField(blank=True)
-	price = models.IntegerField(blank=True)
+	price = models.IntegerField(blank=True, null=True)
 	isbn_number = models.CharField(max_length=19) # ?
 	gallery = models.ImageField(blank=True)
 	# Possibly move price to Magazine model.
