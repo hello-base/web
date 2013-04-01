@@ -57,10 +57,10 @@ class Set(models.Model):
 
 
 class Card(models.Model):
-	issue = models.ForeignKey(Issue, related_name='available_cards')
+	issue = models.ForeignKey(Issue, related_name='cards')
 	set = models.ForeignKey(Set, blank=True, null=True)
-	model = models.ForeignKey(Idol, blank=True, related_name='models')
+	model = models.ForeignKey(Idol, blank=True, related_name='cards')
 	image = models.ImageField(blank=True)
 	# Sometimes multiple models will be featured in a card.
 	# Derrive H!B idol from existing database, but group they belong to set manually.
-	# When the model is not a H!B idol, CharField to input name/romanized_name/group.
+	# When the model is not a H!B idol, CharField to input name/romanized_name/group name/group romanized name.
