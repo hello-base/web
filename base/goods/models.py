@@ -102,3 +102,8 @@ class Set(BaseGood):
     )
     category = models.CharField(choices=CATEGORIES)
     # Sets within sets. Setception.
+
+
+class SuperSet(BaseGood):
+    goods = models.ManyToManyField(Good)
+    sets = models.ManyToManyField(Set)
