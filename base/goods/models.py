@@ -1,4 +1,7 @@
 from django.db import models
+from model_utils import Choices
+
+from events.models import Event
 
 
 class Source(models.Model):
