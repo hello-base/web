@@ -33,7 +33,7 @@ class BaseGood(models.Model):
     source = models.ForeignKey(Source, blank=True, null=True)
     available_from = models.DateField(blank=True, null=True)
     available_until = models.DateField(blank=True, null=True)
-    link = models.URLFeild(blank=True)
+    link = models.URLField(blank=True)
     image = models.ImageField(blank=True)
 
 
