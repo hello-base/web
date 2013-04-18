@@ -34,20 +34,19 @@ class BaseGood(models.Model):
     image = models.ImageField(blank=True)
 
 
-
 class Good(BaseGood):
     CATEGORIES = Choices(
         ('badge', 'Badge'),
-        ('bandana', 'Bandana'), # other?
+        ('bandana', 'Bandana'),  # other?
         ('clearfile', 'Clear File'),
         ('collectionphoto', 'Collection Photo'),
-        ('costume', 'Costume Good'), # other? costume fabric piece
-        ('dvd', 'DVD'), # DVD Magazine/DVD Memorial.. NO store-released DVD's.
+        ('costume', 'Costume Good'),  # other? costume fabric piece
+        ('dvd', 'DVD'),  # DVD Magazine/DVD Memorial.. NO store-released DVD's.
         ('gachagacha', 'GachaGacha Collection Item'),
         ('keyholder', 'Keyholder'),
         ('microfiber', 'Microfiber Towel'),
         ('muffler', 'Muffler Towel'),
-        ('parka', 'Parka'), # hoodie?
+        ('parka', 'Parka'),  # hoodie?
         ('tradingcardphoto', 'Trading Card-size Photo'),
         ('lphoto', 'L-size Photo'),
         ('lmetallic', 'L-size Metallic Photo'),
@@ -55,18 +54,18 @@ class Good(BaseGood):
         ('2lphoto', '2L-size Photo'),
         ('A5photo', 'A5-wide Photo'),
         ('A4photo', 'A4-size Photo'),
-        ('photocard', 'Photo Card'), # PR cards, 4 seasons cards, birthday cards, etc.
+        ('photocard', 'Photo Card'),  # PR cards, 4 seasons cards, birthday cards, etc.
         ('pinup', 'Pin-up Poster'),
         ('a2poster', 'A2-size Poster'),
         ('b2poster', 'B2-size Poster'),
-        ('scrunchie', 'Scrunchie'), # other? shushu?
+        ('scrunchie', 'Scrunchie'),  # other? shushu?
         ('strap', 'Strap/Charm'),
         ('tourbag', 'Tour Bag'),
-        ('tradingcard', 'Trading Card'), # non-collection?
+        ('tradingcard', 'Trading Card'),  # non-collection?
         ('tshirt', 'T-shirt'),
         ('uchiwa', 'Uchiwa'),
         ('visualbook', 'Visual Book/Pamphlet'),
-        ('visualscreen', 'Visual Screen'), # other? tapestry?
+        ('visualscreen', 'Visual Screen'),  # other? tapestry?
         ('wristband', 'Wristband'),
         ('collectionitem', 'Other Collection Item'),
         ('poster', 'Other Poster'),
@@ -92,9 +91,9 @@ class Set(BaseGood):
         ('collectionphotoset', 'Collection Photo Set'),
         ('gachagachaset', 'GachaGacha Collection Set'),
         ('keyholderset', 'Keyholder Set'),
-        ('parkaset', 'Parka Set'), # hoodie set?
+        ('parkaset', 'Parka Set'),  # hoodie set?
         ('pinupset', 'Pin-up Poster Set'),
-        ('scrunchieset', 'Scrunchie Set'), # other? shushu set?
+        ('scrunchieset', 'Scrunchie Set'),  # other? shushu set?
         ('strapset', 'Strap/Charm Set'),
         ('tshirtset', 'T-shirt Set'),
         ('collectionset', 'Other Collection Set'),
