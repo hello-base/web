@@ -85,7 +85,7 @@ class Good(BaseGood):
     # Goods that you get with releases. Example: Mano NFS photo for buying any of her PB's during graduation.
 
 
-class GoodSet(BaseGood):
+class Set(BaseGood):
     CATEGORIES = Choices(
         ('bandanaset', 'Bandana Set'),
         ('clearfileset', 'Clear File Set'),
