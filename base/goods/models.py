@@ -114,7 +114,6 @@ class Set(BaseGood):
         ('otherset', 'Other Set'),
     )
     category = models.CharField(choices=CATEGORIES)
-    # Sets within sets. Setception.
 
 
 class SuperSet(BaseGood):
