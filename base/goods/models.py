@@ -1,6 +1,7 @@
 from django.db import models
 from model_utils import Choices
 
+from people.models import Group, Idol
 from events.models import Event
 
 
@@ -26,10 +27,13 @@ class BaseGood(models.Model):
     is_campaign_good = models.BooleanField(default=False)
     is_lottery_good = models.BooleanField(default=False)
 
+    idols = models.ManyToManyField(Idol, blank=True, null=True)
+    groups = models.ManyToManyField(Group, blank=True, null=True)
+    event = models.ForeignKey(Event, blank=True, null=True)
+
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
-    event = models.ForeignKey(Event, blank=True, null=True)
     source = models.ForeignKey(Source, blank=True, null=True)
     available_from = models.DateField(blank=True, null=True)
     available_until = models.DateField(blank=True, null=True)
