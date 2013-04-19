@@ -40,6 +40,13 @@ class BaseGood(models.Model):
     link = models.URLField(blank=True)
     image = models.ImageField(blank=True)
 
+    def __unicode__(self):
+        if self.event:
+            return u'%s from %s' % (self.romanized_name, self.event.nickname)
+        if self.source:
+            return u'%s from %s' % (self.romanized_name, self.source)
+        return u'%s' % self.romanized_name
+
 
 class Good(BaseGood):
     CATEGORIES = Choices(
