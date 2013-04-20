@@ -94,3 +94,19 @@ class Membership(models.Model):
 
     # Custom Managers
     objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
+
+
+class Trivia(models.Model):
+    body = models.TextField()
+    idol = models.ForeignKey(Idol, blank=True, null=True)
+    group = models.ForeignKey(Group, blank=True, null=True)
+    
+    def __unicode__(self):
+        if self.idol:
+            return u'%s trivia' self.idol.romanized_name
+        if self.group:
+            return u'%s trivia' self.group.romanized_name
+        if self.idol and self.group:
+            return u'%s trivia (%s)' % (self.group.romanized_name, self.idol.romanized_name)
+        return u'trivia'
+    # If multiple idols/groups are named in trivia, how do you return multiple idol/group names?
