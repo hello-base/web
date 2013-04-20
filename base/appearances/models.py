@@ -86,7 +86,7 @@ class Issue(models.Model):
     cover = models.ImageField(blank=True)
 
     def __unicode__(self):
-        return u'%s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
+        return u'%s #%s' % (self.magazine.romanized_name, self.volume_number)
 
 
 class IssueImage(models.Model):
@@ -130,9 +130,31 @@ class Card(models.Model):
 
     def __unicode__(self):
         if self.number:
-            return u'%s #%s card no. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.number)
-        if self.group:
-            return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.group.romanized_name)
-        if self.other_model_romanized_name or self.other_group_romanized_name:
-            return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.other_model_romanized_name or self.other_group_romanized_name)
-        return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.hp_model.romanized_name)
+            return u'%s card no. %s' % (self.issue, self.number)
+        if self.group or self.other_group_romanized_name:
+            return u'%s card feat. %s' % (self.issue, self.group_romanized_name)
+        return u'%s card feat. %s' % (self.issue, self.model_romanized_name)
+
+    @property
+    def group_name(self):
+        if self.other_group_name:
+            return self.other_group_name
+        return self.group.name
+
+    @property
+    def group_romanized_name(self):
+        if self.other_group_romanized_name:
+            return self.other_group_romanized_name
+        return self.group.romanized_name
+
+    @property
+    def model_name(self):
+        if self.other_model_name:
+            return self.other_model_name
+        return self.hp_model.name
+
+    @property
+    def model_romanized_name(self):
+        if self.hp_model.romanized_name:
+            return self.other_model_romanized_name
+        return self.hp_model.romanized_name
