@@ -7,7 +7,7 @@ from events.models import Event
 
 class Source(models.Model):
     romanized_name = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
+    name = models.CharField(blank=True, max_length=200)
     website_link = models.URLField(blank=True)
     # HelloShop.jp (Egao) - egao tsuuhan (mail order)
     # HelloShop.jp (Overstock) - kuradashi (warehouse)
@@ -19,6 +19,9 @@ class Source(models.Model):
     # Other - Tsutaya, Tower Records, etc. (posters, Tower t-shirt, etc).
 
     # Campaign goods (freebies) may also be defined as a source?
+    
+    def __unicode__(self):
+        return u'%s' % self.romanized_name
 
 
 class BaseGood(models.Model):
@@ -57,10 +60,10 @@ class Good(BaseGood):
         ('costume', 'Costume Good'),  # other? costume fabric piece
         ('dvd', 'DVD'),  # DVD Magazine/DVD Memorial.. NO store-released DVD's.
         ('gachagacha', 'GachaGacha Collection Item'),
+        ('hoodie', 'Hoodie'),
         ('keyholder', 'Keyholder'),
         ('microfiber', 'Microfiber Towel'),
         ('muffler', 'Muffler Towel'),
-        ('parka', 'Parka'),  # hoodie?
         ('tradingcardphoto', 'Trading Card-size Photo'),
         ('lphoto', 'L-size Photo'),
         ('lmetallic', 'L-size Metallic Photo'),
@@ -71,18 +74,19 @@ class Good(BaseGood):
         ('photocard', 'Photo Card'),  # PR cards, 4 seasons cards, birthday cards, etc.
         ('pinup', 'Pin-up Poster'),
         ('a2poster', 'A2-size Poster'),
+        ('b1poster', 'B1-size Poster'),
         ('b2poster', 'B2-size Poster'),
-        ('scrunchie', 'Scrunchie'),  # other? shushu?
+        ('scrunchie', 'Scrunchie'), # hair ornament?
         ('strap', 'Strap/Charm'),
         ('tourbag', 'Tour Bag'),
-        ('tradingcard', 'Trading Card'),  # non-collection?
+        ('tradingcard', 'Trading Card'),
         ('tshirt', 'T-shirt'),
         ('uchiwa', 'Uchiwa'),
         ('visualbook', 'Visual Book/Pamphlet'),
-        ('visualscreen', 'Visual Screen'),  # other? tapestry?
+        ('visualscreen', 'Visual Screen'),
         ('wristband', 'Wristband'),
         ('collectionitem', 'Other Collection Item'),
-        ('poster', 'Other Poster'),
+        ('poster', 'Other Poster'), # no fabric posters like tapestries
         ('towel', 'Other Towel'),
         ('other', 'Other'),
     )

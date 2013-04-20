@@ -3,9 +3,13 @@ from django.db import models
 class Event(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_lenth=200)
+    nickname = models.CharField(bank=True, max_length=30)
     info_link = models.URLField(blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    
+    def __unicode__(self):
+        return u'%s' self.romanized_name
 
 
 class Performance(models.Model):
@@ -13,6 +17,11 @@ class Performance(models.Model):
     start_time = models.TimeField(blank=True, null=True)
     end_time = models.TimeField(blank=True, null=True)
     event = models.ForeignKey(Event, related_name='schedule')
+    
+    def __unicode__(self):
+        if self.start_time:
+            return u'%s %s at %s' % (self.day, self.event.nickname, self.start_time)
+        return u'%s %s' % (self.day, self.event.nickname)
 
 
 class Venue(models.Model):
@@ -22,3 +31,6 @@ class Venue(models.Model):
     country = models.CharField(max_length=200, blank=True)
     performance = models.ForeignKey(Performance)
     # Country field only filled if outside US (maybe unnecessary).
+    
+    def __unicode__(self):
+        return u'%s' self.romanized_day

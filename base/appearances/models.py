@@ -7,12 +7,19 @@ class Show(models.Model):
     aired_from = models.DateField(blank=True, null=True)
     aired_until = models.DateField(blank=True, null=True)
     # Aired from/until is only for HelloPro shows.
+    
+    def __unicode__(self):
+        return u'%s' self.romanized_name
+
 
 class TimeSlot(models.Model):
     start_time = models.DateTimeField(blank=True, null=True)
     end_time = models.DateTimeField(blank=True, null=True)
     show = models.ForeignKey(Show)
     # TimeSlot is only for HelloPro shows.
+    
+    def __unicode__(self):
+        return u'%s~%s %s' % (self.start_time, self.end_time, self.show.romanized_name)
 
 
 class Episode(models.Model):
@@ -27,11 +34,18 @@ class Episode(models.Model):
     episode = models.ForeignKey('self', blank=True, null=True, related_name='continuation')
     # Continuation links episodes that are continuations of each other (i.e. Part One, Part Two).
     # Embed video if possible. Multiple links will be submitted by users.
+    
+    def __unicode__(self):
+        return u'%s %s' % (self.air_date, self.show.romanized_name)
 
 
 class EpisodeSynopsis(models.Model):
     body = models.TextField(blank=True)
     # Multiple synopsese will be submitted by users.
+    
+    def __unicode__(self):
+        return u'%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)
+    # Missing a 'submitted by' type field to identify the synopsis?
 
 
 class Magazine(models.Model):
@@ -39,6 +53,9 @@ class Magazine(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
     # If prices change in the course of a magazine we may need to move this to Issue or make a Price model.
+    
+    def __unicode__(self):
+        return u'%s' self.romanized_name
 
 
 class Issue(models.Model):
@@ -51,18 +68,27 @@ class Issue(models.Model):
 
     def all_available_cards(self):
         return self.available_cards.all()
+    
+    def __unicode__(self):
+        return u'%s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
 
 
 class IssueImage(models.Model):
     image = models.ImageField(blank=True)
     issue = models.ForeignKey(Issue, related_name='gallery')
     # Gallery will allow multiple images to be uploaded by users.
+    
+    def __unicode__(self):
+        return u'Image of %s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
 
 
 class Set(models.Model):
     romanized_name = models.CharField(max_length=200)
     issue = models.ForeignKey(Issue, related_name='sets')
     image = models.ImageField(blank=True)
+    
+    def __unicode__(self):
+        return u'%s %s' % (self.magazine.romanized_name, self.romanized_name)
 
 
 class Card(models.Model):
@@ -73,3 +99,8 @@ class Card(models.Model):
     # Sometimes multiple models will be featured in a card.
     # Derrive H!B idol from existing database, but group they belong to set manually.
     # When the model is not a H!B idol, CharField to input name/romanized_name/group name/group romanized name.
+    
+    def __unicode__(self):
+        if self.number:
+            return u'%s #%s card no. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.number)
+        return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.model.romanized_name)
