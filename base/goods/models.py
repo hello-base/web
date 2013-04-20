@@ -1,8 +1,8 @@
 from django.db import models
 from model_utils import Choices
 
-from people.models import Group, Idol
 from events.models import Event
+from people.models import Group, Idol
 
 
 class Source(models.Model):
@@ -19,7 +19,7 @@ class Source(models.Model):
     # Other - Tsutaya, Tower Records, etc. (posters, Tower t-shirt, etc).
 
     # Campaign goods (freebies) may also be defined as a source?
-    
+
     def __unicode__(self):
         return u'%s' % self.romanized_name
 
@@ -76,7 +76,7 @@ class Good(BaseGood):
         ('a2poster', 'A2-size Poster'),
         ('b1poster', 'B1-size Poster'),
         ('b2poster', 'B2-size Poster'),
-        ('scrunchie', 'Scrunchie'), # hair ornament?
+        ('scrunchie', 'Scrunchie'),  # hair ornament?
         ('strap', 'Strap/Charm'),
         ('tourbag', 'Tour Bag'),
         ('tradingcard', 'Trading Card'),
@@ -86,7 +86,7 @@ class Good(BaseGood):
         ('visualscreen', 'Visual Screen'),
         ('wristband', 'Wristband'),
         ('collectionitem', 'Other Collection Item'),
-        ('poster', 'Other Poster'), # no fabric posters like tapestries
+        ('poster', 'Other Poster'),  # no fabric posters like tapestries
         ('towel', 'Other Towel'),
         ('other', 'Other'),
     )
