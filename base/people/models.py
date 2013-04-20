@@ -1,5 +1,6 @@
 from django.db import models
 
+from model_utils import ModelTracker
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
 
@@ -48,8 +49,10 @@ class Idol(Person):
     thumbnail = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), ResizeToFit(width=144)], image_field='photo', options={'quality': 90})
     mini = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), SmartCrop(60, 60)], image_field='photo', options={'quality': 90})
 
+    # Model Managers
     objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
     birthdays = models.BirthdayManager()
+    tracker = ModelTracker()
 
 
 class Group(TimeStampedModel):
@@ -77,6 +80,9 @@ class Group(TimeStampedModel):
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
+    # Model Managers
+    tracker = ModelTracker()
+
 
 class Membership(models.Model):
     idol = models.ForeignKey(Idol, related_name='memberships')
@@ -92,17 +98,18 @@ class Membership(models.Model):
     leadership_started = models.DateField(blank=True, null=True)
     leadership_ended = models.DateField(blank=True, null=True)
 
-    # Custom Managers
+    # Model Managers
     objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
+    tracker = ModelTracker()
 
 
 class Trivia(models.Model):
     idol = models.ForeignKey(Idol, blank=True, null=True)
     group = models.ForeignKey(Group, blank=True, null=True)
-    
+
     # Information
     body = models.TextField()
-    
+
     def __unicode__(self):
         if self.idol:
             return u'%s trivia' self.idol.romanized_name

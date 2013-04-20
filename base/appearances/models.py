@@ -1,5 +1,7 @@
 from django.db import models
 
+from model_utils import ModelTracker
+
 from people.models import Idol, Group
 
 
@@ -45,14 +47,20 @@ class Episode(models.Model):
     video_link = models.URLField(blank=True)
     # Embed video if possible. Multiple links will be submitted by users.
 
+    # Model Managers
+    tracker = ModelTracker()
+
     def __unicode__(self):
         return u'%s %s' % (self.air_date, self.show.romanized_name)
 
 
 class Synopsis(models.Model):
+    # Multiple synopsese will be submitted by users.
     episode = models.ForeignKey(Episode)
     body = models.TextField(blank=True)
-    # Multiple synopsese will be submitted by users.
+
+    # Model Managers
+    tracker = ModelTracker()
 
     def __unicode__(self):
         return u'%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)

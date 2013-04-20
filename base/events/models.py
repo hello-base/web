@@ -1,5 +1,7 @@
 from django.db import models
 
+from model_utils import ModelTracker
+
 
 class Event(models.Model):
     romanized_name = models.CharField(max_length=200)
@@ -8,6 +10,9 @@ class Event(models.Model):
     info_link = models.URLField(blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+    # Model Managers
+    tracker = ModelTracker()
 
     def __unicode__(self):
         return u'%s' % self.romanized_name
