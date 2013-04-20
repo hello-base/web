@@ -1,5 +1,7 @@
 from django.db import models
+
 from model_utils import Choices
+from model_utils.managers import InheritanceManager
 
 from events.models import Event
 from people.models import Group, Idol
@@ -42,6 +44,9 @@ class BaseGood(models.Model):
     available_until = models.DateField(blank=True, null=True)
     link = models.URLField(blank=True)
     image = models.ImageField(blank=True)
+
+    # Model Managers
+    objects = InheritanceManager()
 
     def __unicode__(self):
         if self.event:
