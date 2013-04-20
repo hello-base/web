@@ -1,5 +1,7 @@
 from django.db import models
 
+from people.models import Idol, Group
+
 class Show(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -93,6 +95,7 @@ class Card(models.Model):
     cardset = models.ForeignKey(CardSet, blank=True, null=True)
     number = models.IntegerField(blank=True, null=True)
     model = models.ForeignKey(Idol, related_name='cards')
+    group = models.ForeignKey(Group, blank=True, null=True, related_name='cards',)
     image = models.ImageField(blank=True)
     # Sometimes multiple models will be featured in a card.
     # Derrive H!B idol from existing database, but group they belong to set manually.
