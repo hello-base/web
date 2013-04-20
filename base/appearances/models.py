@@ -104,15 +104,27 @@ class CardSet(models.Model):
 class Card(models.Model):
     issue = models.ForeignKey(Issue, related_name='cards')
     cardset = models.ForeignKey(CardSet, blank=True, null=True)
+    hp_model = models.ForeignKey(Idol, blank=True, null=True, related_name='cards')
+    member_of = models.ForeignKey(Group, blank=True, null=True, related_name='idol')
+    group = models.ForeignKey(Group, blank=True, null=True, related_name='cards')
     number = models.IntegerField(blank=True, null=True)
-    model = models.ForeignKey(Idol, related_name='cards')
-    group = models.ForeignKey(Group, blank=True, null=True, related_name='cards',)
     image = models.ImageField(blank=True)
-    # Sometimes multiple models will be featured in a card.
-    # Derrive H!B idol from existing database, but group they belong to set manually.
+    
+    # Non-H!P Model Information
+    other_model_romanized_name = models.CharField(blank=True, max_length=200)
+    other_model_name = models.CharField(blank=True, max_length=200)
+    other_member_of_romanized_name = models.CharField(blank=True, max_length=200)
+    other_member_of_name = models.CharField(blank=True, max_length=200)
+    other_group_romanized_name = models.CharField(blank=True, max_length=200)
+    other_group_name = models.CharField(blank=True, max_length=200)
+    # Models must always be named, even if card features a group.
     # When the model is not a H!B idol, CharField to input name/romanized_name/group name/group romanized name.
     
     def __unicode__(self):
         if self.number:
             return u'%s #%s card no. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.number)
-        return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.model.romanized_name)
+        if self.group:
+            return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.group.romanized_name)
+        if self.other_model_romanized_name or self.other_group_romanized_name:
+            return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.other_model_romanized_name or self.other_group_romanized_name)
+        return u'%s #%s card feat. %s' % (self.magazine.romanized_name, self.issue.volume_number, self.hp_model.romanized_name)
