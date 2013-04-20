@@ -5,6 +5,7 @@ from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
 
 from .constants import (BLOOD_TYPE, CLASSIFICATIONS, SCOPE, STATUS)
+from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
 
 
 class Person(TimeStampedModel):
