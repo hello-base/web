@@ -97,9 +97,11 @@ class Membership(models.Model):
 
 
 class Trivia(models.Model):
-    body = models.TextField()
     idol = models.ForeignKey(Idol, blank=True, null=True)
     group = models.ForeignKey(Group, blank=True, null=True)
+    
+    # Information
+    body = models.TextField()
     
     def __unicode__(self):
         if self.idol:
