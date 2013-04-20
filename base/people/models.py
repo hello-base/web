@@ -112,9 +112,9 @@ class Trivia(models.Model):
 
     def __unicode__(self):
         if self.idol:
-            return u'%s trivia' self.idol.romanized_name
+            return u'%s trivia' % self.idol.romanized_name
         if self.group:
-            return u'%s trivia' self.group.romanized_name
+            return u'%s trivia' % self.group.romanized_name
         if self.idol and self.group:
             return u'%s trivia (%s)' % (self.group.romanized_name, self.idol.romanized_name)
         return u'trivia'
