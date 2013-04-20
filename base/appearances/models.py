@@ -28,7 +28,6 @@ class Episode(models.Model):
     number = models.IntegerField(blank=True, null=True)
     air_date = models.DateField()
     record_date = models.DateField(blank=True, null=True)
-    synopsis = models.TextField(blank=True)
     video_link = models.URLField(blank=True)
     show = models.ForeignKey(Show)
     episode = models.ForeignKey('self', blank=True, null=True, related_name='continuation')
@@ -39,8 +38,9 @@ class Episode(models.Model):
         return u'%s %s' % (self.air_date, self.show.romanized_name)
 
 
-class EpisodeSynopsis(models.Model):
+class Synopsis(models.Model):
     body = models.TextField(blank=True)
+    episode = models.ForeignKey(Episode)
     # Multiple synopsese will be submitted by users.
     
     def __unicode__(self):
@@ -65,9 +65,6 @@ class Issue(models.Model):
     catalog_number = models.CharField(blank=True)
     cover = models.ImageField(blank=True)
     isbn_number = models.CharField(max_length=19) # ?
-
-    def all_available_cards(self):
-        return self.available_cards.all()
     
     def __unicode__(self):
         return u'%s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
@@ -82,7 +79,7 @@ class IssueImage(models.Model):
         return u'Image of %s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
 
 
-class Set(models.Model):
+class CardSet(models.Model):
     romanized_name = models.CharField(max_length=200)
     issue = models.ForeignKey(Issue, related_name='sets')
     image = models.ImageField(blank=True)
@@ -93,7 +90,8 @@ class Set(models.Model):
 
 class Card(models.Model):
     issue = models.ForeignKey(Issue, related_name='cards')
-    set = models.ForeignKey(Set, blank=True, null=True)
+    cardset = models.ForeignKey(CardSet, blank=True, null=True)
+    number = models.IntegerField(blank=True, null=True)
     model = models.ForeignKey(Idol, related_name='cards')
     image = models.ImageField(blank=True)
     # Sometimes multiple models will be featured in a card.
