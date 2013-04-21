@@ -8,7 +8,7 @@ css_dir = "static/stylesheets"
 fonts_dir = "fonts"
 images_dir = "static/images"
 javascripts_dir = "static/javascripts"
-sass_dir = "ranking/assets/scss"
+sass_dir = "base/assets/sass"
 
 # output_style = :compressed
 output_style = :expanded
