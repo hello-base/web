@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Always run from app root.
+cd "$(dirname "$0")/.."
+
+# Make sure we have our virutalenv loaded.
+if [[ -f .venv ]]; then
+    source "$(cat .venv)/bin/activate"
+else
+    echo "Please run \"(cdvirtualenv && pwd) > .venv\" so we can easily activate your virtualenv."
+fi
+
+# Run foreman with our custom Procfile.
+exec foreman start -f Procfile.dev
