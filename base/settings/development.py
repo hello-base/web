@@ -1,7 +1,7 @@
 import os
 import sys
 
-from common import Base as Settings
+from .base import Base as Settings
 
 
 class Development(Settings):

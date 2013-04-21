@@ -1,6 +1,6 @@
 import os
 
-from common import Base as Settings
+from .base import Base as Settings
 
 
 class Production(Settings):
