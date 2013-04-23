@@ -5,8 +5,8 @@ from model_utils import ModelTracker
 
 class Event(models.Model):
     romanized_name = models.CharField(max_length=200)
-    name = models.CharField(max_lenth=200)
-    nickname = models.CharField(bank=True, max_length=30)
+    name = models.CharField(max_length=200)
+    nickname = models.CharField(blank=True, max_length=30)
     info_link = models.URLField(blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
