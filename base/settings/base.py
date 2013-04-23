@@ -77,11 +77,11 @@ class Base(Settings):
         'django.contrib.staticfiles',
     ]
     COMPONENTS = [
-        'events',
-        'goods',
-        'people',
-        'releases',
-        'releases.music',
+        'components.events',
+        'components.goods',
+        'components.people',
+        'components.releases',
+        'components.releases.music',
     ]
     PLUGINS = [
         'gunicorn',
