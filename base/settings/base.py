@@ -81,7 +81,6 @@ class Base(Settings):
         'goods',
         'people',
         'releases',
-        'releases.media',
         'releases.music',
     ]
     PLUGINS = [
