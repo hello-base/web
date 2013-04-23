@@ -1,5 +1,7 @@
 from model_utils import Choices
 
+from ohashi.constants import OTHER
+
 
 BLOOD_TYPE = Choices('A', 'B', 'O', 'AB')
 
