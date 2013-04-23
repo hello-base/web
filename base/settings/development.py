@@ -14,7 +14,7 @@ class Development(Settings):
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
         'debug_toolbar',
         'debugtools',
-        # 'devserver',
+        'devserver',
         'django_extensions',
     ]
 
