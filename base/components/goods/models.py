@@ -3,8 +3,8 @@ from django.db import models
 from model_utils import Choices, ModelTracker
 from model_utils.managers import InheritanceManager
 
-from events.models import Event
-from people.models import Group, Idol
+from ..events.models import Event
+from ..people.models import Group, Idol
 
 
 class Source(models.Model):
