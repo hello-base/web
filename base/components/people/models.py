@@ -1,8 +1,7 @@
-from django.db import models
-
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
+from ohashi.db import models
 
 from .constants import (BLOOD_TYPE, CLASSIFICATIONS, SCOPE, STATUS)
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
