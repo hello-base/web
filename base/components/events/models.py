@@ -10,6 +10,7 @@ class Event(models.Model):
     info_link = models.URLField(blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    slug = models.SlugField()
 
     # Model Managers
     tracker = FieldTracker()
@@ -36,6 +37,7 @@ class Venue(models.Model):
     location = models.CharField(max_length=200)
     country = models.CharField(max_length=200, blank=True)
     performance = models.ForeignKey(Performance)
+    slug = models.SlugField()
     # Country field only filled if outside US (maybe unnecessary).
 
     def __unicode__(self):
