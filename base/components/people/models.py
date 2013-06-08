@@ -75,6 +75,7 @@ class Group(TimeStampedModel):
     note_processed = models.TextField(blank=True, editable=False)
 
     # Model Managers
+    objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
     tracker = FieldTracker()
 
 
