@@ -63,7 +63,6 @@ class Base(Settings):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'django_hosts.middleware.HostsMiddleware',
     )
 
     # Installed Applications
