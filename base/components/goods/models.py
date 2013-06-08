@@ -7,7 +7,7 @@ from ..events.models import Event
 from ..people.models import Group, Idol
 
 
-class Source(models.Model):
+class Shop(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(blank=True, max_length=200)
     website_link = models.URLField(blank=True)
