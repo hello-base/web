@@ -43,12 +43,6 @@ class Idol(Person):
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
-    # Denormalized Headshot & ImageKit Specifications
-    photo = models.ImageField(blank=True, editable=False, upload_to='people/idols/')
-    display = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), ResizeToFit(width=296)], image_field='photo', options={'quality': 90})
-    thumbnail = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), ResizeToFit(width=144)], image_field='photo', options={'quality': 90})
-    mini = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), SmartCrop(60, 60)], image_field='photo', options={'quality': 90})
-
     # Model Managers
     objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
     birthdays = models.BirthdayManager()

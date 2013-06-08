@@ -4,8 +4,6 @@ from itertools import chain
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 
-from imagekit import models as specs
-from imagekit.processors import SmartCrop, Adjust
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
@@ -145,11 +143,6 @@ class Edition(TimeStampedModel):
     art = models.ImageField(blank=True, null=True, upload_to='releases/music/editions/')
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
-
-    # ImageKit Specifications
-    display = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), SmartCrop(300, 300)], image_field='art', options={'quality': 90})
-    thumbnail = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), SmartCrop(144, 144)], image_field='art', options={'quality': 90})
-    mini = specs.ImageSpec([Adjust(contrast=1.1, sharpness=1.1), SmartCrop(60, 60)], image_field='art', options={'quality': 90})
 
     # Managers
     objects = EditionManager()
