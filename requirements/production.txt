@@ -3,6 +3,7 @@
 dj-database-url == 0.2.1
 dj-redis-url == 0.1.4
 Django == 1.5.1
+django-birthday == 0.1.1
 django-braces == 1.0.0
 django-configurations == 0.3
 django-model-utils == 1.4.0
