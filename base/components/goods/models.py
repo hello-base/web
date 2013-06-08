@@ -43,7 +43,7 @@ class BaseGood(models.Model):
     available_from = models.DateField(blank=True, null=True)
     available_until = models.DateField(blank=True, null=True)
     link = models.URLField(blank=True)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to='/')
 
     # Model Managers
     objects = InheritanceManager()
@@ -96,12 +96,12 @@ class Good(BaseGood):
         ('towel', 'Other Towel'),
         ('other', 'Other'),
     )
-    category = models.CharField(choices=CATEGORIES)
+    category = models.CharField(choices=CATEGORIES, max_length=16)
     is_bonus_good = models.BooleanField(default=False)
     is_set_exclusive = models.BooleanField(default=False)
     is_online_exclusive = models.BooleanField(default=False)
     is_mailorder_exclusive = models.BooleanField(default=False)
-    parent = models.ForeignKey('GoodSet', blank=True, null=True)
+    parent = models.ForeignKey('Set', blank=True, null=True)
     # Look into goods that are part of an event having the same available from/until date.
     # A Good is either from a Source or from an Event, not both. Exception: HelloShop.jp Goods section???
     # Connect to idols/groups (custom ForeignKey?)
@@ -123,7 +123,7 @@ class Set(BaseGood):
         ('collectionset', 'Other Collection Set'),
         ('otherset', 'Other Set'),
     )
-    category = models.CharField(choices=CATEGORIES)
+    category = models.CharField(choices=CATEGORIES, max_length=18)
 
 
 class SuperSet(BaseGood):

@@ -69,6 +69,7 @@ class Base(Settings):
 
     # Installed Applications
     DJANGO_APPLICATIONS = [
+        'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.humanize',
         'django.contrib.messages',
