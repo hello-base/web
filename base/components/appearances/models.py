@@ -1,6 +1,6 @@
 from django.db import models
 
-from model_utils import ModelTracker
+from model_utils import FieldTracker
 
 from people.models import Idol, Group
 
@@ -48,7 +48,7 @@ class Episode(models.Model):
     # Embed video if possible. Multiple links will be submitted by users.
 
     # Model Managers
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
     def __unicode__(self):
         return u'%s %s' % (self.air_date, self.show.romanized_name)
@@ -60,7 +60,7 @@ class Synopsis(models.Model):
     body = models.TextField(blank=True)
 
     # Model Managers
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
     def __unicode__(self):
         return u'%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)

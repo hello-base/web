@@ -1,6 +1,6 @@
 from django.db import models
 
-from model_utils import ModelTracker
+from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
 
@@ -53,7 +53,7 @@ class Idol(Person):
     # Model Managers
     objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
     birthdays = models.BirthdayManager()
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
 
 class Group(TimeStampedModel):
@@ -82,7 +82,7 @@ class Group(TimeStampedModel):
     note_processed = models.TextField(blank=True, editable=False)
 
     # Model Managers
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
 
 class Membership(models.Model):
@@ -101,7 +101,7 @@ class Membership(models.Model):
 
     # Model Managers
     objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
 
 class Trivia(models.Model):

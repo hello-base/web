@@ -1,6 +1,6 @@
 from django.db import models
 
-from model_utils import ModelTracker
+from model_utils import FieldTracker
 
 
 class Event(models.Model):
@@ -12,7 +12,7 @@ class Event(models.Model):
     end_date = models.DateField(blank=True, null=True)
 
     # Model Managers
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
     def __unicode__(self):
         return u'%s' % self.romanized_name

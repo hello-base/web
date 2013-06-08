@@ -1,6 +1,6 @@
 from django.db import models
 
-from model_utils import Choices, ModelTracker
+from model_utils import Choices, FieldTracker
 from model_utils.managers import InheritanceManager
 
 from ..events.models import Event
@@ -47,7 +47,7 @@ class BaseGood(models.Model):
 
     # Model Managers
     objects = InheritanceManager()
-    tracker = ModelTracker()
+    tracker = FieldTracker()
 
     def __unicode__(self):
         if self.event:
