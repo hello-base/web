@@ -62,7 +62,6 @@ class Base(Settings):
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
-        'social_auth.middleware.SocialAuthExceptionMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'django_hosts.middleware.HostsMiddleware',
     )
