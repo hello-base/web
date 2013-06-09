@@ -1,6 +1,8 @@
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import (ListView, DetailView, TemplateView, 
+   CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
 
+from .forms import EventForm, VenueForm
 from .models import Event, Venue
 
 
@@ -20,7 +22,7 @@ class EventCreateView(CreateView):
     form_class = EventForm
 
 
-class EventUpdatView(UpdateView):
+class EventUpdateView(UpdateView):
     model = Event
     success_url = reverse_lazy('event-detail')
     form_class = EventForm

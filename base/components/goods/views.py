@@ -1,6 +1,8 @@
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import (ListView, DetailView, TemplateView, 
+   CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
 
+from .forms import ShopForm, GoodForm, SetForm, SuperSetForm
 from .models import Shop, Good, Set, SuperSet
 
 
@@ -18,49 +20,49 @@ class ShopDetailView(DetailView):
     template_name = 'goods/shop-detail.html'
 
 
-class ShopCreateForm(CreateForm):
+class ShopCreateView(CreateView):
     model = Shop
     success_url = reverse_lazy('shop-detail')
     form_class = ShopForm
 
 
-class ShopUpdateForm(CreateForm):
+class ShopUpdateView(CreateView):
     model = Shop
     success_url = reverse_lazy('shop-detail')
     form_class = ShopForm
 
 
-class GoodCreateForm(CreateForm):
+class GoodCreateView(CreateView):
     model = Good
     success_url = reverse_lazy('goods-browse')
     form_class = GoodForm
 
 
-class GoodUpdateForm(UpdateForm):
+class GoodUpdateView(UpdateView):
     model = Good
     success_url = reverse_lazy('goods-browse')
     form_class = GoodForm
 
 
-class SetCreateForm(CreateForm):
+class SetCreateView(CreateView):
     model = Set
     success_url = reverse_lazy('goods-browse')
     form_class = SetForm
 
 
-class SetUpdateForm(UpdateForm):
+class SetUpdateView(UpdateView):
     model = Set
     success_url = reverse_lazy('goods-browse')
     form_class = SetForm
 
 
-class SuperSetCreateForm(CreateForm):
+class SuperSetCreateView(CreateView):
     model = SuperSet
     success_url = reverse_lazy('goods-browse')
     form_class = SuperSetForm
 
 
-class SuperSetUpdateForm(UpdateForm):
+class SuperSetUpdateView(UpdateView):
     model = SuperSet
     success_url = reverse_lazy('goods-browse')
     form_class = SuperSetForm
