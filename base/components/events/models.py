@@ -24,6 +24,7 @@ class Performance(models.Model):
     start_time = models.TimeField(blank=True, null=True)
     end_time = models.TimeField(blank=True, null=True)
     event = models.ForeignKey(Event, related_name='schedule')
+    # Add 'set list' field with convoluted ordering and everything...
 
     def __unicode__(self):
         if self.start_time:
@@ -34,7 +35,7 @@ class Performance(models.Model):
 class Venue(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    location = models.CharField(max_length=200)
+    location = models.CharField(max_length=200) # is CharField good enough to search by location eventually??
     country = models.CharField(max_length=200, blank=True)
     performance = models.ForeignKey(Performance)
     slug = models.SlugField()

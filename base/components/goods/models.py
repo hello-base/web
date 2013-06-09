@@ -14,8 +14,8 @@ class Shop(models.Model):
     slug = models.SlugField()
     # HelloShop.jp (Egao) - egao tsuuhan (mail order)
     # HelloShop.jp (Overstock) - kuradashi (warehouse)
-    # HelloShop.jp (Complete Albums)
-    # HelloShop.jp (Special) - current stuff
+    # HelloShop.jp (Complete Albums) - maybe don't need..?
+    # HelloShop.jp (Special) - current stuff; FFUUU stuff available at H!POS
     # HelloShop.jp/H!P Official Shop (Goods) - 'goods' usually available at both
     # Hello! Project Official Shop (Photos) - just photos, not goods
     # U/F Online - event?
@@ -30,13 +30,14 @@ class Shop(models.Model):
 class BaseGood(models.Model):
     is_graduation_good = models.BooleanField(default=False)
     is_birthday_good = models.BooleanField(default=False)
-    is_campaign_good = models.BooleanField(default=False)
-    is_lottery_good = models.BooleanField(default=False)
+    is_online_exclusive = models.BooleanField(default=False)
+    is_mailorder_exclusive = models.BooleanField(default=False)
 
     idols = models.ManyToManyField(Idol, blank=True, null=True)
     groups = models.ManyToManyField(Group, blank=True, null=True)
     event = models.ForeignKey(Event, blank=True, null=True)
     shop = models.ForeignKey(Shop, blank=True, null=True)
+    online_id = models.CharField(blank=True, null=True, max_length=16)
 
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -99,9 +100,9 @@ class Good(BaseGood):
     )
     category = models.CharField(choices=CATEGORIES, max_length=16)
     is_bonus_good = models.BooleanField(default=False)
+    is_campaign_good = models.BooleanField(default=False)
+    is_lottery_good = models.BooleanField(default=False)
     is_set_exclusive = models.BooleanField(default=False)
-    is_online_exclusive = models.BooleanField(default=False)
-    is_mailorder_exclusive = models.BooleanField(default=False)
     parent = models.ForeignKey('Set', blank=True, null=True)
     # Look into goods that are part of an event having the same available from/until date.
     # A Good is either from a Source or from an Event, not both. Exception: HelloShop.jp Goods section???
