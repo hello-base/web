@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+<title>{% block title_override %}{% block title %}{% endblock %} &middot; Hello! Ranking{% endblock %}</title>
+</head>
+<body id="hello-base" data-path="{{ request.path }}">
+
+<h1>Hello! Base</h1>
+
+<div style="color: red">
+{% block body %}
+{% endblock body %}
+</div>
+
+<div style="color: blue">
+{% block body2 %}
+{% endblock body2 %}
+</div>
+
+</body>
+</html>

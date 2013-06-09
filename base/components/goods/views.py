@@ -1,4 +1,4 @@
-from django.views.generic import (ListView, DetailView, TemplateView, 
+from django.views.generic import (ListView, DetailView, TemplateView,
    CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
 
@@ -8,6 +8,12 @@ from .models import Shop, Good, Set, SuperSet
 
 class GoodsBrowseView(TemplateView):
     template_name = 'goods/goods-browse.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GoodsBrowseView, self).get_context_data(**kwargs)
+        context['event_goods'] = Good.objects.filter(event__isnull=False)
+        context['shop_goods'] = Good.objects.filter(shop__isnull=False)
+        return context
 
 
 class ShopListView(ListView):
