@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView
 
-from .models import Event
+from .models import Event, Venue
+
 
 class EventListView(ListView):
     queryset = Event.objects.all()
@@ -12,16 +13,16 @@ class EventDetailView(DetailView):
     template_name = 'events/event-detail.html'
 
 
+class EventGoodsDetailView(DetailView):
+    queryset = Event.objects.all()
+    template_name = 'events/event-goods-detail.html'
+
+
 class VenueListView(ListView):
     queryset = Venue.objects.all()
-    template_name = 'venue/venue-list.html'
+    template_name = 'events/venue-list.html'
 
 
 class VenueDetailView(DetailView):
     queryset = Venue.objects.all()
-    template_name = 'venue/venue-detail.html'
-
-
-class EventGoodsDetailView(DetailView):
-    queryset = Event.objects.all()
-    template_name = 'events/event-goods-detail.html'
+    template_name = 'events/venue-detail.html'

@@ -2,7 +2,7 @@ from django.db import models
 
 from model_utils import FieldTracker
 
-from people.models import Idol, Group
+from ..people.models import Idol, Group
 
 
 class Show(models.Model):
@@ -10,6 +10,7 @@ class Show(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    slug = models.SlugField()
 
     # Run Dates (for Hello! Project shows only)
     aired_from = models.DateField(blank=True, null=True)
@@ -71,6 +72,7 @@ class Magazine(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
+    slug = models.SlugField()
     # If prices change in the course of a magazine we may need to move this to Issue or make a Price model.
 
     def __unicode__(self):
@@ -79,7 +81,7 @@ class Magazine(models.Model):
 
 class Issue(models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
-    volume_number = models.IntegerField()
+    volume_number = models.CharField(max_length=4)
     release_date = models.DateField(blank=True, null=True)
     catalog_number = models.CharField(blank=True)
     isbn_number = models.CharField(max_length=19)  # ?
