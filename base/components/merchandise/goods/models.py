@@ -40,6 +40,7 @@ class BaseGood(base.Merchandise):
     event = models.ForeignKey('events.Event', blank=True, null=True)
     shop = models.ForeignKey(Shop, blank=True, null=True)
     online_id = models.CharField(blank=True, null=True, max_length=16)
+    other_info = models.TextField(blank=True, null=True) # Size/restrictions/etc
 
     available_from = models.DateField(blank=True, null=True)
     available_until = models.DateField(blank=True, null=True)
