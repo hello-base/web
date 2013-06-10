@@ -42,6 +42,7 @@ class BaseGood(models.Model):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
+    other_info = models.TextField(blank=True, null=True) # Size/restrictions/etc
     available_from = models.DateField(blank=True, null=True)
     available_until = models.DateField(blank=True, null=True)
     link = models.URLField(blank=True)
