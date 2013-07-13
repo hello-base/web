@@ -21,11 +21,11 @@ class Merchandise(models.Model):
         return '%s' % self.name
 
 
-class DVD(Merchandise):
+class Videodisc(Merchandise):
     """
-    An abstract base class for DVD merchandise. Because of the fundemental
-    difference between "concert" DVDs (which are released to the public) and
-    "fan club" DVDs (which are generally only released to fan club members),
+    An abstract base class for videodisc merchandise. Because of the fundemental
+    difference between "concert" discs (which are released to the public) and
+    "fan club" discs (which are generally only released to fan club members),
     we cannot consolidate the two into one class.
 
     """
