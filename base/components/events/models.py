@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 
 from model_utils import FieldTracker
@@ -43,3 +44,9 @@ class Venue(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.romanized_day
+
+
+# -HACK- to quickly input data.
+admin.site.register(Event)
+admin.site.register(Performance)
+admin.site.register(Venue)
