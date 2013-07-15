@@ -5,14 +5,17 @@ from ohashi.db import models
 
 
 class Merchandise(models.Model):
+    # Ownership.
     idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss')
     groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss')
 
+    # Shared metadata.
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
     released = models.DateField(blank=True, db_index=True, default=date.min, null=True)
+    price = models.IntegerField(blank=True, null=True)
 
-    # Secondary Identifier
+    # Secondary identifier.
     uuid = models.UUIDField()
 
     class Meta:
