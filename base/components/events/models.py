@@ -43,6 +43,9 @@ class Performance(models.Model):
     event = models.ForeignKey(Event, related_name='schedule')
     venue = models.ForeignKey(Venue, blank=True, null=True, related_name='performances')
     # Add 'set list' field with convoluted ordering and everything...
+    
+    class Meta:
+        ordering = ('day', 'start_time')
 
     def __unicode__(self):
         if self.start_time:
