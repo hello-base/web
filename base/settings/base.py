@@ -77,10 +77,10 @@ class Base(Settings):
     ]
     COMPONENTS = [
         'components.events',
-        'components.goods',
+        'components.merchandise',
+        'components.merchandise.goods',
+        'components.merchandise.music',
         'components.people',
-        'components.releases',
-        'components.releases.music',
     ]
     PLUGINS = [
         'gunicorn',
