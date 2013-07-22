@@ -1,15 +1,14 @@
 from datetime import date
 from itertools import chain
 
-# from model_utils.models import TimeStampedModel
 # from ohashi.db import models
-
 # from ...people.constants import CLASSIFICATIONS
 # from .managers import (AlbumManager, EditionManager, SingleManager,
 #     TrackOrderManager, VideoTrackOrderManager)
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
+from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
 

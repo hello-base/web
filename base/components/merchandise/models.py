@@ -1,10 +1,11 @@
 from datetime import date
 
 from model_utils import Choices
+from model_utils.models import TimeStampedModel
 from ohashi.db import models
 
 
-class Merchandise(models.Model):
+class Merchandise(TimeStampedModel):
     # Ownership.
     idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss')
     groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss')
