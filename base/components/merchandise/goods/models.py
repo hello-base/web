@@ -3,8 +3,7 @@ from django.db import models
 from model_utils import Choices, FieldTracker
 from model_utils.managers import InheritanceManager
 
-from ..events.models import Event
-from ..people.models import Group, Idol
+from .. import models as base
 
 
 class Shop(models.Model):
@@ -12,6 +11,7 @@ class Shop(models.Model):
     name = models.CharField(blank=True, max_length=200)
     website_link = models.URLField(blank=True)
     slug = models.SlugField()
+
     # HelloShop.jp (Egao) - egao tsuuhan (mail order)
     # HelloShop.jp (Overstock) - kuradashi (warehouse)
     # HelloShop.jp (Complete Albums) - maybe don't need..?
@@ -27,29 +27,24 @@ class Shop(models.Model):
         return u'%s' % self.romanized_name
 
 
-class BaseGood(models.Model):
+class BaseGood(base.Merchandise):
+    # Model Managers.
+    objects = InheritanceManager()
+    tracker = FieldTracker()
+
     is_graduation_good = models.BooleanField(default=False)
     is_birthday_good = models.BooleanField(default=False)
     is_online_exclusive = models.BooleanField(default=False)
     is_mailorder_exclusive = models.BooleanField(default=False)
 
-    idols = models.ManyToManyField(Idol, blank=True, null=True)
-    groups = models.ManyToManyField(Group, blank=True, null=True)
-    event = models.ForeignKey(Event, blank=True, null=True)
+    event = models.ForeignKey('events.Event', blank=True, null=True)
     shop = models.ForeignKey(Shop, blank=True, null=True)
     online_id = models.CharField(blank=True, null=True, max_length=16)
 
-    romanized_name = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    price = models.IntegerField(blank=True, null=True)
     available_from = models.DateField(blank=True, null=True)
     available_until = models.DateField(blank=True, null=True)
     link = models.URLField(blank=True)
     image = models.ImageField(blank=True, upload_to='/')
-
-    # Model Managers
-    objects = InheritanceManager()
-    tracker = FieldTracker()
 
     def __unicode__(self):
         if self.event:
@@ -57,6 +52,10 @@ class BaseGood(models.Model):
         if self.source:
             return u'%s from %s' % (self.romanized_name, self.source)
         return u'%s' % self.romanized_name
+
+    def save(self, *args, **kwargs):
+        self.released = self.available_from
+        super(BaseGood, self).save(*args, **kwargs)
 
 
 class Good(BaseGood):
@@ -99,11 +98,13 @@ class Good(BaseGood):
         ('other', 'Other'),
     )
     category = models.CharField(choices=CATEGORIES, max_length=16)
+    parent = models.ForeignKey('Set', blank=True, null=True)
+
     is_bonus_good = models.BooleanField(default=False)
     is_campaign_good = models.BooleanField(default=False)
     is_lottery_good = models.BooleanField(default=False)
     is_set_exclusive = models.BooleanField(default=False)
-    parent = models.ForeignKey('Set', blank=True, null=True)
+
     # Look into goods that are part of an event having the same available from/until date.
     # A Good is either from a Source or from an Event, not both. Exception: HelloShop.jp Goods section???
     # Connect to idols/groups (custom ForeignKey?)
