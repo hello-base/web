@@ -1,51 +1,38 @@
 from datetime import date
 from itertools import chain
 
+# from ohashi.db import models
+# from ...people.constants import CLASSIFICATIONS
+# from .managers import (AlbumManager, EditionManager, SingleManager,
+#     TrackOrderManager, VideoTrackOrderManager)
+
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
-
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
 
-from ...people.constants import CLASSIFICATIONS
-from .managers import (AlbumManager, EditionManager, SingleManager,
-    TrackOrderManager, VideoTrackOrderManager)
+from ..models import Merchandise
 
 
 class Label(models.Model):
     name = models.CharField()
     slug = models.SlugField()
 
-    class Meta:
-        ordering = ('name',)
-
     def __unicode__(self):
         return u'%s' % self.name
 
 
-class MusicBase(TimeStampedModel):
-    idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss')
-
-    # Shared Metadata
+class Base(Merchandise):
+    # Music-specific shared metadata.
     number = models.CharField(blank=True)
-    name = models.CharField()
-    kanji = models.CharField(blank=True)
-    released = models.DateField(db_index=True, default=date.min)
-    label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)s_releases')
-    slug = models.SlugField()
-
-    # Secondary Identifier
-    uuid = models.UUIDField()
+    label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
+    slug = models.SlugField(blank=True)
 
     class Meta:
         abstract = True
         get_latest_by = 'released'
         ordering = ('-released',)
-
-    def __unicode__(self):
-        return u'%s' % self.name
 
     def _render_participants(self):
         groups = self.groups.exclude(classification=CLASSIFICATIONS.supergroup)
@@ -81,24 +68,18 @@ class MusicBase(TimeStampedModel):
                 return group
 
 
-class Album(MusicBase):
+class Album(Base):
     is_compilation = models.BooleanField('compilation?', default=False)
-
-    # Managers
-    objects = AlbumManager()
 
     def get_absolute_url(self):
         return reverse('album-detail', kwargs={'slug': self.slug})
 
 
-class Single(MusicBase):
+class Single(Base):
     is_indie = models.BooleanField('indie single?', default=False)
     has_8cm = models.BooleanField('8cm version?', default=False)
     has_lp = models.BooleanField('LP version?', default=False)
     has_cassette = models.BooleanField('cassette version?', default=False)
-
-    # Managers
-    objects = SingleManager()
 
     def get_absolute_url(self):
         return reverse('single-detail', kwargs={'slug': self.slug})
@@ -132,8 +113,8 @@ class Edition(TimeStampedModel):
     single = models.ForeignKey(Single, blank=True, null=True, related_name='editions')
 
     # Metadata
+    romanized_name = models.CharField(blank=True)
     name = models.CharField(blank=True)
-    kanji = models.CharField(blank=True)
     kind = models.IntegerField(choices=EDITIONS, db_index=True, default=REGULAR)
     released = models.DateField(blank=True, db_index=True, null=True)
     catalog_number = models.CharField(blank=True)
@@ -143,9 +124,6 @@ class Edition(TimeStampedModel):
     art = models.ImageField(blank=True, null=True, upload_to='releases/music/editions/')
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
-
-    # Managers
-    objects = EditionManager()
 
     class Meta:
         get_latest_by = 'released'
@@ -201,14 +179,14 @@ class Track(TimeStampedModel):
     groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='tracks')
 
     # Metadata
-    name = models.CharField()
-    kanji = models.CharField(blank=True)
+    romanized_name = models.CharField()
+    name = models.CharField(blank=True)
 
     # Alternate Versions
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
+    romanized_alternate = models.CharField('alternate name (romanized)', blank=True)
     name_alternate = models.CharField('alternate name', blank=True)
-    kanji_alternate = models.CharField('alternate name (in kanji)', blank=True)
 
     # Staff
     # arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
@@ -239,9 +217,6 @@ class TrackOrder(models.Model):
     is_bside = models.BooleanField('b-side?', default=False)
     is_album_track = models.BooleanField('album track?', default=False)
     is_instrumental = models.BooleanField('instrumental?', default=False)
-
-    # Managers
-    objects = TrackOrderManager()
 
     class Meta:
         ordering = ('edition', 'position')
@@ -283,8 +258,8 @@ class Video(TimeStampedModel):
     single = models.ForeignKey(Single, blank=True, null=True, related_name='videos')
 
     # Metadata
-    name = models.CharField()
-    kanji = models.CharField(blank=True)
+    romanized_name = models.CharField()
+    name = models.CharField(blank=True)
     kind = models.PositiveSmallIntegerField(choices=VIDEO_TYPES, default=PV_NORMAL)
     released = models.DateField(blank=True, null=True)
 
@@ -308,9 +283,6 @@ class VideoTrackOrder(models.Model):
     edition = models.ForeignKey(Edition, related_name='video_order')
     video = models.ForeignKey(Video, related_name='on_edition')
     position = models.PositiveSmallIntegerField()
-
-    # Managers
-    objects = VideoTrackOrderManager()
 
     class Meta:
         ordering = ('edition', 'position')

@@ -1,22 +1,23 @@
 from django import forms
 
-from .models import Shop, Good, Set, SuperSet
+from . import models
 
 
 class ShopForm(forms.ModelForm):
     class Meta:
-        model = Shop
+        model = models.Shop
 
 
 class GoodForm(forms.ModelForm):
     class Meta:
-        model = Good
+        model = models.Good
 
 
 class SetForm(forms.ModelForm):
     class Meta:
-        model = Set
+        model = models.Set
+
 
 class SuperSetForm(forms.ModelForm):
     class Meta:
-        model = SuperSet
+        model = models.SuperSet

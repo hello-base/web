@@ -7,7 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
-    url(r'^', include('components.goods.urls')),
+    url(r'^', include('components.merchandise.goods.urls')),
 
     # Examples:
     # url(r'^$', 'base.views.home', name='home'),
