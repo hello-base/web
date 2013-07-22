@@ -1,4 +1,5 @@
 *.pyc
 
 .env
+.sass-cache
 .venv
