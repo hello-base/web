@@ -11,18 +11,18 @@ class GoodsBrowseView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GoodsBrowseView, self).get_context_data(**kwargs)
-        context['event_goods'] = Good.objects.filter(event__isnull=False)
-        context['shop_goods'] = Good.objects.filter(shop__isnull=False)
+        context['event_goods'] = models.Good.objects.filter(event__isnull=False)
+        context['shop_goods'] = models.Good.objects.filter(shop__isnull=False)
         return context
 
 
 class ShopListView(generic.ListView):
-    queryset = Shop.objects.all()
+    model = models.Shop
     template_name = 'goods/shop-list.html'
 
 
 class ShopDetailView(generic.DetailView):
-    queryset = Shop.objects.all()
+    model = models.Shop
     template_name = 'goods/shop-detail.html'
 
 
