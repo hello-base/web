@@ -1,12 +1,11 @@
-from django.views.generic import (ListView, DetailView, TemplateView,
-   CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
+from django.views import generic
 
-from .forms import ShopForm, GoodForm, SetForm, SuperSetForm
-from .models import Shop, Good, Set, SuperSet
+from . import forms
+from . import models
 
 
-class GoodsBrowseView(TemplateView):
+class GoodsBrowseView(generic.TemplateView):
     template_name = 'goods/goods-browse.html'
 
     def get_context_data(self, **kwargs):
@@ -16,61 +15,61 @@ class GoodsBrowseView(TemplateView):
         return context
 
 
-class ShopListView(ListView):
+class ShopListView(generic.ListView):
     queryset = Shop.objects.all()
     template_name = 'goods/shop-list.html'
 
 
-class ShopDetailView(DetailView):
+class ShopDetailView(generic.DetailView):
     queryset = Shop.objects.all()
     template_name = 'goods/shop-detail.html'
 
 
-class ShopCreateView(CreateView):
-    model = Shop
+class ShopCreateView(generic.CreateView):
+    form_class = forms.ShopForm
+    model = models.Shop
     success_url = reverse_lazy('shop-detail')
-    form_class = ShopForm
 
 
-class ShopUpdateView(CreateView):
-    model = Shop
+class ShopUpdateView(generic.CreateView):
+    form_class = forms.ShopForm
+    model = models.Shop
     success_url = reverse_lazy('shop-detail')
-    form_class = ShopForm
 
 
-class GoodCreateView(CreateView):
-    model = Good
+class GoodCreateView(generic.CreateView):
+    form_class = forms.GoodForm
+    model = models.Good
     success_url = reverse_lazy('goods-browse')
-    form_class = GoodForm
 
 
-class GoodUpdateView(UpdateView):
-    model = Good
+class GoodUpdateView(generic.UpdateView):
+    form_class = forms.GoodForm
+    model = models.Good
     success_url = reverse_lazy('goods-browse')
-    form_class = GoodForm
 
 
-class SetCreateView(CreateView):
-    model = Set
+class SetCreateView(generic.CreateView):
+    form_class = forms.SetForm
+    model = models.Set
     success_url = reverse_lazy('goods-browse')
-    form_class = SetForm
 
 
-class SetUpdateView(UpdateView):
-    model = Set
+class SetUpdateView(generic.UpdateView):
+    form_class = forms.SetForm
+    model = models.Set
     success_url = reverse_lazy('goods-browse')
-    form_class = SetForm
 
 
-class SuperSetCreateView(CreateView):
-    model = SuperSet
+class SuperSetCreateView(generic.CreateView):
+    form_class = forms.SuperSetForm
+    model = models.SuperSet
     success_url = reverse_lazy('goods-browse')
-    form_class = SuperSetForm
 
 
-class SuperSetUpdateView(UpdateView):
-    model = SuperSet
+class SuperSetUpdateView(generic.UpdateView):
+    form_class = forms.SuperSetForm
+    model = models.SuperSet
     success_url = reverse_lazy('goods-browse')
-    form_class = SuperSetForm
 
 # See if we can change success_url from 'goods-browse' good permalink?
