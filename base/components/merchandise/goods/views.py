@@ -1,3 +1,4 @@
+from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 
@@ -25,49 +26,49 @@ class ShopDetailView(generic.DetailView):
     template_name = 'goods/shop-detail.html'
 
 
-class ShopCreateView(generic.CreateView):
+class ShopCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ShopForm
     model = models.Shop
     success_url = reverse_lazy('shop-detail')
 
 
-class ShopUpdateView(generic.CreateView):
+class ShopUpdateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ShopForm
     model = models.Shop
     success_url = reverse_lazy('shop-detail')
 
 
-class GoodCreateView(generic.CreateView):
+class GoodCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.GoodForm
     model = models.Good
     success_url = reverse_lazy('goods-browse')
 
 
-class GoodUpdateView(generic.UpdateView):
+class GoodUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.GoodForm
     model = models.Good
     success_url = reverse_lazy('goods-browse')
 
 
-class SetCreateView(generic.CreateView):
+class SetCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.SetForm
     model = models.Set
     success_url = reverse_lazy('goods-browse')
 
 
-class SetUpdateView(generic.UpdateView):
+class SetUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.SetForm
     model = models.Set
     success_url = reverse_lazy('goods-browse')
 
 
-class SuperSetCreateView(generic.CreateView):
+class SuperSetCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.SuperSetForm
     model = models.SuperSet
     success_url = reverse_lazy('goods-browse')
 
 
-class SuperSetUpdateView(generic.UpdateView):
+class SuperSetUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.SuperSetForm
     model = models.SuperSet
     success_url = reverse_lazy('goods-browse')
