@@ -8,7 +8,6 @@ class Development(Settings):
     # Default / Debug Settings
     DEBUG = True
     INTERNAL_IPS = ('127.0.0.1',)
-    TEMPLATE_STRING_IF_INVALID = 'INVALID EXPRESSION: %s'
 
     # Installed Applications
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
