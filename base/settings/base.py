@@ -83,6 +83,7 @@ class Base(Settings):
         'components.people',
     ]
     PLUGINS = [
+        'floppyforms',
         'gunicorn',
         'south',
     ]

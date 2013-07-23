@@ -42,6 +42,7 @@ class GoodCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.GoodForm
     model = models.Good
     success_url = reverse_lazy('goods-browse')
+    template_name = 'goods/goods-form.html'
 
 
 class GoodUpdateView(LoginRequiredMixin, generic.UpdateView):

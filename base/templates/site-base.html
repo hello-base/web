@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block page %}
+<header class="header">
+    <h1>{% block site-name %}<a href=""><strong>Hello! Base</strong></a>{% endblock %}</h1>
+    <p>{% block site-tagline %}A service for the <strong>Hello! Ranking</strong> community.{% endblock %}</p>
+</header>
+<section class="content" role="content">
+{% block content %}{% endblock %}
+</section>
+{% endblock page %}

@@ -1,0 +1,8 @@
+@import "compass";
+
+.form {
+    ul {
+        @include reset-box-model;
+        @include reset-list-style;
+    }
+}
