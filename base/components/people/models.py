@@ -19,6 +19,12 @@ class Person(TimeStampedModel):
     nicknames = models.CharField(blank=True)
     slug = models.SlugField()
 
+    class Meta:
+        abstract = True
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
+
 
 class Idol(Person):
     GAIJINS = ['April', 'Chelsea', 'Danielle', 'Lehua', 'Mika Taressa']
