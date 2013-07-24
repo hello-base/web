@@ -1,0 +1,43 @@
+{% extends "site_base.html" %}
+{% load floppyforms %}
+
+{% block title %}Add an Event{% endblock %}
+{% block content %}
+<section class="form creation">
+    <div class="container">
+        <h1>Add an event.</h1>
+
+        <form action="." method="post" accept-charset="utf-8">
+        {% form form using %}
+        <div class="row">
+            <div class="col-sm-6">{% formrow form.romanized_name %}</div>
+            <div class="col-sm-6">{% formrow form.name %}</div>
+            <div class="col-sm-6">{% formrow form.nickname %}</div>
+            <div class="col-sm-6">{% formrow form.info_link %}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">{% formrow form.start_date %}</div>
+            <div class="col-sm-6">{% formrow form.end_date %}</div>
+        </div>
+        {% endform %}
+
+        <fieldset>
+            <legend>Performances</legend>
+            {{ formset.management_form }}
+            {% form formset.forms using %}
+            {% for form in formset.forms %}
+            <div class="row">
+                <div class="col-sm-4">{% formrow form.day %}</div>
+                <div class="col-sm-4">{% formrow form.end_time %}</div>
+                <div class="col-sm-4">{% formrow form.start_time %}</div>
+            </div>
+            {% endfor %}
+            {% endform %}
+        </fieldset>
+
+        {% csrf_token %}
+        <button class="button" type="submit">Add Event</button>
+        </form>
+    </div>
+</section>
+{% endblock content %}

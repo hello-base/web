@@ -1,8 +1,8 @@
-from django.views.generic import (ListView, DetailView, TemplateView, 
+from django.views.generic import (ListView, DetailView, TemplateView,
    CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
 
-from .forms import EventForm, VenueForm
+from .forms import EventForm, PerformanceFormset, VenueForm
 from .models import Event, Venue
 
 
@@ -20,6 +20,13 @@ class EventCreateView(CreateView):
     model = Event
     success_url = reverse_lazy('event-detail')
     form_class = EventForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EventCreateView, self).get_context_data(**kwargs)
+        context['formset'] = PerformanceFormset()
+        if self.request.POST:
+            context['formset'] = PerformanceFormset(self.request.POST)
+        return context
 
 
 class EventUpdateView(UpdateView):
