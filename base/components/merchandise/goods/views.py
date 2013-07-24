@@ -7,7 +7,7 @@ from . import models
 
 
 class GoodsBrowseView(generic.TemplateView):
-    template_name = 'goods/goods-browse.html'
+    template_name = 'goods/good_browse.html'
 
     def get_context_data(self, **kwargs):
         context = super(GoodsBrowseView, self).get_context_data(**kwargs)
@@ -16,14 +16,26 @@ class GoodsBrowseView(generic.TemplateView):
         return context
 
 
+class GoodCreateView(generic.CreateView):
+    form_class = forms.GoodForm
+    model = models.Good
+    success_url = reverse_lazy('goods-browse')
+
+
+class GoodUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.GoodForm
+    model = models.Good
+    success_url = reverse_lazy('goods-browse')
+
+
 class ShopListView(generic.ListView):
     model = models.Shop
-    template_name = 'goods/shop-list.html'
+    template_name = 'goods/shop_list.html'
 
 
 class ShopDetailView(generic.DetailView):
     model = models.Shop
-    template_name = 'goods/shop-detail.html'
+    template_name = 'goods/shop_detail.html'
 
 
 class ShopCreateView(LoginRequiredMixin, generic.CreateView):
@@ -36,19 +48,6 @@ class ShopUpdateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ShopForm
     model = models.Shop
     success_url = reverse_lazy('shop-detail')
-
-
-class GoodCreateView(LoginRequiredMixin, generic.CreateView):
-    form_class = forms.GoodForm
-    model = models.Good
-    success_url = reverse_lazy('goods-browse')
-    template_name = 'goods/goods-form.html'
-
-
-class GoodUpdateView(LoginRequiredMixin, generic.UpdateView):
-    form_class = forms.GoodForm
-    model = models.Good
-    success_url = reverse_lazy('goods-browse')
 
 
 class SetCreateView(LoginRequiredMixin, generic.CreateView):
