@@ -30,7 +30,10 @@ class GoodForm(forms.ModelForm):
             'available_from': forms.DateInput,
             'available_until': forms.DateInput,
             'link': forms.URLInput,
+            'name': forms.TextInput,
+            'other_info': forms.Textarea(attrs={'rows': 2}),
             'price': forms.NumberInput,
+            'romanized_name': forms.TextInput,
         }
 
 
