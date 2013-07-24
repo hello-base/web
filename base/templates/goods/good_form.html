@@ -3,10 +3,15 @@
 
 {% block title %}Add a Good{% endblock %}
 {% block content %}
+<header class="section-header">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-12">Add a Good</h1>
+        </div>
+    </div>
+</header>
 <section class="form creation">
     <div class="container">
-        <h1>Add a good.</h1>
-
         {% for error in form.non_field_errors %}
         <div class="alert alert-danger">
             <a class="close" href="#" data-dismiss="alert">×</a>
@@ -25,39 +30,39 @@
             <fieldset>
                 <legend>Name and Classification</legend>
                 <div class="row">
-                    <div class="col-lg-4">{% formrow form.romanized_name %}</div>
-                    <div class="col-lg-4">{% formrow form.name %}</div>
+                    <div class="col-sm-6">{% formrow form.romanized_name %}</div>
+                    <div class="col-sm-6">{% formrow form.name %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">{% formrow form.category %}</div>
+                    <div class="col-sm-12">{% formrow form.category %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">{% formrow form.image %}</div>
+                    <div class="col-sm-12">{% formrow form.image %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">{% formrow form.idols %}</div>
-                    <div class="col-lg-4">{% formrow form.groups %}</div>
+                    <div class="col-sm-6">{% formrow form.idols %}</div>
+                    <div class="col-sm-6">{% formrow form.groups %}</div>
                 </div>
             </fieldset>
             <fieldset>
                 <legend>Source</legend>
                 <div class="row">
-                    <div class="col-lg-8">{% formrow form.link %}</div>
+                    <div class="col-sm-12">{% formrow form.link %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">{% formrow form.event %}</div>
+                    <div class="col-sm-12">{% formrow form.event %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">{% formrow form.shop %}</div>
-                    <div class="col-lg-4">{% formrow form.online_id %}</div>
+                    <div class="col-sm-6">{% formrow form.shop %}</div>
+                    <div class="col-sm-6">{% formrow form.online_id %}</div>
                 </div>
             </fieldset>
             <fieldset>
                 <legend>Availability</legend>
                 <div class="row">
-                    <div class="col-lg-3">{% formrow form.available_from %}</div>
-                    <div class="col-lg-3">{% formrow form.available_until %}</div>
-                    <div class="col-lg-2">
+                    <div class="col-sm-4">{% formrow form.available_from %}</div>
+                    <div class="col-sm-4">{% formrow form.available_until %}</div>
+                    <div class="col-sm-4">
                         <label for="{{ form.price|id }}">{{ form.price.label }}</label>
                         <div class="input-group">
                             <span class="input-group-addon">¥‎</span>
@@ -69,10 +74,10 @@
             <fieldset>
                 <legend>Other Information</legend>
                 <div class="row">
-                    <div class="col-lg-8">{% formrow form.parent %}</div>
+                    <div class="col-sm-12">{% formrow form.parent %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">{% formrow form.other_info %}</div>
+                    <div class="col-sm-12">{% formrow form.other_info %}</div>
                 </div>
             </fieldset>
             {% endform %}
