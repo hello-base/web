@@ -12,6 +12,15 @@ BASE_GOOD_FIELDS = [
     # Relations.
     'idols', 'groups', 'event', 'shop',
 ]
+BASE_GOOD_WIDGETS = {
+    'available_from': forms.DateInput,
+    'available_until': forms.DateInput,
+    'link': forms.URLInput,
+    'name': forms.TextInput,
+    'other_info': forms.Textarea(attrs={'rows': 2}),
+    'price': forms.NumberInput,
+    'romanized_name': forms.TextInput,
+}
 
 
 class ShopForm(forms.ModelForm):
@@ -57,22 +66,18 @@ class GoodForm(BaseGoodForm):
             'category', 'parent', 'is_bonus_good', 'is_campaign_good',
             'is_lottery_good', 'is_set_exclusive'
         ]
-        widgets = {
-            'available_from': forms.DateInput,
-            'available_until': forms.DateInput,
-            'link': forms.URLInput,
-            'name': forms.TextInput,
-            'other_info': forms.Textarea(attrs={'rows': 2}),
-            'price': forms.NumberInput,
-            'romanized_name': forms.TextInput,
-        }
+        widgets = BASE_GOOD_WIDGETS
 
 
 class SetForm(BaseGoodForm):
     class Meta:
         model = models.Set
+        fields = BASE_GOOD_FIELDS + ['category']
+        widgets = BASE_GOOD_WIDGETS
 
 
 class SuperSetForm(BaseGoodForm):
     class Meta:
         model = models.SuperSet
+        fields = BASE_GOOD_FIELDS + ['goods', 'sets']
+        widgets = BASE_GOOD_WIDGETS
