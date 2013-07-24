@@ -1,10 +1,25 @@
 {% extends "site_base.html" %}
 {% load floppyforms %}
 
+{% block title %}Add a Good{% endblock %}
 {% block content %}
 <section class="form creation">
     <div class="container">
         <h1>Add a good.</h1>
+
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ error }}
+        </div>
+        {% endfor %}
+        {% for error in form|hidden_field_errors %}
+        <div class="alert alert-danger">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ error }}
+        </div>
+        {% endfor %}
+
         <form action="." method="post" accept-charset="utf-8">
             {% form form using %}
             <fieldset>
@@ -27,12 +42,14 @@
             <fieldset>
                 <legend>Source</legend>
                 <div class="row">
+                    <div class="col-lg-8">{% formrow form.link %}</div>
+                </div>
+                <div class="row">
                     <div class="col-lg-8">{% formrow form.event %}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3">{% formrow form.shop %}</div>
-                    <div class="col-lg-3">{% formrow form.link %}</div>
-                    <div class="col-lg-2">{% formrow form.online_id %}</div>
+                    <div class="col-lg-4">{% formrow form.shop %}</div>
+                    <div class="col-lg-4">{% formrow form.online_id %}</div>
                 </div>
             </fieldset>
             <fieldset>
