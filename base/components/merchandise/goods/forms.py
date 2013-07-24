@@ -36,6 +36,27 @@ class GoodForm(forms.ModelForm):
             'romanized_name': forms.TextInput,
         }
 
+    def clean(self):
+        cleaned_data = super(GoodForm, self).clean()
+
+        # Goods must be associated with at least one idol or one group. Raise
+        # a ValidationError if none are associated.
+        groups = cleaned_data.get('groups', '')
+        idols = cleaned_data.get('idols', '')
+        if not groups and not idols:
+            message = u'Goods must be associated with at least one idol or group.'
+            raise forms.ValidationError(message)
+
+        # Goods must originate from either a shop or an event. Raise a
+        # ValidationError if neither of them are set.
+        event = cleaned_data.get('event', '')
+        shop = cleaned_data.get('shop', '')
+        if not event and not shop:
+            message = u'Goods must either originate from a shop or an event.'
+            raise forms.ValidationError(message)
+
+        return cleaned_data
+
 
 class SetForm(forms.ModelForm):
     class Meta:
