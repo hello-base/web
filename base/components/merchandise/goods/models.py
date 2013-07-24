@@ -37,13 +37,18 @@ class BaseGood(base.Merchandise):
     is_online_exclusive = models.BooleanField(default=False)
     is_mailorder_exclusive = models.BooleanField(default=False)
 
-    event = models.ForeignKey('events.Event', blank=True, null=True)
+    event = models.ForeignKey('events.Event', blank=True, null=True,
+        help_text='Is this good from an event?')
     shop = models.ForeignKey(Shop, blank=True, null=True)
-    online_id = models.CharField(blank=True, null=True, max_length=16)
-    other_info = models.TextField(blank=True, null=True) # Size/restrictions/etc
+    online_id = models.CharField('online ID', blank=True, null=True, max_length=16,
+        help_text='The good\'s ID or catalog number (if available).')
+    other_info = models.TextField(blank=True, null=True,
+        help_text='Any additional information about the good. Size, restrictions, etc.')
 
-    available_from = models.DateField(blank=True, null=True)
-    available_until = models.DateField(blank=True, null=True)
+    available_from = models.DateField(blank=True, null=True,
+        help_text='When was the good originally released?')
+    available_until = models.DateField(blank=True, null=True,
+        help_text='When was the good taken off the market?')
     link = models.URLField(blank=True)
     image = models.ImageField(blank=True, upload_to='/')
 
@@ -99,7 +104,9 @@ class Good(BaseGood):
         ('other', 'Other'),
     )
     category = models.CharField(choices=CATEGORIES, max_length=16)
-    parent = models.ForeignKey('Set', blank=True, null=True)
+    parent = models.ForeignKey('Set', blank=True, null=True,
+        help_text='Is this good a part of another good? (e.g., a photo that is part of a set)',
+        verbose_name=u'parent good')
 
     is_bonus_good = models.BooleanField(default=False)
     is_campaign_good = models.BooleanField(default=False)
