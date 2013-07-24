@@ -23,85 +23,88 @@ class Person(TimeStampedModel):
         abstract = True
 
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u'%s' % (self.romanized_name)
 
 
 class Idol(Person):
     GAIJINS = ['April', 'Chelsea', 'Danielle', 'Lehua', 'Mika Taressa']
 
-    # Status
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
+    birthdays = models.BirthdayManager()
+    tracker = FieldTracker()
+
+    # Status.
     status = models.PositiveSmallIntegerField(choices=STATUS, db_index=True, default=STATUS.active)
     scope = models.PositiveSmallIntegerField(choices=SCOPE, db_index=True, default=SCOPE.hp)
 
-    # Details
+    # Details.
     bloodtype = models.CharField(blank=True, choices=BLOOD_TYPE, default='A', max_length=2)
     height = models.DecimalField(blank=True, decimal_places=1, max_digits=4, null=True)
 
-    # Birth Information
+    # Birth Information.
     birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True)
     birthplace_romanized = models.CharField(blank=True)
     birthplace_latitude = models.FloatField(blank=True, null=True)
     birthplace_longitude = models.FloatField(blank=True, null=True)
 
-    # Options & Extra Information
+    # Options & Extra Information.
     has_discussions = models.BooleanField('activate discussions for this idol.', default=False)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
-    # Model Managers
-    objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
-    birthdays = models.BirthdayManager()
-    tracker = FieldTracker()
-
 
 class Group(TimeStampedModel):
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
+    tracker = FieldTracker()
+
     name = models.CharField()
     romanized_name = models.CharField()
     slug = models.SlugField()
 
-    # Status
+    # Status.
     classification = models.PositiveSmallIntegerField(choices=CLASSIFICATIONS, db_index=True, default=CLASSIFICATIONS.major)
     status = models.PositiveSmallIntegerField(choices=STATUS, db_index=True, default=STATUS.active)
     scope = models.PositiveSmallIntegerField(choices=SCOPE, db_index=True, default=SCOPE.hp)
 
-    # Details
+    # Details.
     started = models.DateField(db_index=True)
     ended = models.DateField(blank=True, db_index=True, null=True)
     members = models.ManyToManyField(Idol, related_name='groups', through='Membership')
 
-    # Parents & Children
+    # Parents & Children.
     parent = models.ForeignKey('self', blank=True, null=True, related_name='subgroups')
     groups = models.ManyToManyField('self', blank=True, null=True, related_name='member_groups', symmetrical=False)
 
-    # Options & Extra Information
+    # Options & Extra Information.
     has_discussions = models.BooleanField('activate discussions for this group.', default=False)
     former_names = models.CharField(blank=True)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
-    # Model Managers
-    objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
-    tracker = FieldTracker()
+    def __unicode__(self):
+        return u'%s' % (self.romanized_name)
 
 
 class Membership(models.Model):
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
+    tracker = FieldTracker()
+
     idol = models.ForeignKey(Idol, related_name='memberships')
     group = models.CustomManagerForeignKey(Group, blank=True, null=True, manager=Group.objects.unfiltered, related_name='memberships')
 
-    # Group Involvement Details
+    # Group Involvement Details.
     is_primary = models.BooleanField('Primary?', db_index=True, default=False)
     started = models.DateField(db_index=True)
     ended = models.DateField(blank=True, db_index=True, null=True)
 
-    # Leadership Details
+    # Leadership Details.
     is_leader = models.BooleanField('Is/Was leader?')
     leadership_started = models.DateField(blank=True, null=True)
     leadership_ended = models.DateField(blank=True, null=True)
-
-    # Model Managers
-    objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
-    tracker = FieldTracker()
 
 
 class Trivia(models.Model):
