@@ -10,6 +10,7 @@ class EventForm(forms.ModelForm):
         widgets = {
             'end_date': forms.DateInput,
             'info_link': forms.URLInput,
+            'secondary_info_link': forms.URLInput,
             'start_date': forms.DateInput,
         }
 

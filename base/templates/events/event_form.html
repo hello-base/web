@@ -18,8 +18,9 @@
             <div class="row">
                 <div class="col-sm-6">{% formrow form.romanized_name %}</div>
                 <div class="col-sm-6">{% formrow form.name %}</div>
-                <div class="col-sm-6">{% formrow form.nickname %}</div>
-                <div class="col-sm-6">{% formrow form.info_link %}</div>
+                <div class="col-sm-4">{% formrow form.nickname %}</div>
+                <div class="col-sm-4">{% formrow form.info_link %}</div>
+                <div class="col-sm-4">{% formrow form.secondary_info_link %}</div>
             </div>
             <div class="row">
                 <div class="col-sm-6">{% formrow form.start_date %}</div>
@@ -32,13 +33,25 @@
             <legend>Performances</legend>
             {{ formset.management_form }}
             {% form formset.forms using %}
+            <ul class="inline-form">
             {% for form in formset.forms %}
-            <div class="row">
-                <div class="col-sm-4">{% formrow form.day %}</div>
-                <div class="col-sm-4">{% formrow form.start_time %}</div>
-                <div class="col-sm-4">{% formrow form.end_time %}</div>
-            </div>
+            <li class="row">
+                <div class="col-sm-3"></div>
+                <div class="performance col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-4">{% formrow form.day %}</div>
+                        <div class="col-sm-4">{% formrow form.romanized_name %}</div>
+                        <div class="col-sm-4">{% formrow form.name %}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">{% formrow form.start_time %}</div>
+                        <div class="col-sm-4">{% formrow form.end_time %}</div>
+                        <div class="col-sm-4">{% formrow form.venue %}</div>
+                    </div>
+                </div>
+            </li>
             {% endfor %}
+            </ul>
             {% endform %}
         </fieldset>
 
