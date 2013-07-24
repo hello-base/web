@@ -3,10 +3,15 @@
 
 {% block title %}Add an Event{% endblock %}
 {% block content %}
+<header class="section-header">
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-12">Add an Event</h1>
+        </div>
+    </div>
+</header>
 <section class="form creation">
     <div class="container">
-        <h1>Add an event.</h1>
-
         <form action="." method="post" accept-charset="utf-8">
         {% form form using %}
         <div class="row">
