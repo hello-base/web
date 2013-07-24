@@ -1,3 +1,31 @@
 @import "base";
 
 @import "components/forms";
+
+
+.page > header {
+    background: #222;
+    padding-top: 36px; padding-bottom: 18px;
+
+    a { color: #fff; }
+    h1 {
+        font-size: 18px;
+        margin: 0;
+    }
+    .tagline {
+        color: #666;
+        font-size: 12px;
+        margin: 0;
+    }
+}
+
+.section-header {
+    border-bottom: 1px solid #eee;
+
+    h1 {
+        font-size: 24px;
+        font-weight: normal;
+        margin: 0;
+        padding-top: 24px; padding-bottom: 24px;
+    }
+}

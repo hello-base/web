@@ -2,8 +2,10 @@
 
 {% block page %}
 <header class="header">
-    <h1>{% block site-name %}<a href=""><strong>Hello! Base</strong></a>{% endblock %}</h1>
-    <p>{% block site-tagline %}A service for the <strong>Hello! Ranking</strong> community.{% endblock %}</p>
+    <div class="container">
+        <h1>{% block site-name %}<a href="/"><strong>Hello!</strong> Base</a>{% endblock %}</h1>
+        <p class="tagline">{% block site-tagline %}A service for the <strong>Hello! Ranking</strong> community.{% endblock %}</p>
+    </div>
 </header>
 <section class="content" role="content">
 {% block content %}{% endblock %}
