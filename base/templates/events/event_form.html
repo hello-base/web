@@ -14,16 +14,18 @@
     <div class="container">
         <form action="." method="post" accept-charset="utf-8">
         {% form form using %}
-        <div class="row">
-            <div class="col-sm-6">{% formrow form.romanized_name %}</div>
-            <div class="col-sm-6">{% formrow form.name %}</div>
-            <div class="col-sm-6">{% formrow form.nickname %}</div>
-            <div class="col-sm-6">{% formrow form.info_link %}</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">{% formrow form.start_date %}</div>
-            <div class="col-sm-6">{% formrow form.end_date %}</div>
-        </div>
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-6">{% formrow form.romanized_name %}</div>
+                <div class="col-sm-6">{% formrow form.name %}</div>
+                <div class="col-sm-6">{% formrow form.nickname %}</div>
+                <div class="col-sm-6">{% formrow form.info_link %}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">{% formrow form.start_date %}</div>
+                <div class="col-sm-6">{% formrow form.end_date %}</div>
+            </div>
+        </fieldset>
         {% endform %}
 
         <fieldset>
@@ -33,8 +35,8 @@
             {% for form in formset.forms %}
             <div class="row">
                 <div class="col-sm-4">{% formrow form.day %}</div>
-                <div class="col-sm-4">{% formrow form.end_time %}</div>
                 <div class="col-sm-4">{% formrow form.start_time %}</div>
+                <div class="col-sm-4">{% formrow form.end_time %}</div>
             </div>
             {% endfor %}
             {% endform %}
