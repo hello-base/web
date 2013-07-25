@@ -1,0 +1,26 @@
+{% extends "layouts/form_base.html" %}
+{% load floppyforms %}
+
+{% block title %}Add a Venue{% endblock %}
+{% block section-title %}Add a Venue{% endblock %}
+{% block form %}
+{% form form using %}
+<fieldset>
+    <div class="row">
+        <div class="col-sm-6">{% formrow form.romanized_name %}</div>
+        <div class="col-sm-6">{% formrow form.name %}</div>
+        <div class="col-sm-12">{% formrow form.former_names %}</div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Location</legend>
+    <div class="row">
+        <div class="col-sm-12">{% formrow form.romanized_address %}</div>
+        <div class="col-sm-12">{% formrow form.address %}</div>
+        <div class="col-sm-12">{% formrow form.country %}</div>
+    </div>
+</fieldset>
+{% endform %}
+{% csrf_token %}
+<button class="button" type="submit">Add Venue</button>
+{% endblock form %}
