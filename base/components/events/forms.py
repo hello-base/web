@@ -23,7 +23,9 @@ class PerformanceForm(forms.ModelForm):
             'end_time': forms.TimeInput,
             'start_time': forms.TimeInput,
         }
-PerformanceFormset = inlineformset_factory(Event, Performance, form=PerformanceForm)
+PerformanceFormset = inlineformset_factory(
+    Event, Performance, form=PerformanceForm, extra=1
+)
 
 
 class VenueForm(forms.ModelForm):
