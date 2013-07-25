@@ -1,65 +1,54 @@
-{% extends "site_base.html" %}
+{% extends "layouts/form_base.html" %}
 {% load floppyforms %}
 
 {% block title %}Add an Event{% endblock %}
-{% block content %}
-<header class="section-header">
-    <div class="container">
-        <div class="row">
-            <h1 class="col-sm-12">Add an Event</h1>
-        </div>
+{% block section-title %}Add an Event{% endblock %}
+{% block form %}
+{% form form using %}
+<fieldset>
+    <div class="row">
+        <div class="col-sm-6">{% formrow form.romanized_name %}</div>
+        <div class="col-sm-6">{% formrow form.name %}</div>
+        <div class="col-sm-4">{% formrow form.nickname %}</div>
+        <div class="col-sm-4">{% formrow form.info_link %}</div>
+        <div class="col-sm-4">{% formrow form.secondary_info_link %}</div>
     </div>
-</header>
-<section class="form creation">
-    <div class="container">
-        <form action="." method="post" accept-charset="utf-8">
-        {% form form using %}
-        <fieldset>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.romanized_name %}</div>
-                <div class="col-sm-6">{% formrow form.name %}</div>
-                <div class="col-sm-4">{% formrow form.nickname %}</div>
-                <div class="col-sm-4">{% formrow form.info_link %}</div>
-                <div class="col-sm-4">{% formrow form.secondary_info_link %}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.start_date %}</div>
-                <div class="col-sm-6">{% formrow form.end_date %}</div>
-            </div>
-        </fieldset>
-        {% endform %}
-
-        <fieldset>
-            <legend>Performances</legend>
-            {{ formset.management_form }}
-            {% form formset.forms using %}
-            <ul class="performances inline-form">
-            {% for form in formset.forms %}
-                <li class="row">
-                    <div class="col-sm-1">{{ forloop.counter }}</div>
-                    <div class="performance col-sm-11">
-                        <div class="row">
-                            <div class="col-sm-6">{% formrow form.day %}</div>
-                            <div class="col-sm-3">{% formrow form.start_time %}</div>
-                            <div class="col-sm-3">{% formrow form.end_time %}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">{% formrow form.romanized_name %}</div>
-                            <div class="col-sm-6">{% formrow form.name %}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">{% formrow form.venue %}</div>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-            {% endform %}
-        </fieldset>
-
-        {% csrf_token %}
-        <button class="button" type="submit">Add Event</button>
-        </form>
+    <div class="row">
+        <div class="col-sm-6">{% formrow form.start_date %}</div>
+        <div class="col-sm-6">{% formrow form.end_date %}</div>
     </div>
-</section>
-{% endblock content %}
+</fieldset>
+{% endform %}
+
+<fieldset>
+    <legend>Performances</legend>
+    {{ formset.management_form }}
+    {% form formset.forms using %}
+    <ul class="performances inline-form">
+    {% for form in formset.forms %}
+        <li class="row">
+            <div class="col-sm-1">{{ forloop.counter }}</div>
+            <div class="performance col-sm-11">
+                <div class="row">
+                    <div class="col-sm-6">{% formrow form.day %}</div>
+                    <div class="col-sm-3">{% formrow form.start_time %}</div>
+                    <div class="col-sm-3">{% formrow form.end_time %}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">{% formrow form.romanized_name %}</div>
+                    <div class="col-sm-6">{% formrow form.name %}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">{% formrow form.venue %}</div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+    {% endform %}
+</fieldset>
+
+{% csrf_token %}
+<button class="button" type="submit">Add Event</button>
+</form>
+{% endblock form %}
