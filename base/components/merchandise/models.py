@@ -12,7 +12,7 @@ class Merchandise(TimeStampedModel):
 
     # Shared metadata.
     romanized_name = models.CharField()
-    name = models.CharField(blank=True)
+    name = models.CharField()
     released = models.DateField(blank=True, db_index=True, default=date.min, null=True)
     price = models.IntegerField(blank=True, null=True)
 
