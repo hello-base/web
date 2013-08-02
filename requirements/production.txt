@@ -1,6 +1,6 @@
 # Package Requirements for Production
 
-dj-database-url == 0.2.1
+dj-database-url == 0.2.2
 dj-redis-url == 0.1.4
 Django == 1.5.1
 django-birthday == 0.1.1
