@@ -4,7 +4,7 @@ dj-database-url == 0.2.1
 dj-redis-url == 0.1.4
 Django == 1.5.1
 django-birthday == 0.1.1
-django-braces == 1.0.0
+django-braces == 1.2.1
 django-configurations == 0.3
 django-floppyforms == 1.1
 django-model-utils == 1.4.0
@@ -15,8 +15,8 @@ greenlet == 0.4.1
 gunicorn == 0.17.4
 hiredis == 0.1.1
 ohashi == 0.0.11
-Pillow == 2.0.0
+Pillow == 2.1.0
 psycogreen == 1.0
-psycopg2 == 2.5
-raven == 3.3.7
+psycopg2 == 2.5.1
+raven == 3.4.1
 South == 0.8.1
