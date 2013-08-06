@@ -9,7 +9,7 @@ django-configurations == 0.3
 django-floppyforms == 1.1
 django-model-utils == 1.4.0
 django-storages == 1.1.8
-django-tastypie == 0.9.15
+django-tastypie == 0.10.0
 gevent == 0.13.8
 greenlet == 0.4.1
 gunicorn == 17.5
