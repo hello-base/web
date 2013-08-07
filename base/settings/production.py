@@ -5,6 +5,7 @@ from .base import Base as Settings
 
 class Production(Settings):
     DEBUG = True
+    print("oh hello.")
 
     # TEMPLATE_LOADERS = (
     #     ('django.template.loaders.cached.Loader', (
