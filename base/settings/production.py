@@ -1,11 +1,11 @@
 import os
+import sys
 
 from .base import Base as Settings
 
 
 class Production(Settings):
     DEBUG = True
-    print("oh hello.")
 
     # TEMPLATE_LOADERS = (
     #     ('django.template.loaders.cached.Loader', (
@@ -33,29 +33,29 @@ class Production(Settings):
     #     'djangosecure',
     # ]
 
-    # # Logging
-    # LOGGING = {
-    #     'version': 1,
-    #     'disable_existing_loggers': False,
-    #     'filters': {
-    #         'require_debug_false': {
-    #             '()': 'django.utils.log.RequireDebugFalse'
-    #         }
-    #     },
-    #     'handlers': {
-    #         'console': {
-    #             'level': 'DEBUG',
-    #             'class': 'logging.StreamHandler',
-    #         },
-    #     },
-    #     'loggers': {
-    #         'django': {
-    #             'handlers': ['console'],
-    #             'level': 'DEBUG',
-    #             'propagate': True,
-    #         },
-    #     }
-    # }
+    # Logging
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'filters': {
+            'require_debug_false': {
+                '()': 'django.utils.log.RequireDebugFalse'
+            }
+        },
+        'handlers': {
+            'console': {
+                'level':'INFO',
+                'class':'logging.StreamHandler',
+                'strm': sys.stdout
+            },
+        'loggers': {
+            'django': {
+                'handlers': ['console'],
+                'level': 'DEBUG',
+                'propagate': True,
+            },
+        }
+    }
 
     # # Django Secure
     # SECURE_BROWSER_XSS_FILTER = True
