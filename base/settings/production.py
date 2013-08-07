@@ -46,8 +46,10 @@ class Production(Settings):
             'console': {
                 'level':'INFO',
                 'class':'logging.StreamHandler',
-                'strm': sys.stdout
+                'formatter': 'verbose',
+                'stream': sys.stdout
             },
+        },
         'loggers': {
             'django': {
                 'handlers': ['console'],
