@@ -1,11 +1,14 @@
-from django.contrib import admin
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
+from components.views import SiteView
 
 # Uncomment the next two lines to enable the admin:
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', name='site-home', view=SiteView.as_view()),
+
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
     url(r'^', include('components.merchandise.goods.urls')),
