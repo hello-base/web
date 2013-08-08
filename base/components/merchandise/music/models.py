@@ -185,13 +185,13 @@ class Track(TimeStampedModel):
     # Alternate Versions
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
-    romanized_alternate = models.CharField('alternate name (romanized)', blank=True)
+    romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
     name_alternate = models.CharField('alternate name', blank=True)
 
     # Staff
-    # arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
-    # composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
-    # lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
+    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
+    composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
+    lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
 
     def __unicode__(self):
         if self.is_alternate:
