@@ -6,6 +6,7 @@ Django == 1.5.1
 django-birthday == 0.1.1
 django-braces == 1.2.1
 django-configurations == 0.3
+django-dotenv == 1.2
 django-floppyforms == 1.1
 django-model-utils == 1.4.0
 django-storages == 1.1.8
