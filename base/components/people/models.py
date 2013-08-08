@@ -55,6 +55,12 @@ class Idol(Person):
     note_processed = models.TextField(blank=True, editable=False)
 
 
+class Staff(Person):
+    class Meta:
+        ordering = ('name',)
+        verbose_name_plural = 'staff'
+
+
 class Group(TimeStampedModel):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
