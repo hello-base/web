@@ -26,7 +26,7 @@ def read_env():
 
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'base.settings')
-    os.environ.setdefault('DJANGO_CONFIGURATION', 'Production')
+    os.environ.setdefault('DJANGO_CONFIGURATION', 'Development')
 
     read_env()
 
