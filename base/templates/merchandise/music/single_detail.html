@@ -1,0 +1,18 @@
+{% extends "site_base.html" %}
+{% load humanize %}
+
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block content %}
+
+{% if object.number %}<span class="number">{{ object.number | ordinal }} Single</span>{% endif %}
+<h1>{{ object.romanized_name }}</h1>
+<p>{{ object.name }}</p>
+
+{% for edition in object.editions.all %}
+    {{ edition.romanized_name }}
+    {{ edition.kind }}
+    {{ edition.released }}
+    {{ edition.catalog_number }}
+{% endfor %}
+
+{% endblock content %}
