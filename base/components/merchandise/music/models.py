@@ -131,12 +131,12 @@ class Edition(TimeStampedModel):
 
     def __unicode__(self):
         if self.parent:
-            return u'%s [%s]' % (self.parent.name, self.name)
+            return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
         return u'%s' % (self.name)
 
     def save(self, *args, **kwargs):
-        if not self.name:
-            self.name = self.get_kind_display()
+        if not self.romanized_name:
+            self.romanized_name = self.get_kind_display()
         if self.kind in [self.REGULAR, self.DIGITAL]:
             if self.released:
                 self.parent.released = self.released
@@ -195,10 +195,10 @@ class Track(TimeStampedModel):
 
     def __unicode__(self):
         if self.is_alternate:
-            return u'%s [%s]' % (self.name, self.name_alternate)
+            return u'%s [%s]' % (self.romanized_name, self.romanized_name_alternate)
         if self.is_cover and not self.is_alternate:
-            return u'%s [Cover]' % (self.name)
-        return u'%s' % (self.name)
+            return u'%s [Cover]' % (self.romanized_name)
+        return u'%s' % (self.romanized_name)
 
     def get_absolute_url(self):
         return reverse('track-detail', kwargs={'pk': self.pk})
@@ -272,7 +272,7 @@ class Video(TimeStampedModel):
         ordering = ('-modified',)
 
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u'%s' % (self.romanized_name)
 
     @property
     def parent(self):
