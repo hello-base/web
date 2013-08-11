@@ -4,15 +4,29 @@
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block content %}
 
-{% if object.number %}<span class="number">{{ object.number | ordinal }} Single</span>{% endif %}
-<h1>{{ object.romanized_name }}</h1>
-<p>{{ object.name }}</p>
+<div class="metadata">
+    {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+    {% if object.number %}<span class="number">{{ object.number | ordinal }} Single</span>{% endif %}
+</div>
 
-{% for edition in object.editions.all %}
-    {{ edition.romanized_name }}
-    {{ edition.kind }}
-    {{ edition.released }}
-    {{ edition.catalog_number }}
-{% endfor %}
+<header>
+    <h1>{{ object.romanized_name }}</h1>
+    <p>{{ object.name }}</p>
+</header>
+
+<div class="editions">
+    {{ object.editions.count }} edition{{ object.editions.count | pluralize }}
+    <ul>
+    {% for edition in object.editions.all %}
+        <li>
+            <h2>{{ edition.romanized_name }}</h2>
+            {{ edition.released }}
+            {{ edition.catalog_number }}
+            {{ edition.tracklist }}
+            {{ edition.videolist }}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
 
 {% endblock content %}

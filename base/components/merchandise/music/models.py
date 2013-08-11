@@ -1,18 +1,17 @@
 from datetime import date
 from itertools import chain
 
-# from ohashi.db import models
-# from ...people.constants import CLASSIFICATIONS
-# from .managers import (AlbumManager, EditionManager, SingleManager,
-#     TrackOrderManager, VideoTrackOrderManager)
-
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
 
+from components.people.constants import CLASSIFICATIONS
+
 from ..models import Merchandise
+# from .managers import (AlbumManager, EditionManager, SingleManager,
+#     TrackOrderManager, VideoTrackOrderManager)
 
 
 class Label(models.Model):
@@ -86,27 +85,16 @@ class Single(Base):
 
 
 class Edition(TimeStampedModel):
-    REGULAR_ETC, REGULAR, LIMITED_ETC, LIMITED_A, LIMITED_B, LIMITED_C, \
+    REGULAR, REGULAR_ETC, LIMITED, LIMITED_A, LIMITED_B, LIMITED_C, \
     LIMITED_D, SINGLE_V, EVENT_V, COMMEMORATIVE, DIGITAL = range(1, 12)
     EDITIONS = (
-        ('Regular', (
-            (REGULAR, 'Regular'),
-            (REGULAR_ETC, 'Regular (Other Format)'),
-        )),
-        ('Limited', (
-            (LIMITED_A, 'Limited A'),
-            (LIMITED_B, 'Limited B'),
-            (LIMITED_C, 'Limited C'),
-            (LIMITED_D, 'Limited D'),
-            (LIMITED_ETC, 'Limited (Other Format)'),
-        )),
-        ('Special', (
-            (COMMEMORATIVE, 'Commemorative'),
-            (DIGITAL, 'Digital'),
-            (EVENT_V, 'Event V'),
-            (SINGLE_V, 'Single V')
-        )),
-        (OTHER, 'Other')
+        (REGULAR, 'Regular'),
+        (LIMITED, 'Limited'),
+        (COMMEMORATIVE, 'Commemorative'),
+        (DIGITAL, 'Digital'),
+        (EVENT_V, 'Event V'),
+        (SINGLE_V, 'Single V'),
+        (OTHER, 'Other'),
     )
 
     album = models.ForeignKey(Album, blank=True, null=True, related_name='editions')
@@ -127,7 +115,7 @@ class Edition(TimeStampedModel):
 
     class Meta:
         get_latest_by = 'released'
-        ordering = ('kind',)
+        ordering = ('kind', 'romanized_name')
 
     def __unicode__(self):
         if self.parent:
