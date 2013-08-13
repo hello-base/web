@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
+from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
@@ -85,16 +86,14 @@ class Single(Base):
 
 
 class Edition(TimeStampedModel):
-    REGULAR, REGULAR_ETC, LIMITED, LIMITED_A, LIMITED_B, LIMITED_C, \
-    LIMITED_D, SINGLE_V, EVENT_V, COMMEMORATIVE, DIGITAL = range(1, 12)
-    EDITIONS = (
-        (REGULAR, 'Regular'),
-        (LIMITED, 'Limited'),
-        (COMMEMORATIVE, 'Commemorative'),
-        (DIGITAL, 'Digital'),
-        (EVENT_V, 'Event V'),
-        (SINGLE_V, 'Single V'),
-        (OTHER, 'Other'),
+    EDITIONS = Choices(
+        (1, 'regular', 'Regular'),
+        (2, 'limited', 'Limited'),
+        (3, 'singlev', 'Single V'),
+        (4, 'eventv', 'Event V'),
+        (11, 'commemorative', 'Commemorative'),
+        (12, 'digital', 'Digital'),
+        (99, 'other', 'Other'),
     )
 
     album = models.ForeignKey(Album, blank=True, null=True, related_name='editions')
@@ -103,7 +102,7 @@ class Edition(TimeStampedModel):
     # Metadata
     romanized_name = models.CharField(blank=True)
     name = models.CharField(blank=True)
-    kind = models.IntegerField(choices=EDITIONS, db_index=True, default=REGULAR)
+    kind = models.IntegerField(choices=EDITIONS, db_index=True, default=EDITIONS.regular)
     released = models.DateField(blank=True, db_index=True, null=True)
     catalog_number = models.CharField(blank=True)
     price = models.IntegerField(blank=True, null=True)
@@ -125,7 +124,7 @@ class Edition(TimeStampedModel):
     def save(self, *args, **kwargs):
         if not self.romanized_name:
             self.romanized_name = self.get_kind_display()
-        if self.kind in [self.REGULAR, self.DIGITAL]:
+        if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital]:
             if self.released:
                 self.parent.released = self.released
                 self.parent.save()
@@ -136,14 +135,14 @@ class Edition(TimeStampedModel):
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
-        kwargs = {self.parent.identifier: self.parent, 'kind': self.REGULAR}
+        kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
         return self._default_manager.get(**kwargs)
 
     def _render_release_date(self):
         return self._get_regular_edition().released
 
     def _render_tracklist(self):
-        if self.kind is not self.REGULAR and not self.order.exists():
+        if self.kind is not self.EDITIONS.regular and not self.order.exists():
             return self._get_regular_edition().order.all()
         return self.order.all()
 
@@ -155,7 +154,7 @@ class Edition(TimeStampedModel):
         return filter(None, [self.album, self.single])[0]
 
     def tracklist(self):
-        if self.kind in [self.EVENT_V, self.SINGLE_V]:
+        if self.kind in [self.EDITIONS.eventv, self.EDITIONS.singlev]:
             return self.order.none()
 
         tracklist = self._render_tracklist()
