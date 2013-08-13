@@ -22,8 +22,18 @@
             <h2>{{ edition.romanized_name }}</h2>
             {{ edition.released }}
             {{ edition.catalog_number }}
-            {{ edition.tracklist }}
-            {{ edition.videolist }}
+
+            <ol>
+            {% for position in edition.tracklist %}
+                <li>{{ position.track.romanized_name }} <small>({{ position.track.name }})</small></li>
+            {% endfor %}
+            </ol>
+
+            <ol>
+            {% for video in edition.videos.all %}
+                <li>{{ video.romanized_name }}</li>
+            {% endfor %}
+            </ol>
         </li>
     {% endfor %}
     </ul>
