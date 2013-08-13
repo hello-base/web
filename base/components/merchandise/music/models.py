@@ -217,28 +217,24 @@ class TrackOrder(models.Model):
 
 
 class Video(TimeStampedModel):
-    PV_NORMAL, PV_ALTERNATE, PV_ANOTHER, PV_CLOSE, PV_CLOSE_SOLO, PV_DANCE, \
-    PV_OFFSHOT, PV_SOLO, MO_GENERAL, MO_JACKET, MO_PROMOTIONAL, BACKSTAGE, \
-    PERFORMANCE = range(1, 14)
-    VIDEO_TYPES = (
-        ('Promotional Videos', (
-            (PV_NORMAL, 'Normal'),
-            (PV_ALTERNATE, 'Alternate (Other)'),
-            (PV_ANOTHER, '"Another" Version (Re-Cut)'),
-            (PV_CLOSE, 'Close-up'),
-            (PV_CLOSE_SOLO, 'Close-up (Solo)'),
-            (PV_DANCE, 'Dance Shot'),
-            (PV_OFFSHOT, 'Off Shot'),
-            (PV_SOLO, 'Solo'),
-        )),
-        ('Making Of', (
-            (MO_GENERAL, 'General'),
-            (MO_JACKET, 'Release Jacket'),
-            (MO_PROMOTIONAL, 'Promotional Video'),
-        )),
-        (BACKSTAGE, 'Backstage'),
-        (PERFORMANCE, 'Performance'),
-        (OTHER, 'Other')
+    VIDEO_TYPES = Choices(
+        (1, 'pv_regular', 'Regular'),
+        (2, 'pv_danceshot', 'Dance Shot'),
+        (3, 'pv_closeup', 'Close-up'),
+        (4, 'pv_another', 'Another'),
+        (9, 'pv_other', 'Other (PV)'),
+
+        (11, 'pv_solo_version', 'Solo'),
+        (12, 'pv_solo_closeup', 'Close-up (Solo)'),
+
+        (21, 'making_general', 'Making of'),
+        (22, 'making_jacket', 'Jacket Making'),
+        (23, 'making_pv', 'PV Making'),
+
+        (31, 'bonus_backstage', 'Backstage'),
+        (32, 'bonus_performance', 'Performance'),
+
+        (99, 'other', 'Other'),
     )
 
     album = models.ForeignKey(Album, blank=True, null=True, related_name='videos')
@@ -247,7 +243,7 @@ class Video(TimeStampedModel):
     # Metadata
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
-    kind = models.PositiveSmallIntegerField(choices=VIDEO_TYPES, default=PV_NORMAL)
+    kind = models.PositiveSmallIntegerField(choices=VIDEO_TYPES, default=VIDEO_TYPES.pv_regular)
     released = models.DateField(blank=True, null=True)
 
     # Contents
