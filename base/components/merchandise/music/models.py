@@ -34,17 +34,20 @@ class Base(Merchandise):
         get_latest_by = 'released'
         ordering = ('-released',)
 
+    def __unicode__(self):
+        return u'%s' % (self.romanized_name)
+
     def _render_participants(self):
         groups = self.groups.exclude(classification=CLASSIFICATIONS.supergroup)
         if bool(groups):
-            # Gather all of the individual idols attributed to the single
-            # into a set().
+            # Gather all of the individual idols attributed to the
+            # single into a set().
             idols = set(idol for idol in self.idols.all())
 
-            # Specify an empty set() that will contain all of the members of
-            # the groups attributed to the single. Then, loop through all of
-            # the groups and update the set with all of the
-            # individual members.
+            # Specify an empty set() that will contain all of the
+            # members of the groups attributed to the single. Then,
+            # loop through all of the groups and update the set with
+            # all of the individual members.
             group_members = set()
             for group in groups:
                 group_members.update(idol for idol in group.members.all())
@@ -218,19 +221,23 @@ class TrackOrder(models.Model):
 
 class Video(TimeStampedModel):
     VIDEO_TYPES = Choices(
+        # Promotional Videos.
         (1, 'pv_regular', 'Regular'),
         (2, 'pv_danceshot', 'Dance Shot'),
         (3, 'pv_closeup', 'Close-up'),
         (4, 'pv_another', 'Another'),
         (9, 'pv_other', 'Other (PV)'),
 
+        # Promotional Videos (Solo Versions).
         (11, 'pv_solo_version', 'Solo'),
         (12, 'pv_solo_closeup', 'Close-up (Solo)'),
 
+        # Making ofs.
         (21, 'making_general', 'Making of'),
         (22, 'making_jacket', 'Jacket Making'),
         (23, 'making_pv', 'PV Making'),
 
+        # Bonus Material.
         (31, 'bonus_backstage', 'Backstage'),
         (32, 'bonus_performance', 'Performance'),
 
