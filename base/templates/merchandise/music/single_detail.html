@@ -25,7 +25,14 @@
 
             <ol>
             {% for position in edition.tracklist %}
-                <li>{{ position.track.romanized_name }} <small>({{ position.track.name }})</small></li>
+                <li>
+                    <span class="side {% if position.is_aside %}a{% endif %}{% if position.is_bside %}b{% endif %}">
+                        {% if position.is_aside %}A{% endif %}
+                        {% if position.is_bside %}B{% endif %}
+                    </span>
+                    {{ position.track.romanized_name }} {% if position.is_instrumental %}(Instrumental){% endif %}
+                    <small>({{ position.track.name }})</small>
+                </li>
             {% endfor %}
             </ol>
 
