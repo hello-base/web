@@ -11,7 +11,10 @@ urlpatterns = patterns('',
 
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
+
     url(r'^', include('components.merchandise.goods.urls')),
+    url(r'^', include('components.merchandise.music.urls')),
+    url(r'^', include('components.people.urls')),
 
     # Examples:
     # url(r'^$', 'base.views.home', name='home'),
