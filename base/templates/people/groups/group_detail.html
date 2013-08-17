@@ -1,0 +1,27 @@
+{% extends "site_base.html" %}
+
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block content %}
+
+{% if object.status == "other" %}
+<p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
+{% endif %}
+
+<header>
+    <h1>{{ object.romanized_name }}</h1>
+    <p>{{ object.name }}</p>
+</header>
+
+<ul>
+{% for album in object.albums.all %}
+    <li><a href="{{ album.get_absolute_url }}">{{ album }}</a></li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for single in object.singles.all %}
+    <li><a href="{{ single.get_absolute_url }}">{{ single }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
