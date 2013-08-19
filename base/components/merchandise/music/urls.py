@@ -16,10 +16,7 @@ urlpatterns = patterns('',
         catch=(Http404, ContinueResolving)
     ),
 
-    # url(r'^music/albums/(?P<slug>[-\w]+)/$', name='album-detail', view=AlbumDetailView.as_view()),
     # url(r'^music/albums/$', name='album-browse', view=AlbumBrowseView.as_view()),
-
-    # url(r'^music/singles/(?P<slug>[-\w]+)/$', name='single-detail', view=SingleDetailView.as_view()),
     # url(r'^music/singles/$', name='single-browse', view=SingleBrowseView.as_view()),
 
     # url(r'^music/tracks/(?P<pk>\d+)/$', name='track-detail', view=TrackDetailView.as_view()),
