@@ -54,6 +54,9 @@ class Idol(Person):
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
+    def get_absolute_url(self):
+        return reverse('group-detail', kwargs={'slug': self.slug})
+
 
 class Staff(Person):
     class Meta:
