@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 
 {% block title_override %}Welcome to Hello! Base{% endblock %}
-{% block content %}
+{% block page %}
+
+<header>
+    <h1>Hello! Base</h1>
+    <p class="tagline">Discover everything about <a href="http://helloproject.com">Hello! Project</a>.</p>
+    <p class="service">A service of <a href="http://">Hello! Ranking</a>&mdash;for wota, by wota.</p>
+</header>
 
 <form action="." method="get" accept-charset="utf-8">
     <input type="search">
     <button type="submit">Search</button>
 </form>
 
-{% endblock content %}
+<div class="browse">
+
+</div>
+<div class="examples">
+    E.g. <a href="?">sayashi</a>, <a href="?">musume</a> or <a href="?">wagamama</a>
+</div>
+
+{% endblock page %}
