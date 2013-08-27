@@ -9,6 +9,7 @@ from ohashi.db import models
 
 from .constants import (BLOOD_TYPE, CLASSIFICATIONS, SCOPE, STATUS)
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
+from .utils import calculate_age, calculate_average_age
 
 
 class Person(TimeStampedModel):
@@ -60,6 +61,15 @@ class Idol(Person):
 
     def get_absolute_url(self):
         return reverse('idol-detail', kwargs={'slug': self.slug})
+
+    def age(self):
+        return calculate_age(self.birthdate)
+
+    def latest_album(self):
+        return self.albums.latest()
+
+    def latest_single(self):
+        return self.singles.latest()
 
     def primary_group(self):
         return self.memberships.select_related('group').get(is_primary=True)

@@ -6,11 +6,14 @@
 <header>
     <h1>{{ object.romanized_name }}</h1>
     <p>{{ object.name }}, <span class="nicknames">{{ object.nicknames }}</span></p>
-    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a> since {{ object.primary_group.started | date:"F j, Y"}}
+    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a> since {{ object.primary_group.started|date:"F j, Y" }}
 
-    <span>Born</span> {% firstof object.birthdate|date:"F j, Y" "Unknown" %} {% if object.birthplace_romanized %}in {{ object.birthplace_romanized }}{% endif %}
-    <span>Bloodtype</span> {% firstof object.bloodtype "Unknown" %}
-    <span>Height</span> {% firstof object.height "Unknown" %}
+    <ul>
+        <li><span>Age</span> {% firstof object.age "Unknown" %}</li>
+        <li><span>Born</span> {% firstof object.birthdate|date:"F j, Y" "Unknown" %} {% if object.birthplace_romanized %}in {{ object.birthplace_romanized }}{% endif %}</li>
+        <li><span>Bloodtype</span> {% firstof object.bloodtype "Unknown" %}</li>
+        <li><span>Height</span> {% firstof object.height "Unknown" %}</li>
+    </ul>
 </header>
 
 <ul>
@@ -18,12 +21,48 @@
     <li><strong>{{ object.albums.count }}</strong> albums</li>
 </ul>
 
+{{ object.latest_album }}
+{{ object.latest_single }}
 
 <h2>Singles {{ object.singles.count }}</h2>
-{{ object.singles.all }}
+<ul>
+{% for release in object.singles.all %}
+    <li>
+        <a href="{{ release.get_absolute_url }}">{{ release }}</a>
+
+        {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
+
+        {% if release.participants|length == 1 %}
+            {% for participant in release.participants %}
+                {% if participant != object.primary_group.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                {% if participant == object %}<span class="">Solo work</span>{% endif %}
+            {% endfor %}
+        {% else %}
+            with {% for participant in release.participants %}{% if participant != object %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endif %}{% endfor %}
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
 
 <h2>Albums {{ object.albums.count }}</h2>
-{{ object.albums.all }}
+<ul>
+{% for release in object.albums.all %}
+    <li>
+        <a href="{{ release.get_absolute_url }}">{{ release.romanized_name }}</a>
+        {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
+        Released {{ release.released|date:"F j, Y" }}
+
+        {% if release.participants|length == 1 %}
+            {% for participant in release.participants %}
+                {% if participant != object.primary_group.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                {% if participant == object %}<span class="">Solo work</span>{% endif %}
+            {% endfor %}
+        {% else %}
+            with {% for participant in release.participants %}{% if participant != object %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endif %}{% endfor %}
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
 
 {% print object %}
 
