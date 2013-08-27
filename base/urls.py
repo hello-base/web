@@ -8,6 +8,7 @@ from components.views import SiteView
 
 urlpatterns = patterns('',
     url(r'^$', name='site-home', view=SiteView.as_view()),
+    url(r'^search/', include('haystack.urls')),
 
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),

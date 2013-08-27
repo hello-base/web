@@ -8,6 +8,7 @@ django-braces == 1.2.1
 django-configurations == 0.3
 django-dotenv == 1.2
 django-floppyforms == 1.1
+django-haystack == 2.1.0
 django-model-utils == 1.4.0
 django-multiurl == 1.0.1
 django-storages == 1.1.8
@@ -20,5 +21,7 @@ ohashi == 0.0.11
 Pillow == 2.1.0
 psycogreen == 1.0
 psycopg2 == 2.5.1
+pyelasticsearch == 0.6
 raven == 3.4.1
+requests == 1.2.3
 South == 0.8.1
