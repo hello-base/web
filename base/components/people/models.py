@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.urlresolvers import reverse
 
 from model_utils import FieldTracker
@@ -59,6 +61,9 @@ class Idol(Person):
     def get_absolute_url(self):
         return reverse('idol-detail', kwargs={'slug': self.slug})
 
+    def primary_group(self):
+        return self.memberships.select_related('group').get(is_primary=True)
+
 
 class Staff(Person):
     class Meta:
@@ -100,6 +105,12 @@ class Group(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('group-detail', kwargs={'slug': self.slug})
+
+    def age_in_days(self):
+        if self.ended:
+            return (self.ended - self.started).days
+        return (date.today() - self.started).days
+
 
 
 class Membership(models.Model):

@@ -1,0 +1,30 @@
+{% extends "site_base.html" %}
+
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block content %}
+
+<header>
+    <h1>{{ object.romanized_name }}</h1>
+    <p>{{ object.name }}, <span class="nicknames">{{ object.nicknames }}</span></p>
+    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a> since {{ object.primary_group.started | date:"F j, Y"}}
+
+    <span>Born</span> {% firstof object.birthdate|date:"F j, Y" "Unknown" %} {% if object.birthplace_romanized %}in {{ object.birthplace_romanized }}{% endif %}
+    <span>Bloodtype</span> {% firstof object.bloodtype "Unknown" %}
+    <span>Height</span> {% firstof object.height "Unknown" %}
+</header>
+
+<ul>
+    <li><strong>{{ object.singles.count }}</strong> singles</li>
+    <li><strong>{{ object.albums.count }}</strong> albums</li>
+</ul>
+
+
+<h2>Singles {{ object.singles.count }}</h2>
+{{ object.singles.all }}
+
+<h2>Albums {{ object.albums.count }}</h2>
+{{ object.albums.all }}
+
+{% print object %}
+
+{% endblock content %}
