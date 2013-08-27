@@ -1,3 +1,5 @@
+from django.core.urlresolvers import reverse
+
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
@@ -55,7 +57,7 @@ class Idol(Person):
     note_processed = models.TextField(blank=True, editable=False)
 
     def get_absolute_url(self):
-        return reverse('group-detail', kwargs={'slug': self.slug})
+        return reverse('idol-detail', kwargs={'slug': self.slug})
 
 
 class Staff(Person):
@@ -95,6 +97,9 @@ class Group(TimeStampedModel):
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
+
+    def get_absolute_url(self):
+        return reverse('group-detail', kwargs={'slug': self.slug})
 
 
 class Membership(models.Model):
