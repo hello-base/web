@@ -1,2 +1,3 @@
 {{ object.name }}
 {{ object.romanized_name }}
+{{ object.slug }}
