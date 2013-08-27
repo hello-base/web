@@ -70,7 +70,16 @@ class Production(Settings):
     # Secret Key
     SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
 
-    # Heroku =================================================================
+    # Heroku ===========================================================
+    # Django Haystack (ElasticSearch)
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'URL': os.environ.get('BONSAI_URL', ''),
+            'INDEX_NAME': 'haystack',
+        },
+    }
+
     # Sentry
     if 'SENTRY_DSN' in os.environ:
         # Add raven to the list of installed apps
