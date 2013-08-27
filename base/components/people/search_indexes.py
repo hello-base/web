@@ -17,3 +17,7 @@ class GroupIndex(indexes.SearchIndex, indexes.Indexable):
 
     def get_model(self):
         return Group
+
+
+# TODO: Staff won't be searchable until we actually make that data
+# meaningful; with profile pages or something of that nature.
