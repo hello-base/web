@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 
-{% block header %}
+{% block title %}{% if query %}Results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
+{% block page %}
 
-{% endblock header %}
+{% if query %}
+<h1>Results</h1>
+
+{% for result in page.object_list %}
+    <a href="{{ result.object.get_absolute_url }}">{{ result.object }}</a>
+    {% print result.object %}
+{% empty %}
+    <div class="empty">
+        <h2>OTZ</h2>
+        <p>Sorry, we couldn't find anything for the term "{{ query }}".</p>
+    </div>
+{% endfor %}
+{% endif %}
+
+{% endblock page %}
