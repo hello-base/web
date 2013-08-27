@@ -85,6 +85,7 @@ class Base(Settings):
     PLUGINS = [
         'floppyforms',
         'gunicorn',
+        'haystack',
         'south',
     ]
     ADMINISTRATION = [
