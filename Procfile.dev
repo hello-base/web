@@ -1,3 +1,4 @@
 coffee:  coffee --compile --output static/javascripts --watch base/assets/coffeescript
 compass: compass watch -e production
+search:  elasticsearch -f -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
 web:     python ./manage.py runserver
