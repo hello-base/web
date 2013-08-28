@@ -141,6 +141,47 @@ class Membership(models.Model):
     leadership_started = models.DateField(blank=True, null=True)
     leadership_ended = models.DateField(blank=True, null=True)
 
+    class Meta:
+        get_latest_by = 'started'
+        ordering = ('-is_primary', '-started', '-idol__birthdate')
+        unique_together = ('idol', 'group')
+
+    def __unicode__(self):
+        if self.group.name == 'Soloist':
+            return '%s (Soloist)' % (self.idol)
+        return '%s (member of %s)' % (self.idol, self.group.name)
+
+    def is_active(self):
+        if self.ended is None or self.ended >= date.today():
+            return True
+        return False
+
+    def tenure(self):
+        if self.ended:
+            return timesince.timesince(self.started, now=self.ended)
+        return timesince.timesince(self.started, now=date.today())
+
+    def tenure_in_days(self):
+        if self.ended:
+            return (self.ended - self.started).days
+        return (date.today() - self.started).days
+
+    def days_before_becoming_leader(self):
+        if self.is_leader:
+            return (self.leadership_started - self.group.started).days
+
+    def leadership_tenure(self):
+        if self.is_leader:
+            if self.leadership_ended:
+                return timesince.timesince(self.leadership_started, now=self.leadership_ended)
+            return timesince.timesince(self.leadership_started, now=date.today())
+
+    def leadership_tenure_in_days(self):
+        if self.is_leader:
+            if self.leadership_ended:
+                return (self.leadership_ended - self.leadership_started).days
+            return (date.today() - self.leadership_started).days
+
 
 class Trivia(models.Model):
     idol = models.ForeignKey(Idol, blank=True, null=True)
