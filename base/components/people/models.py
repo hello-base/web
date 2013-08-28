@@ -121,6 +121,11 @@ class Group(TimeStampedModel):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
+    def latest_album(self):
+        return self.albums.latest()
+
+    def latest_single(self):
+        return self.singles.latest()
 
 
 class Membership(models.Model):
@@ -155,11 +160,6 @@ class Membership(models.Model):
         if self.ended is None or self.ended >= date.today():
             return True
         return False
-
-    def tenure(self):
-        if self.ended:
-            return timesince.timesince(self.started, now=self.ended)
-        return timesince.timesince(self.started, now=date.today())
 
     def tenure_in_days(self):
         if self.ended:
