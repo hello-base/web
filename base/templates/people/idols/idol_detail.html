@@ -5,8 +5,14 @@
 
 <header>
     <h1>{{ object.romanized_name }}</h1>
-    <p>{{ object.name }}, <span class="nicknames">{{ object.nicknames }}</span></p>
-    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a> since {{ object.primary_group.started|date:"F j, Y" }}
+    <p>{{ object.name }} <span class="nicknames">(a.k.a., {{ object.nicknames }})</span></p>
+
+    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a>
+    {% if object.primary_group.is_active %}
+        since {{ object.primary_group.started|date:"F j, Y" }}
+    {% else %}
+        from {{ object.primary_group.started|date:"F j, Y" }}&ndash;{{ object.primary_group.ended|date:"F j, Y" }}
+    {% endif %}
 
     <ul>
         <li><span>Age</span> {% firstof object.age "Unknown" %}</li>
@@ -21,14 +27,33 @@
     <li><strong>{{ object.albums.count }}</strong> albums</li>
 </ul>
 
-{{ object.latest_album }}
-{{ object.latest_single }}
+<div class="latest-releases">
+    <h2>{% if object.primary_group.is_active %}Latest Album{% else %}Last Album Participated In{% endif %}</h2>
+    {% with object.latest_album as album %}
+    <a href="{{ album.get_absolute_url }}">{{ album }}</a>
+    Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }}
+    {% endwith %}
+
+    <h2>{% if object.primary_group.is_active %}Latest Single{% else %}Last Single Participated In{% endif %}</h2>
+    {% with object.latest_single as single %}
+    <a href="{{ single.get_absolute_url }}">{{ single }}</a>
+    Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago) in {{ single.editions.count }} edition{{ single.editions.count|pluralize }}
+    {% endwith %}
+</div>
+
+<h2>Memberships {{ object.memberships.count }}</h2>
+{% for membership in object.memberships.all %}
+    {{ membership }}
+    {{ membership.tenure }}
+{% endfor %}
 
 <h2>Singles {{ object.singles.count }}</h2>
 <ul>
 {% for release in object.singles.all %}
     <li>
-        <a href="{{ release.get_absolute_url }}">{{ release }}</a>
+        <a href="{{ release.get_absolute_url }}">{{ release.romanized_name }}</a>
+        {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
+        Released {{ release.released|date:"F j, Y" }} in {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
 
         {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
 
@@ -50,7 +75,7 @@
     <li>
         <a href="{{ release.get_absolute_url }}">{{ release.romanized_name }}</a>
         {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
-        Released {{ release.released|date:"F j, Y" }}
+        Released {{ release.released|date:"F j, Y" }} in {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
 
         {% if release.participants|length == 1 %}
             {% for participant in release.participants %}
