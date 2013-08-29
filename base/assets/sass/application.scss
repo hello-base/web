@@ -1,32 +1,134 @@
-@import "base";
+@import "compass";
+@import "components/bootstrap";
 
-@import "components/forms";
+// @import "components/scaffolding";
+// @import "components/forms";
 
 
-.page > header {
+// .container {
+//     @include container;
+// }
+
+.page > .header {
     background: #222;
     padding-top: 36px; padding-bottom: 18px;
 
     a { color: #fff; }
     h1 {
-        font-size: 18px;
+        font-size: 24px;
+        letter-spacing: -1px;
         margin: 0;
     }
-    sup { color: #999; }
-    .tagline {
-        color: #666;
-        font-size: 12px;
-        margin: 0;
+    sup {
+        color: #999;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
+//     .tagline {
+//         color: #666;
+//         font-size: 12px;
+//         margin: 0;
+//     }
 }
 
-.section-header {
-    border-bottom: 1px solid #eee;
+// .section-header {
+//     border-bottom: 1px solid #eee;
+
+//     h1 {
+//         font-size: 24px;
+//         font-weight: normal;
+//         margin: 0;
+//         padding-top: 24px; padding-bottom: 24px;
+//     }
+// }
+
+
+* {
+    font-family: 'Ideal Sans SSm A', 'Ideal Sans SSm B';
+}
+
+
+//
+
+.section-masthead {
+    background: #313B3D;
+}
+
+.section-photo {
+    background: #666;
+    min-height: 200px;
+}
+
+.metadata-header {
+    background: #fff;
+    margin-top: -30px;
+    border-radius: 4px;
 
     h1 {
         font-size: 24px;
-        font-weight: normal;
-        margin: 0;
-        padding-top: 24px; padding-bottom: 24px;
+        margin-bottom: 0;
     }
+    p {
+        font-size: 13px;
+    }
+    ul {
+        list-style: none;
+    }
+}
+
+.metadata-vitals {
+    @include reset-box-model;
+    @include reset-list-style;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+
+    li {
+        font-size: 16px;
+    }
+    span {
+        display: block;
+
+        color: #999;
+        font-size: 12px;
+        // font-weight: bold;
+    }
+}
+
+.metadata-participation {
+    @include reset-box-model;
+    @include reset-list-style;
+    padding-top: 30px;
+
+    color: #FFF;
+
+    li {
+        padding-bottom: 30px;
+        // padding-left: 60px;
+    }
+    .count {
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: -1px; }
+    .count strong { font-size: 30px; }
+    h2 {
+        margin-top: 10px;
+        padding-top: 10px;
+
+        border-top: 1px solid #3B4648;
+        color: #5F6A6D;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .latest {
+        color: #8C989C;
+        font-size: 12px;
+    }
+    .latest a {
+        color: #FFF;
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
 }

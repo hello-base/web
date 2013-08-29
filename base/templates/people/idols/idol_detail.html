@@ -9,7 +9,7 @@
 <div class="section-masthead">
     <div class="container">
         <div class="metadata-header row">
-            <div class="metadata-photo"><img src="http://placekitten.com/g/200/200" class="img-circle img-responsive"></div>
+            <div class="metadata-photo"><img src="http://placekitten.com/g/100/100" class="img-circle img-responsive"></div>
             <div class="metadata-names">
                 <h1>{{ object.romanized_name }}</h1>
                 <p>{{ object.name }} {# <span class="nicknames">(a.k.a., {{ object.nicknames }})</span> #}</p>
@@ -20,7 +20,7 @@
             <ul class="metadata-vitals">
                 <li>{% firstof object.age "Unknown" %} <span>Age</span></li>
                 <li>{% firstof object.birthdate|date:"F j, Y" "Unknown" %} <span>Birthday</span></li>
-                {% if object.birthplace_romanized %}<li>{{ object.birthplace_romanized }} <span>Birthplace</span></li>{% endif %}
+                {# {% if object.birthplace_romanized %}<li>{{ object.birthplace_romanized }} <span>Birthplace</span></li>{% endif %} #}
                 <li>{% firstof object.bloodtype "Unknown" %} <span>Bloodtype</span></li>
                 <li>{% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span>Height</span></li>
             </ul>
@@ -31,12 +31,12 @@
                     <span class="count"><strong>{{ object.memberships.count }}</strong> groups</span>
                     <h2>Primary Group</h2>
                     <div class="latest">
-                    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a>
-                    {% if object.primary_group.is_active %}
-                        since {{ object.primary_group.started|date:"F j, Y" }}
-                    {% else %}
-                        from {{ object.primary_group.started|date:"F j, Y" }}&ndash;{{ object.primary_group.ended|date:"F j, Y" }}
-                    {% endif %}
+                        <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a>
+                        {% if object.primary_group.is_active %}
+                            since {{ object.primary_group.started|date:"F j, Y" }}
+                        {% else %}
+                            from {{ object.primary_group.started|date:"F j, Y" }}&ndash;{{ object.primary_group.ended|date:"F j, Y" }}
+                        {% endif %}
                     </div>
                 </li>
                 <li class="col-md-4">
