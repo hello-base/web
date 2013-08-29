@@ -11,7 +11,7 @@
     <h1>{{ object.romanized_name }}</h1>
     <p>{{ object.name }}</p>
 
-    <div class="tenure">{{ object.started | date:"F j, Y" }}&ndash;{% if object.ended %}{{ object.ended }}{% else %}Present{% endif %} <span class="tenure-in-days">{{ object.age_in_days }} days</div>
+    <div class="date tenure">{{ object.started | date:"F j, Y" }}&ndash;{% if object.ended %}{{ object.ended }}{% else %}Present{% endif %} <span class="tenure-in-days">{{ object.age_in_days }} days</div>
 </header>
 
 <div class="latest-releases">

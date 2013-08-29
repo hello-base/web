@@ -3,42 +3,65 @@
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block content %}
 
-<header>
-    <h1>{{ object.romanized_name }}</h1>
-    <p>{{ object.name }} <span class="nicknames">(a.k.a., {{ object.nicknames }})</span></p>
+<div class="section-photo">
 
-    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a>
-    {% if object.primary_group.is_active %}
-        since {{ object.primary_group.started|date:"F j, Y" }}
-    {% else %}
-        from {{ object.primary_group.started|date:"F j, Y" }}&ndash;{{ object.primary_group.ended|date:"F j, Y" }}
-    {% endif %}
+</div>
+<div class="section-masthead">
+    <div class="container">
+        <div class="metadata-header row">
+            <div class="metadata-photo"><img src="http://placekitten.com/g/200/200" class="img-circle img-responsive"></div>
+            <div class="metadata-names">
+                <h1>{{ object.romanized_name }}</h1>
+                <p>{{ object.name }} {# <span class="nicknames">(a.k.a., {{ object.nicknames }})</span> #}</p>
+            </div>
+            <div class="metadata-dates">
+            </div>
 
-    <ul>
-        <li><span>Age</span> {% firstof object.age "Unknown" %}</li>
-        <li><span>Born</span> {% firstof object.birthdate|date:"F j, Y" "Unknown" %} {% if object.birthplace_romanized %}in {{ object.birthplace_romanized }}{% endif %}</li>
-        <li><span>Bloodtype</span> {% firstof object.bloodtype "Unknown" %}</li>
-        <li><span>Height</span> {% firstof object.height "Unknown" %}</li>
-    </ul>
-</header>
-
-<ul>
-    <li><strong>{{ object.singles.count }}</strong> singles</li>
-    <li><strong>{{ object.albums.count }}</strong> albums</li>
-</ul>
-
-<div class="latest-releases">
-    <h2>{% if object.primary_group.is_active %}Latest Album{% else %}Last Album Participated In{% endif %}</h2>
-    {% with object.latest_album as album %}
-    <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-    Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }}
-    {% endwith %}
-
-    <h2>{% if object.primary_group.is_active %}Latest Single{% else %}Last Single Participated In{% endif %}</h2>
-    {% with object.latest_single as single %}
-    <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-    Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago) in {{ single.editions.count }} edition{{ single.editions.count|pluralize }}
-    {% endwith %}
+            <ul class="metadata-vitals">
+                <li>{% firstof object.age "Unknown" %} <span>Age</span></li>
+                <li>{% firstof object.birthdate|date:"F j, Y" "Unknown" %} <span>Birthday</span></li>
+                {% if object.birthplace_romanized %}<li>{{ object.birthplace_romanized }} <span>Birthplace</span></li>{% endif %}
+                <li>{% firstof object.bloodtype "Unknown" %} <span>Bloodtype</span></li>
+                <li>{% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span>Height</span></li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul class="metadata-participation clearfix">
+                <li class="col-md-4">
+                    <span class="count"><strong>{{ object.memberships.count }}</strong> groups</span>
+                    <h2>Primary Group</h2>
+                    <div class="latest">
+                    <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a>
+                    {% if object.primary_group.is_active %}
+                        since {{ object.primary_group.started|date:"F j, Y" }}
+                    {% else %}
+                        from {{ object.primary_group.started|date:"F j, Y" }}&ndash;{{ object.primary_group.ended|date:"F j, Y" }}
+                    {% endif %}
+                    </div>
+                </li>
+                <li class="col-md-4">
+                    <span class="count"><strong>{{ object.singles.count }}</strong> singles</span>
+                    <h2>{% if object.primary_group.is_active %}Latest Single{% else %}Last Single{% endif %}</h2>
+                    <div class="latest">
+                        {% with object.latest_single as single %}
+                        <a href="{{ single.get_absolute_url }}">{{ single }}</a>
+                        Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago) in {{ single.editions.count }} edition{{ single.editions.count|pluralize }}
+                        {% endwith %}
+                    </div>
+                </li>
+                <li class="col-md-4">
+                    <span class="count"><strong>{{ object.albums.count }}</strong> albums</span>
+                    <h2>{% if object.primary_group.is_active %}Latest Album{% else %}Last Album{% endif %}</h2>
+                    <div class="latest">
+                        {% with object.latest_album as album %}
+                        <a href="{{ album.get_absolute_url }}">{{ album }}</a>
+                        Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }}
+                        {% endwith %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <h2>Memberships {{ object.memberships.count }}</h2>
@@ -88,7 +111,5 @@
     </li>
 {% endfor %}
 </ul>
-
-{% print object %}
 
 {% endblock content %}

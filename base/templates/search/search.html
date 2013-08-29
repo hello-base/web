@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "site_base.html" %}
 
 {% block title %}{% if query %}Results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
-{% block page %}
+{% block content %}
 
 {% if query %}
 <h1>Results</h1>
@@ -17,4 +17,4 @@
 {% endfor %}
 {% endif %}
 
-{% endblock page %}
+{% endblock content %}

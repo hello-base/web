@@ -12,6 +12,8 @@
 <header>
     <h1>{{ object.romanized_name }}</h1>
     <p>{{ object.name }}</p>
+
+    <div class="date">{{ object.released|date:"F j, Y" }}</div>
 </header>
 
 <div class="editions">
