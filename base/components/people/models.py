@@ -71,7 +71,11 @@ class Idol(Person):
     def latest_single(self):
         return self.singles.latest()
 
-    def primary_group(self):
+    def primary_membership(self):
+        """
+        Returns the Membership marked `is_primary` for the given idol.
+
+        """
         return self.memberships.select_related('group').get(is_primary=True)
 
 

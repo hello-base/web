@@ -11,12 +11,10 @@
         <div class="metadata-header row">
             <div class="metadata-photo"><img src="http://placekitten.com/g/100/100" class="img-circle img-responsive"></div>
             <div class="metadata-names">
-                <h1>{{ object.romanized_name }}</h1>
-                <p>{{ object.name }} {# <span class="nicknames">(a.k.a., {{ object.nicknames }})</span> #}</p>
-            </div>
-            <div class="metadata-dates">
-            </div>
-
+                <h1>{{ object.romanized_name }} <span class="kanji">{{ object.name }}</span></h1>
+                <p> <span class="nicknames">(a.k.a., {{ object.nicknames }})</span></p>
+                <p class="standing">{{ object.standing }} of {{ object.primary_membership }}</p>
+            </div><!-- .metadata-names -->
             <ul class="metadata-vitals">
                 <li>{% firstof object.age "Unknown" %} <span>Age</span></li>
                 <li>{% firstof object.birthdate|date:"F j, Y" "Unknown" %} <span>Birthday</span></li>
@@ -31,17 +29,17 @@
                     <span class="count"><strong>{{ object.memberships.count }}</strong> groups</span>
                     <h2>Primary Group</h2>
                     <div class="latest">
-                        <a href="{{ object.primary_group.group.get_absolute_url }}">{{ object.primary_group.group }}</a>
-                        {% if object.primary_group.is_active %}
-                            since {{ object.primary_group.started|date:"F j, Y" }}
+                        <a href="{{ object.primary_membership.group.get_absolute_url }}">{{ object.primary_membership.group }}</a>
+                        {% if object.primary_membership.is_active %}
+                            since {{ object.primary_membership.started|date:"F j, Y" }}
                         {% else %}
-                            from {{ object.primary_group.started|date:"F j, Y" }}&ndash;{{ object.primary_group.ended|date:"F j, Y" }}
+                            from {{ object.primary_membership.started|date:"F j, Y" }}&ndash;{{ object.primary_membership.ended|date:"F j, Y" }}
                         {% endif %}
                     </div>
                 </li>
                 <li class="col-md-4">
                     <span class="count"><strong>{{ object.singles.count }}</strong> singles</span>
-                    <h2>{% if object.primary_group.is_active %}Latest Single{% else %}Last Single{% endif %}</h2>
+                    <h2>{% if object.primary_membership.is_active %}Latest Single{% else %}Last Single{% endif %}</h2>
                     <div class="latest">
                         {% with object.latest_single as single %}
                         <a href="{{ single.get_absolute_url }}">{{ single }}</a>
@@ -51,7 +49,7 @@
                 </li>
                 <li class="col-md-4">
                     <span class="count"><strong>{{ object.albums.count }}</strong> albums</span>
-                    <h2>{% if object.primary_group.is_active %}Latest Album{% else %}Last Album{% endif %}</h2>
+                    <h2>{% if object.primary_membership.is_active %}Latest Album{% else %}Last Album{% endif %}</h2>
                     <div class="latest">
                         {% with object.latest_album as album %}
                         <a href="{{ album.get_absolute_url }}">{{ album }}</a>
@@ -78,11 +76,9 @@
         {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
         Released {{ release.released|date:"F j, Y" }} in {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
 
-        {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
-
         {% if release.participants|length == 1 %}
             {% for participant in release.participants %}
-                {% if participant != object.primary_group.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                {% if participant != object.primary_membership.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
                 {% if participant == object %}<span class="">Solo work</span>{% endif %}
             {% endfor %}
         {% else %}
@@ -102,7 +98,7 @@
 
         {% if release.participants|length == 1 %}
             {% for participant in release.participants %}
-                {% if participant != object.primary_group.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                {% if participant != object.primary_membership.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
                 {% if participant == object %}<span class="">Solo work</span>{% endif %}
             {% endfor %}
         {% else %}
@@ -111,5 +107,8 @@
     </li>
 {% endfor %}
 </ul>
+</div>
+
+{% print object %}
 
 {% endblock content %}
