@@ -1,119 +1,103 @@
-@import "compass";
-@import "components/bootstrap";
+// @import "components/bootstrap";
 
-// @import "components/scaffolding";
-// @import "components/forms";
+@import "components/scaffolding";
+// // @import "components/forms";
 
-
-// .container {
-//     @include container;
-// }
-
-.page > .header {
-    background: #222;
-    padding-top: 36px; padding-bottom: 18px;
-
-    a { color: #fff; }
-    h1 {
-        font-size: 24px;
-        letter-spacing: -1px;
-        margin: 0;
-    }
-    sup {
-        color: #999;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-//     .tagline {
-//         color: #666;
-//         font-size: 12px;
-//         margin: 0;
-//     }
-}
-
-// .section-header {
-//     border-bottom: 1px solid #eee;
-
-//     h1 {
-//         font-size: 24px;
-//         font-weight: normal;
-//         margin: 0;
-//         padding-top: 24px; padding-bottom: 24px;
-//     }
-// }
-
-
-* {
+.content * {
+    // color: #999 !important;
+    // border-color: #ccc !important;
     font-family: 'Ideal Sans SSm A', 'Ideal Sans SSm B';
+    // font-size: 13px !important;
 }
 
+.header {
+    background-color: #8FCDD4;
+    a { color: #FFF !important; }
+}
 
-//
+.profile {
+    ul {
+        @include reset-box-model;
+        @include reset-list-style;
+    }
+}
 
 .section-masthead {
-    background: #313B3D;
+    background-color: #222;
+    background-position: center center;
+    padding-top: 2em;
 }
 
-.section-photo {
-    background: #666;
-    min-height: 200px;
-}
+.metadata-names {
+    @include push(3);
+    padding-bottom: 1em;
 
-.metadata-header {
-    background: #fff;
-    margin-top: -30px;
-    border-radius: 4px;
+    h1, p { margin: 0; }
+    .romanized-name {
+        margin-bottom: 2px;
 
-    h1 {
-        font-size: 24px;
-        margin-bottom: 0;
-    }
-    p {
-        font-size: 13px;
-    }
-    ul {
-        list-style: none;
-    }
-}
-
-.metadata-vitals {
-    @include reset-box-model;
-    @include reset-list-style;
-    border-top: 1px solid #ccc;
-    padding: 10px;
-
-    li {
-        font-size: 16px;
-    }
-    span {
+        color: rgba(#FFF, 0.9) !important;
+        font-size: 30px;
+        font-weight: 300;
+        text-transform: uppercase; }
+    .name {
+        color: rgba(#FFF, 0.5);
         display: block;
+        font-size: 12px; }
+    .standing {
+        color: #73C0C9 !important;
+        font-size: 13px;
+        font-style: italic; }
+}
 
-        color: #999;
-        font-size: 12px;
-        // font-weight: bold;
+.section-vitals {
+    @include span-columns(3);
+    margin-top: -90px;
+    background: #FFF;
+
+    .metadata-vitals {
+        font-size: 13px;
+        padding: 0.5em 1em;
+
+        li {
+            padding-top: 0.5em; padding-bottom: 0.5em;
+
+            border-bottom: 1px solid #F7F7F7;
+            font-weight: 700;
+            text-align: right;
+        }
+        li:last-child { border-bottom: none; }
+        span {
+            float: left;
+            font-weight: 300;
+        }
     }
+}
+
+.section-participation {
+    @include span-columns(9 omega);
 }
 
 .metadata-participation {
     @include reset-box-model;
     @include reset-list-style;
-    padding-top: 30px;
 
     color: #FFF;
 
     li {
-        padding-bottom: 30px;
-        // padding-left: 60px;
+        @include clearfix;
+        border-top: 1px solid #3B4648;
     }
     .count {
-        font-size: 24px;
+        @include span-columns(3, 9);
+        font-size: 18px;
         font-weight: 300;
         letter-spacing: -1px; }
-    .count strong { font-size: 30px; }
+    .count strong { font-size: 24px; }
     h2 {
-        margin-top: 10px;
-        padding-top: 10px;
+        @include span-columns(2, 9);
+        margin-top: 0;
 
-        border-top: 1px solid #3B4648;
         color: #5F6A6D;
         font-size: 11px;
         font-weight: 600;
@@ -121,14 +105,20 @@
     }
 
     .latest {
+        @include span-columns(4 omega, 9);
         color: #8C989C;
         font-size: 12px;
-    }
-    .latest a {
-        color: #FFF;
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-    }
 
+        a {
+            color: #FFF;
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+        }
+    }
 }
+
+.section-metadata {
+    background: #313B3D;
+}
+

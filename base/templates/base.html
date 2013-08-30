@@ -4,11 +4,10 @@
 <html class="no-js" lang="{{ LANGUAGE_CODE|slice:"2" }}">
 <head>
 <title>{% block title_override %}{% block title %}{% endblock %} &middot; Hello! Base{% endblock %}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="//cloud.typography.com/7547452/745842/css/fonts.css">
 <link rel="stylesheet" href="{% static "stylesheets/application.css" %}">
 </head>
-<body id="hello-base" class="path-{{ request.path|slugify }}" data-path="{{ request.path }}">
+<body id="hello-base" class="path-{{ request.path|slugify }} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
 {% block body %}
 <div class="wrapper">
 {% block wrapper %}
