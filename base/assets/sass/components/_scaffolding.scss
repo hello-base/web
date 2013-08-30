@@ -1,0 +1,52 @@
+// Import our required basic modules: Compass and Normalize.
+@import "normalize";
+@import "compass";
+@import "susy";
+
+// Import our internal components.
+@import "components/variables";
+@import "components/mixins";
+
+// Establish a baseline rhythym using Compass' establish-baseline();
+// mixin. This takes the value of $base-font-size into account in order
+// to establish a proper line-height, etc.
+@include establish-baseline();
+
+// Force the box model to use the saner border-box calculation.
+*, *:before, *:after {
+    @include box-sizing(border-box);
+    text-rendering: optimizeLegibility;
+}
+
+html { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+a {
+    // color: $link-color;
+    text-decoration: none;
+
+    // &:hover, &:focus {
+    //     color: $link-hover-color;
+    //     text-decoration: underline;
+    // }
+
+    // &:focus {
+    //     @include tab-focus();
+    // }
+}
+
+
+.container {
+    @include container;
+    @include susy-grid-background;
+}
+
+// Responsive images (ensure images don't scale beyond their parents).
+.img-responsive {
+  @include img-responsive();
+}

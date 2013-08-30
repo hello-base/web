@@ -1,0 +1,29 @@
+// Let's start out with some variables. Here, we determine what kind of
+// CSS we want Compass to write, because we don't want EVERYTHING.
+$legacy-support-for-ie: false; // Turns off hack support for IE6 & 7.
+$support-for-original-webkit-gradients: false; // Because Mac users upgrade.
+$experimental-support-for-opera: false; // Fuck Opera.
+$experimental-support-for-khtml: false; // What?
+
+// Susy variables.
+// These are customized from the default values of 4em and 1em
+// to allow for a bit more breathing room between the columns.
+$total-columns: 12;
+$column-width: 55px;
+$gutter-width: 30px;
+$grid-padding: $gutter-width;
+
+// Typographic variables.
+$font-family-sans-serif: 'Ideal Sans SSm A', 'Ideal Sans SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+$font-family-base: $font-family-sans-serif !default;
+
+$font-size-base:          14px !default;
+$font-size-large:         ceil($font-size-base * 1.25) !default; // ~18px
+$font-size-small:         ceil($font-size-base * 0.85) !default; // ~12px
+
+$line-height-base:        1.428571429 !default; // 20/14
+$line-height-computed:    floor($font-size-base * $line-height-base) !default; // ~20px
+
+$headings-font-family:    $font-family-base !default;
+$headings-font-weight:    500 !default;
+$headings-line-height:    1.1 !default;
