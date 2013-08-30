@@ -3,15 +3,18 @@
 {% block page %}
 <header class="header">
     <div class="container">
-        <div class="row">
-            <h1 class="col-md-2">{% block site-name %}<a href="/"><strong>hello!</strong> base<sup>&#976;</sup></a>{% endblock %}</h1>
-            {# <p class="tagline">{% block site-tagline %}A service for the <strong>Hello! Ranking</strong> community.{% endblock %}</p> #}
-
-            <form action="{% url "haystack_search" %}" class="col-md-10" method="get" accept-charset="utf-8">
-                <input type="search" autocapitalize="off" id="id_q" name="q" placeholder="What are you looking for?">
-            </form>
-        </div>
+        <a href="{% url "site-home" %}" class="header-logo-wordmark">
+            <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+        </a>
     </div>
+
+    {# <h1 class="col-md-2">{% block site-name %}<a href="/"><strong>hello!</strong> base<sup>&#976;</sup></a>{% endblock %}</h1> #}
+    {# <p class="tagline">{% block site-tagline %}A service for the <strong>Hello! Ranking</strong> community.{% endblock %}</p> #}
+    {% comment %}
+    <form action="{% url "haystack_search" %}" class="col-md-10" method="get" accept-charset="utf-8">
+        <input type="text" autocapitalize="off" id="id_q" name="q" placeholder="What are you looking for?">
+    </form>
+    {% endcomment %}
 </header>
 <section class="content" role="content">
 {% block content %}{% endblock %}

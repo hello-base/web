@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'hicons';
+  src: url('/static/fonts/hicons.eot');
+  src: url('/static/fonts/hicons.eot?#iefix') format('embedded-opentype'),
+       url('/static/fonts/hicons.woff') format('woff'),
+       url('/static/fonts/hicons.ttf') format('truetype'),
+       url('/static/fonts/hicons.svg#hicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hicon {
+  font: normal normal 16px hicons;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hicon-logo-base:before { content: '\f002'} /*  */
+.hicon-logo-hello:before { content: '\f001'} /*  */
+.hicon-logo-ranking:before { content: '\f000'} /*  */
