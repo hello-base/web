@@ -9,8 +9,8 @@
     <p class="service">A service of <a href="http://">Hello! Ranking</a>&mdash;for wota, by wota.</p>
 </header>
 
-<form action="{% url "haystack_search" %}" method="get" accept-charset="utf-8">
-    <input type="search" name="q" id="id_q">
+<form accept-charset="utf-8" action="{% url "haystack_search" %}" class="home-search-form" method="get">
+    <input type="text" autocapitalize="off" id="id_q" name="q" placeholder="What are you looking for?">
     <button type="submit">Search</button>
 </form>
 
