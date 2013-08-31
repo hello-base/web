@@ -156,9 +156,9 @@ class Membership(models.Model):
         unique_together = ('idol', 'group')
 
     def __unicode__(self):
-        if self.group.name == 'Soloist':
+        if self.group.romanized_name == 'Soloist':
             return '%s (Soloist)' % (self.idol)
-        return '%s (member of %s)' % (self.idol, self.group.name)
+        return '%s (member of %s)' % (self.idol, self.group.romanized_name)
 
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
@@ -185,6 +185,27 @@ class Membership(models.Model):
             if self.leadership_ended:
                 return (self.leadership_ended - self.leadership_started).days
             return (date.today() - self.leadership_started).days
+
+    @property
+    def standing(self):
+        """
+        A convenience method that returns a string of a member's
+        standing in the given group (e.g., member, former member, etc.).
+
+        """
+        if self.group.romanized_name == 'Soloist':
+            if self.ended:
+                return 'Former soloist'
+            return 'Soloist'
+
+        if self.is_leader:
+            if self.leadership_ended:
+                return 'Former leader'
+            return 'Current leader'
+        else:
+            if self.ended:
+                return 'Former member'
+            return 'Member'
 
 
 class Trivia(models.Model):
