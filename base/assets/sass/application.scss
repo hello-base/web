@@ -1,7 +1,7 @@
-// @import "components/bootstrap";
-
 @import "components/scaffolding";
-// // @import "components/forms";
+@import "components/type";
+@import "components/hicons";
+// @import "components/forms";
 
 .content * {
     // color: #999 !important;
@@ -11,8 +11,23 @@
 }
 
 .header {
-    background-color: #8FCDD4;
+    background-color: #F7F7F7;
     a { color: #FFF !important; }
+
+    .container {
+        background-color: #FFF;
+        padding-top: 1em; padding-bottom: 1em;
+    }
+}
+.header-logo-wordmark {
+
+    .hicon-logo-hello,
+    .hicon-logo-base {
+        color: #333;
+        font-size: 26px;
+        padding-top: 2px;
+    }
+    .hicon-logo-base { padding-left: 2px; }
 }
 
 .profile {
@@ -23,7 +38,7 @@
 }
 
 .section-masthead {
-    background-color: #222;
+    background-color: #252525;
     background-position: center center;
     padding-top: 2em;
 }
@@ -34,8 +49,6 @@
 
     h1, p { margin: 0; }
     .romanized-name {
-        margin-bottom: 2px;
-
         color: rgba(#FFF, 0.9) !important;
         font-size: 30px;
         font-weight: 300;
@@ -50,6 +63,7 @@
         font-style: italic; }
 }
 
+//
 .section-vitals {
     @include span-columns(3);
     margin-top: -90px;
@@ -68,6 +82,7 @@
         }
         li:last-child { border-bottom: none; }
         span {
+            color: rgba(#000, 0.5);
             float: left;
             font-weight: 300;
         }
@@ -81,44 +96,60 @@
 .metadata-participation {
     @include reset-box-model;
     @include reset-list-style;
-
     color: #FFF;
 
     li {
         @include clearfix;
-        border-top: 1px solid #3B4648;
+        padding: 12px 0;
     }
+
     .count {
-        @include span-columns(3, 9);
-        font-size: 18px;
+        @include span-columns(2, 9);
+        position: relative; top: -4px;
+
+        font-size: 24px;
         font-weight: 300;
         letter-spacing: -1px; }
-    .count strong { font-size: 24px; }
+    .count strong { font-size: 30px; }
+
     h2 {
         @include span-columns(2, 9);
-        margin-top: 0;
+        margin-top: 2px;
 
         color: #5F6A6D;
         font-size: 11px;
         font-weight: 600;
+        text-align: right;
         text-transform: uppercase;
     }
 
+    .latest-image {
+        @include span-columns(1, 9);
+    }
+
     .latest {
-        @include span-columns(4 omega, 9);
+        @include span-columns(3, 9);
         color: #8C989C;
         font-size: 12px;
-
-        a {
-            color: #FFF;
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-        }
     }
+    .latest a {
+        color: #FFF;
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
 }
 
 .section-metadata {
     background: #313B3D;
+    border-top: 1px solid #3B4648;
 }
 
+.section-title {
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin: 1em 0;
+}
