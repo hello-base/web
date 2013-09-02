@@ -7,12 +7,12 @@ from .base import Base as Settings
 class Production(Settings):
     DEBUG = True
 
-    # TEMPLATE_LOADERS = (
-    #     ('django.template.loaders.cached.Loader', (
-    #         'django.template.loaders.filesystem.Loader',
-    #         'django.template.loaders.app_directories.Loader',
-    #     )),
-    # )
+    TEMPLATE_LOADERS = (
+        ('django.template.loaders.cached.Loader', (
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        )),
+    )
 
     # # Middleware
     # MIDDLEWARE_CLASSES = (
@@ -36,26 +36,59 @@ class Production(Settings):
     # Logging
     LOGGING = {
         'version': 1,
-        'disable_existing_loggers': False,
-        'filters': {
-            'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse'
-            }
+        'disable_existing_loggers': True,
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['sentry'],
         },
-        'handlers': {
-            'console': {
-                'level':'INFO',
-                'class':'logging.StreamHandler',
-                'stream': sys.stdout
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
             },
         },
+        'handlers': {
+            'sentry': {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose'
+            }
+        },
         'loggers': {
-            'django': {
-                'handlers': ['console'],
+            'analytics': {
+                'handlers': ['console', 'sentry'],
                 'level': 'DEBUG',
                 'propagate': True,
             },
-        }
+            'django': {
+                'level': 'INFO',
+                'handlers': ['sentry'],
+                'propagate': True,
+            },
+            'django.db.backends': {
+                'level': 'ERROR',
+                'handlers': ['sentry'],
+                'propagate': False,
+            },
+            'django.request': {
+                'level': 'ERROR',
+                'handlers': ['sentry'],
+                'propagate': False,
+            },
+            'raven': {
+                'level': 'DEBUG',
+                'handlers': ['sentry'],
+                'propagate': False,
+            },
+            'sentry.errors': {
+                'level': 'DEBUG',
+                'handlers': ['sentry'],
+                'propagate': False,
+            },
+        },
     }
 
     # File / Media / Static Media Settings
@@ -66,7 +99,9 @@ class Production(Settings):
     STATIC_S3_PATH = 'meishi/static'
     STATIC_ROOT = '/%s/' % STATIC_S3_PATH
     STATIC_URL = '//%s.s3.amazonaws.com/meishi/static/' % Settings.AWS_STORAGE_BUCKET_NAME
-    STATICFILES_DIRS = (os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),)
+    STATICFILES_DIRS = (
+        os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
+    )
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 
     # # Django Secure

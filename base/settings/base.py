@@ -93,64 +93,6 @@ class Base(Settings):
     ]
     INSTALLED_APPS = DJANGO_APPLICATIONS + COMPONENTS + PLUGINS + ADMINISTRATION
 
-    # Logging
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': True,
-        'root': {
-            'level': 'WARNING',
-            'handlers': ['sentry'],
-        },
-        'formatters': {
-            'verbose': {
-                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-            },
-        },
-        'handlers': {
-            'sentry': {
-                'level': 'ERROR',
-                'class': 'raven.contrib.django.handlers.SentryHandler',
-            },
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-                'formatter': 'verbose'
-            }
-        },
-        'loggers': {
-            'analytics': {
-                'handlers': ['console', 'sentry'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-            'django': {
-                'level': 'INFO',
-                'handlers': ['sentry'],
-                'propagate': True,
-            },
-            'django.db.backends': {
-                'level': 'ERROR',
-                'handlers': ['sentry'],
-                'propagate': False,
-            },
-            'django.request': {
-                'level': 'ERROR',
-                'handlers': ['sentry'],
-                'propagate': False,
-            },
-            'raven': {
-                'level': 'DEBUG',
-                'handlers': ['sentry'],
-                'propagate': False,
-            },
-            'sentry.errors': {
-                'level': 'DEBUG',
-                'handlers': ['sentry'],
-                'propagate': False,
-            },
-        },
-    }
-
     # Sessions
     SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
