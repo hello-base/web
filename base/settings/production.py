@@ -58,6 +58,17 @@ class Production(Settings):
         }
     }
 
+    # File / Media / Static Media Settings
+    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+    DEFAULT_S3_PATH = 'meishi/media'
+    MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
+    MEDIA_URL = '//%s.s3.amazonaws.com/meishi/media/' % Settings.AWS_STORAGE_BUCKET_NAME
+    STATIC_S3_PATH = 'meishi/static'
+    STATIC_ROOT = '/%s/' % STATIC_S3_PATH
+    STATIC_URL = '//%s.s3.amazonaws.com/meishi/static/' % Settings.AWS_STORAGE_BUCKET_NAME
+    STATICFILES_DIRS = (os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),)
+    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+
     # # Django Secure
     # SECURE_BROWSER_XSS_FILTER = True
     # SECURE_CONTENT_TYPE_NOSNIFF = True

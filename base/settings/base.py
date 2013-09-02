@@ -24,8 +24,8 @@ class Base(Settings):
     TEMPLATE_DEBUG = Settings.DEBUG
 
     # Emails
-    ADMINS = [('Bryan Veloso', 'bryan@hello-ranking.com')]
-    MANAGERS = [('Jennifer Verduzco', 'jen@hello-ranking.com')]
+    ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
+    MANAGERS = [('Jennifer Verduzco', 'jen@hello-base.com')]
 
     # Localization
     LANGUAGE_CODE = 'en-us'
@@ -154,20 +154,11 @@ class Base(Settings):
     # Sessions
     SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
-    # Media Settings
+    # File / Media / Static Media Settings
     MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
     MEDIA_URL = '/media/'
-    MEDIA_STORAGE_BUCKET_NAME = 'hello-ranking-media'
-
-    # Static Media Settings
     STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
     STATIC_URL = '/static/'
-    STATICFILES_DIRS = ()
-    STATICFILES_FINDERS = (
-        'django.contrib.staticfiles.finders.FileSystemFinder',
-        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    )
-    STATIC_STORAGE_BUCKET_NAME = 'hello-ranking-static'
 
     # Django Storages
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
