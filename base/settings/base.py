@@ -111,8 +111,7 @@ class Base(Settings):
     AWS_PRELOAD_METADATA = True
     AWS_QUERYSTRING_AUTH = False
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
-    AWS_STORAGE_BUCKET_NAME = MEDIA_STORAGE_BUCKET_NAME
-    AWS_STATIC_STORAGE_BUCKET_NAME = STATIC_STORAGE_BUCKET_NAME
+    AWS_STORAGE_BUCKET_NAME = 'hello-base'
 
     # South
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
