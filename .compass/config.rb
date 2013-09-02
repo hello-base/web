@@ -2,7 +2,7 @@ require "compass-normalize"
 require "susy"
 
 # Set this to the root of your project when deployed:
-http_path = "/"
+http_path = (environment == :production) ? "//hello-base.s3.amazonaws.com/base/" : "/"
 
 css_dir = "static/stylesheets"
 fonts_dir = "static/fonts"
