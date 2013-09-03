@@ -12,6 +12,7 @@ django-haystack == 2.1.0
 django-model-utils == 1.4.0
 django-multiurl == 1.0.1
 django-s3-folder-storage == 0.1
+django-secure == 1.0
 django-storages == 1.1.8
 django-tastypie == 0.10.0
 gevent == 0.13.8

@@ -86,7 +86,9 @@ class Base(Settings):
         'floppyforms',
         'gunicorn',
         'haystack',
+        's3_folder_storage',
         'south',
+        'storages',
     ]
     ADMINISTRATION = [
         'django.contrib.admin',

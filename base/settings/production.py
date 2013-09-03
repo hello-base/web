@@ -5,8 +5,11 @@ from .base import Base as Settings
 
 
 class Production(Settings):
+    # Default / Debug Settings
     DEBUG = True
+    ALLOWED_HOSTS = ['.hello-base.com', '.hello-base.com.',]
 
+    # Template Settings
     TEMPLATE_LOADERS = (
         ('django.template.loaders.cached.Loader', (
             'django.template.loaders.filesystem.Loader',
@@ -14,24 +17,10 @@ class Production(Settings):
         )),
     )
 
-    # # Middleware
-    # MIDDLEWARE_CLASSES = (
-    #     'django.middleware.gzip.GZipMiddleware',
-    #     'djangosecure.middleware.SecurityMiddleware',
-    #     'django.middleware.common.CommonMiddleware',
-    #     'django.contrib.sessions.middleware.SessionMiddleware',
-    #     'django.middleware.csrf.CsrfViewMiddleware',
-    #     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #     'django.contrib.messages.middleware.MessageMiddleware',
-    #     'social_auth.middleware.SocialAuthExceptionMiddleware',
-    #     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #     'django_hosts.middleware.HostsMiddleware',
-    # )
-
-    # # Installed Applications
-    # INSTALLED_APPS = Settings.INSTALLED_APPS + [
-    #     'djangosecure',
-    # ]
+    # Installed Applications
+    INSTALLED_APPS = Settings.INSTALLED_APPS + [
+        'djangosecure',
+    ]
 
     # Logging
     LOGGING = {
@@ -93,10 +82,10 @@ class Production(Settings):
 
     # File / Media / Static Media Settings
     DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    DEFAULT_S3_PATH = 'meishi/media'
+    DEFAULT_S3_PATH = 'base/media'
     MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
     MEDIA_URL = '//%s.s3.amazonaws.com/base/media/' % Settings.AWS_STORAGE_BUCKET_NAME
-    STATIC_S3_PATH = 'meishi/static'
+    STATIC_S3_PATH = 'base/static'
     STATIC_ROOT = '/%s/' % STATIC_S3_PATH
     STATIC_URL = '//%s.s3.amazonaws.com/base/static/' % Settings.AWS_STORAGE_BUCKET_NAME
     STATICFILES_DIRS = (
