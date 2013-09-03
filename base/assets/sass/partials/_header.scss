@@ -1,0 +1,22 @@
+.header {
+  padding: 12px inherit;
+  background-color: #F7F7F7;
+
+  a {
+    @include link-colors(#FFF);
+    text-decoration: none;
+  }
+  .container {
+    background-color: #FFF;
+    padding-top: 1em; padding-bottom: 1em;
+  }
+}
+.header-logo-wordmark {
+  .hicon-logo-hello,
+  .hicon-logo-base {
+    color: #333;
+    font-size: 26px;
+    padding-top: 2px;
+  }
+  .hicon-logo-base { padding-left: 2px; }
+}

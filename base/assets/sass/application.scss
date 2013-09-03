@@ -3,31 +3,16 @@
 @import "components/hicons";
 // @import "components/forms";
 
+@import "partials/header";
+
+// Boooo.
+@import "hacks";
+
 .content * {
     // color: #999 !important;
     // border-color: #ccc !important;
     font-family: 'Ideal Sans SSm A', 'Ideal Sans SSm B';
     // font-size: 13px !important;
-}
-
-.header {
-    background-color: #F7F7F7;
-    a { color: #FFF !important; }
-
-    .container {
-        background-color: #FFF;
-        padding-top: 1em; padding-bottom: 1em;
-    }
-}
-.header-logo-wordmark {
-
-    .hicon-logo-hello,
-    .hicon-logo-base {
-        color: #333;
-        font-size: 26px;
-        padding-top: 2px;
-    }
-    .hicon-logo-base { padding-left: 2px; }
 }
 
 .profile {
