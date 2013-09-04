@@ -1,5 +1,6 @@
 # Package Requirements for Production
 
+analytics-python == 0.4.2
 dj-database-url == 0.2.2
 dj-redis-url == 0.1.4
 Django == 1.5.1
