@@ -22,6 +22,11 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'base.settings')
 os.environ.setdefault('DJANGO_CONFIGURATION', 'Production')
 
+# Since this module will only be called at startup, initialize our
+# Segment.io analytics library here.
+import analytics
+analytics.init('zkz69wd80a98iprsdgr7')
+
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
