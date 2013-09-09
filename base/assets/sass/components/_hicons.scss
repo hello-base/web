@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'hicons';
-  src: url('/static/fonts/hicons.eot');
-  src: url('/static/fonts/hicons.eot?#iefix') format('embedded-opentype'),
-       url('/static/fonts/hicons.woff') format('woff'),
-       url('/static/fonts/hicons.ttf') format('truetype'),
-       url('/static/fonts/hicons.svg#hicons') format('svg');
+  src: font-url('hicons.eot');
+  src: font-url('hicons.eot?#iefix') format('embedded-opentype'),
+       font-url('hicons.woff') format('woff'),
+       font-url('hicons.ttf') format('truetype'),
+       font-url('hicons.svg#hicons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
