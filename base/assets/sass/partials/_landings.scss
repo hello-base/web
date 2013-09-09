@@ -1,0 +1,22 @@
+.landing {
+
+}
+
+.landing-home {
+
+}
+
+.reasonings {
+  @include reset-list-style;
+
+  h2 {
+    min-height: 38px;
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .reasoning {
+    @include span-columns(4, $total-columns);
+    @include nth-omega(3n);
+  }
+}

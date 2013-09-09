@@ -31,3 +31,12 @@ $line-height-computed: floor($font-size-base * $line-height-base) !default; // ~
 $headings-font-family: $font-family-base !default;
 $headings-font-weight: 600 !default;
 $headings-line-height: 1.1 !default;
+
+// Temporary color variable placement.
+$brand-paleGrey: #eeeeee !default;
+$brand-lightGrey: #999999 !default;
+$brand-medGrey: #666666 !default;
+$brand-darkGrey: #333333 !default;
+
+$brand-blue: #30beda !default;
+$brand-green: #6cc644 !default;

@@ -26,4 +26,23 @@
         </div>
     </div>
 </div>
+
+{% filter typogrify %}
+<ul class="reasonings container">
+    <li class="reasoning">
+        <h2>The most complete Hello! Project database.</h2>
+        <p>From <a href="">Morning Coffee's 8cm</a> CD release to all the performances of <a href="">Morning Musume's recent tour</a>, we aim to have the most complete database on Hello! Project, its idols and groups.</p>
+    </li>
+    <li class="reasoning">
+        <h2>All the Hello! Project statistics you could ever want.</h2>
+        <p>Ever wonder how many singles <a href="{% url "idol-detail" "ishikawa-rika" %}">Charmy</a> took part in? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader?</p>
+    </li>
+    <li class="reasoning">
+        <h2>We take a deeper view into Hello! Project.</h2>
+        <p>We find all sorts of corrlelations to give you an entirely new view of your favorite groups and idols.</p>
+    </li>
+</ul>
+{% endfilter %}
+
+{% include "partials/footer.html" %}
 {% endblock page %}
