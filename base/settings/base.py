@@ -89,6 +89,7 @@ class Base(Settings):
         's3_folder_storage',
         'south',
         'storages',
+        'typogrify',
     ]
     ADMINISTRATION = [
         'django.contrib.admin',

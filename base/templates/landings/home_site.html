@@ -1,9 +1,9 @@
 {% extends "base.html" %}
+{% load typogrify_tags %}
 
 {% block title_override %}(Re)discover Hello! Project &middot; Welcome to Hello! Base{% endblock %}
 {% block body-class %}landing landing-home{% endblock %}
 {% block page %}
-
 <div class="hero">
     <div class="container">
         <a href="{% url "site-home" %}" class="header-logo-wordmark">

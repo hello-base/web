@@ -28,3 +28,4 @@ pyelasticsearch == 0.6
 raven == 3.4.1
 requests == 1.2.3
 South == 0.8.1
+typogrify == 2.0.0
