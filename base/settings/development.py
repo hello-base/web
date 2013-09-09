@@ -9,6 +9,13 @@ class Development(Settings):
     DEBUG = True
     INTERNAL_IPS = ('127.0.0.1',)
 
+    # Database / Caching
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
     # Installed Applications
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
         'debug_toolbar',

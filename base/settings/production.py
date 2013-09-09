@@ -115,6 +115,11 @@ class Production(Settings):
         },
     }
 
+    # OpenRedis
+    CACHES = redisify(default='redis://localhost')
+    SESSION_ENGINE = 'redis_sessions.session'
+    SESSION_REDIS_URL = os.environ.get('OPENREDIS_URL', '')
+
     # Sentry
     if 'SENTRY_DSN' in os.environ:
         # Add raven to the list of installed apps

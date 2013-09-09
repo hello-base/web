@@ -5,7 +5,7 @@ from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
 from configurations import Settings
-from dj_database_url import config as database_config
+from postgresify import postgresify
 
 
 class Base(Settings):
@@ -35,7 +35,7 @@ class Base(Settings):
     USE_TZ = True
 
     # Database / Caching
-    DATABASES = {'default': database_config(default='postgres://localhost')}
+    DATABASES = postgresify()
 
     # Template Settings
     TEMPLATE_CONTEXT_PROCESSORS = (

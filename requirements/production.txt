@@ -1,8 +1,6 @@
 # Package Requirements for Production
 
 analytics-python == 0.4.2
-dj-database-url == 0.2.2
-dj-redis-url == 0.1.4
 Django == 1.5.1
 django-birthday == 0.1.1
 django-braces == 1.2.1
@@ -10,6 +8,8 @@ django-configurations == 0.3
 django-dotenv == 1.2
 django-floppyforms == 1.1
 django-haystack == 2.1.0
+django-heroku-postgresify == 0.3
+django-heroku-redisify == 0.2.1
 django-model-utils == 1.4.0
 django-multiurl == 1.0.1
 django-s3-folder-storage == 0.1
