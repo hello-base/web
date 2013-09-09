@@ -1,6 +1,8 @@
 import os
 import sys
 
+from redisify import redisify
+
 from .base import Base as Settings
 
 
