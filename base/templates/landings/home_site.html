@@ -19,8 +19,11 @@
         <p class="subtext"></p>
 
         <form accept-charset="utf-8" action="{% url "haystack_search" %}" class="hero-search searchbar" method="get">
-            <input type="text" autocapitalize="off" id="id_q" name="q" placeholder="What are you looking for?">
-            <button type="submit">Search</button>
+            <div class="search-container">
+                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking for?">
+                <div class="search-results js-search-results"></div>
+            </div>
+            <button type="submit"><span class="ss-icon ss-search"></span> Search</button>
         </form>
 
         <div class="examples">

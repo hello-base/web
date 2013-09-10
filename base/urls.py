@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from components.views import SiteView
+from components.views import AutocompleteView, SiteView
 
 # Uncomment the next two lines to enable the admin:
 # admin.autodiscover()
@@ -9,6 +9,7 @@ from components.views import SiteView
 urlpatterns = patterns('',
     url(r'^$', name='site-home', view=SiteView.as_view()),
     url(r'^search/', include('haystack.urls')),
+    url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
 
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
