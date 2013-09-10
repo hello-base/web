@@ -84,12 +84,12 @@ class Production(Settings):
 
     # File / Media / Static Media Settings
     DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    DEFAULT_S3_PATH = 'base/media'
+    DEFAULT_S3_PATH = 'media'
     MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
-    MEDIA_URL = '//%s.s3.amazonaws.com/base/media/' % Settings.AWS_STORAGE_BUCKET_NAME
-    STATIC_S3_PATH = 'base/static'
+    MEDIA_URL = '//%s.s3.amazonaws.com/media/' % Settings.AWS_STORAGE_BUCKET_NAME
+    STATIC_S3_PATH = 'static'
     STATIC_ROOT = '/%s/' % STATIC_S3_PATH
-    STATIC_URL = '//%s.s3.amazonaws.com/base/static/' % Settings.AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = '//%s.s3.amazonaws.com/static/' % Settings.AWS_STORAGE_BUCKET_NAME
     STATICFILES_DIRS = (
         os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
     )
