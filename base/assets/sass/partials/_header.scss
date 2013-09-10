@@ -1,4 +1,5 @@
 .header {
+  background-color: #232B2D;
   padding: 12px inherit;
 
   a {
@@ -8,13 +9,16 @@
   .container { }
 }
 .header-logo-wordmark {
+  display: inline-block;
+  vertical-align: -4px;
+
   .hicon-logo-hello,
   .hicon-logo-base {
-    color: #333;
-    font-size: 26px;
+    color: #FFF;
+    font-size: 22px;
     padding-top: 2px;
   }
-  .hicon-logo-base { padding-left: 2px; }
+  .hicon-logo-base { margin-left: 2px; }
 }
 .header-tagline {
   display: inline-block;
@@ -22,5 +26,39 @@
   color: rgba(#FFF, 0.6);
   font-size: 12px;
   font-style: italic;
-  vertical-align: 4px;
+  vertical-align: 0;
+}
+
+.header-search {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 0 2px 2px;
+  position: relative;
+  width: columns(4, 12);
+
+  border-radius: 4px;
+  background-color: #FFF;
+
+  input {
+    padding: 4px 2px 5px 6px;
+    width: 259px; // This is kind of... a hack.
+
+    border: none;
+    font-size: 12px;
+
+    &:focus { outline: none; }
+  }
+  button {
+    position: absolute;
+    top: 2px; right: 2px;
+
+    background-color: $brand-green;
+    border: none;
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .ss-icon { position: relative; top: 2px; }
 }

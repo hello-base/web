@@ -1,18 +1,8 @@
 .landing {}
 .landing-home {
-  .header { background-color: #232B2D; }
-  .header-logo-wordmark {
-    font-size: 22px;
-    font-style: italic;
-    font-weight: bold;
-    letter-spacing: -1px;
-  }
-  .hicon-logo-hello,
-  .hicon-logo-base {
-    color: #FFF;
-    font-size: 22px;
-  }
-  .hicon-logo-hello { margin-left: 2px; }
+  .header {
+    padding-top: 14px; padding-bottom: 14px;
+    background-color: #232B2D; }
 }
 
 .tagline, .hero-search, .examples {
