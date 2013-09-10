@@ -41,7 +41,7 @@
 
   input {
     padding: 4px 2px 5px 6px;
-    width: 259px; // This is kind of... a hack.
+    width: columns(3, 4);
 
     border: none;
     font-size: 12px;
@@ -59,6 +59,7 @@
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
+    width: columns(1, 4);
   }
   .ss-icon { position: relative; top: 2px; }
 }

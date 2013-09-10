@@ -31,13 +31,13 @@
 }
 
 .hero-search {
-  padding: 4px 4px 2px;
+  padding: 4px 4px 3px;
   border-radius: 4px;
   background-color: #FFF;
 
   input {
     @include span-columns(6, 8);
-    padding: 9px 12px 10px;
+    padding: 9px 12px 9px;
 
     border: none;
     font-size: 18px;
@@ -46,7 +46,7 @@
   }
   button {
     @include span-columns(2 omega, 8);
-    padding: 13px 15px 10px;
+    padding: 10px 12px;
 
     background-color: $brand-green;
     border: none;
@@ -55,6 +55,11 @@
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
+
+    .ss-icon {
+      position: relative;
+      top: 2px;
+    }
   }
 }
 
