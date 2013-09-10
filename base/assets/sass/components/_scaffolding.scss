@@ -40,12 +40,7 @@ a {
 }
 
 
-.container {
-    @include container;
-    @include susy-grid-background;
-}
+.container { @include container; }
 
 // Responsive images (ensure images don't scale beyond their parents).
-.img-responsive {
-  @include img-responsive();
-}
+.img-responsive { @include img-responsive(); }

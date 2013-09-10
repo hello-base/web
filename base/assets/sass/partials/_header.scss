@@ -1,15 +1,11 @@
 .header {
   padding: 12px inherit;
-  background-color: #F7F7F7;
 
   a {
     @include link-colors(#FFF);
     text-decoration: none;
   }
-  .container {
-    background-color: #FFF;
-    padding-top: 1em; padding-bottom: 1em;
-  }
+  .container { }
 }
 .header-logo-wordmark {
   .hicon-logo-hello,
@@ -19,4 +15,12 @@
     padding-top: 2px;
   }
   .hicon-logo-base { padding-left: 2px; }
+}
+.header-tagline {
+  display: inline-block;
+  margin-top: 0; margin-bottom: 0; margin-left: 6px;
+  color: rgba(#FFF, 0.6);
+  font-size: 12px;
+  font-style: italic;
+  vertical-align: 4px;
 }
