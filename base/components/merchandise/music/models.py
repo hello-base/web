@@ -139,7 +139,7 @@ class Edition(TimeStampedModel):
 
     def _get_regular_edition(self):
         kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
-        return self._default_manager.get(**kwargs)
+        return self._default_manager.filter(**kwargs)[0]
 
     def _render_release_date(self):
         return self._get_regular_edition().released
