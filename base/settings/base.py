@@ -105,6 +105,9 @@ class Base(Settings):
     STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
     STATIC_URL = '/static/'
 
+    # Django Haystack
+    HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
+
     # Django Storages
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
     AWS_HEADERS = {
