@@ -21,9 +21,9 @@
         <form accept-charset="utf-8" action="{% url "haystack_search" %}" class="hero-search searchbar" method="get">
             <div class="search-container">
                 <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking for?">
-                <div class="search-results js-search-results"></div>
+                <button type="submit"><span class="ss-icon ss-search"></span> Search</button>
             </div>
-            <button type="submit"><span class="ss-icon ss-search"></span> Search</button>
+            <div class="search-results js-search-results"></div>
         </form>
 
         <div class="examples">
@@ -53,7 +53,7 @@
     <li class="reasoning">
         <span class="ss-icon ss-search"></span>
         <h2>We take a deeper view into Hello! Project.</h2>
-        <p>We take our data and find all sorts of corrlelations to give you an entirely new view of your favorite groups and idols.</p>
+        <p>We take our data and find all sorts of correlations to give you an entirely new view of your favorite groups and idols.</p>
     </li>
 </ul>
 {% endfilter %}

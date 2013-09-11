@@ -10,9 +10,9 @@
         <form action="{% url "haystack_search" %}" class="header-search searchbar" method="get" accept-charset="utf-8">
             <div class="search-container">
                 <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking for?" value="{{ request.GET.q }}">
-                <div class="search-results js-search-results"></div>
+                <button type="submit"><span class="ss-icon ss-search"></span></button>
             </div>
-            <button type="submit"><span class="ss-icon ss-search"></span></button>
+            <div class="search-results js-search-results"></div>
         </form>
     </div>
 </header>
