@@ -7,6 +7,7 @@ from .models import Group, Idol
 
 class IdolIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.NgramField(document=True, use_template=True)
+    model = indexes.CharField(model_attr="_meta__verbose_name_plural", faceted=True)
 
     def get_model(self):
         return Idol
@@ -14,6 +15,7 @@ class IdolIndex(indexes.SearchIndex, indexes.Indexable):
 
 class GroupIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.NgramField(document=True, use_template=True)
+    model = indexes.CharField(model_attr="_meta__verbose_name_plural", faceted=True)
 
     def get_model(self):
         return Group
