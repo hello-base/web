@@ -10,7 +10,7 @@
   @include squish(2, 2);
 }
 
-.landing-home .hero {
+.hero {
   padding-top: 24px; padding-bottom: 72px;
 
   background-color: #232B2D;
@@ -30,7 +30,9 @@
   }
 }
 
-.hero-search {
+.hero-search { position: relative; }
+.hero-search .search-container {
+  @include clearfix;
   padding: 4px 4px 3px;
   border-radius: 4px;
   background-color: #FFF;
