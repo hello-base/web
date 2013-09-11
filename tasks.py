@@ -8,6 +8,9 @@ def deploy():
     print('- Run the stylesheets through Compass using "Production" settings...')
     run('compass compile -e production --force -q')
 
+    print('- Compile all of the Handlebars...')
+    run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
+
     print('- Collecting the static files and throwing them on S3...')
     run('python manage.py collectstatic --configuration=Production --noinput -v 0')
 
