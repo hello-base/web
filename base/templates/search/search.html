@@ -20,8 +20,6 @@
             {% if result.content_type == "music.single" %}{% include "search/includes/music/single.html" %}{% endif %}
             {% if result.content_type == "people.idol" %}{% include "search/includes/people/idol.html" %}{% endif %}
             {% if result.content_type == "people.group" %}{% include "search/includes/people/group.html" %}{% endif %}
-            {# <a href="{{ result.object.get_absolute_url }}">{{ result.object }} ({{ result.content_type }})</a> #}
-            {# {% print result.object %} #}
         </li>
     {% empty %}
         <li class="empty">

@@ -1,12 +1,15 @@
 {% with result.object as object %}
 <div class="result-item people idol">
+    <div class="item-icon"><span class="ss-icon ss-mic"></span></div>
     <div class="item-object">
         <a href="{{ object.get_absolute_url }}">
             <span class="item-name">{{ object.name }}{% if object.alias %} ({{ object.alias }}){% endif %}</span>
             <span class="item-romanized-name">{{ object }}{% if object.romanized_alias %} ({{ object.romanized_alias }}){% endif %}</span>
         </a>
         <div class="item-standing">
-            {{ object.primary_membership.standing }}{% if object.primary_membership.group.romanized_name != "Soloist" %} of {{ object.primary_membership.group }}{% endif %}
+            {% with object.primary_membership as primary %}
+            <a href="{{ primary.get_absolute_url }}">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}</a>{% endif %}
+            {% endwith %}
         </div>
     </div>
     <div class="item-meta">

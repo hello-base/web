@@ -1,4 +1,65 @@
+// .result-*
+// Shared set of standard classes that set the basic styles
+// for any and all search results.
+.results {
+  @include reset-box-model;
+  @include reset-list-style;
+}
+.result {
+  padding: 11px 12px 9px;
+  border-bottom: 1px solid $brand-paleGrey;
+  font-size: 13px;
+
+  a {
+    @include link-colors(#333, $brand-green);
+    font-weight: normal;
+  }
+}
+.result-item { @include clearfix; }
+.result-query { border-bottom: none; }
+
+// .path-search
+// Set of classes that handle the main search results page.
+.path-search {
+
+  h1 { font-weight: normal; }
+
+  // .result-* overrides.
+  .result {
+    border: none;
+    border-top: 1px solid $brand-paleGrey;
+    padding: 18px 0;
+  }
+
+  // .item-* overrides.
+  .item-object { @include span-columns(9, 12); }
+  .item-romanized-name {
+    font-size: 16px;
+    font-weight: 300;
+  }
+  .item-name {
+    display: block;
+    color: #ccc;
+    font-size: 12px;
+  }
+  .item-meta {
+    @include span-columns(3 omega, 12);
+    color: $brand-lightGrey;
+    position: relative;
+    top: 20px;
+  }
+  .item-participants,
+  .item-standing { opacity: 0.75; }
+
+  // Hide the header's search field. We're going to make it bigger.
+  .header-search { visibility: hidden; }
+}
+
+// .search-results
+// Set of classes for the container that handles any
+// autocomplete-related search results.
 .search-results {
+  display: none;
   position: absolute;
   top: 32px;
   width: 150%;
@@ -10,25 +71,6 @@
   color: $brand-medGrey;
 
   &.active { display: block; }
-
-  // Results.
-  .result-list {
-    @include reset-box-model;
-    @include reset-list-style;
-  }
-  .result {
-    padding: 11px 12px 9px;
-    border-bottom: 1px solid $brand-paleGrey;
-    font-size: 13px;
-
-    a {
-      @include link-colors(#333, $brand-green);
-      display: block;
-      font-weight: normal;
-    }
-  }
-  .result-item { @include clearfix; }
-  .result-query { border-bottom: none; }
 
   // Items.
   .item-type {
@@ -58,3 +100,10 @@
   .item-object { @include span-columns(7, 8); }
   .item-type { @include span-columns(1 omega, 8); }
 }
+
+// Overrides for specific types of search results.
+// .music .item-romanized-name { font-size: 16px; }
+// .music .item-meta { top: 20px; }
+// .music .identifier { font-weight: bold; text-transform: capitalize; }
+// .people .item-romanized-name { font-size: 18px; }
+// .people .item-meta { top: 24px; }

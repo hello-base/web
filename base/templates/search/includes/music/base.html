@@ -1,6 +1,7 @@
 {% load humanize %}
 {% with result.object as object %}
 <div class="result-item music {{ object.identifier }}">
+    <div class="item-icon"><span class="ss-icon ss-disc"></span></div>
     <div class="item-object">
         <a href="{{ object.get_absolute_url }}">
             <span class="item-name">{{ object.name }}</span>
