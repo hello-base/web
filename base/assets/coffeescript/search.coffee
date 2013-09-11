@@ -9,7 +9,7 @@ class Results
     @$field.on 'keydown.results', @onFieldKeyDown
     @$field.on 'input.results', @onFieldInput
     @$field.on 'focusout.results', @teardown
-    @$field.on 'submit.results', @teardown
+    @$form.on 'submit.results', @teardown
 
     @$template = $ '#js-search-results-template'
     @$results = $ '.js-search-results'
@@ -33,3 +33,7 @@ class Results
       success: (data) =>
         template = Handlebars.templates["autocomplete"]
         @$results.html(template(data))
+
+$(document).on 'click', '.result-item', ->
+  $('.js-search').val("")
+  return
