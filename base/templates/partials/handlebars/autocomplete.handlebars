@@ -1,0 +1,18 @@
+<ul class="result-list">
+{{#each results}}
+    <li class="result result-item {{ model }}">
+        <a href="{{ url }}">
+            <div class="item-object">
+                <span class="item-romanized-name">{{ romanized_name }}</span>
+                <span class="item-name">{{ name }}</span>
+            </div>
+            <span class="item-type">{{ model }}</span>
+        </a>
+    </li>
+{{/each}}
+{{#if query}}
+    <li class="result result-query">
+        <a href="/search/?q={{ query }}">Search for other "<strong>{{ query }}</strong>" results &rarr;</a>
+    </li>
+{{/if}}
+</ul>
