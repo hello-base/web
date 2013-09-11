@@ -3,15 +3,27 @@ from django.views.generic.base import TemplateView
 
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 from haystack.query import SearchQuerySet
+from haystack.inputs import AutoQuery, Exact, Clean
 
 
 class SiteView(TemplateView):
     template_name = 'landings/home_site.html'
 
 
-class AutocompleteView(JSONResponseMixin, View):
-    def get(self, request, *args, **kwargs):
-        sqs = SearchQuerySet().autocomplete(text=request.GET.get('q', ''))[:5]
-        suggestions = [result.pk for result in sqs]
-        json = {'results': suggestions}
+class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
+    def get_ajax(self, request, *args, **kwargs):
+        query = request.GET.get('q', '')
+        sqs = SearchQuerySet().autocomplete(text=query).load_all()[:5]
+        suggestions = []
+        for result in sqs:
+            suggestions.append({
+                'text': result.text,
+                'pk': result.pk,
+                'model': result.model_name,
+                'name': result.object.name if result.object.name != result.object.romanized_name else None,
+                'romanized_name': result.object.romanized_name,
+                'url': result.object.get_absolute_url(),
+            })
+        # suggestions = [result.pk for result in sqs]
+        json = {'query': query, 'results': suggestions}
         return self.render_json_response(json)
