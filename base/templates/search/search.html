@@ -10,9 +10,22 @@
     </div>
 </header>
 
-{# {% print page.paginator %} #}
+{% if query %}
+<div class="container">
+    <h1>We found <strong>{{ page.paginator.count }}</strong> results for "{{ query }}"</h1>
+</div>
 
 <div class="container">
+    <ul class="facets">
+    {% for model in facets.fields.model %}
+        <li class="facet">
+            <span class="facet-chart" style="width: {% widthratio model.1 page.paginator.count 100 %}%"></span>
+            <span class="facet-type">{{ model.0 }}</span>
+            <span class="facet-count">{{ model.1 }}</span>
+        </li>
+    {% endfor %}
+    </ul>
+
     <ul class="results">
     {% for result in page.object_list %}
         <li class="result">
@@ -29,7 +42,5 @@
     {% endfor %}
     </ul>
 </div>
-
 {% endif %}
-
 {% endblock content %}

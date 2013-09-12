@@ -18,6 +18,43 @@
 .result-item { @include clearfix; }
 .result-query { border-bottom: none; }
 
+// .facet(s)
+// Standard classes for displaying facets (or simple statistics) around
+// the makeup of the search results; usually type or model, etc.
+.facets {
+  @include reset-box-model;
+  @include reset-list-style;
+}
+.facet {
+  padding-top: 5px;
+  margin-bottom: 8px;
+  position: relative;
+
+  .facet-type {
+    position: relative;
+    top: -1px;
+
+    color: $brand-lightGrey;
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+  .facet-count {
+    float: right;
+    color: $brand-medGrey;
+    font-weight: 700;
+  }
+  .facet-chart {
+    position: absolute;
+    top: 0; right: 0;
+    display: block;
+    height: 1px;
+    padding-right: 5px;
+
+    background-color: #a9d2f2; // @@@
+    color: #125a95;
+  }
+}
+
 // .path-search
 // Set of classes that handle the main search results page.
 .path-search {
