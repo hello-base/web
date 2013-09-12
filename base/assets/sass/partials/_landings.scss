@@ -2,7 +2,7 @@
 .landing-home {
   .header {
     padding-top: 14px; padding-bottom: 14px;
-    background-color: #232B2D; }
+    background-color: $brand-dark; }
 }
 
 .tagline, .hero-search, .examples {
@@ -13,7 +13,7 @@
 .hero {
   padding-top: 24px; padding-bottom: 72px;
 
-  background-color: #232B2D;
+  background-color: $brand-dark;
   color: #FFF;
 
   a {
