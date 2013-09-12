@@ -1,51 +1,76 @@
 {% extends "site_base.html" %}
 {% load humanize %}
+{% load typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block body-class %}profile music-profile{% endblock %}
 {% block content %}
+<header class="masthead">
+    <div class="container">
+        <p class="release-name name">{{ object.name }}</p>
+        <h1 class="release-romanized-name romanized-name">{{ object.romanized_name }}</h1>
+        <div class="metadata">
+            {% if object.participants|length > 1 %}by{% endif %}
+            {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}{% if object.participants|length == 1 %}'s{% endif %}</a>{% include "utilities/commaify.html" %}{% endfor %}
+            {% if object.number %}<span class="number">{{ object.number | ordinal }} Single</span>{% endif %}
+        </div>
 
-<div class="metadata">
-    {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
-    {% if object.number %}<span class="number">{{ object.number | ordinal }} Single</span>{% endif %}
-</div>
-
-<header>
-    <h1>{{ object.romanized_name }}</h1>
-    <p>{{ object.name }}</p>
-
-    <div class="date">{{ object.released|date:"F j, Y" }}</div>
+        <div class="release-date">Released {{ object.released | date:"F j, Y" }}</div>
+        {{ object.editions.count }} edition{{ object.editions.count | pluralize }}
+    </div>
 </header>
-
-<div class="editions">
-    {{ object.editions.count }} edition{{ object.editions.count | pluralize }}
-    <ul>
+<div class="container">
+    {% comment %}
+    <div class="release-overview">
+        {{ object.romanized_name }} was released on
+    </div>
+    {% endcomment %}
+    <ul class="editions">
     {% for edition in object.editions.all %}
-        <li>
-            <h2>{{ edition.romanized_name }}</h2>
-            {{ edition.released }}
-            {{ edition.catalog_number }}
-
-            <ol>
-            {% for position in edition.tracklist %}
-                <li>
-                    <span class="side {% if position.is_aside %}a{% endif %}{% if position.is_bside %}b{% endif %}">
-                        {% if position.is_aside %}A{% endif %}
-                        {% if position.is_bside %}B{% endif %}
-                    </span>
-                    {{ position.track.romanized_name }} {% if position.is_instrumental %}(Instrumental){% endif %}
-                    <small>({{ position.track.name }})</small>
-                </li>
-            {% endfor %}
-            </ol>
-
-            <ol>
-            {% for video in edition.videos.all %}
-                <li>{{ video.romanized_name }}</li>
-            {% endfor %}
-            </ol>
+        <li class="edition">
+            <div class="edition-meta">
+                <h2 class="edition-name">{{ edition.romanized_name | typogrify }}</h2>
+                <span class="edition-released">Released {{ edition.released | date:"F j, Y" }}</span>
+                <span class="edition-number">{{ edition.catalog_number }}</span>
+            </div><!-- .edition-meta -->
+            <div class="edition-photo"><span class="ss-icon ss-disc"></span></div>
+            <div class="edition-contents">
+                {% if edition.tracklist.exists %}
+                <h3 class="tracklist-heading">Tracklist</h3>
+                <ol class="tracklist">
+                {% for position in edition.tracklist %}
+                    <li class="track {% if position.is_instrumental %}instrumental{% endif %}">
+                        {# <span class="track-number">{{ forloop.counter }}</span> #}
+                        <span class="name">{{ position.track.name }}</span>
+                        <span class="romanized-name">{{ position.track.romanized_name }} {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}</span>
+                        <span class="track-side {% if position.is_aside %}a{% endif %}{% if position.is_bside %}b{% endif %}">
+                            {% if position.is_aside %}A-side{% endif %}
+                            {% if position.is_bside %}B-side{% endif %}
+                        </span>
+                    </li>
+                {% endfor %}
+                </ol><!-- .tracklist -->
+                {% endif %}
+                {% if edition.videos.exists %}
+                <h3 class="tracklist-heading">Videos</h3>
+                <ol class="tracklist">
+                {% for position in edition.videos.all %}
+                    <li class="track">
+                        {# <span class="track-number">{{ forloop.counter }}</span> #}
+                        <span class="name">{{ position.name }}</span>
+                        <span class="romanized-name">{{ position.romanized_name }}</span>
+                        <span class="track-type">{{ position.get_kind_display }}</span>
+                    </li>
+                {% endfor %}
+                </ol><!-- .tracklist -->
+                {% endif %}
+            </div><!-- .edition-contents -->
         </li>
     {% endfor %}
     </ul>
 </div>
-
+{% print object %}
 {% endblock content %}

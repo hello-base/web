@@ -1,0 +1,113 @@
+.music-profile {
+  .masthead {
+    background-color: $brand-dark;
+    margin-bottom: 24px;
+  }
+
+  .romanized-name { }
+  .name {
+    display: block;
+    color: $brand-lightGrey;
+    font-size: 12px;
+  }
+}
+
+.release-romanized-name {
+  margin: 0;
+
+  color: #FFF;
+  font-weight: 200;
+  letter-spacing: -1px;
+}
+.release-name {
+  margin: 0;
+}
+
+
+
+.edition {
+  @include clearfix;
+  margin-bottom: 36px;
+}
+.edition-meta { @include span-columns(3, 12); }
+.edition-contents { @include span-columns(7 omega, 12); }
+
+.edition-photo {
+  @include span-columns(2, 12);
+  height: 147px;
+  position: relative;
+
+  box-shadow: inset 0 0 0 1px #CCC;
+  border-radius: 4px;
+  text-align: center;
+
+  .ss-icon {
+    display: block;
+    margin: auto;
+    overflow: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width: 42px; height: 42px;
+
+    color: $brand-lightGrey;
+    font-size: 36px;
+  }
+}
+
+.edition-meta {
+  color: $brand-medGrey;
+  text-align: right;
+}
+.edition-name {
+  color: $brand-darkGrey;
+  font-size: 18px;
+}
+
+.edition-released,
+.edition-number {
+  display: block;
+  font-size: 12px;
+}
+
+.tracklist-heading {
+  display: none;
+  margin: 0;
+  font-size: 14px;
+}
+.tracklist {
+  @include reset-list-style;
+  @include reset-box-model;
+
+  // border-top: 1px solid $brand-paleGrey;
+  padding: 12px 0;
+}
+
+.track {
+  border-top: 1px solid $brand-paleGrey;
+  padding: 6px 0;
+}
+.track.instrumental * {
+  opacity: 0.5;
+}
+
+.track-number {
+  display: inline-block;
+//   padding: 3px 4px 1px;
+//   width: 20px;
+
+//   // box-shadow: inset 0 0 0 1px $brand-lightGrey;
+//   background-color: $brand-lightGrey;
+//   border-radius: 3px;
+//   // color: $brand-medGrey;
+//   color: #FFF;
+//   font-size: 12px;
+//   font-weight: bold;
+//   text-align: center;
+}
+
+.track-side,
+.track-type {
+  font-size: 12px;
+  font-weight: bold;
+  float: right;
+}
