@@ -38,8 +38,13 @@ class Base(Merchandise):
         return u'%s' % (self.romanized_name)
 
     def _render_participants(self):
-        groups = self.groups.exclude(classification=CLASSIFICATIONS.supergroup)
+        groups = self.groups.all()
         if bool(groups):
+            # If a supergroup is one of the groups attributed, just
+            # show the supergroup.
+            if self.supergroup() in groups:
+                return [self.supergroup()]
+
             # Gather all of the individual idols attributed to the
             # single into a set().
             idols = set(idol for idol in self.idols.all())
