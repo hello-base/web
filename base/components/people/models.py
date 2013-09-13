@@ -59,8 +59,17 @@ class Idol(Person):
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
+    # Denormalized Fields.
+    # Note: These fields should be 1) too frequently accessed to make
+    # sense as methods and 2) infrequently updated.
+    primary_membership = models.ForeignKey('Membership', related_name='primary')
+
     def get_absolute_url(self):
         return reverse('idol-detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        self.primary_membership = self.memberships.get(is_primary=True)
+        return super(Idol, self).save(*args, **kwargs)
 
     def age(self):
         return calculate_age(self.birthdate)
@@ -70,13 +79,6 @@ class Idol(Person):
 
     def latest_single(self):
         return self.singles.latest()
-
-    def primary_membership(self):
-        """
-        Returns the Membership marked `is_primary` for the given idol.
-
-        """
-        return self.memberships.select_related('group').get(is_primary=True)
 
 
 class Staff(Person):
