@@ -4,7 +4,7 @@ analytics-python == 0.4.2
 Django == 1.5.1
 django-birthday == 0.1.1
 django-braces == 1.2.1
-django-configurations == 0.3
+django-configurations >= 0.6
 django-dotenv == 1.2
 django-floppyforms == 1.1
 django-haystack == 2.1.0
