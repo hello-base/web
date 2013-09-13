@@ -3,6 +3,8 @@ from itertools import chain
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
+from django.utils.functional import cached_property
+
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
@@ -29,6 +31,12 @@ class Base(Merchandise):
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
+    # Denormalized Fields.
+    # Note: These fields should be 1) too frequently accessed to make
+    # sense as methods and 2) infrequently updated.
+    participating_idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss_attributed_to')
+    participating_groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss_attributed_to')
+
     class Meta:
         abstract = True
         get_latest_by = 'released'
@@ -37,39 +45,59 @@ class Base(Merchandise):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
+    def save(self, *args, **kwargs):
+        # Denormalize the release's participants. We only ever have to
+        # calulcate this once and we shouldn't have to on request.
+        self._render_participants()
+        return super(Base, self).save(*args, **kwargs)
+
     def _render_participants(self):
+        from components.people.models import Idol, Membership
+
+        # Do we have existing participants? Clear them out so we can
+        # calculate them again.
+        self.participating_idols.clear()
+        self.participating_groups.clear()
+
         groups = self.groups.all()
-        if bool(groups):
+        if groups.exists():
             # If a supergroup is one of the groups attributed, just
             # show the supergroup.
-            if self.supergroup() in groups:
-                return [self.supergroup()]
+            if self.supergroup in groups:
+                return [self.supergroup]
 
-            # Gather all of the individual idols attributed to the
-            # single into a set().
-            idols = set(idol for idol in self.idols.all())
+            # Gather all of the individual idol's primary keys
+            # attributed to the single into a set().
+            idols = self.idols.all()
 
             # Specify an empty set() that will contain all of the
             # members of the groups attributed to the single. Then,
             # loop through all of the groups and update the set with
-            # all of the individual members.
-            group_members = set()
-            for group in groups:
-                group_members.update(idol for idol in group.members.all())
+            # all of the individual members' primary keys.
+            group_ids = groups.values_list('id', flat=True)
+            group_members = Membership.objects.filter(group__in=group_ids).values_list('idol', flat=True)
 
-            # Simple set() subtraction. We'll be printing whomever's left.
-            distinct_idols = idols - group_members
-            return list(chain(distinct_idols, groups))
-        return self.idols.all()
+            # Subtract group_members from idols.
+            distinct_idols = idols.exclude(pk__in=group_members)
+
+            # Add the calculated groups and idols to our new list of
+            # participating groups and idols.
+            self.participating_groups.add(*list(groups))
+            self.participating_idols.add(*list(distinct_idols))
+            return
+
+        # No groups? Just add all the idols.
+        self.participating_idols.add(*list(self.idols.all()))
+        return
 
     @property
     def identifier(self):
         return self._meta.module_name
 
     def participants(self):
-        participants = self._render_participants()
-        return participants
+        return list(chain(self.participating_idols.all(), self.participating_groups.all()))
 
+    @property
     def supergroup(self):
         for group in self.groups.all():
             if group.classification == CLASSIFICATIONS.supergroup:
