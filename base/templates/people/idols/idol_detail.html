@@ -1,4 +1,6 @@
 {% extends "site_base.html" %}
+{% load music_tags %}
+{% load typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block meta %}
@@ -6,17 +8,13 @@
 {% endblock %}
 {% block body-class %}profile idol-profile{% endblock %}
 {% block content %}
-
 <div class="section-masthead section-photo" style="">
     <div class="container">
         <div class="masthead">
             <div class="metadata-names">
                 <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
                 {% with object.primary_membership as primary %}
-                <p class="standing">
-                    {{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}
-                    {# <span class="nicknames">(a.k.a., {{ object.nicknames }})</span> #}
-                </p>
+                <p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>
                 {% endwith %}
             </div><!-- .metadata-names -->
         </div><!-- .masthead -->
@@ -61,24 +59,24 @@
                     </div>
                 </li><!-- .group-participation -->
                 <li class="single-participation">
-                    <span class="count"><strong>{{ object.singles.count }}</strong> singles</span>
+                    <span class="count"><strong>{{ singles|length }}</strong> singles</span>
                     <h2>{% if object.primary_membership.is_active %}Latest Single{% else %}Last Single{% endif %} &rarr;</h2>
                     <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
                     <div class="latest">
                         {% with object.latest_single as single %}
                         <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-                        Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago) in {{ single.editions.count }} edition{{ single.editions.count|pluralize }}
+                        Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago){#  in {{ single.editions.count }} edition{{ single.editions.count|pluralize }} #}
                         {% endwith %}
                     </div>
                 </li><!-- .single-participation -->
                 <li class="album-participation">
-                    <span class="count"><strong>{{ object.albums.count }}</strong> albums</span>
+                    <span class="count"><strong>{{ albums|length }}</strong> albums</span>
                     <h2>{% if object.primary_membership.is_active %}Latest Album{% else %}Last Album{% endif %} &rarr;</h2>
                     <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
                     <div class="latest">
                         {% with object.latest_album as album %}
                         <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-                        Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }}
+                        Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago){#  in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
                         {% endwith %}
                     </div>
                 </li><!-- .album-participation -->
@@ -88,59 +86,56 @@
 </div><!-- .section-metadata -->
 
 <div class="container">
-<h2 class="section-title">Memberships {{ object.memberships.count }}</h2>
-<ul>
-{% for membership in object.memberships.all %}
-    <li>
-    <a href="{{ membership.group.get_absolute_url }}">{{ membership.group }}</a>
-    {{ membership.tenure_in_days }}
-    {{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %}
-    </li>
-{% endfor %}
-</ul>
-
-<h2 class="section-title">Singles {{ object.singles.count }}</h2>
-<ul>
-{% for release in object.singles.all %}
-    <li>
-        <div class="release-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
-        <a href="{{ release.get_absolute_url }}">{{ release.romanized_name }}</a>
-        {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
-        Released {{ release.released|date:"F j, Y" }} in {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
-
-        {% if release.participants|length == 1 %}
-            {% for participant in release.participants %}
-                {% if participant != object.primary_membership.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
-                {% if participant == object %}<span class="">Solo work</span>{% endif %}
-            {% endfor %}
-        {% else %}
-            with {% for participant in release.participants %}{% if participant != object %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endif %}{% endfor %}
-        {% endif %}
-    </li>
-{% endfor %}
-</ul>
-
-<h2>Albums {{ object.albums.count }}</h2>
-<ul>
-{% for release in object.albums.all %}
-    <li>
-        <a href="{{ release.get_absolute_url }}">{{ release.romanized_name }}</a>
-        {% if release.name != relaease.romanized_name %}<small>{{ release.name }}</small>{% endif %}
-        Released {{ release.released|date:"F j, Y" }} in {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
-
-        {% if release.participants|length == 1 %}
-            {% for participant in release.participants %}
-                {% if participant != object.primary_membership.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
-                {% if participant == object %}<span class="">Solo work</span>{% endif %}
-            {% endfor %}
-        {% else %}
-            with {% for participant in release.participants %}{% if participant != object %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endif %}{% endfor %}
-        {% endif %}
-    </li>
-{% endfor %}
-</ul>
+    <h2 class="section-title">Memberships {{ object.memberships.count }}</h2>
+    <ul>
+    {% for membership in object.memberships.all %}
+        <li>
+        <a href="{{ membership.group.get_absolute_url }}">{{ membership.group }}</a>
+        {{ membership.tenure_in_days }}
+        {{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %}
+        </li>
+    {% endfor %}
+    </ul>
 </div>
 
-{% print object %}
-
+<section class="releases">
+    <div class="container">
+        <div class="releases-singles">
+            <h2 class="section-title">Singles {{ singles|length }}</h2>
+            <ul class="release-list">
+            {% for release in singles %}
+                <li class="release">
+                    <div class="release-image">
+                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                    </div><!-- .release-image -->
+                    <div class="release-meta">
+                        <span class="name">{{ release.name }}</span>
+                        <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+                        <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
+                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                    </div><!-- .release-meta -->
+                </li><!-- .release -->
+            {% endfor %}
+            </ul><!-- .release-list -->
+        </div><!-- .releases-singles -->
+        <div class="releases-albums">
+            <h2 class="section-title">Albums {{ albums|length }}</h2>
+            <ul class="release-list">
+            {% for release in albums %}
+                <li class="release">
+                    <div class="release-image">
+                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                    </div><!-- .release-image -->
+                    <div class="release-meta">
+                        <span class="name">{{ release.name }}</span>
+                        <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+                        <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
+                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                    </div><!-- .release-meta -->
+                </li><!-- .release -->
+            {% endfor %}
+            </ul><!-- .release-list -->
+        </div><!-- .releases-albums -->
+    </div><!-- .container -->
+</section><!-- .releases -->
 {% endblock content %}

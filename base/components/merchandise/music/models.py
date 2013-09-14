@@ -64,7 +64,7 @@ class Base(Merchandise):
             # If a supergroup is one of the groups attributed, just
             # show the supergroup.
             if self.supergroup in groups:
-                return [self.supergroup]
+                return self.participating_groups.add(self.supergroup)
 
             # Gather all of the individual idol's primary keys
             # attributed to the single into a set().
@@ -94,6 +94,7 @@ class Base(Merchandise):
     def identifier(self):
         return self._meta.module_name
 
+    @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
 

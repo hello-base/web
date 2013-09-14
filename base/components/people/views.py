@@ -67,9 +67,16 @@ class IdolBrowseView(TemplateView):
 #         return context
 
 
-class IdolDetailView(DetailView):
-    queryset = Idol.objects.all()
+class IdolDetailView(PrefetchRelatedMixin, DetailView):
+    model = Idol
+    prefetch_related = ['memberships__group']
     template_name = 'people/idols/idol_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IdolDetailView, self).get_context_data(**kwargs)
+        context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        return context
 
 
 class IdolDiscographyView(DetailView):
