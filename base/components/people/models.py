@@ -62,13 +62,18 @@ class Idol(Person):
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
-    primary_membership = models.ForeignKey('Membership', related_name='primary')
+    primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     def get_absolute_url(self):
         return reverse('idol-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.primary_membership = self.memberships.get(is_primary=True)
+        # Denormalize the idol's primary membership. Make sure that
+        # primary membership exists first.
+        try:
+            self.primary_membership = self.memberships.get(is_primary=True)
+        except Membership.DoesNotExist:
+            pass
         return super(Idol, self).save(*args, **kwargs)
 
     def age(self):
@@ -195,7 +200,7 @@ class Membership(models.Model):
         standing in the given group (e.g., member, former member, etc.).
 
         """
-        if self.group.romanized_name == 'Soloist':
+        if self.group_id == 65: # Soloist
             if self.ended:
                 return 'Former soloist'
             return 'Soloist'
