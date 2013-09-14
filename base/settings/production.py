@@ -1,6 +1,7 @@
 import os
 import sys
 
+from configurations import values
 from redisify import redisify
 
 from .base import Base as Settings
@@ -21,7 +22,7 @@ class Production(Settings):
 
     # Installed Applications
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        'djangosecure',
+        # 'djangosecure',
     ]
 
     # Logging

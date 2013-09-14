@@ -4,11 +4,11 @@ import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
-from configurations import Settings
+from configurations import Configuration, values
 from postgresify import postgresify
 
 
-class Base(Settings):
+class Base(Configuration):
     # Path Configuration
     DJANGO_ROOT = dirname(dirname(abspath(__file__)))
     SITE_ROOT = dirname(DJANGO_ROOT)
@@ -19,10 +19,13 @@ class Base(Settings):
     path.append(DJANGO_ROOT)
 
     # Default / Debug Settings
+    ALLOWED_HOSTS = []
+    DATE_FORMAT = 'Y/m/d'
+    DEBUG = True
     ROOT_URLCONF = '%s.urls' % SITE_NAME
     SITE_ID = 1
-    TEMPLATE_DEBUG = Settings.DEBUG
-    DATE_FORMAT = 'Y/m/d'
+    TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
+    WSGI_APPLICATION = 'wsgi.application'
 
     # Emails
     ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
