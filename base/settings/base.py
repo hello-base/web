@@ -22,6 +22,7 @@ class Base(Settings):
     ROOT_URLCONF = '%s.urls' % SITE_NAME
     SITE_ID = 1
     TEMPLATE_DEBUG = Settings.DEBUG
+    DATE_FORMAT = 'Y/m/d'
 
     # Emails
     ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
