@@ -1,5 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView
 
+from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
+
 # from components.merchandise.music import constants as music
 from .models import Group, Idol, Staff
 # from .utils import attach_primary_groups
@@ -19,6 +21,12 @@ class GroupBrowseView(ListView):
 class GroupDetailView(DetailView):
     queryset = Group.objects.all()
     template_name = 'people/groups/group_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupDetailView, self).get_context_data(**kwargs)
+        context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        return context
 
 
 class GroupDiscographyView(DetailView):

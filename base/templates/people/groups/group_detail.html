@@ -1,4 +1,5 @@
 {% extends "site_base.html" %}
+{% load typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block content %}
@@ -26,17 +27,72 @@
     {% endwith %}
 </div>
 
-<ul>
-{% for album in object.albums.all %}
-    <li><a href="{{ album.get_absolute_url }}">{{ album }}</a></li>
-{% endfor %}
-</ul>
-
-<ul>
-{% for single in object.singles.all %}
-    <li><a href="{{ single.get_absolute_url }}">{{ single }}</a></li>
-{% endfor %}
-</ul>
+<section class="releases">
+    <div class="container">
+        <div class="releases-singles">
+            <h2 class="section-title">Singles {{ singles|length }}</h2>
+            <ul class="release-list">
+            {% for release in singles %}
+                <li class="release">
+                    <div class="release-image">
+                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                    </div>
+                    <div class="release-meta">
+                        <span class="name">{{ release.name }}</span>
+                        <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+                        <span class="release-participants">
+                            {# {% idol_contexted_participants release object %} #}
+                            {% comment %}
+                            {% if release.participants|length == 1 %}
+                                {% for participant in release.participants %}
+                                    {% if participant != object.primary_membership.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                                    {% if participant == object %}<span class="">Solo work</span>{% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% if participant in object.groups.all %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                                with {% for participant in release.participants %}{% if participant != object and participant not in object.groups.all %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}{% include "utilities/commaify.html" %}{% endfor %}
+                            {% endif %}
+                            {% endcomment %}
+                        </span>
+                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </div><!-- .releases-singles -->
+        <div class="releases-albums">
+            <h2 class="section-title">Albums {{ albums|length }}</h2>
+            <ul class="release-list">
+            {% for release in albums %}
+                <li class="release">
+                    <div class="release-image">
+                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                    </div>
+                    <div class="release-meta">
+                        <span class="name">{{ release.name }}</span>
+                        <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+                        <span class="release-participants">
+                            {# {% idol_contexted_participants release object %} #}
+                            {% comment %}
+                            {% if release.participants|length == 1 %}
+                                {% for participant in release.participants %}
+                                    {% if participant != object.primary_membership.group and participant != object %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                                    {% if participant == object %}<span class="">Solo work</span>{% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% if participant in object.groups.all %}for <a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}
+                                with {% for participant in release.participants %}{% if participant != object and participant not in object.groups.all %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% endif %}{% include "utilities/commaify.html" %}{% endfor %}
+                            {% endif %}
+                            {% endcomment %}
+                        </span>
+                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </div><!-- .releases-albums -->
+    </div><!-- .container -->
+</section><!-- .releases -->
 
 {% print object %}
 
