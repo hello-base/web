@@ -175,7 +175,7 @@
   @include clearfix;
   padding-top: 24px; padding-bottom: 24px;
 }
-.releases-singles { border-bottom: 1px solid $brand-paleGrey; }
+.releases-albums { border-top: 1px solid $brand-paleGrey; }
 
 .release {
   @include clearfix;

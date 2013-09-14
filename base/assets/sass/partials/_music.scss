@@ -1,3 +1,9 @@
+// Widths
+.editions { @include span-columns(9 , 12); }
+.participations { @include span-columns(3 omega, 12); }
+.edition-meta { @include span-columns(3, 9); }
+.edition-contents { @include span-columns(6 omega, 9); }
+
 .music-profile {
   .masthead {
     background-color: $brand-dark;
@@ -23,14 +29,10 @@
   margin: 0;
 }
 
-
-
 .edition {
   @include clearfix;
   margin-bottom: 36px;
 }
-.edition-meta { @include span-columns(3, 12); }
-.edition-contents { @include span-columns(7 omega, 12); }
 
 .edition-meta {
   color: $brand-medGrey;

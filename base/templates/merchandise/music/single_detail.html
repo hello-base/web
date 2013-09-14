@@ -16,9 +16,9 @@
         <div class="metadata">
             {% if object.participants|length > 1 %}by{% endif %}
             {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}{% if object.participants|length == 1 %}'s{% endif %}</a>{% include "utilities/commaify.html" %}{% endfor %}
-            {% if object.number %}<span class="number">{{ object.number | ordinal }} Single</span>{% endif %}
+            {% if object.number %}<span class="number">{{ object.number|ordinal }} Single</span>{% endif %}
         </div>
-        <div class="release-date">Released {{ object.released | date:"F j, Y" }} in {{ editions|length }} edition{{ object.editions.count | pluralize }}</div>
+        <div class="release-date">Released {{ object.released | date:"F j, Y" }} in {{ editions|length }} edition{{ editions|length|pluralize }}</div>
     </div>
 </header>
 <div class="container">
@@ -27,68 +27,68 @@
         {{ object.romanized_name }} was released on
     </div>
     {% endcomment %}
-    <ul class="editions">
-    {% for edition in editions %}
-        <li class="edition">
-            <div class="edition-meta">
-                <h2 class="edition-name">{{ edition.romanized_name | typogrify }}</h2>
-                <span class="edition-released">Released {{ edition.released | date:"F j, Y" }}</span>
-                <span class="edition-number">{{ edition.catalog_number }}</span>
-            </div><!-- .edition-meta -->
-            <div class="edition-image">
-                <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
-            </div><!-- .edition-image -->
-            <div class="edition-contents">
-                {% if edition.tracklist %}
-                <h3 class="tracklist-heading">Tracklist</h3>
-                <ol class="tracklist">
-                {% for position in edition.tracklist %}
-                    <li class="track {% if position.is_instrumental %}instrumental{% endif %}">
-                        {# <span class="track-number">{{ forloop.counter }}</span> #}
-                        <span class="romanized-name">
-                            {{ position.track.romanized_name }}
-                            {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
-                            {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
-                        </span>
-                        <span class="name">{{ position.track.name }}</span>
-                        <span class="track-side {% if position.is_aside %}a{% endif %}{% if position.is_bside %}b{% endif %}">
-                            {% if position.is_aside %}A-side{% endif %}
-                            {% if position.is_bside %}B-side{% endif %}
-                        </span>
-                    </li>
-                {% endfor %}
-                </ol><!-- .tracklist -->
-                {% endif %}
-                {% if edition.videos %}
-                <h3 class="tracklist-heading">Videos</h3>
-                <ol class="tracklist">
-                {% for position in edition.videos.all %}
-                    <li class="track">
-                        {# <span class="track-number">{{ forloop.counter }}</span> #}
-                        <span class="romanized-name">{{ position.romanized_name }}</span>
-                        <span class="name">{{ position.name }}</span>
-                        <span class="track-type">{{ position.get_kind_display }}</span>
-                    </li>
-                {% endfor %}
-                </ol><!-- .tracklist -->
-                {% endif %}
-            </div><!-- .edition-contents -->
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="editions">
+        <h2 class="section-header">Editions</h2>
+        <ul class="edition-list">
+        {% for edition in editions %}
+            <li class="edition">
+                <div class="edition-meta">
+                    <h2 class="edition-name">{{ edition.romanized_name | typogrify }}</h2>
+                    <span class="edition-released">Released {{ edition.released | date:"F j, Y" }}</span>
+                    <span class="edition-number">{{ edition.catalog_number }}</span>
+                </div><!-- .edition-meta -->
+                <div class="edition-image">
+                    {# <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div> #}
+                </div><!-- .edition-image -->
+                <div class="edition-contents">
+                    {% if edition.tracklist %}
+                    <h3 class="tracklist-heading">Tracklist</h3>
+                    <ol class="tracklist">
+                    {% for position in edition.tracklist %}
+                        <li class="track {% if position.is_instrumental %}instrumental{% endif %}">
+                            <span class="track-number">{{ forloop.counter }}</span>
+                            <span class="romanized-name">
+                                {{ position.track.romanized_name }}
+                                {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
+                                {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
+                            </span>
+                            <span class="name">{{ position.track.name }}</span>
+                            <span class="track-side {% if position.is_aside %}a{% endif %}{% if position.is_bside %}b{% endif %}">
+                                {% if position.is_aside %}A-side{% endif %}
+                                {% if position.is_bside %}B-side{% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                    </ol><!-- .tracklist -->
+                    {% endif %}
+                    {% if edition.videos %}
+                    <h3 class="tracklist-heading">Videos</h3>
+                    <ol class="tracklist">
+                    {% for position in edition.videos.all %}
+                        <li class="track">
+                            <span class="track-number">{{ forloop.counter }}</span>
+                            <span class="romanized-name">{{ position.romanized_name }}</span>
+                            <span class="name">{{ position.name }}</span>
+                            <span class="track-type">{{ position.get_kind_display }}</span>
+                        </li>
+                    {% endfor %}
+                    </ol><!-- .tracklist -->
+                    {% endif %}
+                </div><!-- .edition-contents -->
+            </li><!-- .edition -->
+        {% endfor %}
+        </ul><!-- .edition-list -->
+    </div><!-- .editions -->
+    <div class="participations">
+        <h2 class="section-header">Participants</h2>
+        <p class="subtext"><em>{{ idols|length }} idols</em> participated in this {{ object.identifier }}. They are listed below alongside their age at the time, staring from the oldest.</p>
+        <ul class="participant-list">
+        {% for idol in idols %}
+            <li class="participant">
+                <a href="{{ idol.get_absolute_url }}">{{ idol }} ({{ idol.birthdate|age:object.released }})</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
 </div>
-
-<div class="participations">
-    <h2>Participants</h2>
-    <p class="subtext">Below are the idols that participated in the {{ object.identifier }} as well as their age at the time.</p>
-    <ul class="participant-list">
-    {% for idol in object.idols.all %}
-        <li class="participant">
-            <a href="{{ idol.get_absolute_url }}">{{ idol }} ({{ idol.birthdate|age:object.released }})</a>
-        </li>
-    {% endfor %}
-    </ul>
-</div>
-
-{% print object %}
 {% endblock content %}
