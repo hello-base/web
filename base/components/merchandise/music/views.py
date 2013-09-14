@@ -14,6 +14,12 @@ class AlbumDetailView(DetailView):
     queryset = Album.objects.all()
     template_name = 'merchandise/music/album_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(AlbumDetailView, self).get_context_data(**kwargs)
+        context['editions'] = self.object.editions.prefetch_related('order', 'videos')
+        context['idols'] = self.object.idols.order_by('birthdate')
+        return context
+
 
 class MusicBrowseView(TemplateView):
     template_name = 'merchandise/music/music_browse.html'
