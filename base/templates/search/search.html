@@ -2,11 +2,12 @@
 
 {% block title %}{% if query %}Search results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
 {% block content %}
-
-{% if query %}
-<header>
+<header class="masthead">
     <div class="container">
-        <h1>We found <strong>{{ page.paginator.count }}</strong> results for "{{ query }}"</h1>
+        <h1 class="page-heading">Search</h1>
+        <form accept-charset="utf-8" action="{% url "search" %}" class="searchbar" method="get">
+            {% include "partials/searchbar.html" with value=query %}
+        </form>
     </div>
 </header>
 
