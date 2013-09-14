@@ -3,14 +3,15 @@ from datetime import date, timedelta
 from django.db.models import get_model
 
 
-def calculate_age(birthdate):
-    today = date.today()
+def calculate_age(birthdate, target=None):
+    if not target:
+        target = date.today()
     if birthdate is not None:
-        birthday = birthdate.replace(year=today.year)
-        if birthday > today:
-            return today.year - birthdate.year - 1
+        birthday = birthdate.replace(year=target.year)
+        if birthday > target:
+            return target.year - birthdate.year - 1
         else:
-            return today.year - birthdate.year
+            return target.year - birthdate.year
 
 
 def calculate_average_age(birthdates):

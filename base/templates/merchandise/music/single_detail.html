@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 {% load humanize %}
 {% load typogrify_tags %}
+{% load people_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block meta %}
@@ -72,5 +73,18 @@
     {% endfor %}
     </ul>
 </div>
+
+<div class="participations">
+    <h2>Participants</h2>
+    <p class="subtext">Below are the idols that participated in the {{ object.identifier }} as well as their age at the time.</p>
+    <ul class="participant-list">
+    {% for idol in object.idols.all %}
+        <li class="participant">
+            <a href="{{ idol.get_absolute_url }}">{{ idol }} ({{ idol.birthdate|age:object.released }})</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
 {% print object %}
 {% endblock content %}
