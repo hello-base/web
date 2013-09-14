@@ -1,8 +1,5 @@
 .landing {}
 .landing-home {
-  .header {
-    padding-top: 14px; padding-bottom: 14px;
-    background-color: $brand-dark; }
 }
 
 .tagline, .hero-search, .examples {
@@ -13,7 +10,7 @@
 .hero {
   padding-top: 24px; padding-bottom: 72px;
 
-  background-color: $brand-dark;
+  background-color: #2A2E33;
   color: #FFF;
 
   a {
@@ -23,10 +20,10 @@
   .tagline {
     margin-bottom: 0.5em;
 
-    font-size: 48px;
+    font-size: 54px;
     font-weight: 200;
     letter-spacing: -2px;
-    line-height: normal;
+    line-height: 1.2;
   }
 }
 
@@ -94,7 +91,7 @@
     color: #333;
     min-height: 38px;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
   }
   .ss-icon {
     position: absolute;

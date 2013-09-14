@@ -132,9 +132,89 @@
 }
 
 .section-title {
-    color: #FFF;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 200;
     text-transform: uppercase;
     margin: 1em 0;
+}
+
+
+
+
+.empty-artwork {
+  height: 100%;
+  position: relative;
+
+  box-shadow: inset 0 0 0 1px #CCC;
+  border-radius: 4px;
+  text-align: center;
+
+  .ss-icon {
+    display: block;
+    margin: auto;
+    overflow: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width: 42px; height: 42px;
+
+    color: $brand-lightGrey;
+    font-size: 36px;
+  }
+}
+
+
+
+.releases {
+  border-top: 1px solid $brand-paleGrey;
+  // border-bottom: 1px solid $brand-paleGrey;
+
+  a { @include link-colors(#2E6588); }
+}
+.releases-singles,
+.releases-albums {
+  @include clearfix;
+  padding-top: 24px; padding-bottom: 24px;
+}
+.releases-singles { border-bottom: 1px solid $brand-paleGrey; }
+
+.release {
+  @include clearfix;
+  @include span-columns(6, 12);
+  @include nth-omega(2n);
+  min-height: 88px;
+
+  .romanized-name {
+    line-height: $headings-line-height;
+    font-size: 16px;
+    font-style: italic;
+  }
+  .name {
+    display: block;
+    color: $brand-lightGrey;
+    font-size: 12px;
+  }
+
+}
+.release-image {
+  @include span-columns(1, 6);
+  height: 65px;
+
+  .ss-icon {
+    font-size: 24px;
+    width: 30px; height: 30px;
+  }
+}
+.release-meta {
+  @include span-columns(5 omega, 6);
+  padding-top: 6px;
+}
+
+
+.release-date {
+  color: $brand-medGrey;
+  font-size: 12px;
+}
+
+.release-participants {
+  font-size: 13px;
 }
