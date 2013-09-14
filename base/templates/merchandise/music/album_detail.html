@@ -15,7 +15,7 @@
         <h1 class="release-romanized-name romanized-name">{{ object.romanized_name }}</h1>
         <div class="metadata">
             {% if object.participants|length > 1 %}by{% endif %}
-            {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}{% if object.participants|length == 1 %}'s{% endif %}</a>{% include "utilities/commaify.html" %}{% endfor %}
+            {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}{% if object.number %}'s{% endif %}</a>{% include "utilities/commaify.html" %}{% endfor %}
             {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
         </div>
         <div class="release-date">Released {{ object.released | date:"F j, Y" }} in {{ editions|length }} edition{{ editions|length|pluralize }}</div>
