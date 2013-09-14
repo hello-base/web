@@ -178,10 +178,11 @@ class Edition(TimeStampedModel):
     def _render_release_date(self):
         return self._get_regular_edition().released
 
+
     def _render_tracklist(self):
         if self.kind is not self.EDITIONS.regular and not self.order.exists():
-            return self._get_regular_edition().order.all()
-        return self.order.all()
+            return self._get_regular_edition().order.select_related('track')
+        return self.order.select_related('track')
 
     def participants(self):
         return self.parent.participants()
@@ -190,10 +191,10 @@ class Edition(TimeStampedModel):
     def parent(self):
         return filter(None, [self.album, self.single])[0]
 
+    @cached_property
     def tracklist(self):
         if self.kind in [self.EDITIONS.eventv, self.EDITIONS.singlev]:
             return self.order.none()
-
         tracklist = self._render_tracklist()
         return tracklist
 
