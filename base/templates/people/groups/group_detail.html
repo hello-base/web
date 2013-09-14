@@ -4,8 +4,8 @@
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block content %}
 
-{% if object.status == "other" %}
-<p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
+{% if object.get_status_display == "Other" %}
+    <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
 {% endif %}
 
 <header>
