@@ -15,13 +15,6 @@
 // Boooo.
 @import "hacks";
 
-.content * {
-    // color: #999 !important;
-    // border-color: #ccc !important;
-    font-family: 'Ideal Sans SSm A', 'Ideal Sans SSm B';
-    // font-size: 13px !important;
-}
-
 .profile {
     ul {
         @include reset-box-model;
