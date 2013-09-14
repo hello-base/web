@@ -168,7 +168,7 @@ class Edition(TimeStampedModel):
             elif not self.released:
                 self.released = date.min
         elif not self.released:
-            self.released = self._render_release_date()
+            self.released = self.parent.released
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
@@ -178,9 +178,8 @@ class Edition(TimeStampedModel):
     def _render_release_date(self):
         return self._get_regular_edition().released
 
-
     def _render_tracklist(self):
-        if self.kind is not self.EDITIONS.regular and not self.order.exists():
+        if self.kind != self.EDITIONS.regular and not self.order.exists():
             return self._get_regular_edition().order.select_related('track')
         return self.order.select_related('track')
 
