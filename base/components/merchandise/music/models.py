@@ -98,7 +98,7 @@ class Base(Merchandise):
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
 
-    @property
+    @cached_property
     def supergroup(self):
         for group in self.groups.all():
             if group.classification == CLASSIFICATIONS.supergroup:
