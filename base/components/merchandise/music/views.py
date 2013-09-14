@@ -1,7 +1,5 @@
 from django.views.generic import DetailView, ListView, TemplateView
 
-from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
-
 from .models import Album, Single, Track
 
 
@@ -32,7 +30,6 @@ class SingleBrowseView(ListView):
 
 class SingleDetailView(DetailView):
     model = Single
-    # prefetch_related = ['editions__order', 'editions__videos']
     template_name = 'merchandise/music/single_detail.html'
 
     def get_context_data(self, **kwargs):
