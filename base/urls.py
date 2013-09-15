@@ -7,8 +7,6 @@ from haystack.views import FacetedSearchView
 
 from components.views import AutocompleteView, SiteView
 
-# Uncomment the next two lines to enable the admin:
-# admin.autodiscover()
 
 # The switch to faceted search requires a custom SearchQuerySet.
 # By default we facet on "model" so the types of results can be
@@ -27,13 +25,6 @@ urlpatterns = patterns('',
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
 
-    # Examples:
-    # url(r'^$', 'base.views.home', name='home'),
-    # url(r'^base/', include('base.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
+    url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

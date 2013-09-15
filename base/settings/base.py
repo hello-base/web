@@ -96,6 +96,7 @@ class Base(Configuration):
         'typogrify',
     ]
     ADMINISTRATION = [
+        'grappelli',
         'django.contrib.admin',
     ]
     INSTALLED_APPS = DJANGO_APPLICATIONS + COMPONENTS + PLUGINS + ADMINISTRATION
@@ -108,6 +109,10 @@ class Base(Configuration):
     MEDIA_URL = '/media/'
     STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
     STATIC_URL = '/static/'
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+    )
 
     # Django Haystack
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
