@@ -18,13 +18,13 @@ urlpatterns = patterns('',
     url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
     url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
 
+    url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
 
     url(r'^', include('components.merchandise.goods.urls')),
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
-
-    url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^admin/', include(admin.site.urls)),
 )
