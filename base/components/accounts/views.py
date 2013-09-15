@@ -4,8 +4,8 @@ from django.views.generic import RedirectView, View
 from requests_oauthlib import OAuth2Session
 
 
-CLIENT_ID = settings.get('HELLO_BASE_CLIENT_ID', '')
-CLIENT_SECRET = settings.get('HELLO_BASE_CLIENT_SECRET', '')
+CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
+CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
 AUTHORIZATION_URL = 'http://localhost:8002/authorize'
 TOKEN_URL = 'http://localhost:8002/token'
 
