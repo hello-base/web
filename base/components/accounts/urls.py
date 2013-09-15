@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, url
 
-from .views import ProcessUserView
+from .views import PreAuthorizationView, PostAuthorizationView
 
 
 urlpatterns = patterns('',
-    url(r'^accounts/authenticated/$', name='authenticated-user', view=ProcessUserView),
+    url(r'^authorize/$', name='oauth-authorize', view=PreAuthorizationView),
+    url(r'^authenticated/$', name='oauth-callback', view=PostAuthorizationView),
 )

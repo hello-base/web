@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^', include('components.accounts.urls')),
+    url(r'^accounts/', include('components.accounts.urls')),
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
 
