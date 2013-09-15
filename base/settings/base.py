@@ -114,6 +114,10 @@ class Base(Configuration):
         'django.contrib.staticfiles.finders.FileSystemFinder',
     )
 
+    # Django Authentication (OAuth, etc.)
+    HELLO_BASE_CLIENT_ID = values.Value('',  environ_prefix=None)
+    HELLO_BASE_CLIENT_SECRET = values.Value('',  environ_prefix=None)
+
     # Django Grappelli
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
 
