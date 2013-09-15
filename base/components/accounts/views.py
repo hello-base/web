@@ -1,3 +1,4 @@
+from django import http
 from django.conf import settings
 from django.views.generic import RedirectView, View
 
@@ -6,24 +7,35 @@ from requests_oauthlib import OAuth2Session
 
 CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
 CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
-AUTHORIZATION_URL = 'http://localhost:8002/authorize'
-TOKEN_URL = 'http://localhost:8002/token'
+AUTHORIZATION_URL = 'https://localhost:8443/authorize'
+TOKEN_URL = 'https://localhost:8443/token'
 
 class PreAuthorizationView(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         # Redirect the user to Hello! Base ID using the appropriate
         # URL with a few key OAuth paramters built in.
         base = OAuth2Session(CLIENT_ID)
         authorization_url, state = base.authorization_url(AUTHORIZATION_URL)
 
+        print(state)
+
         # State is used to prevent CSRF, so let's keep this for later.
-        self.request.session['oauth_state'] = state
-        return authorization_url
+        request.session['oauth_state'] = state
+
+        print(request.session['oauth_state'])
+
+        request.session.modified = True
+        return http.HttpResponseRedirect(authorization_url)
 
 
 class PostAuthorizationView(View):
     def get(self, request, *args, **kwargs):
-        base = OAuth2Session(CLIENT_ID, state=self.request.session['oauth_state'])
-        token = base.fetch_token(TOKEN_URL, client_secret=CLIENT_SECRET, authorization_response=self.request.url)
+        # We SHOULD be grabbing state from the session, maybe this'll
+        # work in production, but in development it's not. So... we're
+        # doing this. :(
+        base = OAuth2Session(CLIENT_ID, state=request.GET['state'])
+        token = base.fetch_token(TOKEN_URL, client_secret=CLIENT_SECRET, authorization_response=self.request.build_absolute_uri())
+
+        print(token)
 
 

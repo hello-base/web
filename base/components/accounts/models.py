@@ -31,6 +31,9 @@ class Editor(AbstractBaseUser):
     started = models.DateTimeField(default=timezone.now)
     active_sicne = models.DateTimeField(blank=True, default=timezone.now())
 
+    # Authentication-/Authorization-related fields.
+    oauth_token = models.CharField(max_length=200, blank=True)
+
 
 class ContributorMixin(models.Model):
     submitted_by = models.ForeignKey(Editor, related_name='submissions')
