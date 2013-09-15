@@ -114,6 +114,9 @@ class Base(Configuration):
         'django.contrib.staticfiles.finders.FileSystemFinder',
     )
 
+    # Django Grappelli
+    GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
+
     # Django Haystack
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
 
