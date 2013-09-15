@@ -7,8 +7,8 @@ from requests_oauthlib import OAuth2Session
 
 CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
 CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
-AUTHORIZATION_URL = 'https://localhost:8443/authorize'
-TOKEN_URL = 'https://localhost:8443/token'
+AUTHORIZATION_URL = 'https://localhost:8443/authorize/'
+TOKEN_URL = 'https://localhost:8443/token/'
 
 class PreAuthorizationView(RedirectView):
     def get(self, request, *args, **kwargs):
@@ -17,13 +17,8 @@ class PreAuthorizationView(RedirectView):
         base = OAuth2Session(CLIENT_ID)
         authorization_url, state = base.authorization_url(AUTHORIZATION_URL)
 
-        print(state)
-
         # State is used to prevent CSRF, so let's keep this for later.
         request.session['oauth_state'] = state
-
-        print(request.session['oauth_state'])
-
         request.session.modified = True
         return http.HttpResponseRedirect(authorization_url)
 
@@ -34,8 +29,10 @@ class PostAuthorizationView(View):
         # work in production, but in development it's not. So... we're
         # doing this. :(
         base = OAuth2Session(CLIENT_ID, state=request.GET['state'])
-        token = base.fetch_token(TOKEN_URL, client_secret=CLIENT_SECRET, authorization_response=self.request.build_absolute_uri())
-
-        print(token)
+        token = base.fetch_token(
+            TOKEN_URL,
+            auth=(CLIENT_ID, CLIENT_SECRET),
+            authorization_response=request.build_absolute_uri()
+        )
 
 
