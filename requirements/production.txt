@@ -7,6 +7,7 @@ django-braces == 1.2.1
 django-configurations >= 0.5
 django-dotenv == 1.2
 django-floppyforms == 1.1
+django-grappelli <= 3.0
 django-haystack == 2.1.0
 django-heroku-postgresify == 0.3
 django-heroku-redisify == 0.2.1
