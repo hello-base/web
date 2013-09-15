@@ -80,6 +80,11 @@ class Production(Settings):
                 'handlers': ['sentry'],
                 'propagate': False,
             },
+            'oauthlib': {
+                'level': 'DEBUG',
+                'handlers': ['sentry'],
+                'propagate': True,
+            },
         },
     }
 
