@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from ohashi.db import models
 
+
 class EditorManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
         now = timezone.now()
@@ -25,14 +26,21 @@ class EditorManager(BaseUserManager):
 # Maybe that should be in here? The only form of users we have on Base
 # ARE editors... I think.
 class Editor(AbstractBaseUser):
+    base_id = models.IntegerField(db_index=True, unique=True)
     username = models.CharField(blank=True, db_index=True)
     name = models.CharField(blank=True)
     email = models.EmailField(db_index=True, unique=True)
     started = models.DateTimeField(default=timezone.now)
-    active_sicne = models.DateTimeField(blank=True, default=timezone.now())
+    active_since = models.DateTimeField(blank=True, default=timezone.now())
 
     # Authentication-/Authorization-related fields.
-    oauth_token = models.CharField(max_length=200, blank=True)
+    access_token = models.CharField(blank=True)
+    refresh_token = models.CharField(blank=True)
+
+    # Editor status booleans.
+    is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
 
 class ContributorMixin(models.Model):
