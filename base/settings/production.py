@@ -37,29 +37,67 @@ class Production(Settings):
         'djangosecure',
     ]
 
-    # Logging
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['console', 'sentry'],
+        },
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            },
+        },
         'filters': {
             'require_debug_false': {
                 '()': 'django.utils.log.RequireDebugFalse'
             }
         },
         'handlers': {
+            'sentry': {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
             'console': {
-                'level':'INFO',
-                'class':'logging.StreamHandler',
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
                 'stream': sys.stdout
             },
         },
         'loggers': {
-            'django': {
-                'handlers': ['console'],
+            'analytics': {
                 'level': 'DEBUG',
+                'handlers': ['console', 'sentry'],
                 'propagate': True,
             },
-        }
+            'django': {
+                'level': 'INFO',
+                'handlers': ['console', 'sentry'],
+                'propagate': True,
+            },
+            'django.db.backends': {
+                'level': 'ERROR',
+                'handlers': ['console', 'sentry'],
+                'propagate': False,
+            },
+            'django.request': {
+                'level': 'ERROR',
+                'handlers': ['console', 'sentry'],
+                'propagate': False,
+            },
+            'raven': {
+                'level': 'DEBUG',
+                'handlers': ['console', 'sentry'],
+                'propagate': False,
+            },
+            'sentry.errors': {
+                'level': 'DEBUG',
+                'handlers': ['console', 'sentry'],
+                'propagate': False,
+            },
+        },
     }
 
     # File / Media / Static Media Settings
