@@ -1,10 +1,13 @@
 from django import http
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 from django.views.generic import RedirectView, View
 
 from requests_oauthlib import OAuth2Session
 
 
+USER = get_user_model()
 CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
 CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
 AUTHORIZATION_URL = 'https://localhost:8443/authorize/'
@@ -14,11 +17,14 @@ REDIRECT_URL = 'https://localhost:8444/accounts/authenticated/'
 class PreAuthorizationView(RedirectView):
     def get(self, request, *args, **kwargs):
         # Redirect the user to Hello! Base ID using the appropriate
-        # URL with a few key OAuth paramters built in.
+        # URL with a few key OAuth paramters built in. We throw in
+        # `request.META['HTTP_REFERER']` as a way to redirect back to
+        # the referring page when we're done.
         base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL)
         authorization_url, state = base.authorization_url(AUTHORIZATION_URL)
 
         # State is used to prevent CSRF, so let's keep this for later.
+        request.session['oauth_referrer'] = request.META['HTTP_REFERER']
         request.session['oauth_state'] = state
         request.session.modified = True
         return http.HttpResponseRedirect(authorization_url)
@@ -31,5 +37,33 @@ class PostAuthorizationView(View):
         # doing this. :(
         base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL, state=request.GET['state'])
         token = base.fetch_token(TOKEN_URL, auth=(CLIENT_ID, CLIENT_SECRET), authorization_response=request.build_absolute_uri())
-        return http.HttpResponse(token)
 
+        # Hooray! Somebody sent us up the token.
+        # Now let's fetch their user from the Hello! Base ID API.
+        hbi = OAuth2Session(CLIENT_ID, token=token)
+        profile = hbi.get('https://localhost:8443/api/user/')
+
+        # Now that we have the profile data, let's check for an
+        # existing user. If we don't have one, create one.
+        try:
+            user = USER.objects.get(base_id=profile['id'])
+            user.username = profile['username']
+            user.email = profile['email']
+        except USER.DoesNotExist:
+            user = USER.objects.create_user(
+                base_id=profile['id'],
+                username=profile['username'],
+                email=profile['email'],
+            )
+        finally:
+            user.is_active = profile['is_active']
+            user.is_staff = profile['is_staff']
+            user.is_superuser = profile['is_superuser']
+            user.access_token = token['access_token']
+            user.refresh_token = token['refresh_token']
+            user.active_since = timezone.now()
+            user.save()
+
+        if 'oauth_referrer' in request.session:
+            return http.HttpResponseRedirect(request.session['oauth_referrer'])
+        return http.HttpResponseRedirect('/')

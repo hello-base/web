@@ -20,6 +20,7 @@ class Base(Configuration):
 
     # Default / Debug Settings
     ALLOWED_HOSTS = []
+    AUTH_USER_MODEL = 'accounts.editor'
     DATE_FORMAT = 'Y/m/d'
     DEBUG = True
     ROOT_URLCONF = '%s.urls' % SITE_NAME
