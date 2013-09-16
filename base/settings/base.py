@@ -82,6 +82,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
     ]
     COMPONENTS = [
+        'components.accounts',
         'components.events',
         'components.merchandise',
         'components.merchandise.goods',

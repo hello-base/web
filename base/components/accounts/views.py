@@ -1,6 +1,6 @@
 from django import http
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.utils import timezone
 from django.views.generic import RedirectView, View
 
@@ -41,28 +41,32 @@ class PostAuthorizationView(View):
         # Hooray! Somebody sent us up the token.
         # Now let's fetch their user from the Hello! Base ID API.
         hbi = OAuth2Session(CLIENT_ID, token=token)
-        profile = hbi.get('https://localhost:8443/api/user/')
+        profile = hbi.get('https://localhost:8443/api/user/').json()
+        print profile
 
         # Now that we have the profile data, let's check for an
         # existing user. If we don't have one, create one.
         try:
             user = USER.objects.get(base_id=profile['id'])
-            user.username = profile['username']
-            user.email = profile['email']
         except USER.DoesNotExist:
             user = USER.objects.create_user(
-                base_id=profile['id'],
                 username=profile['username'],
                 email=profile['email'],
+                base_id=profile['id'],
             )
-        finally:
-            user.is_active = profile['is_active']
-            user.is_staff = profile['is_staff']
-            user.is_superuser = profile['is_superuser']
-            user.access_token = token['access_token']
-            user.refresh_token = token['refresh_token']
-            user.active_since = timezone.now()
-            user.save()
+        user.username = profile['username']
+        user.email = profile['email']
+        user.is_active = profile['is_active']
+        user.is_staff = profile['is_staff']
+        user.is_superuser = profile['is_superuser']
+        user.access_token = token['access_token']
+        user.refresh_token = token['refresh_token']
+        user.active_since = timezone.now()
+        user.save()
+
+        # Now let's try to log in.
+        user = authenticate(request=request)
+        login(request, user)
 
         if 'oauth_referrer' in request.session:
             return http.HttpResponseRedirect(request.session['oauth_referrer'])
