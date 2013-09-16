@@ -20,9 +20,21 @@ class Production(Settings):
         )),
     )
 
+    # Middleware
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.common.CommonMiddleware',
+        'djangosecure.middleware.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
     # Installed Applications
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        # 'djangosecure',
+        'djangosecure',
     ]
 
     # Logging
@@ -96,14 +108,14 @@ class Production(Settings):
     )
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 
-    # # Django Secure
-    # SECURE_BROWSER_XSS_FILTER = True
-    # SECURE_CONTENT_TYPE_NOSNIFF = True
-    # SECURE_FRAME_DENY = True
-    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    # SECURE_HSTS_SECONDS = 1800
-    # SECURE_SSL_REDIRECT = True
-    # SESSION_COOKIE_SECURE = True
+    # Django Secure
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_FRAME_DENY = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
 
     # Secret Key
     SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
