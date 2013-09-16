@@ -50,7 +50,6 @@ class Production(Settings):
             'console': {
                 'level':'INFO',
                 'class':'logging.StreamHandler',
-                'formatter': 'verbose',
                 'stream': sys.stdout
             },
         },
