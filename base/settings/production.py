@@ -9,7 +9,7 @@ from .base import Base as Settings
 
 class Production(Settings):
     # Default / Debug Settings
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = ['.hello-base.com', '.hello-base.com.',]
 
     # Template Settings
