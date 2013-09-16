@@ -43,7 +43,7 @@ class Production(Settings):
         'disable_existing_loggers': True,
         'root': {
             'level': 'WARNING',
-            'handlers': ['sentry'],
+            'handlers': ['console', 'sentry'],
         },
         'formatters': {
             'verbose': {
@@ -58,38 +58,39 @@ class Production(Settings):
             'console': {
                 'level': 'DEBUG',
                 'class': 'logging.StreamHandler',
-                'formatter': 'verbose'
-            }
+                'formatter': 'verbose',
+                'stream': sys.stdout
+            },
         },
         'loggers': {
             'analytics': {
-                'handlers': ['console', 'sentry'],
                 'level': 'DEBUG',
+                'handlers': ['console', 'sentry'],
                 'propagate': True,
             },
             'django': {
                 'level': 'INFO',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': True,
             },
             'django.db.backends': {
                 'level': 'ERROR',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'django.request': {
                 'level': 'ERROR',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'raven': {
                 'level': 'DEBUG',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'sentry.errors': {
                 'level': 'DEBUG',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
         },
