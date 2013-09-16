@@ -32,3 +32,6 @@ requests == 1.2.3
 requests-oauthlib == 0.3.3
 South == 0.8.1
 typogrify == 2.0.0
+
+# Repository-based Requirements (Temporary)
+git+https://github.com/evonove/django-oauth-toolkit.git
