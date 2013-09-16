@@ -22,10 +22,10 @@ class EditorManager(BaseUserManager):
         return user
 
 
-# TODO: Inherit from a custom user class of some kind.
-# Maybe that should be in here? The only form of users we have on Base
-# ARE editors... I think.
 class Editor(AbstractBaseUser):
+    # Model Managers.
+    objects = EditorManager()
+
     base_id = models.IntegerField(db_index=True, unique=True)
     username = models.CharField(blank=True, db_index=True)
     name = models.CharField(blank=True)
@@ -41,6 +41,25 @@ class Editor(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELS = ['email']
+
+    def __unicode__(self):
+        return u'%s' % self.username
+
+    def has_perm(self, perm, obj=None):
+        # Active superusers have all permissions.
+        if self.is_active and self.is_superuser:
+            return True
+
+    def has_module_perms(self, app_label):
+        # Active superusers have all permissions.
+        if self.is_active and self.is_superuser:
+            return True
+
+    def email_user(self, subject, message, from_email=None):
+        send_mail(subject, message, from_email, [self.email])
 
 
 class ContributorMixin(models.Model):
