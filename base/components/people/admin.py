@@ -65,7 +65,7 @@ class StaffAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
     )
-    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name']
+    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name']}
     save_on_top = True
     search_fields = ['romanized_family_name', 'romanized_given_name']
