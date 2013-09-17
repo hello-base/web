@@ -20,6 +20,7 @@ class Base(Configuration):
 
     # Default / Debug Settings
     ALLOWED_HOSTS = []
+    AUTH_USER_MODEL = 'accounts.editor'
     DATE_FORMAT = 'Y/m/d'
     DEBUG = True
     ROOT_URLCONF = '%s.urls' % SITE_NAME
@@ -80,6 +81,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
     ]
     COMPONENTS = [
+        'components.accounts',
         'components.events',
         'components.merchandise',
         'components.merchandise.goods',
@@ -96,6 +98,7 @@ class Base(Configuration):
         'typogrify',
     ]
     ADMINISTRATION = [
+        'grappelli',
         'django.contrib.admin',
     ]
     INSTALLED_APPS = DJANGO_APPLICATIONS + COMPONENTS + PLUGINS + ADMINISTRATION
@@ -108,6 +111,23 @@ class Base(Configuration):
     MEDIA_URL = '/media/'
     STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
     STATIC_URL = '/static/'
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+    )
+
+    # Django Authentication (OAuth, etc.)
+    AUTHENTICATION_BACKENDS = (
+        'components.accounts.backends.HelloBaseIDBackend',
+        'django.contrib.auth.backends.ModelBackend',
+    )
+    HELLO_BASE_CLIENT_ID = values.Value('',  environ_prefix=None)
+    HELLO_BASE_CLIENT_SECRET = values.Value('',  environ_prefix=None)
+    LOGIN_URL = 'oauth-authorize'
+    # LOGOUT_URL = 'oauth-deauthorize'
+
+    # Django Grappelli
+    GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
 
     # Django Haystack
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50

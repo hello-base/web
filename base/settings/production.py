@@ -97,6 +97,11 @@ class Production(Settings):
                 'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
+            'oauthlib': {
+                'level': 'DEBUG',
+                'handlers': ['sentry'],
+                'propagate': True,
+            },
         },
     }
 
@@ -112,6 +117,11 @@ class Production(Settings):
         os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
     )
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+
+    # Django Authentication (OAuth, etc.)
+    OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/authorize/'
+    OAUTH_TOKEN_URL = 'https://id.hello-base.com/token/'
+    OAUTH_REDIRECT_URL = 'https://hello-base.com/accounts/authenticated/'
 
     # Django Secure
     SECURE_BROWSER_XSS_FILTER = True
