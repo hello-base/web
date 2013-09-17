@@ -119,6 +119,7 @@ class Production(Settings):
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 
     # Django Authentication (OAuth, etc.)
+    MEISHI_ENDPOINT = 'https://id.hello-base.com/api/'
     OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/authorize/'
     OAUTH_TOKEN_URL = 'https://id.hello-base.com/token/'
     OAUTH_REDIRECT_URL = 'https://hello-base.com/accounts/authenticated/'
