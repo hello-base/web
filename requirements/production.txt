@@ -7,6 +7,7 @@ django-braces == 1.2.1
 django-configurations >= 0.5
 django-dotenv == 1.2
 django-floppyforms == 1.1
+django-grappelli <= 3.0
 django-haystack == 2.1.0
 django-heroku-postgresify == 0.3
 django-heroku-redisify == 0.2.1
@@ -21,6 +22,7 @@ gevent == 0.13.8
 greenlet == 0.4.1
 gunicorn == 17.5
 hiredis == 0.1.1
+Markdown == 2.3.1
 ohashi >= 0.2.0
 Pillow == 2.1.0
 psycogreen == 1.0
@@ -28,5 +30,6 @@ psycopg2 == 2.5.1
 pyelasticsearch == 0.6
 raven == 3.4.1
 requests == 1.2.3
+requests-oauthlib == 0.3.3
 South == 0.8.1
 typogrify == 2.0.0

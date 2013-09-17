@@ -1,13 +1,16 @@
-// Widths
+// Layout & Widths
 .editions { @include span-columns(9 , 12); }
 .participations { @include span-columns(3 omega, 12); }
-.edition-meta { @include span-columns(3, 9); }
-.edition-contents { @include span-columns(6 omega, 9); }
+
+.edition-image { @include span-columns(2, 9); height: 146px; }
+.edition-name { @include span-columns(4, 7); }
+.edition-subtext { @include span-columns(3 omega, 7); }
+.edition-contents { @include span-columns(7 omega, 9); }
 
 .music-profile {
   .masthead {
-    background-color: $brand-dark;
-    margin-bottom: 24px;
+    background-color: $brand-lightGrey;
+    padding-top: 36px; padding-bottom: 36px;
   }
 
   .romanized-name { }
@@ -35,12 +38,16 @@
 }
 
 .edition-meta {
+  @include clearfix;
   color: $brand-medGrey;
+}
+.edition-subtext {
   text-align: right;
 }
 .edition-name {
   color: $brand-darkGrey;
   font-size: 18px;
+  margin: 0;
 }
 
 .edition-released,
@@ -88,7 +95,6 @@
 .track-side,
 .track-type {
   font-family: $font-family-secondary;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 11px;
   float: right;
 }
