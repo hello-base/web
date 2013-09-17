@@ -18,8 +18,8 @@ sqs = SearchQuerySet().facet('model')
 
 urlpatterns = patterns('',
     url(r'^$', name='site-home', view=SiteView.as_view()),
-    url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
     url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
+    url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
 
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
