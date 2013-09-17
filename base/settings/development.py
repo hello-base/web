@@ -52,6 +52,11 @@ class Development(Settings):
     SESSION_EXPIRE_AT_BROWSER_CLOSE = False
     SESSION_COOKIE_SECURE = False
 
+    # Django Authentication (OAuth, etc.)
+    OAUTH_AUTHORIZATION_URL = 'https://localhost:8443/authorize/'
+    OAUTH_TOKEN_URL = 'https://localhost:8443/token/'
+    OAUTH_REDIRECT_URL = 'https://localhost:8444/accounts/authenticated/'
+
     # Django DevServer
     DEVSERVER_MODULES = (
         'devserver.modules.sql.SQLSummaryModule',

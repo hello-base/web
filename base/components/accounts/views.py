@@ -10,9 +10,9 @@ from requests_oauthlib import OAuth2Session
 USER = get_user_model()
 CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
 CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
-AUTHORIZATION_URL = 'https://localhost:8443/authorize/'
-TOKEN_URL = 'https://localhost:8443/token/'
-REDIRECT_URL = 'https://localhost:8444/accounts/authenticated/'
+AUTHORIZATION_URL = settings.OAUTH_AUTHORIZATION_URL
+TOKEN_URL = settings.OAUTH_TOKEN_URL
+REDIRECT_URL = settings.OAUTH_REDIRECT_URL
 
 class PreAuthorizationView(RedirectView):
     def get(self, request, *args, **kwargs):
