@@ -8,6 +8,9 @@ from haystack.views import FacetedSearchView
 from components.views import AutocompleteView, SiteView
 
 
+# Administration system auto-discovery.
+admin.autodiscover()
+
 # The switch to faceted search requires a custom SearchQuerySet.
 # By default we facet on "model" so the types of results can be
 # displayed on the search results page.
