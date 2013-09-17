@@ -65,7 +65,7 @@ class PostAuthorizationView(View):
         user.save()
 
         # Now let's try to log in.
-        user = authenticate(request=request)
+        user = authenticate(username=profile['username'])
         login(request, user)
 
         if 'oauth_referrer' in request.session:
