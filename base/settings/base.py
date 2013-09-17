@@ -65,7 +65,6 @@ class Base(Configuration):
         'django.middleware.common.CommonMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
-        'oauth2_provider.middleware.OAuth2TokenMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,11 +118,13 @@ class Base(Configuration):
 
     # Django Authentication (OAuth, etc.)
     AUTHENTICATION_BACKENDS = (
-        'oauth2_provider.backends.OAuth2Backend',
+        'components.accounts.backends.HelloBaseIDBackend',
         'django.contrib.auth.backends.ModelBackend',
     )
     HELLO_BASE_CLIENT_ID = values.Value('',  environ_prefix=None)
     HELLO_BASE_CLIENT_SECRET = values.Value('',  environ_prefix=None)
+    LOGIN_URL = 'oauth-authorize'
+    # LOGOUT_URL = 'oauth-deauthorize'
 
     # Django Grappelli
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
