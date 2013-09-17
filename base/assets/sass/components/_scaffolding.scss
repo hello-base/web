@@ -26,19 +26,14 @@ body {
 }
 
 a {
-    // color: $link-color;
-    text-decoration: none;
+  @include link-colors(#00A1FA, #0089E2);
+  @include single-transition(all, 250ms);
+  text-decoration: none;
 
-    // &:hover, &:focus {
-    //     color: $link-hover-color;
-    //     text-decoration: underline;
-    // }
-
-    // &:focus {
-    //     @include tab-focus();
-    // }
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
 }
-
 
 .container { @include container; }
 

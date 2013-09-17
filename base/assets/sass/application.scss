@@ -167,8 +167,6 @@
 .releases {
   border-top: 1px solid $brand-paleGrey;
   // border-bottom: 1px solid $brand-paleGrey;
-
-  a { @include link-colors(#2E6588); }
 }
 .releases-singles,
 .releases-albums {
