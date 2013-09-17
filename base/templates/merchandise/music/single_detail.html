@@ -25,11 +25,6 @@
     </div>
 </header>
 <div class="container">
-    {% comment %}
-    <div class="release-overview">
-        {{ object.romanized_name }} was released on
-    </div>
-    {% endcomment %}
     <div class="editions">
         <h2 class="section-header">Editions</h2>
         <ul class="edition-list">
@@ -39,48 +34,62 @@
                     <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
                 </div><!-- .edition-image -->
                 <div class="edition-contents">
-                    <div class="edition-meta">
-                        <h2 class="edition-name">{{ edition.romanized_name | typogrify }}</h2>
-                        <div class="edition-subtext">
-                            <span class="edition-released">Released {{ edition.released | date:"F j, Y" }}</span>
-                            <span class="edition-number">{{ edition.catalog_number }}</span>
-                        </div>
-                    </div><!-- .edition-meta -->
-                    {% if edition.tracklist %}
-                    <h3 class="tracklist-heading">Tracklist</h3>
-                    <ol class="tracklist">
-                    {% for position in edition.tracklist %}
-                        <li class="track {% if position.is_instrumental %}instrumental{% endif %}">
-                            <span class="track-number">{{ forloop.counter }}</span>
-                            <span class="romanized-name">
-                                {{ position.track.romanized_name }}
-                                {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
-                                {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
-                            </span>
-                            <span class="name">{{ position.track.name }}</span>
-                            {% if position.is_aside or position.is_bside %}
-                            <span class="track-side {% if position.is_aside %}a{% endif %}{% if position.is_bside %}b{% endif %}">
-                                {% if position.is_aside %}A-side{% endif %}
-                                {% if position.is_bside %}B-side{% endif %}
-                            </span>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ol><!-- .tracklist -->
-                    {% endif %}
-                    {% if edition.videos %}
-                    <h3 class="tracklist-heading">Videos</h3>
-                    <ol class="tracklist">
-                    {% for position in edition.videos.all %}
-                        <li class="track">
-                            <span class="track-number">{{ forloop.counter }}</span>
-                            <span class="romanized-name">{{ position.romanized_name }}</span>
-                            <span class="name">{{ position.name }}</span>
-                            <span class="track-type">{{ position.get_kind_display }}</span>
-                        </li>
-                    {% endfor %}
-                    </ol><!-- .tracklist -->
-                    {% endif %}
+                    <table>
+                        <thead>
+                            <tr class="edition-meta">
+                                <td class="edition-name" colspan="2">
+                                        <span class="romanized-name">{{ edition.romanized_name|typogrify }}</span>
+                                        <span class="name">{{ edition.name }}</span>
+                                </td>
+                                <td class="edition-subtext" colspan="1">
+                                    <span class="edition-released">Released {{ edition.released | date:"Y/m/d" }}</span>
+                                    <span class="edition-number">{{ edition.catalog_number }}</span>
+                                </td>
+                            </tr><!-- .edition-meta -->
+                        </thead>
+                        {% if edition.tracklist %}
+                        <tbody class="tracklist music-list">
+                            <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-music"></span> Tracklist</th></tr>
+                            {% for position in edition.tracklist %}
+                            <tr class="track {% if position.is_instrumental %}instrumental{% endif %}">
+                                <td class="track-number"><span class="pill number">{{ forloop.counter }}</span></td>
+                                <td class="track-name">
+                                    <span class="romanized-name">
+                                        {{ position.track.romanized_name|typogrify }}
+                                        {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
+                                        {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
+                                    </span>
+                                    <span class="name">
+                                        {{ position.track.name }}
+                                        {% if position.track.is_alternate %}<span class="">{{ position.track.name_alternate }}</span>{% endif %}
+                                        {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
+                                    </span>
+                                </td>
+                                <td class="track-type">
+                                    {% if position.track.is_cover %}<span class="pill cover">Cover</span>{% endif %}
+                                    {% if position.is_aside %}<span class="pill aside">A-side</span>{% endif %}
+                                    {% if position.is_bside %}<span class="pill bside">B-side</span>{% endif %}
+                                </td>
+                            </tr><!-- .tracklist -->
+                            {% endfor %}
+                        </tbody><!-- .tracklist -->
+                        {% endif %}
+                        {% if edition.videos.exists %}
+                        <tbody class="tracklist video-list">
+                            <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-video"></span> Videos</th></tr>
+                            {% for position in edition.videos.all %}
+                            <tr class="track">
+                                <td class="track-number"><span class="pill number">{{ forloop.counter }}</span></td>
+                                <td class="track-name">
+                                    <span class="romanized-name">{{ position.romanized_name|typogrify }}</span>
+                                    <span class="name">{{ position.name }}</span>
+                                </td>
+                                <td class="track-type"><span class="pill">{{ position.get_kind_display }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody><!-- .tracklist -->
+                        {% endif %}
+                    </table>
                 </div><!-- .edition-contents -->
             </li><!-- .edition -->
         {% endfor %}
@@ -92,7 +101,7 @@
         <ul class="participant-list">
         {% for idol in idols %}
             <li class="participant">
-                <a href="{{ idol.get_absolute_url }}">{{ idol }} <span class="age">({{ idol.birthdate|age:object.released }})</span></a>
+                <a href="{{ idol.get_absolute_url }}">{{ idol }} <span class="age">{{ idol.birthdate|age:object.released }}</span></a>
             </li>
         {% endfor %}
         </ul>

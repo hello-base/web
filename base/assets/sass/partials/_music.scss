@@ -1,11 +1,12 @@
+@import "compass/css3/user-interface";
+
 // Layout & Widths
 .editions { @include span-columns(9 , 12); }
 .participations { @include span-columns(3 omega, 12); }
 
 .edition-image { @include span-columns(2, 9); height: 146px; }
-.edition-name { @include span-columns(4, 7); }
-.edition-subtext { @include span-columns(3 omega, 7); }
 .edition-contents { @include span-columns(7 omega, 9); }
+.edition-contents table { width: 100%; }
 
 .music-profile {
   .masthead {
@@ -36,65 +37,115 @@
   @include clearfix;
   margin-bottom: 36px;
 }
-
 .edition-meta {
   @include clearfix;
   color: $brand-medGrey;
 }
-.edition-subtext {
-  text-align: right;
-}
 .edition-name {
+  margin: 0;
+  height: 54px;
+  padding-bottom: 12px;
+  vertical-align: top;
+
   color: $brand-darkGrey;
   font-size: 18px;
-  margin: 0;
-}
+  font-weight: 600;
+  line-height: $headings-line-height;
 
+  .romanized-name {
+    display: block;
+    padding-top: 3px;
+  }
+  .name { padding-top: 3px; }
+}
+.edition-subtext {
+  text-align: right;
+  vertical-align: top;
+  width: 184px;
+}
 .edition-released,
 .edition-number {
+  color: $brand-lightGrey;
   display: block;
   font-size: 12px;
 }
 
 .tracklist-heading {
-  display: none;
-  margin: 0;
-  font-size: 14px;
-}
-.tracklist {
-  @include reset-list-style;
-  @include reset-box-model;
-
-  // border-top: 1px solid $brand-paleGrey;
   padding: 12px 0;
+
+  border-top: 1px solid $brand-paleGrey;
+  color: $brand-medGrey;
+  font-family: $font-family-secondary;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  .ss-icon {
+    position: relative; top: 1px;
+    margin-right: 2px;
+  }
 }
 
 .track {
-  border-top: 1px solid $brand-paleGrey;
   padding: 6px 0;
-}
-.track.instrumental * {
-  opacity: 0.5;
+
+  td { vertical-align: top; }
+  .track-name { padding-bottom: 6px; }
+  &:last-child .track-name { padding-bottom: 12px; }
+  &.instrumental * { opacity: 0.75; }
 }
 
 .track-number {
-  display: inline-block;
-//   padding: 3px 4px 1px;
-//   width: 20px;
+  font-family: $font-family-secondary;
+  width: 30px;
 
-//   // box-shadow: inset 0 0 0 1px $brand-lightGrey;
-//   background-color: $brand-lightGrey;
-//   border-radius: 3px;
-//   // color: $brand-medGrey;
-//   color: #FFF;
-//   font-size: 12px;
-//   font-weight: bold;
-//   text-align: center;
+  .pill {
+    display: block;
+    margin-right: 6px;
+    padding: 3px 6px;
+
+    background: #FFF;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px $brand-paleGrey;
+    color: $brand-medGrey;
+    font-family: $font-family-secondary;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+  }
 }
 
-.track-side,
 .track-type {
-  font-family: $font-family-secondary;
-  font-size: 11px;
-  float: right;
+  @include user-select(none);
+  text-align: right;
+
+  .pill {
+    margin-left: 6px;
+    padding: 4px 6px;
+
+    background: $brand-medGrey;
+    border-radius: 3px;
+    color: #FFF;
+    font-family: $font-family-secondary;
+    font-size: 10px;
+    font-weight: 600;
+
+    .video-list &,
+    &.cover {
+      background: #FFF;
+      box-shadow: inset 0 0 0 1px $brand-paleGrey;
+      color: $brand-medGrey;
+    }
+  }
+  .pill.aside { background: #FF804F; }
+  .pill.bside { background: #FFCC5E; }
+}
+
+.participant {
+  font-size: 13px;
+
+  .age {
+    float: right;
+    font-weight: 600;
+  }
 }
