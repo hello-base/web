@@ -20,23 +20,39 @@ class Production(Settings):
         )),
     )
 
+    # Middleware
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.gzip.GZipMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'djangosecure.middleware.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
     # Installed Applications
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        # 'djangosecure',
+        'djangosecure',
     ]
 
-    # Logging
     LOGGING = {
         'version': 1,
-        'disable_existing_loggers': True,
+        'disable_existing_loggers': False,
         'root': {
             'level': 'WARNING',
-            'handlers': ['sentry'],
+            'handlers': ['console', 'sentry'],
         },
         'formatters': {
             'verbose': {
                 'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
             },
+        },
+        'filters': {
+            'require_debug_false': {
+                '()': 'django.utils.log.RequireDebugFalse'
+            }
         },
         'handlers': {
             'sentry': {
@@ -46,38 +62,39 @@ class Production(Settings):
             'console': {
                 'level': 'DEBUG',
                 'class': 'logging.StreamHandler',
-                'formatter': 'verbose'
-            }
+                'formatter': 'verbose',
+                'stream': sys.stdout
+            },
         },
         'loggers': {
             'analytics': {
-                'handlers': ['console', 'sentry'],
                 'level': 'DEBUG',
+                'handlers': ['console', 'sentry'],
                 'propagate': True,
             },
             'django': {
                 'level': 'INFO',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': True,
             },
             'django.db.backends': {
                 'level': 'ERROR',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'django.request': {
                 'level': 'ERROR',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'raven': {
                 'level': 'DEBUG',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'sentry.errors': {
                 'level': 'DEBUG',
-                'handlers': ['sentry'],
+                'handlers': ['console', 'sentry'],
                 'propagate': False,
             },
             'oauthlib': {
@@ -106,14 +123,15 @@ class Production(Settings):
     OAUTH_TOKEN_URL = 'https://id.hello-base.com/token/'
     OAUTH_REDIRECT_URL = 'https://hello-base.com/accounts/authenticated/'
 
-    # # Django Secure
-    # SECURE_BROWSER_XSS_FILTER = True
-    # SECURE_CONTENT_TYPE_NOSNIFF = True
-    # SECURE_FRAME_DENY = True
-    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    # SECURE_HSTS_SECONDS = 1800
-    # SECURE_SSL_REDIRECT = True
-    # SESSION_COOKIE_SECURE = True
+    # Django Secure
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_FRAME_DENY = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
 
     # Secret Key
     SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
