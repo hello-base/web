@@ -1,7 +1,7 @@
 # Package Requirements for Production
 
-analytics-python == 0.4.2
-Django == 1.5.1
+# Versioned requirements.
+Django >= 1.5
 django-birthday == 0.1.1
 django-braces == 1.2.1
 django-configurations >= 0.5
@@ -28,8 +28,13 @@ Pillow == 2.1.0
 psycogreen == 1.0
 psycopg2 == 2.5.1
 pyelasticsearch == 0.6
-raven == 3.4.1
 requests == 1.2.3
 requests-oauthlib == 0.3.3
 South == 0.8.1
 typogrify == 2.0.0
+
+# Unversioned requirements.
+# The below are plugins that don't have any bearing on the application.
+newrelic
+raven
+analytics-python
