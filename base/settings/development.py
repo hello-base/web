@@ -8,6 +8,7 @@ class Development(Settings):
     # Default / Debug Settings
     DEBUG = True
     INTERNAL_IPS = ('127.0.0.1',)
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     # Database / Caching
     CACHES = {
@@ -46,6 +47,11 @@ class Development(Settings):
         os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
     )
 
+    # Sessions
+    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+    SESSION_COOKIE_SECURE = False
+
     # Django DevServer
     DEVSERVER_MODULES = (
         'devserver.modules.sql.SQLSummaryModule',
@@ -61,36 +67,4 @@ class Development(Settings):
             'URL': 'http://127.0.0.1:9200/',
             'INDEX_NAME': 'haystack',
         },
-    }
-
-    # Django Tastypie
-    TASTYPIE_FULL_DEBUG = True
-
-    # Logging
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'filters': {
-            'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse'
-            }
-        },
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-            },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-            'oauthlib': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-        }
     }
