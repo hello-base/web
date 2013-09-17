@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /accounts/authorize/
+Disallow: /accounts/authenticated/
+Disallow: /admin/

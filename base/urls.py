@@ -5,7 +5,7 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from components.views import AutocompleteView, SiteView
+from components.views import AutocompleteView, PlainTextView, SiteView
 
 
 # Administration system auto-discovery.
@@ -24,11 +24,15 @@ urlpatterns = patterns('',
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
+    # Core Modules
     url(r'^accounts/', include('components.accounts.urls')),
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
-
     url(r'^', include('components.merchandise.goods.urls')),
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
+
+    # Robots & Humans
+    url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
+    url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
 )

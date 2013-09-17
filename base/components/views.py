@@ -6,10 +6,6 @@ from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery, Exact, Clean
 
 
-class SiteView(TemplateView):
-    template_name = 'landings/home_site.html'
-
-
 class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
     def get_ajax(self, request, *args, **kwargs):
         query = request.GET.get('q', '')
@@ -27,3 +23,12 @@ class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
         # suggestions = [result.pk for result in sqs]
         json = {'query': query, 'results': suggestions}
         return self.render_json_response(json)
+
+
+class SiteView(TemplateView):
+    template_name = 'landings/home_site.html'
+
+
+class PlainTextView(TemplateView):
+    def render_to_response(self, context, **kwargs):
+        return super(TemplateView, self).render_to_response(context, content_type='text/plain', **kwargs)
