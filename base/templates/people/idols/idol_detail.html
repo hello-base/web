@@ -85,19 +85,6 @@
     </div><!-- .container -->
 </div><!-- .section-metadata -->
 
-<div class="container">
-    <h2 class="section-title">Memberships {{ object.memberships.count }}</h2>
-    <ul>
-    {% for membership in object.memberships.all %}
-        <li>
-        <a href="{{ membership.group.get_absolute_url }}">{{ membership.group }}</a>
-        {{ membership.tenure_in_days }}
-        {{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %}
-        </li>
-    {% endfor %}
-    </ul>
-</div>
-
 <section class="releases">
     <div class="container">
         <div class="releases-singles">

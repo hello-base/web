@@ -9,11 +9,10 @@
 {% endblock %}
 {% block body-class %}profile music-profile{% endblock %}
 {% block content %}
-<header class="masthead">
+<header class="section-masthead">
     <div class="container">
         <div class="release-name">
-            <h1 class="romanized-name">{{ object.romanized_name|typogrify }}</h1>
-            <p class="name">{{ object.name }}</p>
+            <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name|typogrify }}</span></h1>
         </div>
         <div class="release-metadata">
             {% filter typogrify %}
@@ -97,14 +96,14 @@
         </ul><!-- .edition-list -->
     </div><!-- .editions -->
     <div class="participations">
-        <h2 class="section-header">Participants</h2>
+        <h2 class="section-title">Participants</h2>
         <p class="subtext"><em>{{ idols|length }} idols</em> participated in this {{ object.identifier }}. They are listed below alongside their age at the time of release, staring from the oldest.</p>
         <ul class="participant-list">
         {% for idol in idols %}
             <li class="participant">
                 <span class="age">{{ idol.birthdate|age:object.released }}</span>
                 <a href="{{ idol.get_absolute_url }}"><span class="romanized-name">{{ idol }}</span></a>
-                <span class="name">{{ idol.name }}</span>
+                {# <span class="name">{{ idol.name }}</span> #}
             </li>
         {% endfor %}
         </ul>

@@ -2,29 +2,36 @@
 {% load typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
 {% block content %}
 
 {% if object.get_status_display == "Other" %}
     <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
 {% endif %}
 
-<header>
-    <h1>{{ object.romanized_name }}</h1>
-    <p>{{ object.name }}</p>
-
-    <div class="date tenure">{{ object.started | date:"F j, Y" }}&ndash;{% if object.ended %}{{ object.ended }}{% else %}Present{% endif %} <span class="tenure-in-days">{{ object.age_in_days }} days</div>
+<header class="section-masthead">
+    <div class="container">
+        <div class="metadata-names">
+            <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
+            <div class="date tenure">{{ object.started | date:"F j, Y" }}&ndash;{% if object.ended %}{{ object.ended }}{% else %}Present{% endif %} <span class="tenure-in-days">{{ object.age_in_days }} days</div>
+        </div>
+    </span>
 </header>
 
 <div class="latest-releases">
-    {% with object.latest_album as album %}
-    <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-    {{ album.editions.count }}
-    {% endwith %}
+    <div class="container">
+        {% with object.latest_album as album %}
+        <a href="{{ album.get_absolute_url }}">{{ album }}</a>
+        {{ album.editions.count }}
+        {% endwith %}
 
-    {% with object.latest_single as single %}
-    <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-    {{ single.editions.count }}
-    {% endwith %}
+        {% with object.latest_single as single %}
+        <a href="{{ single.get_absolute_url }}">{{ single }}</a>
+        {{ single.editions.count }}
+        {% endwith %}
+    </div>
 </div>
 
 <section class="releases">
