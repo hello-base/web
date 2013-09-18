@@ -46,6 +46,7 @@ class Development(Settings):
     STATICFILES_DIRS = (
         os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
     )
+    STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
     # Sessions
     SESSION_ENGINE = 'django.contrib.sessions.backends.db'
