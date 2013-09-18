@@ -33,7 +33,8 @@ a {
 }
 
 .container { @include container; }
-// .content { background-color: #FCFCFC; }
+.content { }
 
+// Mixin-based classes.
 // Responsive images (ensure images don't scale beyond their parents).
 .img-responsive { @include img-responsive(); }
