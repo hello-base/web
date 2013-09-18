@@ -115,6 +115,8 @@ class Base(Configuration):
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
         'django.contrib.staticfiles.finders.FileSystemFinder',
+        'pipeline.finders.PipelineFinder',
+        'pipeline.finders.CachedFileFinder',
     )
 
     # Django Authentication (OAuth, etc.)
