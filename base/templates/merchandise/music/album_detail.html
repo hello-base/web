@@ -11,14 +11,18 @@
 {% block content %}
 <header class="masthead">
     <div class="container">
-        <p class="release-name name">{{ object.name }}</p>
-        <h1 class="release-romanized-name romanized-name">{{ object.romanized_name }}</h1>
-        <div class="metadata">
+        <div class="release-name">
+            <h1 class="romanized-name">{{ object.romanized_name }}</h1>
+            <p class="name">{{ object.name }}</p>
+        </div>
+        <div class="release-metadata">
+            {% filter typogrify %}
             {% if object.participants|length > 1 %}by{% endif %}
             {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}{% if object.number %}'s{% endif %}</a>{% include "utilities/commaify.html" %}{% endfor %}
             {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
+            <div class="release-date">Released {{ object.released | date:"F j, Y" }} in {{ editions|length }} edition{{ editions|length|pluralize }}</div>
+            {% endfilter %}
         </div>
-        <div class="release-date">Released {{ object.released | date:"F j, Y" }} in {{ editions|length }} edition{{ editions|length|pluralize }}</div>
     </div>
 </header>
 <div class="container">
@@ -66,7 +70,7 @@
                                     {% if position.track.is_cover %}<span class="pill cover">Cover</span>{% endif %}
                                     {% if position.is_aside %}<span class="pill aside">A-side</span>{% endif %}
                                     {% if position.is_bside %}<span class="pill bside">B-side</span>{% endif %}
-                                    {% if position.is_album_track %}<span class="pill">Album-only</span>{% endif %}
+                                    {% if position.is_album_track %}<span class="pill album">Album only</span>{% endif %}
                                 </td>
                             </tr><!-- .tracklist -->
                             {% endfor %}

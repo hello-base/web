@@ -26,16 +26,13 @@ body {
 }
 
 a {
-  @include link-colors(#00A1FA, #0089E2);
+  @include link-colors(#009DDD, #00B64F);
   @include single-transition(all, 250ms);
   text-decoration: none;
-
-  &:hover, &:focus {
-    text-decoration: underline;
-  }
 }
 
 .container { @include container; }
+// .content { background-color: #FCFCFC; }
 
 // Responsive images (ensure images don't scale beyond their parents).
 .img-responsive { @include img-responsive(); }

@@ -4,13 +4,19 @@
 .editions { @include span-columns(9 , 12); }
 .participations { @include span-columns(3 omega, 12); }
 
+.release-name { @include span-columns(9, 12); }
+.release-metadata { @include span-columns(3 omega, 12); }
+
 .edition-image { @include span-columns(2, 9); height: 146px; }
 .edition-contents { @include span-columns(7 omega, 9); }
 .edition-contents table { width: 100%; }
 
+//
 .music-profile {
+  .editions { background-color: #FFF; }
   .masthead {
-    background-color: #0B3859;
+    box-shadow: inset 0 1px 0 #32363b;
+    background-color: $brand-primary-blue;
     padding-top: 36px; padding-bottom: 36px;
   }
 
@@ -18,19 +24,34 @@
   .name {
     display: block;
     color: $brand-lightGrey;
-    font-size: 12px;
   }
 }
 
-.release-romanized-name {
-  margin: 0;
-
-  color: #FFF;
-  font-weight: 200;
-  letter-spacing: -1px;
-}
 .release-name {
-  margin: 0;
+  border-right: 1px solid rgba(#fff, 0.1);
+
+ .romanized-name {
+    margin: 0;
+
+    color: #FFF;
+    font-size: 48px;
+    font-weight: 200;
+    letter-spacing: -1px;
+  }
+  .name {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+.release-metadata {
+  padding-top: 6px;
+  color: $brand-lightGrey;
+
+  a {
+    color: #FFF;
+    font-weight: bold;
+  }
 }
 
 .edition {
@@ -131,14 +152,15 @@
     font-weight: 600;
 
     .video-list &,
-    &.cover {
+    &.cover,
+    &.album {
       background: #FFF;
       box-shadow: inset 0 0 0 1px $brand-paleGrey;
       color: $brand-medGrey;
     }
   }
-  .pill.aside { background: #FF804F; }
-  .pill.bside { background: #FFCC5E; }
+  .pill.aside { background: $brand-primary-accent; }
+  .pill.bside { background: $brand-secondary-accent; }
 }
 
 .participant {

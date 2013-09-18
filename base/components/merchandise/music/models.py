@@ -302,6 +302,15 @@ class Video(TimeStampedModel):
     def parent(self):
         return filter(None, [self.album, self.single])[0]
 
+    @property
+    def rendered_kind_display(self):
+        if self.kind in [1, 2, 3, 4, 9, 11, 12]:
+            return 'MV'
+        if self.kind in [21, 22, 23]:
+            return 'Making of'
+        if self.kind in [31, 32]:
+            return 'Performance'
+
 
 class VideoTrackOrder(models.Model):
     edition = models.ForeignKey(Edition, related_name='video_order')
