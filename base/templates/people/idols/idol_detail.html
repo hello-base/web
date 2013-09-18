@@ -36,7 +36,7 @@
         <div class="membership-primary">
             <h3 class="membership-section-title"><span class="pill">Primary Focus</span></h3>
             <div class="group-image">
-                <div class="empty-artwork"><span class="ss-icon ss-usergroup"></span></div>
+                <div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>
             </div><!-- .group-image -->
             <div class="group-metadata">
                 <span class="name">{{ primary.group.name }}</span>
@@ -52,7 +52,7 @@
             {% for membership in memberships %}
                 <li class="membership">
                     <div class="group-image">
-                        <div class="empty-artwork"><span class="ss-icon ss-usergroup"></span></div>
+                        <div class="empty-image"></div>
                     </div><!-- .group-image -->
                     <span class="name">{{ membership.group.name }}</span>
                     <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
@@ -130,7 +130,7 @@
             {% for release in singles %}
                 <li class="release">
                     <div class="release-image">
-                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                        <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                     </div><!-- .release-image -->
                     <div class="release-meta">
                         <span class="name">{{ release.name }}</span>
@@ -148,7 +148,7 @@
             {% for release in albums %}
                 <li class="release">
                     <div class="release-image">
-                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                        <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                     </div><!-- .release-image -->
                     <div class="release-meta">
                         <span class="name">{{ release.name }}</span>

@@ -11,7 +11,7 @@
 @import "hacks";
 
 //
-.empty-artwork {
+.empty-image {
   height: 100%;
   position: relative;
 
@@ -19,7 +19,7 @@
   // border-radius: 8px;
   text-align: center;
 }
-.empty-artwork .ss-icon {
+.empty-image .ss-icon {
   @include absolute-center();
   width: 42px; height: 42px;
 
