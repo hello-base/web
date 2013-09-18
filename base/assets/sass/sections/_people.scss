@@ -196,6 +196,9 @@ section.memberships {
   @include nth-omega(2n);
 }
 
+.membership {
+  padding-bottom: 12px;
+}
 
 .membership-primary {
   margin-bottom: 24px;
@@ -208,3 +211,7 @@ section.memberships {
 .membership-primary .group-metadata { @include span-columns(6, 12); }
 
 
+.tenure {
+  color: $brand-lightGrey;
+  font-size: 12px;
+}

@@ -34,7 +34,7 @@
 
         {% with object.primary_membership as primary %}
         <div class="membership-primary">
-            <h3 class="membership-section-title"><span class="pill">Primary Focus</span></h3>
+            <div class="membership-section-title"><span class="pill">Primary Focus</span></div>
             <div class="group-image">
                 <div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>
             </div><!-- .group-image -->
@@ -47,7 +47,7 @@
         {% endwith %}
         {% if memberships %}
         <div class="membership-secondary">
-            <h3 class="membership-section-title"><span class="pill">Other Groups</span></h3>
+            <div class="membership-section-title"><span class="pill">Other Groups</span></div>
             <ul class="membership-list">
             {% for membership in memberships %}
                 <li class="membership">
