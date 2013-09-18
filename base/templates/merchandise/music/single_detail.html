@@ -12,7 +12,7 @@
 <header class="masthead">
     <div class="container">
         <div class="release-name">
-            <h1 class="romanized-name">{{ object.romanized_name }}</h1>
+            <h1 class="romanized-name">{{ object.romanized_name|typogrify }}</h1>
             <p class="name">{{ object.name }}</p>
         </div>
         <div class="release-metadata">
