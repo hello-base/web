@@ -92,6 +92,7 @@ class Base(Configuration):
         'floppyforms',
         'gunicorn',
         'haystack',
+        'pipeline',
         's3_folder_storage',
         'south',
         'storages',
@@ -114,6 +115,7 @@ class Base(Configuration):
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
         'django.contrib.staticfiles.finders.FileSystemFinder',
+        'pipeline.finders.PipelineFinder',
     )
 
     # Django Authentication (OAuth, etc.)
