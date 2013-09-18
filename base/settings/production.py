@@ -116,7 +116,7 @@ class Production(Settings):
     STATICFILES_DIRS = (
         os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
     )
-    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+    STATICFILES_STORAGE = 'components.storage.S3PipelineStorage'
 
     # Django Authentication (OAuth, etc.)
     OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/authorize/'
@@ -155,3 +155,14 @@ class Production(Settings):
     if 'SENTRY_DSN' in os.environ:
         # Add raven to the list of installed apps
         INSTALLED_APPS = Settings.INSTALLED_APPS + ['raven.contrib.django', ]
+
+    # Further StaticFiles Nonsense
+    PIPELINE_ENABLED = True
+    CACHES['staticfiles'] = {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(Settings.SITE_ROOT, 'static.cache'),
+        'TIMEOUT': 100 * 365 * 24 * 60 * 60, # A hundred years!
+        'OPTIONS': {
+            'MAX_ENTRIES': 100 * 1000
+        }
+    }
