@@ -83,6 +83,7 @@ class IdolDetailView(PrefetchRelatedMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(IdolDetailView, self).get_context_data(**kwargs)
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        context['memberships'] = self.object.memberships.select_related('group')[1:]
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
         return context
 
