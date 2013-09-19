@@ -1,0 +1,260 @@
+.profile {
+    ul {
+        @include reset-box-model;
+        @include reset-list-style;
+    }
+}
+
+.metadata-names {
+  padding-bottom: 1em;
+
+  h1, p {
+    margin: 0;
+    font-weight: 200;
+  }
+  .romanized-name {
+    font-size: 48px;
+  }
+  .name {
+    font-size: 18px;
+  }
+  .standing {
+    font-size: 14px;
+    font-style: italic;
+  }
+}
+
+//
+.section-vitals {
+    @include span-columns(3);
+
+    .metadata-vitals {
+        font-size: 13px;
+
+        li {
+            padding-top: 0.5em; padding-bottom: 0.5em;
+
+            border-bottom: 1px solid #F7F7F7;
+            font-weight: 700;
+            text-align: right;
+        }
+        li:last-child { border-bottom: none; }
+        span {
+            color: rgba(#000, 0.5);
+            float: left;
+            font-weight: 300;
+        }
+    }
+}
+
+
+
+.releases {
+  border-top: 1px solid $brand-paleGrey;
+  // border-bottom: 1px solid $brand-paleGrey;
+}
+.releases-singles,
+.releases-albums {
+  @include clearfix;
+  padding-top: 24px; padding-bottom: 24px;
+}
+.releases-albums { border-top: 1px solid $brand-paleGrey; }
+
+.release {
+  @include clearfix;
+  @include span-columns(6, 12);
+  @include nth-omega(2n);
+  min-height: 88px;
+
+  .romanized-name {
+    line-height: $headings-line-height;
+    font-size: 16px;
+    font-style: italic;
+  }
+  .name {
+    display: block;
+    color: $brand-lightGrey;
+    font-size: 12px;
+  }
+
+}
+.release-image {
+  @include span-columns(1, 6);
+  height: 65px;
+
+  .ss-icon {
+    font-size: 24px;
+    width: 30px; height: 30px;
+  }
+}
+.release-meta {
+  @include span-columns(5 omega, 6);
+  padding-top: 6px;
+}
+
+
+.release-date {
+  color: $brand-medGrey;
+  font-size: 12px;
+}
+
+.release-participants {
+  font-size: 13px;
+}
+
+
+
+// .membership(s)
+section.memberships {
+  @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
+  padding: 24px 0 36px;
+}
+.membership { @include clearfix(); }
+
+.romanized-name {
+  display: block;
+  line-height: $headings-line-height;
+  font-size: 16px;
+}
+.name {
+  display: block;
+  color: $brand-lightGrey;
+  font-size: 12px;
+}
+
+.membership-primary .group-image {
+  @include span-columns(4, 12);
+  height: 174px;
+}
+.membership-list .group-image {
+  @include span-columns(1, 6);
+  height: 37px;
+}
+
+.membership-primary,
+.membership-secondary {
+  @include clearfix;
+}
+.membership-section-title { @include span-columns(2 omega, 12); }
+.membership-list {
+  @include clearfix;
+  @include span-columns(10, 12);
+}
+
+.membership {
+  @include span-columns(5, 10);
+  @include nth-omega(2n);
+}
+
+.membership {
+  padding-bottom: 12px;
+}
+
+.membership-primary {
+  margin-bottom: 24px;
+}
+.membership-section-title {
+  margin: 0;
+  text-align: right;
+}
+
+.membership-primary .group-metadata { @include span-columns(6, 12); }
+
+
+.tenure {
+  color: $brand-lightGrey;
+  font-size: 12px;
+}
+
+
+
+
+.participation {
+  @include span-columns(4, 12);
+  @include nth-omega(3n);
+}
+
+.participation {
+  border: 1px solid $brand-paleGrey;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+section.participations {
+  padding: 24px 0 48px;
+}
+
+.participation-list {
+  @include clearfix;
+  @include reset-box-model;
+  @include reset-list-style;
+
+  // .ss-icon, .count strong { font-size: 36px; }
+  // .count {
+  //   position: relative; top: -4px;
+
+  //   font-size: 24px;
+  //   font-weight: 300;
+  //   letter-spacing: -1px; }
+
+  //   h2 {
+  //       margin-top: 2px;
+
+  //       font-size: 11px;
+  //       font-weight: 600;
+  //       font-family: $font-family-secondary;
+  //       text-transform: uppercase;
+  //   }
+
+  //   .latest-image {
+  //   }
+
+  //   .latest {
+  //       color: #8C989C;
+  //       font-size: 12px;
+  //   }
+  //   .latest a {
+  //       display: block;
+  //       font-size: 13px;
+  //       font-weight: 700;
+  //   }
+
+}
+
+.participation {
+  @include position(relative);
+  min-height: 214px;
+
+  a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .statistic {
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid $brand-paleGrey;
+    line-height: 1;
+    height: 96px;
+  }
+  .count {
+    font-size: 48px;
+    font-weight: bold;
+  }
+  .ss-icon {
+    @include position(absolute, 32px 0 0 0);
+    padding-left: 1px;
+    color: $brand-lightGrey;
+  }
+  .type {
+    @include position(relative, -4px 0 0 0);
+    color: $brand-lightGrey;
+    font-family: $font-family-secondary;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+}
+
+.participation .latest-heading { @include span-columns(1, 4); }
+.participation .latest { @include span-columns(3 omega, 4); }

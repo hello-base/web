@@ -4,3 +4,35 @@
   max-width: 100%; // Part 1: Set a maximum relative to the parent.
   height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching.
 }
+
+// A convenience function for setting `position:`.
+// NOTE: A unitless value is equal to it not existing in the rendered
+// property call.
+@mixin position($position: relative, $coordinates: 0 0 0 0) {
+  @if type-of($position) == list {
+    $coordinates: $position;
+    $position: relative;
+  }
+
+  $top: nth($coordinates, 1);
+  $right: nth($coordinates, 2);
+  $bottom: nth($coordinates, 3);
+  $left: nth($coordinates, 4);
+
+  position: $position;
+
+  @if not(unitless($top)) { top: $top; }
+  @if not(unitless($right)) { right: $right; }
+  @if not(unitless($bottom)) { bottom: $bottom; }
+  @if not(unitless($left)) { left: $left; }
+}
+
+
+// A convenience mixin for vertically and horizontally centering any
+// element with a parent container.
+@mixin absolute-center() {
+  @include position(absolute, 0px 0px 0px 0px);
+  display: block;
+  margin: auto;
+  overflow: hidden;
+}
