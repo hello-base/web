@@ -24,6 +24,18 @@ class GroupDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(GroupDetailView, self).get_context_data(**kwargs)
+
+        # We need to split memberships into four groups. The active
+        # leader, the active members, the former members and the
+        # former leaders.
+        memberships = self.object.memberships.order_by('started').select_related('idol', 'group')
+        context['memberships'] = {
+            'active': [m for m in memberships if m.ended is None and m.is_leader == False],
+            'inactive': [m for m in memberships if m.ended],
+            'leader': [m for m in memberships if m.ended is None and m.is_leader][0],
+            'leaders': [m for m in memberships if m.ended if m.is_leader],
+        }
+
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
         return context
