@@ -47,50 +47,6 @@
     }
 }
 
-.section-participation {
-}
-
-.metadata-participation {
-    @include reset-box-model;
-    @include reset-list-style;
-
-    li {
-        @include clearfix;
-        padding: 12px 0;
-    }
-
-    .count {
-        position: relative; top: -4px;
-
-        font-size: 24px;
-        font-weight: 300;
-        letter-spacing: -1px; }
-    .count strong { font-size: 30px; }
-
-    h2 {
-        margin-top: 2px;
-
-        font-size: 11px;
-        font-weight: 600;
-        text-align: right;
-        text-transform: uppercase;
-    }
-
-    .latest-image {
-    }
-
-    .latest {
-        color: #8C989C;
-        font-size: 12px;
-    }
-    .latest a {
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-}
-
 .section-metadata {
 }
 
@@ -214,4 +170,56 @@ section.memberships {
 .tenure {
   color: $brand-lightGrey;
   font-size: 12px;
+}
+
+
+
+
+.participation {
+  @include span-columns(4, 12);
+  @include nth-omega(3n);
+}
+
+.section-participation {
+}
+
+.metadata-participation {
+    @include reset-box-model;
+    @include reset-list-style;
+
+    li {
+        @include clearfix;
+        padding: 12px 0;
+    }
+
+    .count {
+        position: relative; top: -4px;
+
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: -1px; }
+    .count strong { font-size: 30px; }
+
+    h2 {
+        margin-top: 2px;
+
+        font-size: 11px;
+        font-weight: 600;
+        font-family: $font-family-secondary;
+        text-transform: uppercase;
+    }
+
+    .latest-image {
+    }
+
+    .latest {
+        color: #8C989C;
+        font-size: 12px;
+    }
+    .latest a {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
 }

@@ -30,8 +30,6 @@
 
 <section class="memberships">
     <div class="container">
-        {# <h2 class="section-title">Memberships <span class="count">{{ object.memberships.count }}</span></h2> #}
-
         {% with object.primary_membership as primary %}
         <div class="membership-primary">
             <div class="membership-section-title"><span class="pill">Primary Focus</span></div>
@@ -42,8 +40,8 @@
                 <span class="name">{{ primary.group.name }}</span>
                 <a href="{{ primary.group.get_absolute_url }}"><span class="romanized-name">{{ primary.group }}</span></a>
                 <span class="tenure">{{ primary.started }}&ndash;{% if primary.ended %}{{ primary.ended }}{% else %}Present{% endif %} <span class="tenure in-days">({{ primary.tenure_in_days }} days)</span></span>
-            </div>
-        </div>
+            </div><!-- .group-metadata -->
+        </div><!-- .membership-primary -->
         {% endwith %}
         {% if memberships %}
         <div class="membership-secondary">
@@ -57,25 +55,24 @@
                     <span class="name">{{ membership.group.name }}</span>
                     <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
                     <span class="tenure">{{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %} <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span></span>
-                </li>
+                </li><!-- .membership -->
             {% endfor %}
-            </ul>
-        </div>
+            </ul><!-- .membership-list -->
+        </div><!-- .membership-secondary -->
         {% else %}
         {# @TODO: Empty state. #}
         {% endif %}
-    </div>
-</section>
+    </div><!-- .container -->
+</section><!-- .memberships -->
 
 <div class="section-metadata">
     <div class="container">
         <div class="section-participation">
             <h2 class="section-title">Contributions to Hello! Project</h2>
             <ul class="metadata-participation">
-                <li class="group-participation">
+                <li class="participation group-participation">
                     <span class="count"><strong>{{ object.memberships.count }}</strong> groups</span>
                     <h2>Primary Group &rarr;</h2>
-                    <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
                     <div class="latest">
                         {% with object.primary_membership as primary %}
                         <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a> Member
@@ -95,10 +92,9 @@
                         {% endwith %}
                     </div>
                 </li><!-- .group-participation -->
-                <li class="single-participation">
+                <li class="participation single-participation">
                     <span class="count"><strong>{{ singles|length }}</strong> singles</span>
                     <h2>{% if object.primary_membership.is_active %}Latest Single{% else %}Last Single{% endif %} &rarr;</h2>
-                    <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
                     <div class="latest">
                         {% with object.latest_single as single %}
                         <a href="{{ single.get_absolute_url }}">{{ single }}</a>
@@ -106,10 +102,9 @@
                         {% endwith %}
                     </div>
                 </li><!-- .single-participation -->
-                <li class="album-participation">
+                <li class="participation album-participation">
                     <span class="count"><strong>{{ albums|length }}</strong> albums</span>
                     <h2>{% if object.primary_membership.is_active %}Latest Album{% else %}Last Album{% endif %} &rarr;</h2>
-                    <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
                     <div class="latest">
                         {% with object.latest_album as album %}
                         <a href="{{ album.get_absolute_url }}">{{ album }}</a>
