@@ -70,12 +70,16 @@
         <h2 class="section-title">Contributions to Hello! Project</h2>
         <ul class="participation-list">
             <li class="participation group-participation">
-                <span class="ss-icon ss-usergroup"></span> <span class="type">groups</span>
-                <span class="count"><strong>{{ object.memberships.count }}</strong></span>
-                <h2><span class="pill">Primary</span></h2>
+                <div class="statistic">
+                    <span class="count">{{ object.memberships.count }}</span>
+                    <span class="ss-icon ss-usergroup"></span> <span class="type">groups</span>
+                </div>
+                <div class="latest-heading"><span class="pill">Main</span></div>
                 <div class="latest">
                     {% with object.primary_membership as primary %}
-                    <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a> Member
+                    <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a>
+                    <div class="subtext">
+                    Member
                     {% if primary.is_active %}
                         since {{ primary.started|date:"F j, Y" }}
                     {% else %}
@@ -89,28 +93,37 @@
                             from {{ primary.leadership_started|date:"F j, Y"}}%ndash;{{ primary.leadership_ended|date:"F j, Y" }}
                         {% endif %}
                     {% endif %}
+                    </div>
                     {% endwith %}
                 </div>
             </li><!-- .group-participation -->
             <li class="participation single-participation">
-                <span class="ss-icon ss-music"></span> <span class="type">singles</span>
-                <span class="count"><strong>{{ singles|length }}</strong></span>
-                <h2><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></h2>
+                <div class="statistic">
+                    <span class="count">{{ singles|length }}</span>
+                    <span class="ss-icon ss-music"></span> <span class="type">singles</span>
+                </div>
+                <div class="latest-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
                 <div class="latest">
                     {% with object.latest_single as single %}
                     <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-                    Released {{ single.released|date:"Y/m/d" }} ({{ single.released|timesince }} ago){#  in {{ single.editions.count }} edition{{ single.editions.count|pluralize }} #}
+                    <div class="subtext">
+                        Released {{ single.released|date:"Y/m/d" }} ({{ single.released|timesince }} ago) in {{ single.editions.count }} edition{{ single.editions.count|pluralize }}
+                    </div>
                     {% endwith %}
                 </div>
             </li><!-- .single-participation -->
             <li class="participation album-participation">
-                <span class="ss-icon ss-music"></span> <span class="type">albums</span>
-                <span class="count"><strong>{{ albums|length }}</strong></span>
-                <h2><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></h2>
+                <div class="statistic">
+                    <span class="count">{{ albums|length }}</span>
+                    <span class="ss-icon ss-music"></span> <span class="type">albums</span>
+                </div>
+                <div class="latest-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
                 <div class="latest">
                     {% with object.latest_album as album %}
                     <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-                    Released {{ album.released|date:"Y/m/d" }} ({{ album.released|timesince }} ago){#  in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
+                    <div class="subtext">
+                        Released {{ album.released|date:"Y/m/d" }} ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }}
+                    </div>
                     {% endwith %}
                 </div>
             </li><!-- .album-participation -->

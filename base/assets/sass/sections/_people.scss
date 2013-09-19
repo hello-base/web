@@ -190,33 +190,71 @@ section.participations {
   @include reset-list-style;
 
   // .ss-icon, .count strong { font-size: 36px; }
-  .count {
-    position: relative; top: -4px;
+  // .count {
+  //   position: relative; top: -4px;
 
-    font-size: 24px;
-    font-weight: 300;
-    letter-spacing: -1px; }
+  //   font-size: 24px;
+  //   font-weight: 300;
+  //   letter-spacing: -1px; }
 
-    h2 {
-        margin-top: 2px;
+  //   h2 {
+  //       margin-top: 2px;
 
-        font-size: 11px;
-        font-weight: 600;
-        font-family: $font-family-secondary;
-        text-transform: uppercase;
-    }
+  //       font-size: 11px;
+  //       font-weight: 600;
+  //       font-family: $font-family-secondary;
+  //       text-transform: uppercase;
+  //   }
 
-    .latest-image {
-    }
+  //   .latest-image {
+  //   }
 
-    .latest {
-        color: #8C989C;
-        font-size: 12px;
-    }
-    .latest a {
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-    }
+  //   .latest {
+  //       color: #8C989C;
+  //       font-size: 12px;
+  //   }
+  //   .latest a {
+  //       display: block;
+  //       font-size: 13px;
+  //       font-weight: 700;
+  //   }
 
 }
+
+.participation {
+  @include position(relative);
+  min-height: 214px;
+
+  a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .statistic {
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid $brand-paleGrey;
+    line-height: 1;
+    height: 96px;
+  }
+  .count {
+    font-size: 48px;
+    font-weight: bold;
+  }
+  .ss-icon {
+    @include position(absolute, 32px 0 0 0);
+    padding-left: 1px;
+    color: $brand-lightGrey;
+  }
+  .type {
+    @include position(relative, -4px 0 0 0);
+    color: $brand-lightGrey;
+    font-family: $font-family-secondary;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+}
+
+.participation .latest-heading { @include span-columns(1, 4); }
+.participation .latest { @include span-columns(3 omega, 4); }
