@@ -172,8 +172,12 @@ class Edition(TimeStampedModel):
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
-        kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
-        return self._default_manager.filter(**kwargs)[0]
+        try:
+            kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
+            edition = self._default_manager.filter(**kwargs)[0]
+        except IndexError:
+            edition = self._default_manager.none()
+        return edition
 
     def _render_release_date(self):
         return self._get_regular_edition().released
