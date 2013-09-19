@@ -36,6 +36,7 @@ class Editor(AbstractBaseUser):
     # Authentication-/Authorization-related fields.
     access_token = models.CharField(blank=True)
     refresh_token = models.CharField(blank=True)
+    token_expiration = models.IntegerField(blank=True)
 
     # Editor status booleans.
     is_active = models.BooleanField(default=False)
