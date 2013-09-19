@@ -1,15 +1,17 @@
 @import "compass/css3/user-interface";
 
 // Layout & Widths
-.editions { @include span-columns(9 , 12); }
-.participations { @include span-columns(3 omega, 12); }
+.music-profile {
+  .editions { @include span-columns(9 , 12); }
+  .participations { @include span-columns(3 omega, 12); }
 
-.release-name { @include span-columns(9, 12); }
-.release-metadata { @include span-columns(3 omega, 12); }
+  .release-name { @include span-columns(9, 12); }
+  .release-metadata { @include span-columns(3 omega, 12); }
 
-.edition-image { @include span-columns(2, 9); height: 146px; }
-.edition-contents { @include span-columns(7 omega, 9); }
-.edition-contents table { width: 100%; }
+  .edition-image { @include span-columns(2, 9); height: 146px; }
+  .edition-contents { @include span-columns(7 omega, 9); }
+  .edition-contents table { width: 100%; }
+}
 
 //
 .editions {

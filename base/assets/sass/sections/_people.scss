@@ -47,12 +47,6 @@
     }
 }
 
-.section-metadata {
-}
-
-
-
-
 
 
 .releases {
@@ -180,25 +174,28 @@ section.memberships {
   @include nth-omega(3n);
 }
 
-.section-participation {
+.participation {
+  border: 1px solid $brand-paleGrey;
+  border-radius: 4px;
+  padding: 24px;
 }
 
-.metadata-participation {
-    @include reset-box-model;
-    @include reset-list-style;
+section.participations {
+  padding: 24px 0 48px;
+}
 
-    li {
-        @include clearfix;
-        padding: 12px 0;
-    }
+.participation-list {
+  @include clearfix;
+  @include reset-box-model;
+  @include reset-list-style;
 
-    .count {
-        position: relative; top: -4px;
+  // .ss-icon, .count strong { font-size: 36px; }
+  .count {
+    position: relative; top: -4px;
 
-        font-size: 24px;
-        font-weight: 300;
-        letter-spacing: -1px; }
-    .count strong { font-size: 30px; }
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: -1px; }
 
     h2 {
         margin-top: 2px;

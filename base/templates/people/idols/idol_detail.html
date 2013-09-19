@@ -65,57 +65,58 @@
     </div><!-- .container -->
 </section><!-- .memberships -->
 
-<div class="section-metadata">
+<section class="participations">
     <div class="container">
-        <div class="section-participation">
-            <h2 class="section-title">Contributions to Hello! Project</h2>
-            <ul class="metadata-participation">
-                <li class="participation group-participation">
-                    <span class="count"><strong>{{ object.memberships.count }}</strong> groups</span>
-                    <h2>Primary Group &rarr;</h2>
-                    <div class="latest">
-                        {% with object.primary_membership as primary %}
-                        <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a> Member
-                        {% if primary.is_active %}
-                            since {{ primary.started|date:"F j, Y" }}
-                        {% else %}
-                            from {{ primary.started|date:"F j, Y" }}&ndash;{{ primary.ended|date:"F j, Y" }}
-                        {% endif %}
+        <h2 class="section-title">Contributions to Hello! Project</h2>
+        <ul class="participation-list">
+            <li class="participation group-participation">
+                <span class="ss-icon ss-usergroup"></span> <span class="type">groups</span>
+                <span class="count"><strong>{{ object.memberships.count }}</strong></span>
+                <h2><span class="pill">Primary</span></h2>
+                <div class="latest">
+                    {% with object.primary_membership as primary %}
+                    <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a> Member
+                    {% if primary.is_active %}
+                        since {{ primary.started|date:"F j, Y" }}
+                    {% else %}
+                        from {{ primary.started|date:"F j, Y" }}&ndash;{{ primary.ended|date:"F j, Y" }}
+                    {% endif %}
 
-                        {% if primary.is_leader %} and leader
-                            {% if not primary.leadership_ended %}
-                                since {{ primary.leadership_started|date:"F j, Y" }}
-                            {% else %}
-                                from {{ primary.leadership_started|date:"F j, Y"}}%ndash;{{ primary.leadership_ended|date:"F j, Y" }}
-                            {% endif %}
+                    {% if primary.is_leader %} and leader
+                        {% if not primary.leadership_ended %}
+                            since {{ primary.leadership_started|date:"F j, Y" }}
+                        {% else %}
+                            from {{ primary.leadership_started|date:"F j, Y"}}%ndash;{{ primary.leadership_ended|date:"F j, Y" }}
                         {% endif %}
-                        {% endwith %}
-                    </div>
-                </li><!-- .group-participation -->
-                <li class="participation single-participation">
-                    <span class="count"><strong>{{ singles|length }}</strong> singles</span>
-                    <h2>{% if object.primary_membership.is_active %}Latest Single{% else %}Last Single{% endif %} &rarr;</h2>
-                    <div class="latest">
-                        {% with object.latest_single as single %}
-                        <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-                        Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago){#  in {{ single.editions.count }} edition{{ single.editions.count|pluralize }} #}
-                        {% endwith %}
-                    </div>
-                </li><!-- .single-participation -->
-                <li class="participation album-participation">
-                    <span class="count"><strong>{{ albums|length }}</strong> albums</span>
-                    <h2>{% if object.primary_membership.is_active %}Latest Album{% else %}Last Album{% endif %} &rarr;</h2>
-                    <div class="latest">
-                        {% with object.latest_album as album %}
-                        <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-                        Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago){#  in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
-                        {% endwith %}
-                    </div>
-                </li><!-- .album-participation -->
-            </ul><!-- .metadata-participation -->
-        </div><!-- .section-participation -->
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </li><!-- .group-participation -->
+            <li class="participation single-participation">
+                <span class="ss-icon ss-music"></span> <span class="type">singles</span>
+                <span class="count"><strong>{{ singles|length }}</strong></span>
+                <h2><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></h2>
+                <div class="latest">
+                    {% with object.latest_single as single %}
+                    <a href="{{ single.get_absolute_url }}">{{ single }}</a>
+                    Released {{ single.released|date:"Y/m/d" }} ({{ single.released|timesince }} ago){#  in {{ single.editions.count }} edition{{ single.editions.count|pluralize }} #}
+                    {% endwith %}
+                </div>
+            </li><!-- .single-participation -->
+            <li class="participation album-participation">
+                <span class="ss-icon ss-music"></span> <span class="type">albums</span>
+                <span class="count"><strong>{{ albums|length }}</strong></span>
+                <h2><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></h2>
+                <div class="latest">
+                    {% with object.latest_album as album %}
+                    <a href="{{ album.get_absolute_url }}">{{ album }}</a>
+                    Released {{ album.released|date:"Y/m/d" }} ({{ album.released|timesince }} ago){#  in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
+                    {% endwith %}
+                </div>
+            </li><!-- .album-participation -->
+        </ul><!-- .participation-list -->
     </div><!-- .container -->
-</div><!-- .section-metadata -->
+</div><!-- .participations -->
 
 <section class="releases">
     <div class="container">
