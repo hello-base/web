@@ -20,7 +20,7 @@ def deploy():
     print('All done!')
 
 
-@invoke.task
+@task
 def compile():
     # Compile the CSS.
     print('- Run the stylesheets through Compass using "Production" settings...')
@@ -31,7 +31,7 @@ def compile():
     run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
 
 
-@invoke.task
+@task
 def run():
     # Use Foreman to start all the development processes.
     run('foreman start -f Procfile.dev', pty=True)
