@@ -53,49 +53,75 @@
 <section class="memberships">
     <div class="container">
         {% if memberships.active %}
-        <div class="active-leader">
+        <div class="actives">
+            <div class="active-leader">
             {% with memberships.leader as member %}
-            <span class="name">{{ member.idol.name }}</span>
-            <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                <span class="name">{{ member.idol.name }}</span>
+                <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
             {% endwith %}
-        </div>
-        <div class="active-members">
-            <div class="membership-section-title"><span class="pill">Current Members</span></div>
-            <ul class="membership-list active-members">
-            {% for member in memberships.active %}
-                <li class="membership">
-                    <span class="name">{{ member.idol.name }}</span>
-                    <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                    Since {{ member.started }}
-                </li>
-            {% endfor %}
-            </ul>
+            </div>
+            <div class="active-members">
+                <div class="membership-section-title"><span class="pill">Current Members</span></div>
+                <ul class="membership-list active-members">
+                {% for member in memberships.active %}
+                    <li class="membership">
+                        <span class="name">{{ member.idol.name }}</span>
+                        <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                        Since {{ member.started }}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
         {% endif %}
         {% if memberships.inactive %}
-        {% if memberships.leaders %}
-        <div class="inactive-leaders">
-            <ul class="membership-list">
+        <div class="inactives">
+            {% if memberships.leaders %}
+            {% if memberships.leaders|length == 1 %}
+            <div class="inactive-leader">
             {% for member in memberships.leaders %}
-                <li class="membership">
-                    <span class="name">{{ member.idol.name }}</span>
-                    <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                </li>
+                <span class="name">{{ member.idol.name }}</span>
+                <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                {{ member.started }}&ndash;{{ member.ended }}
             {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-        <div class="inactive-members">
-            <div class="membership-section-title"><span class="pill">Former Members</span></div>
-            <ul class="membership-list">
-            {% for member in memberships.inactive %}
-                <li class="membership">
-                    <span class="name">{{ member.idol.name }}</span>
-                    <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                    {{ member.started }}&ndash;{{ member.ended }}
-                </li>
-            {% endfor %}
-            </ul>
+            </div>
+            {% else %}
+            <div class="inactive-leaders">
+                <ul class="membership-list">
+                {% for member in memberships.leaders %}
+                    <li class="membership">
+
+
+                        <span class="name">{{ member.idol.name }}</span>
+                        <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                        {{ member.started }}&ndash;{{ member.ended }}
+
+                        <div class="graph">
+                        </div>
+
+                        {{ member.tenure_in_days }}
+                        {{ member.leadership_tenure }}
+                        {{ member.leadership_tenure_in_days }}
+                        {{ member.days_before_becoming_leader }}
+
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endif %}
+            <div class="inactive-members">
+                <div class="membership-section-title"><span class="pill">Former Members</span></div>
+                <ul class="membership-list">
+                {% for member in memberships.inactive %}
+                    <li class="membership">
+                        <span class="name">{{ member.idol.name }}</span>
+                        <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                        {{ member.started }}&ndash;{{ member.ended }}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
         {% endif %}
     </div>
