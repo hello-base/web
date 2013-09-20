@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
@@ -32,7 +34,8 @@ urlpatterns = patterns('',
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
 
-    # Robots & Humans
+    # Favicons, Robots & Humans
+    url(r'^favicon\.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
 )
