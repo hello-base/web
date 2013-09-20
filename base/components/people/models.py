@@ -173,6 +173,9 @@ class Membership(models.Model):
             return True
         return False
 
+    def days_before_starting(self):
+        return (self.started - self.group.started).days
+
     def tenure_in_days(self):
         if self.ended:
             return (self.ended - self.started).days

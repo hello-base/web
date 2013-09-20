@@ -271,6 +271,10 @@ section.participations {
     @include reset-list-style;
   }
 
+  .memberships {
+    .actives {}
+    .inactives { border-top: 1px solid $brand-paleGrey; }
+  }
   .membership-section-title { @include span-columns(2 omega, 12); }
 }
 
@@ -285,6 +289,18 @@ section.participations {
 }
 .inactive-leaders {
   @include clearfix;
+  margin: 24px 0;
+
+  .membership { position: relative; }
+  .bar { position: relative; }
+
+  .membership-names { @include span-columns(2, 12); }
+  .membership-graph {
+    @include span-columns(8, 12);
+    border: 1px solid $brand-paleGrey;
+    padding: 2px;
+  }
+  .membership-numbers { @include span-columns(2 omega, 12); }
 }
 .inactive-members {
   @include clearfix;

@@ -90,20 +90,33 @@
                 <ul class="membership-list">
                 {% for member in memberships.leaders %}
                     <li class="membership">
-
-
+                        <div class="membership-names">
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
                         {{ member.started }}&ndash;{{ member.ended }}
-
-                        <div class="graph">
+                        </div>
+                        <div class="membership-graph">
+                            <div class="bar" style="
+                                margin-left: {% widthratio member.days_before_starting object.age_in_days 636 %}px;
+                                width: {% widthratio member.tenure_in_days object.age_in_days 636 %}px;
+                                background-color: grey;
+                            ">
+                                &nbsp;
+                            </div>
+                            <div class="bar" style="
+                                margin-left: {% widthratio member.days_before_becoming_leader object.age_in_days 636 %}px;
+                                width: {% widthratio member.leadership_tenure_in_days object.age_in_days 636 %}px;
+                                background-color: black;
+                            ">
+                                &nbsp;
+                            </div>
                         </div>
 
-                        {{ member.tenure_in_days }}
-                        {{ member.leadership_tenure }}
-                        {{ member.leadership_tenure_in_days }}
-                        {{ member.days_before_becoming_leader }}
-
+                        <div class="membership-stats">
+                            {{ member.days_before_starting }}
+                            {{ member.tenure_in_days }}
+                            {{ member.leadership_tenure_in_days }}
+                        </div>
                     </li>
                 {% endfor %}
                 </ul>
