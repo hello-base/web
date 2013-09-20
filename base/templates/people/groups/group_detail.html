@@ -113,6 +113,7 @@
                         <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                     </div>
                     <div class="release-meta">
+                        {{ release.number }}
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
                         <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
@@ -132,6 +133,7 @@
                         <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                     </div>
                     <div class="release-meta">
+                        {{ release.number }}
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
                         <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
