@@ -1,4 +1,5 @@
 {% extends "site_base.html" %}
+{% load humanize %}
 {% load typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
@@ -88,6 +89,12 @@
             {% else %}
             <div class="inactive-leaders">
                 <ul class="membership-list">
+                    <li class="membership-header">
+                        <div class="membership-graph">
+                            <span class="graph-started">{{ object.started|date:"Y/m/d" }}</span>
+                            <span class="graph-ended">{% if object.ended %}{{ object.ended }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
+                        </div>
+                    </li>
                 {% for member in memberships.leaders %}
                     <li class="membership">
                         <div class="membership-names">
@@ -103,12 +110,13 @@
                                 margin-left: {% widthratio member.days_before_becoming_leader object.age_in_days 554 %}px;
                                 width: {% widthratio member.leadership_tenure_in_days object.age_in_days 554 %}px;
                             "></div>
+                            <span class="leadership-tenure-count" style="
+                                margin-left: {% widthratio member.days_before_ending object.age_in_days 554 %}px;
+                            ">{{ member.leadership_tenure_in_days|intcomma }}</span>
                         </div>
 
                         <div class="membership-stats">
                             <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
-                            {{ member.tenure_in_days }}
-                            {{ member.leadership_tenure_in_days }}
                         </div>
                     </li>
                 {% endfor %}
