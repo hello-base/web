@@ -1,9 +1,10 @@
 from django.views.generic import ListView, DetailView, TemplateView
 
 from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
+from ohashi.shortcuts import get_object_or_none
 
 # from components.merchandise.music import constants as music
-from .models import Group, Idol, Staff
+from .models import Group, Idol, Membership, Staff
 # from .utils import attach_primary_groups
 
 
@@ -31,9 +32,9 @@ class GroupDetailView(DetailView):
         memberships = self.object.memberships.order_by('started').select_related('idol', 'group')
         context['memberships'] = {
             'active': [m for m in memberships if m.ended is None and m.is_leader == False],
-            'inactive': [m for m in memberships if m.ended],
-            'leader': [m for m in memberships if m.ended is None and m.is_leader][0],
-            'leaders': [m for m in memberships if m.ended if m.is_leader],
+            'inactive': [m for m in memberships if m.ended and m.is_leader == False],
+            'leader': get_object_or_none(Membership.objects.select_related('idol'), group=self.object.pk, ended__isnull=True, is_leader=True),
+            'leaders': [m for m in memberships if m.ended and m.is_leader],
         }
 
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
