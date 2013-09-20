@@ -5,6 +5,7 @@
 {% block meta %}
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
+{% block body-class %}profile group-profile{% endblock %}
 {% block content %}
 
 {% if object.get_status_display == "Other" %}
@@ -22,17 +23,83 @@
 
 <div class="latest-releases">
     <div class="container">
-        {% with object.latest_album as album %}
-        <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-        {{ album.editions.count }}
-        {% endwith %}
-
-        {% with object.latest_single as single %}
-        <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-        {{ single.editions.count }}
-        {% endwith %}
+        <div class="release">
+            {% with object.latest_album as release %}
+            <div class="release-image">
+                <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
+            </div>
+            <div class="release-meta">
+                <span class="name">{{ release.name }}</span>
+                <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+            </div>
+            {% endwith %}
+        </div>
+        <div class="release">
+            {% with object.latest_single as release %}
+            <div class="release-image">
+                <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
+            </div>
+            <div class="release-meta">
+                <span class="name">{{ release.name }}</span>
+                <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+            </div>
+            {% endwith %}
+        </div>
     </div>
 </div>
+
+<section class="memberships">
+    <div class="container">
+        {% if memberships.active %}
+        <div class="active-leader">
+            {% with memberships.leader as member %}
+            <span class="name">{{ member.idol.name }}</span>
+            <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+            {% endwith %}
+        </div>
+        <div class="active-members">
+            <div class="membership-section-title"><span class="pill">Current Members</span></div>
+            <ul class="membership-list active-members">
+            {% for member in memberships.active %}
+                <li class="membership">
+                    <span class="name">{{ member.idol.name }}</span>
+                    <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                    Since {{ member.started }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if memberships.inactive %}
+        {% if memberships.leaders %}
+        <div class="inactive-leaders">
+            <ul class="membership-list">
+            {% for member in memberships.leaders %}
+                <li class="membership">
+                    <span class="name">{{ member.idol.name }}</span>
+                    <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="inactive-members">
+            <div class="membership-section-title"><span class="pill">Former Members</span></div>
+            <ul class="membership-list">
+            {% for member in memberships.inactive %}
+                <li class="membership">
+                    <span class="name">{{ member.idol.name }}</span>
+                    <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                    {{ member.started }}&ndash;{{ member.ended }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</section>
 
 <section class="releases">
     <div class="container">

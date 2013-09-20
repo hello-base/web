@@ -122,44 +122,44 @@ section.memberships {
   font-size: 12px;
 }
 
-.membership-primary .group-image {
-  @include span-columns(4, 12);
-  height: 174px;
-}
-.membership-list .group-image {
-  @include span-columns(1, 6);
-  height: 37px;
-}
+.idol-profile {
+  .membership-primary .group-image {
+    @include span-columns(4, 12);
+    height: 174px;
+  }
+  .membership-list .group-image {
+    @include span-columns(1, 6);
+    height: 37px;
+  }
 
-.membership-primary,
-.membership-secondary {
-  @include clearfix;
-}
-.membership-section-title { @include span-columns(2 omega, 12); }
-.membership-list {
-  @include clearfix;
-  @include span-columns(10, 12);
-}
+  .membership-primary,
+  .membership-secondary {
+    @include clearfix;
+  }
+  .membership-section-title { @include span-columns(2 omega, 12); }
+  .membership-list {
+    @include clearfix;
+    @include span-columns(10, 12);
+  }
+  .membership {
+    @include span-columns(5, 10);
+    @include nth-omega(2n);
+  }
 
-.membership {
-  @include span-columns(5, 10);
-  @include nth-omega(2n);
-}
+  .membership {
+    padding-bottom: 12px;
+  }
 
-.membership {
-  padding-bottom: 12px;
-}
+  .membership-primary {
+    margin-bottom: 24px;
+  }
+  .membership-section-title {
+    margin: 0;
+    text-align: right;
+  }
 
-.membership-primary {
-  margin-bottom: 24px;
+  .membership-primary .group-metadata { @include span-columns(6, 12); }
 }
-.membership-section-title {
-  margin: 0;
-  text-align: right;
-}
-
-.membership-primary .group-metadata { @include span-columns(6, 12); }
-
 
 .tenure {
   color: $brand-lightGrey;
@@ -170,8 +170,8 @@ section.memberships {
 
 
 .participation {
-  @include span-columns(4, 12);
-  @include nth-omega(3n);
+  @include span-columns(3, 12);
+  @include nth-omega(4n);
 }
 
 .participation {
@@ -256,5 +256,42 @@ section.participations {
   }
 }
 
-.participation .latest-heading { @include span-columns(1, 4); }
-.participation .latest { @include span-columns(3 omega, 4); }
+// .participation .latest-heading { @include span-columns(1, 4); }
+// .participation .latest { @include span-columns(3 omega, 4); }
+
+
+
+
+// Groups
+.group-profile {
+  .membership-list,
+  .release-list {
+    @include clearfix;
+    @include reset-box-model;
+    @include reset-list-style;
+  }
+
+  .membership-section-title { @include span-columns(2 omega, 12); }
+}
+
+.active-members {
+  @include clearfix;
+
+  .membership-list { @include span-columns(10, 12); }
+  .membership {
+    @include span-columns(5, 10);
+    @include nth-omega(2n);
+  }
+}
+.inactive-leaders {
+  @include clearfix;
+}
+.inactive-members {
+  @include clearfix;
+
+  .membership-list { @include span-columns(10, 12); }
+  .membership {
+    @include span-columns(5, 10);
+    @include nth-omega(2n);
+  }
+}
