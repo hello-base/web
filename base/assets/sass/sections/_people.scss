@@ -292,34 +292,75 @@ section.participations {
   }
 }
 
+// .inactive-leaders
+// Classes tasked with displaying a timeline-like graph depicting the
+// tenures of each leader (if the number of former leaders is more
+// than one).
 .inactive-leaders {
   @include clearfix;
   margin: 24px 0;
+
+  .membership { position: relative; }
+  .membership-header { @include clearfix; }
+  .membership-header .membership-graph { @include squish(3, 2); }
+  .membership-names { @include span-columns(3, 12); }
+  .membership-numbers { @include span-columns(2 omega, 12); }
+  .membership-graph {
+    @include span-columns(7, 12);
+    padding: 8px 0;
+    position: relative;
+
+    border: 1px solid $brand-paleGrey;
+    border-width: 0 1px;
+  }
 
   .bar {
     position: relative;
 
     &.full-tenure {
-      background-color: rgba($brand-primary-accent, 0.1);
-      height: 12px; }
+      border: 1px solid rgba($brand-primary-accent, 0.25);
+      border-width: 1px 0;
+      height: 12px;
+    }
     &.leadership-tenure {
       background-color: $brand-primary-accent;
       top: -6px;
-      height: 12px; }
+      height: 12px;
+    }
+  }
+  .leadership-tenure-count {
+    @include position(absolute, 13px 0 0 0);
+    padding-left: 6px;
+
+    color: $brand-primary-accent;
+    font-size: 11px;
+    font-weight: bold;
   }
 
-  .membership {
-    position: relative;
+  // .graph-[started|ended]
+  // Displays the starting and ending dates of the leader graph.
+  .graph-started,
+  .graph-ended {
+    color: $brand-lightGrey;
+    font-size: 11px;
+    font-weight: 600;
   }
-  .membership-names { @include span-columns(3, 12); }
-  .membership-graph {
-    @include span-columns(7, 12);
-    padding: 8px 0;
+  .graph-started { padding-left: 12px; }
+  .graph-ended {
+    float: right;
+    padding-top: 3px; padding-right: 12px;
+  }
+  .graph-started:before,
+  .graph-ended:before {
+    content: '';
+    width: 9px; height: 9px;
 
-    border: 1px solid $brand-paleGrey;
-    border-width: 0 1px;
+    background: #FFF;
+    border: 1px solid #ccc;
+    border-radius: 50%;
   }
-  .membership-numbers { @include span-columns(2 omega, 12); }
+  .graph-started:before { @include position(absolute, 13px 0 0 -5px); }
+  .graph-ended:before { @include position(absolute, 13px -5px 0 0); }
 }
 
 .inactive-members {
