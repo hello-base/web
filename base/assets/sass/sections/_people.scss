@@ -276,6 +276,10 @@ section.participations {
     .inactives { border-top: 1px solid $brand-paleGrey; }
   }
   .membership-section-title { @include span-columns(2 omega, 12); }
+  .membership .romanized-name {
+    font-family: $font-family-secondary;
+    font-size: 14px;
+  }
 }
 
 .active-members {
@@ -287,21 +291,37 @@ section.participations {
     @include nth-omega(2n);
   }
 }
+
 .inactive-leaders {
   @include clearfix;
   margin: 24px 0;
 
-  .membership { position: relative; }
-  .bar { position: relative; }
+  .bar {
+    position: relative;
 
-  .membership-names { @include span-columns(2, 12); }
+    &.full-tenure {
+      background-color: rgba($brand-primary-accent, 0.1);
+      height: 12px; }
+    &.leadership-tenure {
+      background-color: $brand-primary-accent;
+      top: -6px;
+      height: 12px; }
+  }
+
+  .membership {
+    position: relative;
+  }
+  .membership-names { @include span-columns(3, 12); }
   .membership-graph {
-    @include span-columns(8, 12);
+    @include span-columns(7, 12);
+    padding: 8px 0;
+
     border: 1px solid $brand-paleGrey;
-    padding: 2px;
+    border-width: 0 1px;
   }
   .membership-numbers { @include span-columns(2 omega, 12); }
 }
+
 .inactive-members {
   @include clearfix;
 
@@ -309,5 +329,6 @@ section.participations {
   .membership {
     @include span-columns(5, 10);
     @include nth-omega(2n);
+    padding-bottom: 12px;
   }
 }

@@ -67,7 +67,7 @@
                     <li class="membership">
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        Since {{ member.started }}
+                        <span class="tenure">Since {{ member.started }}</span>
                     </li>
                 {% endfor %}
                 </ul>
@@ -82,7 +82,7 @@
             {% for member in memberships.leaders %}
                 <span class="name">{{ member.idol.name }}</span>
                 <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                {{ member.started }}&ndash;{{ member.ended }}
+                <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
             {% endfor %}
             </div>
             {% else %}
@@ -93,27 +93,20 @@
                         <div class="membership-names">
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        {{ member.started }}&ndash;{{ member.ended }}
                         </div>
                         <div class="membership-graph">
-                            <div class="bar" style="
-                                margin-left: {% widthratio member.days_before_starting object.age_in_days 636 %}px;
-                                width: {% widthratio member.tenure_in_days object.age_in_days 636 %}px;
-                                background-color: grey;
-                            ">
-                                &nbsp;
-                            </div>
-                            <div class="bar" style="
-                                margin-left: {% widthratio member.days_before_becoming_leader object.age_in_days 636 %}px;
-                                width: {% widthratio member.leadership_tenure_in_days object.age_in_days 636 %}px;
-                                background-color: black;
-                            ">
-                                &nbsp;
-                            </div>
+                            <div class="full-tenure bar" style="
+                                margin-left: {% widthratio member.days_before_starting object.age_in_days 554 %}px;
+                                width: {% widthratio member.tenure_in_days object.age_in_days 554 %}px;
+                            "></div>
+                            <div class="leadership-tenure bar" style="
+                                margin-left: {% widthratio member.days_before_becoming_leader object.age_in_days 554 %}px;
+                                width: {% widthratio member.leadership_tenure_in_days object.age_in_days 554 %}px;
+                            "></div>
                         </div>
 
                         <div class="membership-stats">
-                            {{ member.days_before_starting }}
+                            <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
                             {{ member.tenure_in_days }}
                             {{ member.leadership_tenure_in_days }}
                         </div>
@@ -130,7 +123,7 @@
                     <li class="membership">
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        {{ member.started }}&ndash;{{ member.ended }}
+                        <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
                     </li>
                 {% endfor %}
                 </ul>
