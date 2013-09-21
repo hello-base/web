@@ -13,6 +13,9 @@ from components.views import AutocompleteView, PlainTextView, SiteView
 # Administration system auto-discovery.
 admin.autodiscover()
 
+# Sitemaps, because Google.
+sitemaps = {}
+
 # The switch to faceted search requires a custom SearchQuerySet.
 # By default we facet on "model" so the types of results can be
 # displayed on the search results page.
@@ -34,8 +37,9 @@ urlpatterns = patterns('',
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
 
-    # Favicons, Robots & Humans
+    # Sitemaps, Favicons, Robots, and Humans
     url(r'^favicon\.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )
