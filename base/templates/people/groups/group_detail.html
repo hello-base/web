@@ -58,7 +58,7 @@
             <div class="active-leader">
             {% with memberships.leader as member %}
                 <span class="name">{{ member.idol.name }}</span>
-                <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
             {% endwith %}
             </div>
             <div class="active-members">
@@ -67,7 +67,7 @@
                 {% for member in memberships.active %}
                     <li class="membership">
                         <span class="name">{{ member.idol.name }}</span>
-                        <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                        <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
                         <span class="tenure">Since {{ member.started }}</span>
                     </li>
                 {% endfor %}
@@ -82,7 +82,7 @@
             <div class="inactive-leader">
             {% for member in memberships.leaders %}
                 <span class="name">{{ member.idol.name }}</span>
-                <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
                 <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
             {% endfor %}
             </div>
@@ -99,7 +99,7 @@
                     <li class="membership">
                         <div class="membership-names">
                         <span class="name">{{ member.idol.name }}</span>
-                        <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                        <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
                         </div>
                         <div class="membership-graph">
                             <div class="full-tenure bar" style="
@@ -130,7 +130,7 @@
                 {% for member in memberships.inactive %}
                     <li class="membership">
                         <span class="name">{{ member.idol.name }}</span>
-                        <a href="{{ member.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                        <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
                         <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
                     </li>
                 {% endfor %}
