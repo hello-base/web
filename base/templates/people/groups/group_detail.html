@@ -32,7 +32,7 @@
             <div class="release-meta">
                 <span class="name">{{ release.name }}</span>
                 <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
             </div>
             {% endwith %}
         </div>
@@ -44,7 +44,7 @@
             <div class="release-meta">
                 <span class="name">{{ release.name }}</span>
                 <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
             </div>
             {% endwith %}
         </div>
@@ -66,6 +66,9 @@
                 <ul class="membership-list active-members">
                 {% for member in memberships.active %}
                     <li class="membership">
+                        <div class="idol-image">
+                            <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
+                        </div>
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
                         <span class="tenure">Since {{ member.started }}</span>
@@ -92,7 +95,7 @@
                     <li class="membership-header">
                         <div class="membership-graph">
                             <span class="graph-started">{{ object.started|date:"Y/m/d" }}</span>
-                            <span class="graph-ended">{% if object.ended %}{{ object.ended }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
+                            <span class="graph-ended">{% if object.ended %}{{ object.ended|date:"Y/m/d" }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
                         </div>
                     </li>
                 {% for member in memberships.leaders %}

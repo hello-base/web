@@ -290,6 +290,10 @@ section.participations {
     @include span-columns(5, 10);
     @include nth-omega(2n);
   }
+  .idol-image {
+    @include span-columns(1, 5);
+    height: 65px;
+  }
 }
 
 // .inactive-leaders
@@ -318,8 +322,7 @@ section.participations {
     position: relative;
 
     &.full-tenure {
-      border: 1px solid rgba($brand-primary-accent, 0.25);
-      border-width: 1px 0;
+      border-top: 1px solid rgba($brand-primary-accent, 0.25);
       height: 12px;
     }
     &.leadership-tenure {
