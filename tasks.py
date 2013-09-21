@@ -32,6 +32,6 @@ def compile():
 
 
 @task
-def run():
+def server():
     # Use Foreman to start all the development processes.
     run('foreman start -f Procfile.dev', pty=True)
