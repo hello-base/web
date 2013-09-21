@@ -31,6 +31,24 @@ class Person(TimeStampedModel):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
+    def save(self, *args, **kwargs):
+        self.name = self._render_name()
+        self.romanized_name = self._render_romanized_name()
+        super(Person, self).save(*args, **kwargs)
+
+    def _render_name(self):
+        if self.alias:
+            return u'%s' % (self.alias)
+        return u'%s%s' % (self.family_name, self.given_name)
+
+    def _render_romanized_name(self):
+        if self.romanized_alias:
+            return u'%s' % (self.romanized_alias)
+        elif hasattr(self, 'is_gaijin'):
+            if self.is_gaijin():
+                return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
+        return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
+
 
 class Idol(Person):
     GAIJINS = ['April', 'Chelsea', 'Danielle', 'Lehua', 'Mika Taressa']
@@ -132,6 +150,9 @@ class Group(TimeStampedModel):
         if self.ended:
             return (self.ended - self.started).days
         return (date.today() - self.started).days
+
+    def is_gaijin(self):
+        return self.given_name in self.GAIJINS
 
     def latest_album(self):
         return self.albums.latest()
