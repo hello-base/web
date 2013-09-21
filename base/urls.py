@@ -7,14 +7,21 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from components.views import AutocompleteView, PlainTextView, SiteView
+from .sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
+    SingleSitemap)
+from .views import AutocompleteView, PlainTextView, SiteView
 
 
 # Administration system auto-discovery.
 admin.autodiscover()
 
 # Sitemaps, because Google.
-sitemaps = {}
+sitemaps = {
+    'albums': AlbumSitemap,
+    'groups': GroupSitemap,
+    'idols': IdolSitemap,
+    'singles': SingleSitemap
+}
 
 # The switch to faceted search requires a custom SearchQuerySet.
 # By default we facet on "model" so the types of results can be

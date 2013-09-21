@@ -16,11 +16,11 @@ class AlbumSitemap(Sitemap):
         return obj.modified
 
 
-class IdolSitemap(Sitemap):
+class GroupSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return Idol.objects.all()
+        return Group.objects.all()
 
     def lastmod(self, obj):
         return obj.modified
@@ -31,11 +31,11 @@ class IdolSitemap(Sitemap):
         return 0.5
 
 
-class GroupSitemap(Sitemap):
+class IdolSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return Group.objects.all()
+        return Idol.objects.all()
 
     def lastmod(self, obj):
         return obj.modified
