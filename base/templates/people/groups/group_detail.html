@@ -17,7 +17,11 @@
     <div class="container">
         <div class="metadata-names">
             <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
-            <div class="date tenure">{{ object.started | date:"F j, Y" }}&ndash;{% if object.ended %}{{ object.ended }}{% else %}Present{% endif %} <span class="tenure-in-days">{{ object.age_in_days }} days</div>
+            <div class="date tenure">
+                <time datetime="{{ object.started|date:"c" }}">{{ object.started|date:"F j, Y" }}</time>&ndash;
+                {% if object.ended %}<time datetime="{{ object.ended|date:"c" }}">{{ object.ended|date:"F j, Y" }}</time>{% else %}<time datetime="{% now "c" %}">Present</time>{% endif %} 
+                <span class="tenure-in-days">{{ object.age_in_days }} days
+            </div>
         </div>
     </span>
 </header>
@@ -32,7 +36,7 @@
             <div class="release-meta">
                 <span class="name">{{ release.name }}</span>
                 <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
+                <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
             </div>
             {% endwith %}
         </div>
@@ -44,7 +48,7 @@
             <div class="release-meta">
                 <span class="name">{{ release.name }}</span>
                 <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
+                <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
             </div>
             {% endwith %}
         </div>
@@ -71,7 +75,7 @@
                         </div>
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        <span class="tenure">Since {{ member.started }}</span>
+                        <span class="tenure"><time datetime="{{ member.started|date:"c"}}">Since {{ member.started }}</time></span>
                     </li>
                 {% endfor %}
                 </ul>
@@ -86,7 +90,7 @@
             {% for member in memberships.leaders %}
                 <span class="name">{{ member.idol.name }}</span>
                 <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
+                <span class="tenure"><time datetime="{{ member.started|date:"c" }}">{{ member.started }}</time>&ndash;<time datetime="{{ member.ended|date:"c" }}">{{ member.ended }}</time></span>
             {% endfor %}
             </div>
             {% else %}
@@ -119,7 +123,7 @@
                         </div>
 
                         <div class="membership-stats">
-                            <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
+                            <span class="tenure"><time datetime="{{ member.started|date:"c" }}">{{ member.started }}</time>&ndash;<time datetime="{{ member.ended|date:"c" }}">{{ member.ended }}</time></span>
                         </div>
                     </li>
                 {% endfor %}
@@ -134,7 +138,7 @@
                     <li class="membership">
                         <span class="name">{{ member.idol.name }}</span>
                         <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        <span class="tenure">{{ member.started }}&ndash;{{ member.ended }}</span>
+                        <span class="tenure"><time datetime="{{ member.started|date:"c" }}">{{ member.started }}</time>&ndash;<time datetime="{{ member.ended|date:"c" }}">{{ member.ended }}</time></span>
                     </li>
                 {% endfor %}
                 </ul>
@@ -159,7 +163,9 @@
                         {{ release.number }}
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                        <div class="release-date">
+                            <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
+                        </div>
                     </div>
                 </li>
             {% endfor %}
@@ -179,7 +185,7 @@
                         {{ release.number }}
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                        <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
                     </div>
                 </li>
             {% endfor %}
