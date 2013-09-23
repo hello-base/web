@@ -21,12 +21,8 @@
 </head>
 <body id="hello-base" class="path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
 {% block body %}
-<div class="wrapper">
-{% block wrapper %}
 <div class="page">
 {% block page %}{% endblock page %}
-</div>
-{% endblock wrapper %}
 </div>
 {% endblock body %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
