@@ -150,6 +150,9 @@ class Group(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('group-detail', kwargs={'slug': self.slug})
 
+    def age(self):
+        return calculate_age(self.started)
+
     def age_in_days(self):
         if self.ended:
             return (self.ended - self.started).days
