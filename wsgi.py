@@ -31,9 +31,7 @@ analytics.init('zkz69wd80a98iprsdgr7')
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from configurations.wsgi import get_wsgi_application
-from newrelic.agent import WSGIApplicationWrapper
 application = get_wsgi_application()
-application = WSGIApplicationWrapper(application)
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
