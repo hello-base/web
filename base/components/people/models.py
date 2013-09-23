@@ -49,6 +49,10 @@ class Person(TimeStampedModel):
                 return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
         return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
 
 class Idol(Person):
     GAIJINS = ['April', 'Chelsea', 'Danielle', 'Lehua', 'Mika Taressa']
@@ -150,6 +154,10 @@ class Group(TimeStampedModel):
         if self.ended:
             return (self.ended - self.started).days
         return (date.today() - self.started).days
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
     def is_gaijin(self):
         return self.given_name in self.GAIJINS
