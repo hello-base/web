@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page %}
-<header class="header">
+<header class="header" role="banner">
     <div class="container">
         <a href="{% url "site-home" %}" class="header-logo-wordmark">
             <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
@@ -16,8 +16,8 @@
         </form>
     </div>
 </header>
-<section class="content" role="content">
+<main class="content" role="main">
 {% block content %}{% endblock %}
-</section>
+</main>
 {% include "partials/footer.html" %}
 {% endblock page %}
