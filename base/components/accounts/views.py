@@ -24,7 +24,7 @@ class PreAuthorizationView(RedirectView):
         authorization_url, state = base.authorization_url(AUTHORIZATION_URL)
 
         # State is used to prevent CSRF, so let's keep this for later.
-        request.session['oauth_referrer'] = request.META['HTTP_REFERER']
+        request.session['oauth_referrer'] = request.META.get('HTTP_REFERER', '')
         request.session['oauth_state'] = state
         request.session.modified = True
         return http.HttpResponseRedirect(authorization_url)
@@ -68,6 +68,6 @@ class PostAuthorizationView(View):
         user = authenticate(username=profile['username'])
         login(request, user)
 
-        if 'oauth_referrer' in request.session:
+        if 'oauth_referrer' in request.session and request.session['oauth_referrer'] != '':
             return http.HttpResponseRedirect(request.session['oauth_referrer'])
         return http.HttpResponseRedirect('/')
