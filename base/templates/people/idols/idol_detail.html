@@ -33,18 +33,24 @@
       <div class="latest-releases">
         <div class="release">
         {% with object.latest_single as release %}
-          <span class="pill">Latest Single</span>
-          <span class="name">{{ release.name }}</span>
-          <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-          <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          <div class="pill-container"><span class="pill">Latest Single</span></div>
+          <div class="release-image"></div>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
         {% endwith %}
         </div>
         <div class="release">
         {% with object.latest_album as release %}
-          <span class="pill">Latest Album</span>
-          <span class="name">{{ release.name }}</span>
-          <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-          <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          <div class="pill-container"><span class="pill">Latest Album</span></div>
+          <div class="release-image"></div>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
         {% endwith %}
         </div>
       </div>
