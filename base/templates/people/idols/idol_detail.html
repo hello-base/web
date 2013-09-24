@@ -8,25 +8,52 @@
 {% endblock %}
 {% block body-class %}profile idol-profile{% endblock %}
 {% block content %}
-<header class="section-masthead section-photo" style="">
+<section class="profile">
+  <div class="profile-masthead"></div>
+
+  <header class="profile-header">
     <div class="container">
-        <div class="metadata-names">
-            <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
-            {% with object.primary_membership as primary %}
-            <p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>
-            {% endwith %}
-        </div><!-- .metadata-names -->
-        <div class="section-vitals">
-            <div class="metadata-photo">{# <img src="http://hellosayunii.com/wp-content/uploads/2009/07/1247273231620.jpg" class="img-responsive"> #}</div>
-            <ul class="metadata-vitals">
-                <li class="vital-age"><span class="ss-icon ss-exercise"></span> {% firstof object.age "Unknown" %} <span>Age</span></li>
-                <li class="vital-birthday"><span class="ss-icon ss-calendar"></span> {% firstof object.birthdate|date:"F j, Y" "Unknown" %} <span>Birthday</span></li>
-                <li class="vital-bloodtype"><span class="ss-icon ss-anatomicalheart"></span> {% firstof object.bloodtype "Unknown" %} <span>Bloodtype</span></li>
-                <li class="vital-height"><span class="ss-icon ss-tapemeasure"></span> {% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span>Height</span></li>
-            </ul><!-- .metadata-vitals -->
-        </div><!-- .section-vitals -->
-    </div><!-- .container -->
-</header><!-- .section-masthead -->
+      <div class="profile-metadata">
+        <div class="profile-photo"></div>
+        <h1 class="profile-name">
+          <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
+          <span class="romanized-name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+        </h1>
+        {% with object.primary_membership as primary %}
+        <p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>
+        {% endwith %}
+      </div>
+      <aside class="profile-vitals">
+        <ul class="vitals-list">
+          <li class="vital vital-age"><span class="ss-icon ss-exercise"></span> {% firstof object.age "Unknown" %} <span class="vital-label">Age</span></li>
+          <li class="vital vital-birthday"><span class="ss-icon ss-calendar"></span> <time datetime="{{ object.birthdate|date:"c" }}">{% firstof object.birthdate|date:"F j, Y" "Unknown" %}</time> <span class="vital-label">Birthday</span></li>
+          <li class="vital vital-bloodtype"><span class="ss-icon ss-anatomicalheart"></span> {% firstof object.bloodtype "Unknown" %} <span class="vital-label">Bloodtype</span></li>
+          <li class="vital vital-height"><span class="ss-icon ss-tapemeasure"></span> {% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span class="vital-label">Height</span></li>
+        </ul>
+      </aside>
+      <div class="latest-releases">
+        <div class="release">
+        {% with object.latest_single as release %}
+          <span class="pill">Latest Single</span>
+          <span class="name">{{ release.name }}</span>
+          <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+          <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+        {% endwith %}
+        </div>
+        <div class="release">
+        {% with object.latest_album as release %}
+          <span class="pill">Latest Album</span>
+          <span class="name">{{ release.name }}</span>
+          <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+          <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+        {% endwith %}
+        </div>
+      </div>
+    </div>
+  </header>
+</section>
+
+
 
 <section class="memberships">
     <div class="container">

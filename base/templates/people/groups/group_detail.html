@@ -8,51 +8,67 @@
 {% endblock %}
 {% block body-class %}profile group-profile{% endblock %}
 {% block content %}
+<section class="profile">
+  <div class="profile-masthead"></div>
 
-{% if object.get_status_display == "Other" %}
-    <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
-{% endif %}
-
-<header class="section-masthead">
+  <header class="profile-header">
     <div class="container">
-        <div class="metadata-names">
-            <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
-            <div class="date tenure">
-                <time datetime="{{ object.started|date:"c" }}">{{ object.started|date:"F j, Y" }}</time>&ndash;
-                {% if object.ended %}<time datetime="{{ object.ended|date:"c" }}">{{ object.ended|date:"F j, Y" }}</time>{% else %}<time datetime="{% now "c" %}">Present</time>{% endif %} 
-                <span class="tenure-in-days">{{ object.age_in_days }} days
-            </div>
-        </div>
-    </span>
-</header>
-
-<div class="latest-releases">
-    <div class="container">
+      <div class="profile-metadata">
+        <div class="profile-photo"></div>
+        <h1 class="profile-name">
+          <span class="name">{{ object.name }}</span>
+          <span class="romanized-name">{{ object.romanized_name }}</span>
+          {% if object.former_names %}<div class="formerly-known-as">Formerly known as {{ object.former_names }}</div>{% endif %}
+        </h1>
+      </div>
+      <aside class="profile-vitals">
+        <ul class="vitals-list">
+          <li class="vital vital-age"><span class="ss-icon ss-clock"></span> {{ object.age }} <small>({{ object.age_in_days|intcomma }} days)</small> <span class="vital-label">Age</span></li>
+          <li class="vital vital-anniversary"><span class="ss-icon ss-calendar"></span> <time datetime="{{ object.started|date:"c" }}">{{ object.started }}</time> <span class="vital-label">Anniversary</span></li>
+          {% if object.ended %}<li class="vital vital-disband"><span class="ss-icon ss-ban"></span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time> <span class="vital-label">Disbanded</span></li>{% endif %}
+          <li class="vital vital-actives"><span class="ss-icon ss-users"></span> {{ memberships.active_count }} <span class="vital-label">Active Members</span></li>
+        </ul>
+      </aside>
+      <div class="latest-releases">
         <div class="release">
-            {% with object.latest_album as release %}
-            <div class="release-image">
-                <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
-            </div>
-            <div class="release-meta">
-                <span class="name">{{ release.name }}</span>
-                <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
-            </div>
-            {% endwith %}
+        {% with object.latest_single as release %}
+          <span class="pill">Latest Single</span>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
+        {% endwith %}
         </div>
         <div class="release">
-            {% with object.latest_single as release %}
-            <div class="release-image">
-                <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
-            </div>
-            <div class="release-meta">
-                <span class="name">{{ release.name }}</span>
-                <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions|length }} edition{{ release.editions|length|pluralize }}</div>
-            </div>
-            {% endwith %}
+        {% with object.latest_album as release %}
+          <span class="pill">Latest Album</span>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
+        {% endwith %}
         </div>
+      </div>
     </div>
+  </header>
+
+  {% if object.note %}<div class="profile-note">{{ object.note_processed|typogrify }}</div>{% endif %}
+  {% if object.get_status_display == "Other" %}
+      <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
+  {% endif %}
+
+  <div class="">
+  </div>
+
+</section>
+
+<div class="profile-subgroups">
+  {% for subgroup in object.subgroups.all %}
+    <span class="name">{{ subgroup.name }}</span>
+    <span class="romanized-name">{{ subgroup.romanized_name }}</span>
+  {% endfor %}
 </div>
 
 <section class="memberships">
