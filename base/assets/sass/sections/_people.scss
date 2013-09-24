@@ -1,8 +1,8 @@
 .profile {
-    ul {
-        @include reset-box-model;
-        @include reset-list-style;
-    }
+  ul {
+    @include reset-box-model;
+    @include reset-list-style;
+  }
 }
 
 .metadata-names {
@@ -23,85 +23,6 @@
     font-style: italic;
   }
 }
-
-//
-.section-vitals {
-    @include span-columns(3);
-
-    .metadata-vitals {
-        font-size: 13px;
-
-        li {
-            padding-top: 0.5em; padding-bottom: 0.5em;
-
-            border-bottom: 1px solid #F7F7F7;
-            font-weight: 700;
-            text-align: right;
-        }
-        li:last-child { border-bottom: none; }
-        span {
-            color: rgba(#000, 0.5);
-            float: left;
-            font-weight: 300;
-        }
-    }
-}
-
-
-
-.releases {
-  border-top: 1px solid $brand-paleGrey;
-  // border-bottom: 1px solid $brand-paleGrey;
-}
-.releases-singles,
-.releases-albums {
-  @include clearfix;
-  padding-top: 24px; padding-bottom: 24px;
-}
-.releases-albums { border-top: 1px solid $brand-paleGrey; }
-
-.release {
-  @include clearfix;
-  @include span-columns(6, 12);
-  @include nth-omega(2n);
-  min-height: 88px;
-
-  .romanized-name {
-    font-family: $font-family-secondary;
-    line-height: $headings-line-height;
-    font-size: 14px;
-  }
-  .name {
-    display: block;
-    color: $brand-lightGrey;
-    font-size: 11px;
-  }
-
-}
-.release-image {
-  @include span-columns(1, 6);
-  height: 65px;
-
-  .ss-icon {
-    font-size: 24px;
-    width: 30px; height: 30px;
-  }
-}
-.release-meta {
-  @include span-columns(5 omega, 6);
-  padding-top: 6px;
-}
-
-
-.release-date {
-  color: $brand-medGrey;
-  font-size: 12px;
-}
-
-.release-participants {
-  font-size: 13px;
-}
-
 
 
 // .membership(s)
@@ -449,3 +370,58 @@ section.participations {
 }
 
 .ss-icon.ss-anatomicalheart { color: #ED3C51; }
+
+
+.releases {
+  border-top: 1px solid $brand-paleGrey;
+  // border-bottom: 1px solid $brand-paleGrey;
+}
+.releases-singles,
+.releases-albums {
+  @include clearfix;
+  padding-top: 24px; padding-bottom: 24px;
+}
+.releases-albums { border-top: 1px solid $brand-paleGrey; }
+
+.release {
+  @include clearfix;
+  @include span-columns(6, 12);
+  @include nth-omega(2n);
+  // min-height: 88px;
+
+  .romanized-name {
+    font-family: $font-family-secondary;
+    line-height: $headings-line-height;
+    font-size: 14px;
+  }
+  .name {
+    display: block;
+    color: $brand-lightGrey;
+    font-size: 11px;
+  }
+
+}
+.release-image {
+  @include span-columns(1, 6);
+  height: 65px;
+
+  .ss-icon {
+    font-size: 24px;
+    width: 30px; height: 30px;
+  }
+}
+.release-meta {
+  @include span-columns(5 omega, 6);
+  padding-top: 6px;
+}
+
+.release-date {
+  color: $brand-medGrey;
+  font-size: 12px;
+}
+
+.release-participants {
+  font-size: 13px;
+}
+
+
