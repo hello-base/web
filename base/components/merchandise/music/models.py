@@ -158,6 +158,9 @@ class Edition(TimeStampedModel):
             return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
         return u'%s' % (self.name)
 
+    def get_absolute_url(self):
+        return self.parent.get_absolute_url()
+
     def save(self, *args, **kwargs):
         if not self.romanized_name:
             self.romanized_name = self.get_kind_display()
