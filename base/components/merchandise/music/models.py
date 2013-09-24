@@ -214,6 +214,7 @@ class Track(TimeStampedModel):
     name = models.CharField(blank=True)
 
     # Alternate Versions
+    original_track = models.ForeignKey('self', blank=True, null=True, related_name='parent')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
     romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
