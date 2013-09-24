@@ -18,9 +18,7 @@
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
           <span class="romanized-name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
         </h1>
-        {% with object.primary_membership as primary %}
-        <p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>
-        {% endwith %}
+        {# {% with object.primary_membership as primary %}<p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>{% endwith %} #}
       </div>
       <aside class="profile-vitals">
         <ul class="vitals-list">
