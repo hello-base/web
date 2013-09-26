@@ -5,24 +5,91 @@
   }
 }
 
-.metadata-names {
-  padding-bottom: 1em;
+// .profile-header (*)
+// Classes tasked with styling the header section of a profile page.
+.profile-header {
+  padding: 12px 0;
 
-  h1, p {
-    margin: 0;
-    font-weight: 200;
+  background-color: #FFF;
+  @include box-shadow(0 0 0 1px $brand-paleGrey);
+
+  .profile-photo {
+    @include span-columns(1, 9);
+    height: 65px;
+
+    background: #333;
   }
-  .romanized-name {
-    font-size: 48px;
+  .profile-metadata {
+    @include clearfix;
+    @include span-columns(9, 12);
+    padding: 12px 0;
   }
-  .name {
-    font-size: 18px;
+  .profile-name {
+    @include span-columns(8 omega, 9);
+    margin-top: 0; margin-bottom: 0;
+    padding: 6px 0;
+
+    font-weight: 300;
+
+    .name { font-size: 18px; }
+    .romanized-name {
+      font-family: $font-family-secondary;
+      font-size: 30px;
+    }
   }
+
+  .formerly-known-as,
   .standing {
+    margin: 0;
+    margin-top: 4px;
+
+    color: $brand-medGrey;
+    font-size: 13px;
+  }
+
+  // .vitals
+  // Set of classes that represent a list of "vital" information about
+  // an idol or group.
+  .profile-vitals { @include span-columns(3 omega, 12); }
+  .vitals-list {
+    @include clearfix;
+    padding: 12px 0;
+  }
+  .vital {
+    padding-bottom: 6px;
+
     font-size: 14px;
-    font-style: italic;
+    font-weight: 600;
+
+    .ss-icon {
+      @include position(relative, 2px 0 0 0);
+      padding-right: 2px;
+    }
+  }
+  .vital-label {
+    display: block;
+
+    color: $brand-lightGrey;
+    font-family: $font-family-secondary;
+    font-size: 10px;
   }
 }
+
+.latest-releases {
+  @include clearfix;
+  @include span-columns(9, 12);
+  padding: 12px 0;
+
+  .pill { margin-bottom: 6px; }
+  .release-metadata { @include span-columns(4 omega, 5); }
+  .release-names { padding-bottom: 6px; }
+  .ss-icon {
+    @include position(relative, 1px 0 0 0);
+    padding-right: 2px;
+  }
+}
+
+.ss-icon.ss-anatomicalheart { color: #ED3C51; }
 
 
 // .membership(s)
@@ -298,80 +365,6 @@ section.participations {
   }
 }
 
-
-// .profile-header (*)
-// Classes tasked with styling the header section of a profile page.
-.profile-header {
-  padding: 12px 0;
-
-  background-color: #FFF;
-  @include box-shadow(0 0 0 1px $brand-paleGrey);
-
-  .profile-metadata {
-    @include clearfix;
-    @include span-columns(9, 12);
-    padding: 12px 0;
-  }
-  .profile-photo {
-    @include span-columns(1, 9);
-    height: 65px;
-
-    background: black;
-  }
-  .profile-name {
-    @include span-columns(8 omega, 9);
-    margin-top: 0; margin-bottom: 0;
-    padding: 6px 0;
-
-    font-weight: 100;
-
-    .name { font-size: 18px; }
-    .romanized-name {
-      font-family: $font-family-secondary;
-      font-size: 30px;
-    }
-  }
-
-  // .vitals
-  // Set of classes that represent a list of "vital" information about
-  // an idol or group.
-  .profile-vitals { @include span-columns(3 omega, 12); }
-  .vitals-list {
-    @include clearfix;
-    padding: 12px 0;
-  }
-  .vital {
-    padding-bottom: 6px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    .ss-icon {
-      @include position(relative, 2px 0 0 0);
-      padding-right: 2px;
-    }
-  }
-  .vital-label {
-    display: block;
-
-    color: $brand-lightGrey;
-    font-family: $font-family-secondary;
-    font-size: 10px;
-  }
-}
-
-.latest-releases {
-  @include clearfix;
-  @include span-columns(9, 12);
-  padding: 12px 0;
-
-  .pill { margin-bottom: 6px; }
-  .release-metadata { @include span-columns(4 omega, 5); }
-}
-
-.ss-icon.ss-anatomicalheart { color: #ED3C51; }
-
-
 .releases {
   border-top: 1px solid $brand-paleGrey;
   // border-bottom: 1px solid $brand-paleGrey;
@@ -415,7 +408,7 @@ section.participations {
   padding-top: 6px;
 }
 
-.release-date {
+.release-data {
   color: $brand-medGrey;
   font-size: 12px;
 }
@@ -423,5 +416,3 @@ section.participations {
 .release-participants {
   font-size: 13px;
 }
-
-

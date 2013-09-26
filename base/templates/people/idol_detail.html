@@ -17,8 +17,8 @@
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
           <span class="romanized-name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
-          {% with object.primary_membership as primary %}<p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>{% endwith %}
         </h1>
+        {# {% with object.primary_membership as primary %}<p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>{% endwith %} #}
       </div>
       <aside class="profile-vitals">
         <ul class="vitals-list">
@@ -32,13 +32,23 @@
         <div class="release">
         {% with object.latest_single as release %}
           <div class="pill-container"><span class="pill">Latest Single</span></div>
-          {% include "people/partials/shared_releases_music_latest.html" with release=release %}
+          <div class="release-image"></div>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
         {% endwith %}
         </div>
         <div class="release">
         {% with object.latest_album as release %}
           <div class="pill-container"><span class="pill">Latest Album</span></div>
-          {% include "people/partials/shared_releases_music_latest.html" with release=release %}
+          <div class="release-image"></div>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
         {% endwith %}
         </div>
       </div>

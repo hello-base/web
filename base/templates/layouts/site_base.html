@@ -9,8 +9,9 @@
 
         <form action="{% url "search" %}" class="header-search searchbar" method="get" accept-charset="utf-8">
             <div class="search-container">
+                <span class="ss-icon ss-search"></span>
                 <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking for?" value="{{ request.GET.q }}">
-                <button type="submit"><span class="ss-icon ss-search"></span></button>
+                {# <button type="submit"><span class="ss-icon ss-search"></span></button> #}
             </div>
             <div class="search-results js-search-results"></div>
         </form>
