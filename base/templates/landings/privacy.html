@@ -1,6 +1,9 @@
 {% extends "layouts/site_base.html" %}
+{% load typogrify_tags %}
 
+{% block title %}Privacy Policy{% endblock %}
 {% block content %}
+{% filter typogrify %}
 <section class="flatpage">
   <header>
     <div class="container">
@@ -48,4 +51,5 @@
     </div>
   </article>
 </section>
+{% endfilter %}
 {% endblock content %}
