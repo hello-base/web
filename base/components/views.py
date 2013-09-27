@@ -1,5 +1,4 @@
-from django.views.generic import View
-from django.views.generic.base import TemplateView
+from django.views.generic import TemplateView, View
 
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 from haystack.query import SearchQuerySet

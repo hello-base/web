@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
@@ -29,14 +29,21 @@ sitemaps = {
 sqs = SearchQuerySet().facet('model')
 
 urlpatterns = patterns('',
+    # Home and Search.
     url(r'^$', name='site-home', view=SiteView.as_view()),
     url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
     url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
 
+    # "Flatpages."
+    url(r'^about/$', name='about', view=TemplateView.as_view(template_name='landings/about.html')),
+    url(r'^privacy/$', name='privacy', view=TemplateView.as_view(template_name='landings/privacy.html')),
+    url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
+
+    # Administration Modules.
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    # Core Modules
+    # Core Modules.
     url(r'^accounts/', include('components.accounts.urls')),
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
@@ -44,7 +51,7 @@ urlpatterns = patterns('',
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
 
-    # Sitemaps, Favicons, Robots, and Humans
+    # Sitemaps, Favicons, Robots, and Humans.
     url(r'^favicon\.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
