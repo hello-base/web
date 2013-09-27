@@ -4,17 +4,19 @@
 {% block title %}Terms of Service{% endblock %}
 {% block content %}
 {% filter typogrify %}
-<section class="flatpage">
+<section class="flatpage fine-print">
   <header>
     <div class="container">
-      <h1>Terms of Service</h1>
+      <h1>The Small (But Important) Stuff</h1>
     </div>
   </header>
-  <article>
-    <div class="container">
+  <div class="container">
+    <header class="flatpage-header">
+      <h1>Terms of Service Agreement</h1>
+    </header>
+    <article class="flatpage-content">
       <p>The following terms and conditions govern all use of the Hello! Base website and all content, services and products available at or through the website. The Website is owned and operated by Revyver Inc. (Revyver). The Website is offered subject to your acceptance without modification of all of the terms and conditions contained herein and all other operating rules, policies (including, without limitation, <a href="{% url "privacy" %}">Hello! Base’s Privacy Policy</a>) and procedures that may be published from time to time on this Site by Revyver (collectively, the Agreement).</p>
       <p>Please read this Agreement carefully before accessing or using the Website. By accessing or using any part of the web site, you agree to become bound by the terms and conditions of this agreement. If you do not agree to all the terms and conditions of this agreement, then you may not access the Website or use any services. If these terms and conditions are considered an offer by Revyver, acceptance is expressly limited to these terms. The Website is available only to individuals who are at least 13 years old.</p>
-
       <ol>
         <li><strong>Your Hello! Base Account and Site.</strong> If you create an account on the Website, you are responsible for maintaining the security of your account and its content, and you are fully responsible for all activities that occur under the account and any other actions taken in connection with the Website. You must not describe or assign content to your account in a misleading or unlawful manner, including in a manner intended to trade on the name or reputation of others, and Revyver may change or remove any description or keyword that it considers inappropriate or unlawful, or otherwise likely to cause Revyver liability. You must immediately notify Revyver of any unauthorized uses of your account or any other breaches of security. Revyver will not be liable for any acts or omissions by You, including any damages of any kind incurred as a result of such acts or omissions.</li>
         {# Responsibility of Contributors. #}
@@ -30,9 +32,11 @@
         <li><strong>Miscellaneous.</strong> This Agreement constitutes the entire agreement between Revyver and you concerning the subject matter hereof, and they may only be modified by a written amendment signed by an authorized executive of Revyver, or by the posting by Revyver of a revised version. Except to the extent applicable law, if any, provides otherwise, this Agreement, any access to or use of the Website will be governed by the laws of the state of California, U.S.A.</li>
       </ol>
 
-      <p>This Terms of Service was crafted from <a href="http://en.wordpress.com/tos/">Wordpress.com's</a> version, which is available under a Creative Commons Sharealike license.</p>
-    </div>
-  </article>
+      <footer>
+        <p>This Terms of Service was crafted from <a href="http://en.wordpress.com/tos/">Wordpress.com's</a> version, which is available under a Creative Commons Sharealike license.</p>
+      </footer>
+    </article>
+  </div>
 </section>
 {% endfilter %}
 {% endblock content %}

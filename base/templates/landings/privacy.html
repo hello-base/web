@@ -4,15 +4,19 @@
 {% block title %}Privacy Policy{% endblock %}
 {% block content %}
 {% filter typogrify %}
-<section class="flatpage">
+<section class="flatpage fine-print">
   <header>
     <div class="container">
-      <h1>Privacy Policy</h1>
-      <p>Your privacy is critically important to us. At Hello! Base we have a few fundamental principles:</p>
+      <h1>The Small (But Important) Stuff</h1>
     </div>
   </header>
-  <article>
-    <div class="container">
+  <div class="container">
+    <header class="flatpage-header">
+      <h1>Privacy Policy</h1>
+    </header>
+    <article class="flatpage-content">
+      <p>Your privacy is critically important to us. At Hello! Base we have a few fundamental principles:</p>
+
       <ul>
         <li>We don’t ask you for personal information unless we truly need it. (We can’t stand services that ask you for things like your gender or income level for no apparent reason.)</li>
         <li>We don’t share your personal information with anyone except to comply with the law, develop our products, or protect our rights.</li>
@@ -47,9 +51,11 @@
       <h2>Privacy Policy Changes</h2>
       <p>Although most changes are likely to be minor, Revyver may change its Privacy Policy from time to time, and in Revyver’s sole discretion. Revyver encourages visitors to frequently check this page for any changes to its Privacy Policy. Your continued use of this site after any change in this Privacy Policy will constitute your acceptance of such change.</p>
 
-      <p>This Privacy Policy was crafted from <a href="http://automattic.com/privacy/">Wordpress.com's</a> version, which is available under a Creative Commons Sharealike license.</p>
-    </div>
-  </article>
+      <footer>
+        <p>This Privacy Policy was crafted from <a href="http://automattic.com/privacy/">Wordpress.com's</a> version, which is available under a Creative Commons Sharealike license.</p>
+      </footer>
+    </article>
+  </div>
 </section>
 {% endfilter %}
 {% endblock content %}
