@@ -1,0 +1,56 @@
+// .fine-print
+// Set of classes that style large swaths of text such as the terms
+// of service and privacy policy pages.
+.fine-print {
+  h1 { @include reset-box-model; }
+  li, p {
+    color: $brand-medGrey;
+    font-size: 13px;
+
+    &:first-child { margin-top: 0; }
+  }
+
+  > header {
+    padding-top: 120px; padding-bottom: 24px;
+    background: $brand-darkGrey;
+
+    h1 {
+      color: #FFF;
+      font-size: 36px;
+      letter-spacing: -1px;
+    }
+  }
+
+  .flatpage-header {
+    @include span-columns(4, 12);
+    padding-top: 2em;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 300;
+    }
+  }
+  .flatpage-content {
+    @include span-columns(8 omega, $total-columns);
+    padding-top: 2em;
+
+    footer {
+      margin: 2em 0;
+      opacity: 0.5;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 400;
+    }
+    li {
+      margin: 0.5em 0;
+
+      &.important {
+        background-color: #FFFBCC;
+        border: 1px solid #E6DB55;
+        padding: 0.5em;
+      }
+    }
+    strong { color: $brand-darkGrey; }
+  }
+}
