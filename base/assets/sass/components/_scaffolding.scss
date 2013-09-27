@@ -7,11 +7,6 @@
 @import "components/variables";
 @import "components/mixins";
 
-// Establish a baseline rhythym using Compass' establish-baseline();
-// mixin. This takes the value of $base-font-size into account in order
-// to establish a proper line-height, etc.
-@include establish-baseline();
-
 // Force the box model to use the saner border-box calculation.
 *, *:before, *:after {
     @include box-sizing(border-box);
