@@ -120,8 +120,8 @@ class Production(Settings):
 
     # Django Authentication (OAuth, etc.)
     MEISHI_ENDPOINT = 'https://id.hello-base.com/api/'
-    OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/authorize/'
-    OAUTH_TOKEN_URL = 'https://id.hello-base.com/token/'
+    OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/oauth/authorize/'
+    OAUTH_TOKEN_URL = 'https://id.hello-base.com/oauth/token/'
     OAUTH_REDIRECT_URL = 'https://hello-base.com/accounts/authenticated/'
 
     # Django Secure
