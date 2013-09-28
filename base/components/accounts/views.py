@@ -41,7 +41,7 @@ class PostAuthorizationView(View):
         # Hooray! Somebody sent us up the token.
         # Now let's fetch their user from the Hello! Base ID API.
         hbi = OAuth2Session(CLIENT_ID, token=token)
-        profile = hbi.get(settings.MEISHI_ENDPOINT + 'user/').json()
+        profile = hbi.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/')).json()
         print profile
 
         # Now that we have the profile data, let's check for an
