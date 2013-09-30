@@ -55,6 +55,7 @@ class PostAuthorizationView(View):
                 base_id=profile['id'],
             )
         user.username = profile['username']
+        user.name = profile['display_name']
         user.email = profile['email']
         user.is_active = profile['is_active']
         user.is_staff = profile['is_staff']
