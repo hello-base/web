@@ -1,5 +1,7 @@
 import datetime
+
 from django.conf import settings
+
 
 CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
 CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
@@ -8,7 +10,6 @@ ACCESS_TOKEN_URL = settings.ACCESS_TOKEN_URL
 REFRESH_TOKEN_URL = settings.REFRESH_TOKEN_URL
 REDIRECT_URL = settings.OAUTH_REDIRECT_URL
 MEISHI_ENDPOINT = settings.MEISHI_ENDPOINT
-
 
 class Meishi(object):
     def refresh_token_if_necessary(self, user):
