@@ -1,11 +1,10 @@
-from django.contrib.staticfiles.storage import CachedFilesMixin
 from django.core.files.base import ContentFile
 
-from pipeline.storage import PipelineMixin
+from ecstatic.storage import CachedStaticFilesMixin, StaticManifestMixin
 from s3_folder_storage.s3 import StaticStorage
 
 
-class S3PipelineStorage(PipelineMixin, CachedFilesMixin, StaticStorage):
+class S3ManifestStorage(StaticManifestMixin, CachedStaticFilesMixin, StaticStorage):
     # HACK: The chunks implementation in S3 files appears
     # broken when gzipped!
     def hashed_name(self, name, content=None):
