@@ -23,6 +23,7 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
         ('Dates', {'fields': ('start_date', 'end_date')}),
         ('Names', {'fields': (('romanized_name', 'name'), 'nickname', 'slug')}),
         ('Links', {'fields': ('info_link', 'secondary_info_link')}),
+        ('Imagery', {'fields': ('logo', 'poster', 'stage')}),
     )
     inlines = [PerformanceInline]
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
