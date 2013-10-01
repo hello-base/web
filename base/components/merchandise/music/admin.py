@@ -7,18 +7,14 @@ from .models import (Album, Edition, Label, Single, Track, TrackOrder,
 class AlbumEditionInline(admin.StackedInline):
     exclude = ['single']
     extra = 1
-    fieldsets = (
-        (None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),
-    )
+    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),)
     model = Edition
 
 
 class SingleEditionInline(admin.StackedInline):
     exclude = ['album']
     extra = 1
-    fieldsets = (
-        (None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),
-    )
+    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),)
     model = Edition
 
 
