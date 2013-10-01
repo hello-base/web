@@ -44,16 +44,6 @@ class GroupDetailView(DetailView):
         return context
 
 
-class GroupDiscographyView(DetailView):
-    queryset = Group.objects.all()
-    template_name = 'people/groups/group_discography.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(GroupDiscographyView, self).get_context_data(**kwargs)
-        context['discography'] = sorted(construct_list_using_index(storage_key=music.OWNER_LIST_KEY % ('groups', self.object.id)), key=lambda x: x.released, reverse=True)
-        return context
-
-
 class GroupMembershipView(DetailView):
     queryset = Group.objects.all()
     template_name = 'people/groups/group_membership.html'
@@ -100,16 +90,6 @@ class IdolDetailView(PrefetchRelatedMixin, DetailView):
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
         context['memberships'] = self.object.memberships.select_related('group')[1:]
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
-        return context
-
-
-class IdolDiscographyView(DetailView):
-    queryset = Idol.objects.all()
-    template_name = 'people/idols/idol_discography.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(IdolDiscographyView, self).get_context_data(**kwargs)
-        context['discography'] = sorted(construct_list_using_index(storage_key=music.OWNER_LIST_KEY % ('idols', self.object.id)), key=lambda x: x.released, reverse=True)
         return context
 
 
