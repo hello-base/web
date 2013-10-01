@@ -5,7 +5,7 @@ import invoke
 
 
 def _out(name, message):
-    print("[\033[1;37m{}\033[0m] {}".format(name, message))
+    print('[\033[1;37m{}\033[0m] {}'.format(name, message))
 
 
 @invoke.task(name='deploy')
@@ -17,7 +17,7 @@ def deploy(**kwargs):
     invoke.run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
 
     # Static Files.
-    print('- Run the stylesheets through Compass using "Production" settings...')
+    print('- Run the stylesheets through Compass using 'Production' settings...')
     invoke.run('compass compile -e production --force -q')
 
     print('- Collecting the static files and throwing them on S3...')
@@ -35,27 +35,34 @@ def deploy(**kwargs):
 @invoke.task(name='server')
 def development_server(**kwargs):
     # Use Foreman to start all the development processes.
-    out = functools.partial(_out, "development.server")
+    out = functools.partial(_out, 'development.server')
     invoke.run('foreman start -f Procfile.dev', pty=True)
-
-
-@invoke.task(name='syncdb')
-def heroku_syncdb(**kwargs):
-    out = functools.partial(_out, "heroku.syncdb")
-    invoke.run('heroku run python manage.py syncdb')
 
 
 @invoke.task(name='collectstatic')
 def heroku_collectstatic(**kwargs):
-    out = functools.partial(_out, "heroku.collectstatic")
+    out = functools.partial(_out, 'heroku.collectstatic')
     invoke.run('heroku run python manage.py collectstatic --noinput')
+
+
+@invoke.task(name='migrate')
+def heroku_migrate(app='', **kwargs):
+    out = functools.partial(_out, 'heroku.migrate')
+    invoke.run('heroku run python manage.py migrate %s' % app)
+
+
+@invoke.task(name='syncdb')
+def heroku_syncdb(**kwargs):
+    out = functools.partial(_out, 'heroku.syncdb')
+    invoke.run('heroku run python manage.py syncdb')
 
 
 ns = invoke.Collection(
     deploy,
     development_server,
     heroku=invoke.Collection(
+        heroku_collectstatic,
+        heroku_migrate,
         heroku_syncdb,
-        heroku_collectstatic
     )
 )
