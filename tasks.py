@@ -32,6 +32,13 @@ def deploy(**kwargs):
     print('All done!')
 
 
+@invoke.task(name='collect')
+def development_collectstatic(**kwargs):
+    out = functools.partial(_out, 'development.collectstatic')
+    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput')
+    invoke.run('python manage.py createstaticmanifest')
+
+
 @invoke.task(name='server')
 def development_server(**kwargs):
     # Use Foreman to start all the development processes.
