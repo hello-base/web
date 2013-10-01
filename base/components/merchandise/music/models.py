@@ -11,6 +11,7 @@ from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.people.constants import CLASSIFICATIONS
+from components.people.models import ParticipationMixin
 
 from ..models import Merchandise
 # from .managers import (AlbumManager, EditionManager, SingleManager,
@@ -160,22 +161,19 @@ class Edition(TimeStampedModel):
         return tracklist
 
 
-class Track(TimeStampedModel):
-    idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='tracks')
-    groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='tracks')
-
-    # Metadata
+class Track(ParticipationMixin):
+    # Metadata.
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
 
-    # Alternate Versions
+    # Alternate Versions.
     original_track = models.ForeignKey('self', blank=True, null=True, related_name='parent')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
     romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
     name_alternate = models.CharField('alternate name', blank=True)
 
-    # Staff
+    # Staff.
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
