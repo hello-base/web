@@ -54,6 +54,7 @@ class Development(Settings):
     SESSION_COOKIE_SECURE = False
 
     # Django Authentication (OAuth, etc.)
+    MEISHI_ENDPOINT = 'https://localhost:8443/api/'
     OAUTH_AUTHORIZATION_URL = 'https://localhost:8443/authorize/'
     OAUTH_TOKEN_URL = 'https://localhost:8443/token/'
     OAUTH_REDIRECT_URL = 'https://localhost:8444/accounts/authenticated/'

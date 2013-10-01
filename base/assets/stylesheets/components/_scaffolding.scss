@@ -7,11 +7,6 @@
 @import "components/variables";
 @import "components/mixins";
 
-// Establish a baseline rhythym using Compass' establish-baseline();
-// mixin. This takes the value of $base-font-size into account in order
-// to establish a proper line-height, etc.
-@include establish-baseline();
-
 // Force the box model to use the saner border-box calculation.
 *, *:before, *:after {
     @include box-sizing(border-box);
@@ -20,22 +15,25 @@
 
 html { -webkit-tap-highlight-color: rgba(#000 ,0); }
 body {
+  color: #444;
   font-family: $font-family-primary;
   font-size: $font-size-base;
   line-height: $line-height-base;
 }
 
 a {
-  @include link-colors(#00A1FA, #0089E2);
+  @include link-colors(#009DDD, #00B64F);
   @include single-transition(all, 250ms);
   text-decoration: none;
-
-  &:hover, &:focus {
-    text-decoration: underline;
-  }
 }
 
 .container { @include container; }
+.content { }
 
+// Images.
+img { vertical-align: middle; }
+.img-circle { border-radius: 50%; }
+
+// Mixin-based classes.
 // Responsive images (ensure images don't scale beyond their parents).
 .img-responsive { @include img-responsive(); }

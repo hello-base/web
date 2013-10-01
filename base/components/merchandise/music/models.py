@@ -158,6 +158,9 @@ class Edition(TimeStampedModel):
             return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
         return u'%s' % (self.name)
 
+    def get_absolute_url(self):
+        return self.parent.get_absolute_url()
+
     def save(self, *args, **kwargs):
         if not self.romanized_name:
             self.romanized_name = self.get_kind_display()
@@ -172,8 +175,12 @@ class Edition(TimeStampedModel):
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
-        kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
-        return self._default_manager.filter(**kwargs)[0]
+        try:
+            kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
+            edition = self._default_manager.filter(**kwargs)[0]
+        except IndexError:
+            edition = self._default_manager.none()
+        return edition
 
     def _render_release_date(self):
         return self._get_regular_edition().released
@@ -207,6 +214,7 @@ class Track(TimeStampedModel):
     name = models.CharField(blank=True)
 
     # Alternate Versions
+    original_track = models.ForeignKey('self', blank=True, null=True, related_name='parent')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
     romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
@@ -301,6 +309,15 @@ class Video(TimeStampedModel):
     @property
     def parent(self):
         return filter(None, [self.album, self.single])[0]
+
+    @property
+    def rendered_kind_display(self):
+        if self.kind in [1, 2, 3, 4, 9, 11, 12]:
+            return 'Music Video'
+        if self.kind in [21, 22, 23]:
+            return 'Making of'
+        if self.kind in [31, 32]:
+            return 'Performance'
 
 
 class VideoTrackOrder(models.Model):

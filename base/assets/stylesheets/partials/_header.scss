@@ -1,5 +1,10 @@
+@import "compass/css3/box-shadow";
+@import "compass/css3/images";
+
 .header {
-  background-color: $brand-dark;
+  // @include box-shadow(inset 0 1px 0 #1a5675, inset 0 -1px 0 #092c49);
+  // @include background(linear-gradient(#124969, #0c3a5b));
+  @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
   padding: 12px inherit;
 
   a {
@@ -14,7 +19,7 @@
 
   .hicon-logo-hello,
   .hicon-logo-base {
-    color: #FFF;
+    color: $brand-lightGrey;
     font-size: 22px;
     padding-top: 2px;
   }
@@ -52,7 +57,7 @@
     position: absolute;
     top: 2px; right: 2px;
 
-    background-color: $brand-green;
+    background-color: $brand-primary-accent;
     border: none;
     border-radius: 3px;
     color: #FFF;

@@ -1,18 +1,28 @@
 @import "compass/css3/user-interface";
 
 // Layout & Widths
-.editions { @include span-columns(9 , 12); }
-.participations { @include span-columns(3 omega, 12); }
+.music-profile {
+  .editions { @include span-columns(9 , 12); }
+  .participations { @include span-columns(3 omega, 12); }
 
-.edition-image { @include span-columns(2, 9); height: 146px; }
-.edition-contents { @include span-columns(7 omega, 9); }
-.edition-contents table { width: 100%; }
+  .release-name { @include span-columns(9, 12); }
+  .release-metadata { @include span-columns(3 omega, 12); }
+
+  .edition-image { @include span-columns(2, 9); height: 146px; }
+  .edition-contents { @include span-columns(7 omega, 9); }
+  .edition-contents table { width: 100%; }
+}
+
+//
+.editions {
+  padding-right: 24px;
+  border-right: 1px solid $brand-paleGrey;
+}
+
+
 
 .music-profile {
-  .masthead {
-    background-color: $brand-lightGrey;
-    padding-top: 36px; padding-bottom: 36px;
-  }
+  .editions { background-color: #FFF; }
 
   .romanized-name { }
   .name {
@@ -22,15 +32,27 @@
   }
 }
 
-.release-romanized-name {
-  margin: 0;
-
-  color: #FFF;
-  font-weight: 200;
-  letter-spacing: -1px;
-}
 .release-name {
-  margin: 0;
+  padding-bottom: 1em;
+
+  h1, p {
+    margin: 0;
+    font-weight: 200;
+  }
+ .romanized-name {
+    font-size: 48px;
+    letter-spacing: -1px;
+  }
+  .name {
+    font-size: 18px;
+  }
+}
+
+.release-metadata {
+  padding-top: 6px;
+  color: $brand-lightGrey;
+
+  a { font-weight: bold; }
 }
 
 .edition {
@@ -92,7 +114,6 @@
   td { vertical-align: top; }
   .track-name { padding-bottom: 6px; }
   &:last-child .track-name { padding-bottom: 12px; }
-  &.instrumental * { opacity: 0.75; }
 }
 
 .track-number {
@@ -131,21 +152,21 @@
     font-weight: 600;
 
     .video-list &,
-    &.cover {
+    &.cover,
+    &.album {
       background: #FFF;
       box-shadow: inset 0 0 0 1px $brand-paleGrey;
       color: $brand-medGrey;
     }
   }
-  .pill.aside { background: #FF804F; }
-  .pill.bside { background: #FFCC5E; }
+  .pill.aside { background: $brand-primary-accent; }
+  .pill.bside { background: $brand-secondary-accent; }
 }
 
 .participant {
   font-size: 13px;
 
   .age {
-    float: right;
     font-weight: 600;
   }
 }

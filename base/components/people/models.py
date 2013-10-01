@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.utils import timesince
 
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
@@ -29,6 +30,28 @@ class Person(TimeStampedModel):
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
+
+    def save(self, *args, **kwargs):
+        self.name = self._render_name()
+        self.romanized_name = self._render_romanized_name()
+        super(Person, self).save(*args, **kwargs)
+
+    def _render_name(self):
+        if self.alias:
+            return u'%s' % (self.alias)
+        return u'%s%s' % (self.family_name, self.given_name)
+
+    def _render_romanized_name(self):
+        if self.romanized_alias:
+            return u'%s' % (self.romanized_alias)
+        elif hasattr(self, 'is_gaijin'):
+            if self.is_gaijin():
+                return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
+        return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
 
 class Idol(Person):
@@ -132,6 +155,13 @@ class Group(TimeStampedModel):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
+    def is_gaijin(self):
+        return self.given_name in self.GAIJINS
+
     def latest_album(self):
         return self.albums.latest()
 
@@ -171,6 +201,12 @@ class Membership(models.Model):
         if self.ended is None or self.ended >= date.today():
             return True
         return False
+
+    def days_before_starting(self):
+        return (self.started - self.group.started).days
+
+    def days_before_ending(self):
+        return (self.ended - self.group.started).days
 
     def tenure_in_days(self):
         if self.ended:

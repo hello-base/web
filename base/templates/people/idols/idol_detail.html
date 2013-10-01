@@ -1,4 +1,4 @@
-{% extends "site_base.html" %}
+{% extends "layouts/site_base.html" %}
 {% load music_tags %}
 {% load typogrify_tags %}
 
@@ -8,95 +8,142 @@
 {% endblock %}
 {% block body-class %}profile idol-profile{% endblock %}
 {% block content %}
-<div class="section-masthead section-photo" style="">
+<header class="section-masthead section-photo" style="">
     <div class="container">
-        <div class="masthead">
-            <div class="metadata-names">
-                <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
-                {% with object.primary_membership as primary %}
-                <p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>
-                {% endwith %}
-            </div><!-- .metadata-names -->
-        </div><!-- .masthead -->
-    </div><!-- .container -->
-</div><!-- .section-masthead -->
-
-<div class="section-metadata">
-    <div class="container">
+        <div class="metadata-names">
+            <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name }}</span></h1>
+            {% with object.primary_membership as primary %}
+            <p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>
+            {% endwith %}
+        </div><!-- .metadata-names -->
         <div class="section-vitals">
             <div class="metadata-photo">{# <img src="http://hellosayunii.com/wp-content/uploads/2009/07/1247273231620.jpg" class="img-responsive"> #}</div>
             <ul class="metadata-vitals">
-                <li class="vital-age">{% firstof object.age "Unknown" %} <span>Age</span></li>
-                <li class="vital-birthday">{% firstof object.birthdate|date:"F j, Y" "Unknown" %} <span>Birthday</span></li>
-                <li class="vital-bloodtype">{% firstof object.bloodtype "Unknown" %} <span>Bloodtype</span></li>
-                <li class="vital-height">{% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span>Height</span></li>
+                <li class="vital-age"><span class="ss-icon ss-exercise"></span> {% firstof object.age "Unknown" %} <span>Age</span></li>
+                <li class="vital-birthday"><span class="ss-icon ss-calendar"></span> {% firstof object.birthdate|date:"F j, Y" "Unknown" %} <span>Birthday</span></li>
+                <li class="vital-bloodtype"><span class="ss-icon ss-anatomicalheart"></span> {% firstof object.bloodtype "Unknown" %} <span>Bloodtype</span></li>
+                <li class="vital-height"><span class="ss-icon ss-tapemeasure"></span> {% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span>Height</span></li>
             </ul><!-- .metadata-vitals -->
         </div><!-- .section-vitals -->
-        <div class="section-participation">
-            <h2 class="section-title">Contributions to Hello! Project</h2>
-            <ul class="metadata-participation">
-                <li class="group-participation">
-                    <span class="count"><strong>{{ object.memberships.count }}</strong> groups</span>
-                    <h2>Primary Group &rarr;</h2>
-                    <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
-                    <div class="latest">
-                        {% with object.primary_membership as primary %}
-                        <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a> Member
-                        {% if primary.is_active %}
-                            since {{ primary.started|date:"F j, Y" }}
-                        {% else %}
-                            from {{ primary.started|date:"F j, Y" }}&ndash;{{ primary.ended|date:"F j, Y" }}
-                        {% endif %}
-
-                        {% if primary.is_leader %} and leader
-                            {% if not primary.leadership_ended %}
-                                since {{ primary.leadership_started|date:"F j, Y" }}
-                            {% else %}
-                                from {{ primary.leadership_started|date:"F j, Y"}}%ndash;{{ primary.leadership_ended|date:"F j, Y" }}
-                            {% endif %}
-                        {% endif %}
-                        {% endwith %}
-                    </div>
-                </li><!-- .group-participation -->
-                <li class="single-participation">
-                    <span class="count"><strong>{{ singles|length }}</strong> singles</span>
-                    <h2>{% if object.primary_membership.is_active %}Latest Single{% else %}Last Single{% endif %} &rarr;</h2>
-                    <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
-                    <div class="latest">
-                        {% with object.latest_single as single %}
-                        <a href="{{ single.get_absolute_url }}">{{ single }}</a>
-                        Released {{ single.released|date:"F j, Y" }} ({{ single.released|timesince }} ago){#  in {{ single.editions.count }} edition{{ single.editions.count|pluralize }} #}
-                        {% endwith %}
-                    </div>
-                </li><!-- .single-participation -->
-                <li class="album-participation">
-                    <span class="count"><strong>{{ albums|length }}</strong> albums</span>
-                    <h2>{% if object.primary_membership.is_active %}Latest Album{% else %}Last Album{% endif %} &rarr;</h2>
-                    <div class="latest-image"><img class="img-responsive" src="http://placekitten.com/g/64/64"></div>
-                    <div class="latest">
-                        {% with object.latest_album as album %}
-                        <a href="{{ album.get_absolute_url }}">{{ album }}</a>
-                        Released {{ album.released|date:"F j, Y" }} ({{ album.released|timesince }} ago){#  in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
-                        {% endwith %}
-                    </div>
-                </li><!-- .album-participation -->
-            </ul><!-- .metadata-participation -->
-        </div><!-- .section-participation -->
     </div><!-- .container -->
-</div><!-- .section-metadata -->
+</header><!-- .section-masthead -->
 
-<div class="container">
-    <h2 class="section-title">Memberships {{ object.memberships.count }}</h2>
-    <ul>
-    {% for membership in object.memberships.all %}
-        <li>
-        <a href="{{ membership.group.get_absolute_url }}">{{ membership.group }}</a>
-        {{ membership.tenure_in_days }}
-        {{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %}
-        </li>
-    {% endfor %}
-    </ul>
-</div>
+<section class="memberships">
+    <div class="container">
+        {% with object.primary_membership as primary %}
+        <div class="membership-primary">
+            <div class="membership-section-title"><span class="pill">Primary Focus</span></div>
+            <div class="group-image">
+                <div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>
+            </div><!-- .group-image -->
+            <div class="group-metadata">
+                <span class="name">{{ primary.group.name }}</span>
+                <a href="{{ primary.group.get_absolute_url }}"><span class="romanized-name">{{ primary.group }}</span></a>
+                <span class="tenure">
+                    <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                        {{ primary.started }}&ndash;{% if primary.ended %}{{ primary.ended }}{% else %}Present{% endif %}
+                    </time>
+                    <span class="tenure in-days">({{ primary.tenure_in_days }} days)</span>
+                </span>
+            </div><!-- .group-metadata -->
+        </div><!-- .membership-primary -->
+        {% endwith %}
+        {% if memberships %}
+        <div class="membership-secondary">
+            <div class="membership-section-title"><span class="pill">Other Groups</span></div>
+            <ul class="membership-list">
+            {% for membership in memberships %}
+                <li class="membership">
+                    <div class="group-image">
+                        <div class="empty-image"></div>
+                    </div><!-- .group-image -->
+                    <span class="name">{{ membership.group.name }}</span>
+                    <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
+                    <span class="tenure">
+                        <time datetime="{{ membership.started|date:"c" }}/{% if membership.ended %}{{ membership.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                            {{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %}
+                        </time>
+                        <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span>
+                    </span>
+                </li><!-- .membership -->
+            {% endfor %}
+            </ul><!-- .membership-list -->
+        </div><!-- .membership-secondary -->
+        {% else %}
+        {# @TODO: Empty state. #}
+        {% endif %}
+    </div><!-- .container -->
+</section><!-- .memberships -->
+
+<section class="participations">
+    <div class="container">
+        <h2 class="section-title">Contributions to Hello! Project</h2>
+        <ul class="participation-list">
+            <li class="participation group-participation">
+                <div class="statistic">
+                    <span class="count">{{ object.memberships.count }}</span>
+                    <span class="ss-icon ss-usergroup"></span> <span class="type">groups</span>
+                </div>
+                <div class="latest-heading"><span class="pill">Main</span></div>
+                <div class="latest">
+                    {% with object.primary_membership as primary %}
+                    <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a>
+                    <div class="subtext">
+                    <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    Member
+                    {% if primary.is_active %}
+                        since {{ primary.started|date:"F j, Y" }}
+                    {% else %}
+                        from {{ primary.started|date:"F j, Y" }}&ndash;{{ primary.ended|date:"F j, Y" }}
+                    {% endif %}
+                    </time>
+                    {% if primary.is_leader %}
+                    <time datetime="{{ primary.leadership_started|date:"c" }}/{% if primary.leadership_ended %}{{ primary.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    and leader
+                        {% if not primary.leadership_ended %}
+                            since {{ primary.leadership_started|date:"F j, Y" }}
+                        {% else %}
+                            from {{ primary.leadership_started|date:"F j, Y"}}&ndash;{{ primary.leadership_ended|date:"F j, Y" }}
+                        {% endif %}
+                    </time>
+                    {% endif %}
+                    </div>
+                    {% endwith %}
+                </div>
+            </li><!-- .group-participation -->
+            <li class="participation single-participation">
+                <div class="statistic">
+                    <span class="count">{{ singles|length }}</span>
+                    <span class="ss-icon ss-music"></span> <span class="type">singles</span>
+                </div>
+                <div class="latest-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
+                <div class="latest">
+                    {% with object.latest_single as single %}
+                    <a href="{{ single.get_absolute_url }}">{{ single }}</a>
+                    <div class="subtext">
+                        Released <time datetime="{{ single.released|date:"c" }}">{{ single.released|date:"Y/m/d" }}</time> ({{ single.released|timesince }} ago) in {{ single.editions.count }} edition{{ single.editions.count|pluralize }}
+                    </div>
+                    {% endwith %}
+                </div>
+            </li><!-- .single-participation -->
+            <li class="participation album-participation">
+                <div class="statistic">
+                    <span class="count">{{ albums|length }}</span>
+                    <span class="ss-icon ss-music"></span> <span class="type">albums</span>
+                </div>
+                <div class="latest-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
+                <div class="latest">
+                    {% with object.latest_album as album %}
+                    <a href="{{ album.get_absolute_url }}">{{ album }}</a>
+                    <div class="subtext">
+                        Released <time datetime="{{ album.released|date:"c" }}">{{ album.released|date:"Y/m/d" }}</time> ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }}
+                    </div>
+                    {% endwith %}
+                </div>
+            </li><!-- .album-participation -->
+        </ul><!-- .participation-list -->
+    </div><!-- .container -->
+</div><!-- .participations -->
 
 <section class="releases">
     <div class="container">
@@ -106,13 +153,13 @@
             {% for release in singles %}
                 <li class="release">
                     <div class="release-image">
-                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                        <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                     </div><!-- .release-image -->
                     <div class="release-meta">
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
                         <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
-                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                        <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
                     </div><!-- .release-meta -->
                 </li><!-- .release -->
             {% endfor %}
@@ -124,13 +171,13 @@
             {% for release in albums %}
                 <li class="release">
                     <div class="release-image">
-                        <div class="empty-artwork"><span class="ss-icon ss-disc"></span></div>
+                        <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                     </div><!-- .release-image -->
                     <div class="release-meta">
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
                         <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
-                        <div class="release-date">{{ release.released|date:"Y/m/d" }} &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                        <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
                     </div><!-- .release-meta -->
                 </li><!-- .release -->
             {% endfor %}

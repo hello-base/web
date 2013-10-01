@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 
 {% block page %}
-<header class="header">
+<header class="header" role="banner">
     <div class="container">
-        <h1>{% block site-name %}<a href="/"><strong>Hello!</strong> Base<sup>&#976;</sup></a>{% endblock %}</h1>
-        <p class="tagline">{% block site-tagline %}A service for the <strong>Hello! Ranking</strong> community.{% endblock %}</p>
+        <a href="{% url "site-home" %}" class="header-logo-wordmark">
+            <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+        </a>
+
+        <form action="{% url "search" %}" class="header-search searchbar" method="get" accept-charset="utf-8">
+            <div class="search-container">
+                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking for?" value="{{ request.GET.q }}">
+                <button type="submit"><span class="ss-icon ss-search"></span></button>
+            </div>
+            <div class="search-results js-search-results"></div>
+        </form>
     </div>
 </header>
-<section class="content" role="content">
+<main class="content" role="main">
 {% block content %}{% endblock %}
-</section>
+</main>
+{% include "partials/footer.html" %}
 {% endblock page %}

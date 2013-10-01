@@ -5,230 +5,59 @@
 
 @import "fonts/hicons";
 @import "fonts/pika";
-
 @import "partials/header";
 @import "partials/footer";
 @import "partials/landings";
 @import "partials/search";
 
-@import "partials/music";
-
-
 // Boooo.
 @import "hacks";
 
-.profile {
-    ul {
-        @include reset-box-model;
-        @include reset-list-style;
-    }
-}
-
-.section-masthead {
-    background-color: #252525;
-    background-position: center center;
-    padding-top: 2em;
-}
-
-.metadata-names {
-    @include push(3);
-    padding-bottom: 1em;
-
-    h1, p { margin: 0; }
-    .romanized-name {
-        color: rgba(#FFF, 0.9) !important;
-        font-size: 30px;
-        font-weight: 300;
-        text-transform: uppercase; }
-    .name {
-        color: rgba(#FFF, 0.5);
-        display: block;
-        font-size: 12px; }
-    .standing {
-        color: #73C0C9 !important;
-        font-size: 13px;
-        font-style: italic; }
-}
-
 //
-.section-vitals {
-    @include span-columns(3);
-    margin-top: -90px;
-    background: #FFF;
-
-    .metadata-vitals {
-        font-size: 13px;
-        padding: 0.5em 1em;
-
-        li {
-            padding-top: 0.5em; padding-bottom: 0.5em;
-
-            border-bottom: 1px solid #F7F7F7;
-            font-weight: 700;
-            text-align: right;
-        }
-        li:last-child { border-bottom: none; }
-        span {
-            color: rgba(#000, 0.5);
-            float: left;
-            font-weight: 300;
-        }
-    }
-}
-
-.section-participation {
-    @include span-columns(9 omega);
-}
-
-.metadata-participation {
-    @include reset-box-model;
-    @include reset-list-style;
-    color: #FFF;
-
-    li {
-        @include clearfix;
-        padding: 12px 0;
-    }
-
-    .count {
-        @include span-columns(2, 9);
-        position: relative; top: -4px;
-
-        font-size: 24px;
-        font-weight: 300;
-        letter-spacing: -1px; }
-    .count strong { font-size: 30px; }
-
-    h2 {
-        @include span-columns(2, 9);
-        margin-top: 2px;
-
-        color: #5F6A6D;
-        font-size: 11px;
-        font-weight: 600;
-        text-align: right;
-        text-transform: uppercase;
-    }
-
-    .latest-image {
-        @include span-columns(1, 9);
-    }
-
-    .latest {
-        @include span-columns(3, 9);
-        color: #8C989C;
-        font-size: 12px;
-    }
-    .latest a {
-        color: #FFF;
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-}
-
-.section-metadata {
-    background: #313B3D;
-    border-top: 1px solid #3B4648;
-}
-
-.section-title {
-    font-size: 18px;
-    font-weight: 200;
-    text-transform: uppercase;
-    margin: 1em 0;
-}
-
-
-
-
-.empty-artwork {
+.empty-image {
   height: 100%;
   position: relative;
 
-  box-shadow: inset 0 0 0 1px #CCC;
-  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px $brand-paleGrey;
+  // border-radius: 8px;
   text-align: center;
+}
+.empty-image .ss-icon {
+  @include absolute-center();
+  width: 42px; height: 42px;
 
-  .ss-icon {
-    display: block;
-    margin: auto;
-    overflow: hidden;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    width: 42px; height: 42px;
-
-    color: $brand-lightGrey;
-    font-size: 36px;
-  }
+  color: $brand-paleGrey;
+  font-size: 36px;
 }
 
-
-
-.releases {
-  border-top: 1px solid $brand-paleGrey;
-  // border-bottom: 1px solid $brand-paleGrey;
-}
-.releases-singles,
-.releases-albums {
-  @include clearfix;
-  padding-top: 24px; padding-bottom: 24px;
-}
-.releases-albums { border-top: 1px solid $brand-paleGrey; }
-
-.release {
-  @include clearfix;
-  @include span-columns(6, 12);
-  @include nth-omega(2n);
-  min-height: 88px;
-
-  .romanized-name {
-    line-height: $headings-line-height;
-    font-size: 16px;
-    font-style: italic;
-  }
-  .name {
-    display: block;
-    color: $brand-lightGrey;
-    font-size: 12px;
-  }
-
-}
-.release-image {
-  @include span-columns(1, 6);
-  height: 65px;
-
-  .ss-icon {
-    font-size: 24px;
-    width: 30px; height: 30px;
-  }
-}
-.release-meta {
-  @include span-columns(5 omega, 6);
-  padding-top: 6px;
-}
-
-
-.release-date {
-  color: $brand-medGrey;
-  font-size: 12px;
-}
-
-.release-participants {
-  font-size: 13px;
-}
-
-
-
-//
-.section-header {
+.section-title {
   font-family: $font-family-secondary;
   font-weight: 300;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .subtext {
   color: $brand-medGrey;
   font-size: 12px;
 }
+
+.section-masthead {
+  box-shadow: inset 0 -1px 0 $brand-paleGrey;
+  padding-top: 36px; padding-bottom: 36px;
+}
+
+.pill {
+  padding: 4px 6px;
+
+  background: #FFF;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px $brand-paleGrey;
+  color: $brand-medGrey;
+  font-family: $font-family-secondary;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+@import "sections/flatpages";
+@import "sections/music";
+@import "sections/people";
