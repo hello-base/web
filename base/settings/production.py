@@ -160,8 +160,6 @@ class Production(Settings):
         }
     }
 
-
-
     # django-haystack (ElasticSearch).
     # ------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
