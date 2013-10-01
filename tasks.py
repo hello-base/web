@@ -17,7 +17,7 @@ def deploy(**kwargs):
     invoke.run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
 
     # Static Files.
-    print('- Run the stylesheets through Compass using 'Production' settings...')
+    print('- Run the stylesheets through Compass using "Production" settings...')
     invoke.run('compass compile -e production --force -q')
 
     print('- Collecting the static files and throwing them on S3...')
