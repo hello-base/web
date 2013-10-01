@@ -4,6 +4,9 @@ from model_utils import FieldTracker
 
 
 class Event(models.Model):
+    # Model Managers.
+    tracker = FieldTracker()
+
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     nickname = models.CharField(max_length=30, blank=True, null=True)
@@ -13,29 +16,8 @@ class Event(models.Model):
     end_date = models.DateField(blank=True, null=True)
     slug = models.SlugField()
 
-    # Model Managers
-    tracker = FieldTracker()
-
     def __unicode__(self):
-        return u'%s' % self.romanized_name
-
-    @staticmethod
-    def autocomplete_search_fields():
-        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
-
-
-class Venue(models.Model):
-    romanized_name = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    former_names = models.CharField(max_length=200, blank=True, null=True)
-    romanized_address = models.CharField(max_length=200, blank=True, null=True)
-    address = models.CharField(max_length=200, blank=True, null=True)
-    country = models.CharField(max_length=200, blank=True, null=True)
-    slug = models.SlugField()
-    # Country field only filled if outside US (maybe unnecessary).
-
-    def __unicode__(self):
-        return u'%s' % self.romanized_name
+        return u'%s' % (self.romanized_name)
 
     @staticmethod
     def autocomplete_search_fields():
@@ -59,3 +41,21 @@ class Performance(models.Model):
         if self.start_time:
             return u'%s %s at %s' % (self.day, self.event.nickname, self.start_time)
         return u'%s %s' % (self.day, self.event.nickname)
+
+
+class Venue(models.Model):
+    romanized_name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    former_names = models.CharField(max_length=200, blank=True, null=True)
+    romanized_address = models.CharField(max_length=200, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    slug = models.SlugField()
+    # Country field only filled if outside US (maybe unnecessary).
+
+    def __unicode__(self):
+        return u'%s' % (self.romanized_name)
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')

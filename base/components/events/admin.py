@@ -3,6 +3,18 @@ from django.contrib import admin
 from .models import Event, Performance, Venue
 
 
+class PerformanceInline(admin.StackedInline):
+    allow_add = True
+    extra = 1
+    fieldsets = (
+        (None, {'fields': ('event', 'venue')}),
+        ('Dates', {'fields': ('day', ('start_time', 'end_time'))}),
+        ('Names', {'fields': (('romanized_name', 'name'),)}),
+    )
+    model = Performance
+    autocomplete_lookup_fields = {'fk': ['event', 'venue']}
+
+
 class EventAdmin(admin.ModelAdmin):
     date_hierarchy = 'start_date'
     fieldsets = (
@@ -10,6 +22,7 @@ class EventAdmin(admin.ModelAdmin):
         ('Names', {'fields': (('romanized_name', 'name'), 'nickname', 'slug')}),
         ('Links', {'fields': ('info_link', 'secondary_info_link')}),
     )
+    inlines = [PerformanceInline]
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
