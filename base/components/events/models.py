@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.db import models
 
 from model_utils import FieldTracker
@@ -34,6 +33,7 @@ class Venue(models.Model):
     def __unicode__(self):
         return u'%s' % self.romanized_name
 
+
 class Performance(models.Model):
     day = models.DateField()
     romanized_name = models.CharField(max_length=200, blank=True, null=True)
@@ -43,7 +43,7 @@ class Performance(models.Model):
     event = models.ForeignKey(Event, related_name='schedule')
     venue = models.ForeignKey(Venue, blank=True, null=True, related_name='performances')
     # Add 'set list' field with convoluted ordering and everything...
-    
+
     class Meta:
         ordering = ('day', 'start_time')
 
@@ -51,9 +51,3 @@ class Performance(models.Model):
         if self.start_time:
             return u'%s %s at %s' % (self.day, self.event.nickname, self.start_time)
         return u'%s %s' % (self.day, self.event.nickname)
-
-
-# -HACK- to quickly input data.
-admin.site.register(Event)
-admin.site.register(Performance)
-admin.site.register(Venue)
