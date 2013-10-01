@@ -6,11 +6,13 @@ from .models import Event, Performance, Venue
 
 
 class PerformanceInline(admin.StackedInline):
-    allow_add = True
+    exclude = ['event']
     extra = 1
-    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'event', 'venue', 'day', ('start_time', 'end_time'))}),)
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', ('day', 'start_time', 'end_time'))}),)
     model = Performance
-    autocomplete_lookup_fields = {'fk': ['event', 'venue']}
+
+    raw_id_fields = ('venue',)
+    autocomplete_lookup_fields = {'fk': ['venue']}
 
 
 class EventAdmin(ContributorMixin, admin.ModelAdmin):
@@ -20,7 +22,7 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
             'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
             'fields': ('idols', 'groups')
         }),
-        ('Dates', {'fields': ('start_date', 'end_date')}),
+        ('Dates', {'fields': (('start_date', 'end_date'),)}),
         ('Names', {'fields': (('romanized_name', 'name'), 'nickname', 'slug')}),
         ('Links', {'fields': ('info_link', 'secondary_info_link')}),
         ('Imagery', {'fields': ('logo', 'poster', 'stage')}),
