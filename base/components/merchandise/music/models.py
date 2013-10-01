@@ -95,7 +95,7 @@ class Edition(models.Model):
     price = models.IntegerField(blank=True, null=True)
 
     # Contents
-    art = models.ImageField(blank=True, null=True, upload_to='releases/music/editions/')
+    art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
 
@@ -248,7 +248,7 @@ class Video(models.Model):
     released = models.DateField(blank=True, null=True)
 
     # Contents
-    still = models.ImageField(blank=True, null=True, upload_to='releases/music/videos/')
+    still = models.ImageField(blank=True, null=True, upload_to='merchandise/music/videos/')
     video_url = models.URLField(blank=True)
 
     class Meta:
