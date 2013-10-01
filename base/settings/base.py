@@ -108,17 +108,22 @@ class Base(Configuration):
     # Sessions
     SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
-    # File / Media / Static Media Settings
-    MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
-    MEDIA_URL = '/media/'
-    STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
+    # Static File Configuration.
+    # ------------------------------------------------------------------
+    STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
-    STATICFILES_FINDERS = (
-        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-        'django.contrib.staticfiles.finders.FileSystemFinder',
-        'pipeline.finders.PipelineFinder',
-        'pipeline.finders.CachedFileFinder',
+    STATICFILES_DIRS = (
+        normpath(join(DJANGO_ROOT, 'static')),
     )
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    )
+
+    # Media Configuration.
+    # ------------------------------------------------------------------
+    MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
+    MEDIA_URL = '/media/'
 
     # Django Authentication (OAuth, etc.)
     AUTHENTICATION_BACKENDS = (
@@ -137,6 +142,7 @@ class Base(Configuration):
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
 
     # Django Pipeline
+    PIPELINE_COMPILERS = ('pipeline.compilers.coffee.CoffeeScriptCompiler',)
     PIPELINE_CSS = {
         'application': {
             'source_filenames': ('stylesheets/application.css',),
@@ -154,8 +160,8 @@ class Base(Configuration):
         },
         'components': {
             'source_filenames': (
-                'javascripts/components/turbolinks.js',
-                'javascripts/components/jquery.turbolinks.js',
+                'javascripts/components/jquery.turbolinks.coffee',
+                'javascripts/components/turbolinks.coffee',
                 'javascripts/components/nprogress.js',
                 'javascripts/components/handlebars.runtime.js',
             ),

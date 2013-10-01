@@ -41,11 +41,6 @@ class Development(Settings):
     SECRET_KEY = '@5zyl)e#a#xmgzg*_%7=$m#kbvc%mi%j-+b(13yaml!dre7l!u'
 
     # Static Media Settings
-    STATIC_ROOT = ''
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = (
-        os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
-    )
     STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
     # Sessions

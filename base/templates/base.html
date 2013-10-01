@@ -1,4 +1,5 @@
 {% load compressed %}
+{% load static from staticfiles %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="{{ LANGUAGE_CODE|slice:"2" }}">
@@ -13,13 +14,13 @@
 <link rel="dns-prefetch" href="//ajax.googleapis.com">
 <link rel="dns-prefetch" href="//hello-base.s3.amazonaws.com">
 <link rel="icon" href="{% static "images/favicon.ico" %}">
+<!-- Stylesheets -->
 <link rel="stylesheet" href="//cloud.typography.com/7547452/745842/css/fonts.css">
 {% compressed_css 'application' %}
-
+<!-- Javascripts -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 {% compressed_js 'components' %}
 {% compressed_js 'application' %}
-
 <script type="text/javascript">
   var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
   analytics.load("qs70qk1");
