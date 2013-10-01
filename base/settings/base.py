@@ -219,36 +219,6 @@ class Base(Configuration):
     # ------------------------------------------------------------------
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
 
-    # django-pipeline.
-    # ------------------------------------------------------------------
-    INSTALLED_APPS += ['pipeline',]
-    PIPELINE_COMPILERS = ('pipeline.compilers.coffee.CoffeeScriptCompiler',)
-    PIPELINE_CSS = {
-        'application': {
-            'source_filenames': ('stylesheets/application.css',),
-            'output_filename': 'stylesheets/production.css',
-        },
-    }
-    PIPELINE_JS = {
-        'application': {
-            'source_filenames': (
-                'javascripts/application/base.js',
-                'javascripts/application/search.js',
-                'javascripts/application/templates.js',
-            ),
-            'output_filename': 'javascripts/application.js'
-        },
-        'components': {
-            'source_filenames': (
-                'javascripts/components/jquery.turbolinks.coffee',
-                'javascripts/components/turbolinks.coffee',
-                'javascripts/components/nprogress.js',
-                'javascripts/components/handlebars.runtime.js',
-            ),
-            'output_filename': 'javascripts/components.js'
-        },
-    }
-
     # South.
     # ------------------------------------------------------------------
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
