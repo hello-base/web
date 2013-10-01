@@ -238,6 +238,10 @@ class Track(TimeStampedModel):
     def participants(self):
         return list(chain(self.idols.all(), self.groups.all()))
 
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
 
 class TrackOrder(models.Model):
     edition = models.ForeignKey(Edition, related_name='order')
