@@ -93,6 +93,7 @@ class Base(Configuration):
         'floppyforms',
         'gunicorn',
         'haystack',
+        'pipeline',
         's3_folder_storage',
         'south',
         'storages',
@@ -115,6 +116,8 @@ class Base(Configuration):
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
         'django.contrib.staticfiles.finders.FileSystemFinder',
+        'pipeline.finders.PipelineFinder',
+        'pipeline.finders.CachedFileFinder',
     )
 
     # Django Authentication (OAuth, etc.)
@@ -132,6 +135,33 @@ class Base(Configuration):
 
     # Django Haystack
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
+
+    # Django Pipeline
+    PIPELINE_CSS = {
+        'application': {
+            'source_filenames': ('stylesheets/application.css',),
+            'output_filename': 'stylesheets/production.css',
+        },
+    }
+    PIPELINE_JS = {
+        'application': {
+            'source_filenames': (
+                'javascripts/application/base.js',
+                'javascripts/application/search.js',
+                'javascripts/application/templates.js',
+            ),
+            'output_filename': 'javascripts/application.js'
+        },
+        'components': {
+            'source_filenames': (
+                'javascripts/components/turbolinks.js',
+                'javascripts/components/jquery.turbolinks.js',
+                'javascripts/components/nprogress.js',
+                'javascripts/components/handlebars.runtime.js',
+            ),
+            'output_filename': 'javascripts/components.js'
+        },
+    }
 
     # Django Storages
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')

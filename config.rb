@@ -1,22 +1,23 @@
+# Require any additional compass plugins here.
 require "compass-normalize"
 require "susy"
 
 # Set this to the root of your project when deployed:
-http_path = (environment == :production) ? "//hello-base.s3.amazonaws.com/" : "/"
-
-css_dir = "static/stylesheets"
+http_path = "/"
+css_dir = "base/static/stylesheets"
+sass_dir = "base/assets/stylesheets"
+images_dir = "base/static/images"
+javascripts_dir = "base/static/javascripts"
 fonts_dir = "static/fonts"
-images_dir = "static/images"
-javascripts_dir = "static/javascripts"
-sass_dir = "base/assets/sass"
 
-# output_style = :compressed
-# output_style = :compact
 output_style = (environment == :production) ? :compressed : :compact
+
+# To enable relative paths to assets via compass helper functions. Uncomment:
+# relative_assets = true
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
 line_comments = false
-# line_comments = (environment == :production) ? false : true
+
 
 # If you prefer the indented syntax, you might want to regenerate this
 # project again passing --syntax sass, or you can uncomment this:
