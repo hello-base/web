@@ -32,12 +32,6 @@ class Base(Merchandise):
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
-    # Denormalized Fields.
-    # Note: These fields should be 1) too frequently accessed to make
-    # sense as methods and 2) infrequently updated.
-    participating_idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss_attributed_to')
-    participating_groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss_attributed_to')
-
     class Meta:
         abstract = True
         get_latest_by = 'released'
