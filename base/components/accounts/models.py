@@ -3,6 +3,7 @@ from django.core import validators
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 
+from model_utils.models import TimeStampedModel
 from ohashi.db import models
 
 
@@ -63,9 +64,9 @@ class Editor(AbstractBaseUser):
         send_mail(subject, message, from_email, [self.email])
 
 
-class ContributorMixin(models.Model):
-    submitted_by = models.ForeignKey(Editor, related_name='submissions')
-    edited_by = models.ManyToManyField(Editor, related_name='edits')
+class ContributorMixin(TimeStampedModel):
+    submitted_by = models.ForeignKey(Editor, blank=True, null=True, related_name='%(class)s_submissions')
+    edited_by = models.ManyToManyField(Editor, blank=True, null=True, related_name='%(class)ss_edits')
 
     class Meta:
         abstract = True
