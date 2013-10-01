@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from components.accounts.admin import ContributorMixin
+
 from .models import (Album, Edition, Label, Single, Track, TrackOrder,
     Video, VideoTrackOrder)
 
@@ -45,7 +47,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['romanized_name']}
 
 
-class AlbumAdmin(MusicBaseAdmin):
+class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
@@ -97,7 +99,7 @@ class LabelAdmin(admin.ModelAdmin):
 admin.site.register(Label, LabelAdmin)
 
 
-class SingleAdmin(MusicBaseAdmin):
+class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
