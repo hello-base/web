@@ -4,7 +4,7 @@ from ecstatic.storage import CachedStaticFilesMixin, StaticManifestMixin
 from s3_folder_storage.s3 import StaticStorage
 
 
-class S3PipelineStorage(StaticManifestMixin, CachedStaticFilesMixin, StaticStorage):
+class S3ManifestStorage(StaticManifestMixin, CachedStaticFilesMixin, StaticStorage):
     # HACK: The chunks implementation in S3 files appears
     # broken when gzipped!
     def hashed_name(self, name, content=None):
