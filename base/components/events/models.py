@@ -31,7 +31,7 @@ class Performance(models.Model):
     start_time = models.TimeField(blank=True, null=True)
     end_time = models.TimeField(blank=True, null=True)
     event = models.ForeignKey(Event, related_name='schedule')
-    venue = models.ForeignKey(Venue, blank=True, null=True, related_name='performances')
+    venue = models.ForeignKey('Venue', blank=True, null=True, related_name='performances')
     # Add 'set list' field with convoluted ordering and everything...
 
     class Meta:
