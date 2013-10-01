@@ -45,51 +45,6 @@ class Base(Merchandise):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
-    def save(self, *args, **kwargs):
-        # Denormalize the release's participants. We only ever have to
-        # calulcate this once and we shouldn't have to on request.
-        self._render_participants()
-        return super(Base, self).save(*args, **kwargs)
-
-    def _render_participants(self):
-        from components.people.models import Idol, Membership
-
-        # Do we have existing participants? Clear them out so we can
-        # calculate them again.
-        self.participating_idols.clear()
-        self.participating_groups.clear()
-
-        groups = self.groups.all()
-        if groups.exists():
-            # If a supergroup is one of the groups attributed, just
-            # show the supergroup.
-            if self.supergroup in groups:
-                return self.participating_groups.add(self.supergroup)
-
-            # Gather all of the individual idol's primary keys
-            # attributed to the single into a set().
-            idols = self.idols.all()
-
-            # Specify an empty set() that will contain all of the
-            # members of the groups attributed to the single. Then,
-            # loop through all of the groups and update the set with
-            # all of the individual members' primary keys.
-            group_ids = groups.values_list('id', flat=True)
-            group_members = Membership.objects.filter(group__in=group_ids).values_list('idol', flat=True)
-
-            # Subtract group_members from idols.
-            distinct_idols = idols.exclude(pk__in=group_members)
-
-            # Add the calculated groups and idols to our new list of
-            # participating groups and idols.
-            self.participating_groups.add(*list(groups))
-            self.participating_idols.add(*list(distinct_idols))
-            return
-
-        # No groups? Just add all the idols.
-        self.participating_idols.add(*list(self.idols.all()))
-        return
-
     @property
     def identifier(self):
         return self._meta.module_name

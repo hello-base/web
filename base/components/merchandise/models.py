@@ -6,10 +6,6 @@ from ohashi.db import models
 
 
 class Merchandise(TimeStampedModel):
-    # Ownership.
-    idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss')
-
     # Shared metadata.
     romanized_name = models.CharField()
     name = models.CharField()
