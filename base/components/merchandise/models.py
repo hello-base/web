@@ -4,12 +4,11 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from ohashi.db import models
 
+from components.accounts.models import ContributorMixin
+from components.people.models import ParticipationMixin
 
-class Merchandise(TimeStampedModel):
-    # Ownership.
-    idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss')
 
+class Merchandise(ContributorMixin, ParticipationMixin):
     # Shared metadata.
     romanized_name = models.CharField()
     name = models.CharField()
