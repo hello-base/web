@@ -16,6 +16,10 @@ class PerformanceInline(admin.StackedInline):
 class EventAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'start_date'
     fieldsets = (
+        ('Relations', {
+            'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
+            'fields': ('idols', 'groups')
+        }),
         ('Dates', {'fields': ('start_date', 'end_date')}),
         ('Names', {'fields': (('romanized_name', 'name'), 'nickname', 'slug')}),
         ('Links', {'fields': ('info_link', 'secondary_info_link')}),
