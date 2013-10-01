@@ -45,6 +45,7 @@ class Base(Configuration):
     PLUGINS = [
         'floppyforms',
         'haystack',
+        'imagekit',
         'south',
         'typogrify',
     ]
