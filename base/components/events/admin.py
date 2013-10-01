@@ -33,6 +33,9 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ['romanized_name']}
     save_on_top = True
     search_fields = ['romanized_name', 'name']
+
+    raw_id_fields = ('idols', 'groups',)
+    autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
 admin.site.register(Event, EventAdmin)
 
 
@@ -57,7 +60,7 @@ admin.site.register(Performance, PerformanceAdmin)
 class VenueAdmin(ContributorMixin, admin.ModelAdmin):
     fieldsets = (
         ('Names', {'fields': (('romanized_name', 'name'), 'former_names', 'slug')}),
-        ('Details', {'fields': ('romanized_address', 'address', 'country')}),
+        ('Details', {'fields': ('romanized_address', 'address', 'country', 'photo')}),
     )
     list_display = ['romanized_name', 'name', 'former_names', 'romanized_address', 'country']
     list_display_links = ['romanized_name', 'name']
