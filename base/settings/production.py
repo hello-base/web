@@ -74,7 +74,7 @@ class Production(Settings):
         'storages',
     ]
     DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    STATICFILES_STORAGE = 'components.storage.S3PipelineStorage'
+    STATICFILES_STORAGE = 'components.storage.S3ManifestStorage'
 
     # Amazon Web Services
     AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='', environ_name='AWS_ACCESS_KEY_ID')

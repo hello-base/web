@@ -32,6 +32,19 @@ def deploy(**kwargs):
     print('All done!')
 
 
+@invoke.task(name='collect')
+def development_collectstatic(**kwargs):
+    out = functools.partial(_out, 'development.collectstatic')
+    # Pre-compile all of our assets.
+    invoke.run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
+    invoke.run('compass compile -e production --force')
+
+    # Build and send it off.
+    invoke.run('python manage.py buildstatic')
+    invoke.run('python manage.py createstaticmanifest')
+    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput')
+
+
 @invoke.task(name='server')
 def development_server(**kwargs):
     # Use Foreman to start all the development processes.
