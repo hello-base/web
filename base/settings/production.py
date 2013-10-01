@@ -159,6 +159,7 @@ class Production(Settings):
 
     # Further StaticFiles Nonsense
     # Separate the staticfiles cache from the normal Redis cache.
+    PIPELINE_COFFEE_SCRIPT_BINARY = '/app/bin/node /app/node_modules/coffee-script/bin/coffee'
     PIPELINE_YUGLIFY_BINARY = '/app/bin/node /app/node_modules/yuglify/bin/yuglify'
     CACHES['staticfiles'] = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
