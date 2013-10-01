@@ -129,6 +129,7 @@ class Base(Configuration):
         normpath(join(DJANGO_ROOT, 'static')),
     )
     STATICFILES_FINDERS = (
+        'staticbuilder.finders.BuiltFileFinder',
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     )
@@ -190,10 +191,25 @@ class Base(Configuration):
         }
     }
 
-    # django-ecstatic
+    # django-ecstatic / django-staticbuilder
     # ------------------------------------------------------------------
-    INSTALLED_APPS += ['ecstatic',]
+    INSTALLED_APPS += [
+        'ecstatic',
+        'staticbuilder',
+    ]
     ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'static', 'staticmanifest.json')
+    STATICBUILDER_BUILD_ROOT = join(DJANGO_ROOT, 'build')
+    STATICBUILDER_BUILD_COMMANDS = [
+        'yuglify {input} --type js --combine {output}'.format(
+            input=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'application', '*.js'),
+            output=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'application')),
+        'yuglify {input} --type js --combine {output}'.format(
+            input=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'components', '*.js'),
+            output=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'components')),
+        'yuglify {input} --type css --combine {output}'.format(
+            input=join(STATICBUILDER_BUILD_ROOT, 'stylesheets', 'application.css'),
+            output=join(STATICBUILDER_BUILD_ROOT, 'stylesheets', 'production')),
+    ]
 
     # django-grappelli.
     # ------------------------------------------------------------------
