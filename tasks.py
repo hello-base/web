@@ -12,17 +12,6 @@ def _out(name, message):
 def deploy(**kwargs):
     print('So you want to deploy? Let\'s get started.')
 
-    # Compile the Handlebars.
-    print('- Compile all of the Handlebars...')
-    invoke.run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
-
-    # Static Files.
-    print('- Run the stylesheets through Compass using "Production" settings...')
-    invoke.run('compass compile -e production --force -q')
-
-    print('- Collecting the static files and throwing them on S3...')
-    invoke.run('python manage.py collectstatic --configuration=Production --noinput -v 0')
-
     # Heroku.
     print('- Deploying Hello! Base to Heroku...')
     invoke.run('git push heroku master')
@@ -72,6 +61,7 @@ def heroku_syncdb(**kwargs):
 
 ns = invoke.Collection(
     deploy,
+    development_collectstatic,
     development_server,
     heroku=invoke.Collection(
         heroku_collectstatic,
