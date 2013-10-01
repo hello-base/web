@@ -35,7 +35,7 @@ class Production(Settings):
 
     # Secret Key Configuration.
     # ------------------------------------------------------------------
-    SECRET_KEY = os.environ.get('SECUREKEY_AMBER_KEY', '').split(',')[0]
+    SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
 
     # Caching Configuration.
     # ------------------------------------------------------------------
