@@ -190,6 +190,11 @@ class Base(Configuration):
         }
     }
 
+    # django-ecstatic
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['ecstatic',]
+    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'static', 'staticmanifest.json')
+
     # django-grappelli.
     # ------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
