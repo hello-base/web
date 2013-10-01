@@ -2,7 +2,8 @@
     "name": "hello-base",
     "version": "0.0.1",
     "dependencies": {
-        "yuglify": "0.1.4"
+        "coffee-script": "1.6.3",
+        "yuglify": "0.1.4",
     },
     "engines": {
         "node": "~0.10.17",
