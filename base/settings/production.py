@@ -157,12 +157,11 @@ class Production(Settings):
         INSTALLED_APPS = Settings.INSTALLED_APPS + ['raven.contrib.django', ]
 
     # Further StaticFiles Nonsense
-    PIPELINE_ENABLED = True
+    # Separate the staticfiles cache from the normal Redis cache.
     CACHES['staticfiles'] = {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(Settings.SITE_ROOT, 'static.cache'),
-        'TIMEOUT': 100 * 365 * 24 * 60 * 60, # A hundred years!
-        'OPTIONS': {
-            'MAX_ENTRIES': 100 * 1000
-        }
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'staticfiles',
+        # Long cache timeout for staticfiles, since this is used
+        # heavily by the optimizing storage.
+        'TIMEOUT': 60 * 60 * 24 * 365,
     }
