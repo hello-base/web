@@ -3,9 +3,10 @@ from django.db import models
 from model_utils import FieldTracker
 
 from components.accounts.models import ContributorMixin
+from components.people.models import ParticipationMixin
 
 
-class Event(ContributorMixin):
+class Event(ContributorMixin, ParticipationMixin):
     # Model Managers.
     tracker = FieldTracker()
 
