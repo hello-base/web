@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from components.accounts.admin import ContributorMixin
+
 from .models import Event, Performance, Venue
 
 
@@ -11,7 +13,7 @@ class PerformanceInline(admin.StackedInline):
     autocomplete_lookup_fields = {'fk': ['event', 'venue']}
 
 
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'start_date'
     fieldsets = (
         ('Dates', {'fields': ('start_date', 'end_date')}),
@@ -27,7 +29,7 @@ class EventAdmin(admin.ModelAdmin):
 admin.site.register(Event, EventAdmin)
 
 
-class PerformanceAdmin(admin.ModelAdmin):
+class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'day'
     fieldsets = (
         (None, {'fields': ('event', 'venue')}),
@@ -45,7 +47,7 @@ class PerformanceAdmin(admin.ModelAdmin):
 admin.site.register(Performance, PerformanceAdmin)
 
 
-class VenueAdmin(admin.ModelAdmin):
+class VenueAdmin(ContributorMixin, admin.ModelAdmin):
     fieldsets = (
         ('Names', {'fields': (('romanized_name', 'name'), 'former_names', 'slug')}),
         ('Details', {'fields': ('romanized_address', 'address', 'country')}),

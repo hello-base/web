@@ -5,6 +5,15 @@ from django.contrib.auth.models import Group
 from .models import Editor
 
 
+class ContributorMixin(admin.ModelAdmin):
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.submitted_by = request.user
+        obj.edited_by.add(request.user)
+        obj.save()
+        super(ContributorMixin, self).save_model(request, obj, form, change)
+
+
 class EditorAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),

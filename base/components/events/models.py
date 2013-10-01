@@ -2,8 +2,10 @@ from django.db import models
 
 from model_utils import FieldTracker
 
+from components.accounts.models import ContributorMixin
 
-class Event(models.Model):
+
+class Event(ContributorMixin):
     # Model Managers.
     tracker = FieldTracker()
 
@@ -24,7 +26,7 @@ class Event(models.Model):
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
 
-class Performance(models.Model):
+class Performance(ContributorMixin):
     day = models.DateField()
     romanized_name = models.CharField(max_length=200, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
@@ -43,7 +45,7 @@ class Performance(models.Model):
         return u'%s %s' % (self.day, self.event.nickname)
 
 
-class Venue(models.Model):
+class Venue(ContributorMixin):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     former_names = models.CharField(max_length=200, blank=True, null=True)
