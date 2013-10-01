@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import (Album, Edition, Single, Track, TrackOrder, Video,
-    VideoTrackOrder)
+from .models import (Album, Edition, Label, Single, Track, TrackOrder,
+    Video, VideoTrackOrder)
 
 
 class AlbumEditionInline(admin.StackedInline):
@@ -92,6 +92,13 @@ class EditionAdmin(admin.ModelAdmin):
     raw_id_fields = ('album', 'single',)
     autocomplete_lookup_fields = {'fk': ['album', 'single']}
 admin.site.register(Edition, EditionAdmin)
+
+
+class LabelAdmin(admin.ModelAdmin):
+    fieldsets = ((None, {'fields': ('name', 'slug')}),)
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ['name']}
+admin.site.register(Label, LabelAdmin)
 
 
 class SingleAdmin(MusicBaseAdmin):
