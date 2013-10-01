@@ -6,11 +6,7 @@ from .models import Event, Performance, Venue
 class PerformanceInline(admin.StackedInline):
     allow_add = True
     extra = 1
-    fieldsets = (
-        (None, {'fields': ('event', 'venue')}),
-        ('Dates', {'fields': ('day', ('start_time', 'end_time'))}),
-        ('Names', {'fields': (('romanized_name', 'name'),)}),
-    )
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'event', 'venue', 'day', ('start_time', 'end_time'))}),)
     model = Performance
     autocomplete_lookup_fields = {'fk': ['event', 'venue']}
 
