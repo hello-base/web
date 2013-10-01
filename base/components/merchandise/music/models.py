@@ -72,7 +72,7 @@ class Single(Base):
         return reverse('single-detail', kwargs={'slug': self.slug})
 
 
-class Edition(TimeStampedModel):
+class Edition(models.Model):
     EDITIONS = Choices(
         (1, 'regular', 'Regular'),
         (2, 'limited', 'Limited'),
@@ -212,7 +212,7 @@ class TrackOrder(models.Model):
         return u'%s on %s' % (self.track, self.edition)
 
 
-class Video(TimeStampedModel):
+class Video(models.Model):
     VIDEO_TYPES = Choices(
         # Promotional Videos.
         (1, 'pv_regular', 'Regular'),
