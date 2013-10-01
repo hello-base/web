@@ -4,8 +4,9 @@ from django.views.generic.base import RedirectView
 
 from multiurl import ContinueResolving, multiurl
 
-from .views import (GroupBrowseView, GroupDetailView, GroupDiscographyView, GroupMembershipView,
-    IdolBrowseView, IdolDetailView, IdolDiscographyView, StaffBrowseView, StaffDetailView)
+from .views import (GroupBrowseView, GroupDetailView,
+    GroupMembershipView, IdolBrowseView, IdolDetailView,
+    StaffBrowseView, StaffDetailView)
 
 
 urlpatterns = patterns('',
