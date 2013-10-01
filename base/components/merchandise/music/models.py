@@ -252,7 +252,6 @@ class Video(models.Model):
 
     class Meta:
         get_latest_by = 'released'
-        ordering = ('-modified',)
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
