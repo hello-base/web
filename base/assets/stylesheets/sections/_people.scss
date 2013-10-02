@@ -1,107 +1,95 @@
 .profile {
-    ul {
-        @include reset-box-model;
-        @include reset-list-style;
-    }
+  ul {
+    @include reset-box-model;
+    @include reset-list-style;
+  }
 }
 
-.metadata-names {
-  padding-bottom: 1em;
+// .profile-header (*)
+// Classes tasked with styling the header section of a profile page.
+.profile-header {
+  padding: 12px 0;
 
-  h1, p {
-    margin: 0;
-    font-weight: 200;
+  background-color: #FFF;
+  @include box-shadow(0 0 0 1px $brand-paleGrey);
+
+  .profile-photo {
+    @include span-columns(1, 9);
+    height: 65px;
+
+    background: #333;
   }
-  .romanized-name {
-    font-size: 48px;
+  .profile-metadata {
+    @include clearfix;
+    @include span-columns(9, 12);
+    padding: 12px 0;
   }
-  .name {
-    font-size: 18px;
+  .profile-name {
+    @include span-columns(8 omega, 9);
+    margin-top: 0; margin-bottom: 0;
+    padding: 6px 0;
+
+    font-weight: 300;
+
+    .name { font-size: 18px; }
+    .romanized-name {
+      font-family: $font-family-secondary;
+      font-size: 30px;
+    }
   }
+
+  .formerly-known-as,
   .standing {
+    margin: 0;
+    margin-top: 4px;
+
+    color: $brand-medGrey;
+    font-size: 13px;
+  }
+
+  // .vitals
+  // Set of classes that represent a list of "vital" information about
+  // an idol or group.
+  .profile-vitals { @include span-columns(3 omega, 12); }
+  .vitals-list {
+    @include clearfix;
+    padding: 12px 0;
+  }
+  .vital {
+    padding-bottom: 6px;
+
     font-size: 14px;
-    font-style: italic;
-  }
-}
+    font-weight: 600;
 
-//
-.section-vitals {
-    @include span-columns(3);
-
-    .metadata-vitals {
-        font-size: 13px;
-
-        li {
-            padding-top: 0.5em; padding-bottom: 0.5em;
-
-            border-bottom: 1px solid #F7F7F7;
-            font-weight: 700;
-            text-align: right;
-        }
-        li:last-child { border-bottom: none; }
-        span {
-            color: rgba(#000, 0.5);
-            float: left;
-            font-weight: 300;
-        }
+    .ss-icon {
+      @include position(relative, 2px 0 0 0);
+      padding-right: 2px;
     }
-}
-
-
-
-.releases {
-  border-top: 1px solid $brand-paleGrey;
-  // border-bottom: 1px solid $brand-paleGrey;
-}
-.releases-singles,
-.releases-albums {
-  @include clearfix;
-  padding-top: 24px; padding-bottom: 24px;
-}
-.releases-albums { border-top: 1px solid $brand-paleGrey; }
-
-.release {
-  @include clearfix;
-  @include span-columns(6, 12);
-  @include nth-omega(2n);
-  min-height: 88px;
-
-  .romanized-name {
-    line-height: $headings-line-height;
-    font-size: 16px;
-    font-style: italic;
   }
-  .name {
+  .vital-label {
     display: block;
+
     color: $brand-lightGrey;
-    font-size: 12px;
+    font-family: $font-family-secondary;
+    font-size: 10px;
   }
-
 }
-.release-image {
-  @include span-columns(1, 6);
-  height: 65px;
 
+.latest-releases {
+  @include clearfix;
+  @include span-columns(9, 12);
+  padding: 12px 0;
+
+  .pill { margin-bottom: 6px; }
+  .release-metadata { @include span-columns(4 omega, 5); }
+  .release-names { padding-bottom: 6px; }
   .ss-icon {
-    font-size: 24px;
-    width: 30px; height: 30px;
+    @include position(relative, 1px 0 0 0);
+    padding-right: 2px;
   }
 }
-.release-meta {
-  @include span-columns(5 omega, 6);
-  padding-top: 6px;
-}
 
-
-.release-date {
-  color: $brand-medGrey;
-  font-size: 12px;
-}
-
-.release-participants {
-  font-size: 13px;
-}
-
+.ss-icon.ss-anatomicalheart { color: #ED3C51; }
 
 
 // .membership(s)
@@ -375,4 +363,56 @@ section.participations {
     @include nth-omega(2n);
     padding-bottom: 12px;
   }
+}
+
+.releases {
+  border-top: 1px solid $brand-paleGrey;
+  // border-bottom: 1px solid $brand-paleGrey;
+}
+.releases-singles,
+.releases-albums {
+  @include clearfix;
+  padding-top: 24px; padding-bottom: 24px;
+}
+.releases-albums { border-top: 1px solid $brand-paleGrey; }
+
+.release {
+  @include clearfix;
+  @include span-columns(6, 12);
+  @include nth-omega(2n);
+  // min-height: 88px;
+
+  .romanized-name {
+    font-family: $font-family-secondary;
+    line-height: $headings-line-height;
+    font-size: 14px;
+  }
+  .name {
+    display: block;
+    color: $brand-lightGrey;
+    font-size: 11px;
+  }
+
+}
+.release-image {
+  @include span-columns(1, 6);
+  height: 65px;
+
+  .ss-icon {
+    font-size: 24px;
+    width: 30px; height: 30px;
+  }
+}
+.release-meta {
+  @include span-columns(5 omega, 6);
+  padding-top: 6px;
+}
+
+.release-data {
+  color: $brand-medGrey;
+  font-size: 12px;
+}
+
+.release-participants {
+  font-size: 13px;
 }
