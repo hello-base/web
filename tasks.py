@@ -9,19 +9,6 @@ def _out(name, message):
     print('[\033[1;37m{}\033[0m] {}'.format(name, message))
 
 
-@invoke.task(name='deploy')
-def deploy(**kwargs):
-    print('So you want to deploy? Let\'s get started.')
-
-    # Heroku.
-    print('- Deploying Hello! Base to Heroku...')
-    invoke.run('git push heroku master')
-
-    # Done!
-    print('')
-    print('All done!')
-
-
 @invoke.task(name='collect')
 def development_collectstatic(**kwargs):
     out = functools.partial(_out, 'development.collectstatic')
@@ -33,6 +20,7 @@ def development_collectstatic(**kwargs):
     invoke.run('python manage.py buildstatic --configuration=Production')
     invoke.run('python manage.py createstaticmanifest --configuration=Production')
     invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput --dry-run')
+
 
 @invoke.task(name='yuglify')
 def development_yuglify(**kwargs):
@@ -56,6 +44,7 @@ def development_yuglify(**kwargs):
         input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
         output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')
     ))
+
 
 @invoke.task(name='server')
 def development_server(**kwargs):
