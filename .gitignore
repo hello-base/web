@@ -5,3 +5,6 @@
 .venv
 
 backups
+base/build
+base/javascripts
+base/static
