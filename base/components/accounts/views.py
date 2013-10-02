@@ -23,11 +23,12 @@ class PreAuthorizationView(RedirectView):
         base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL)
         authorization_url, state = base.authorization_url(AUTHORIZATION_URL)
 
-        # State is used to prevent CSRF, so let's keep this for later.
-        request.session['oauth_referrer'] = request.META.get('HTTP_REFERER', '')
-        request.session['oauth_state'] = state
-        request.session.modified = True
-        return http.HttpResponseRedirect(authorization_url)
+        # In order to persist "session values" from an AnonymousUser
+        # to a logged in user, we need to use cookies.
+        redirect = http.HttpResponseRedirect(authorization_url)
+        redirect.set_cookie('oauth_referrer', request.META.get('HTTP_REFERER', ''))
+        redirect.set_cookie('oauth_state', state)
+        return redirect
 
 
 class PostAuthorizationView(View):
@@ -35,7 +36,7 @@ class PostAuthorizationView(View):
         # We SHOULD be grabbing state from the session, maybe this'll
         # work in production, but in development it's not. So... we're
         # doing this. :(
-        base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL, state=request.GET['state'])
+        base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL, state=request.COOKIES['oauth_state'])
         token = base.fetch_token(TOKEN_URL, auth=(CLIENT_ID, CLIENT_SECRET), authorization_response=request.build_absolute_uri())
 
         # Hooray! Somebody sent us up the token.
