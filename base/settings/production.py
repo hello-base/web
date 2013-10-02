@@ -92,9 +92,7 @@ class Production(Settings):
     # django-s3-folder-storage
     DEFAULT_S3_PATH = 'media'
     STATIC_S3_PATH = 'static'
-    MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
     MEDIA_URL = '//%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, DEFAULT_S3_PATH)
-    STATIC_ROOT = '/%s/' % STATIC_S3_PATH
     STATIC_URL = '//%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, STATIC_S3_PATH)
 
     # Template Configuration.
