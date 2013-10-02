@@ -71,6 +71,13 @@ class PostAuthorizationView(View):
         user = authenticate(username=profile['username'])
         login(request, user)
 
-        if 'oauth_referrer' in request.session and request.session['oauth_referrer'] != '':
-            return http.HttpResponseRedirect(request.session['oauth_referrer'])
-        return http.HttpResponseRedirect('/')
+        # If login has succeeded (which it probably has), then redirect
+        # the user to the page they initiated login on and delete the
+        # appropriate cookies.
+        redirect = http.HttpResponseRedirect
+        redirect.delete_cookie('oauth_state')
+        if 'oauth_referrer' in request.COOKIES and request.COOKIES['oauth_referrer'] != '':
+            referrer = request.COOKIES['oauth_referrer']
+            redirect.delete_cookie('oauth_referrer')
+            return redirect(referrer)
+        return redirect('/')
