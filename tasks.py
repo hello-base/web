@@ -11,7 +11,7 @@ def _out(name, message):
 
 @invoke.task(name='deploy', pre=['collect'])
 def deploy(verbose=False, **kwargs):
-    out = functools.partial(_out, 'development.collectstatic')
+    out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
 
     # Before deploying, check if manifest.json has updated.
@@ -33,7 +33,7 @@ def deploy(verbose=False, **kwargs):
 
 @invoke.task(name='collect')
 def collect(verbose=False, **kwargs):
-    out = functools.partial(_out, 'development.collectstatic')
+    out = functools.partial(_out, 'project.collect')
     hide = 'out' if not verbose else None
 
     # Pre-compile all of our assets.
