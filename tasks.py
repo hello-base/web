@@ -72,7 +72,6 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    deploy,
     development_collectstatic,
     development_server,
     development_yuglify,
