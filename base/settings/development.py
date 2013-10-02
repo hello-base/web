@@ -50,6 +50,10 @@ class Development(Settings):
         'devserver.modules.cache.CacheSummaryModule',
     )
 
+    # django-ecstatic / django-staticbuilder
+    # ------------------------------------------------------------------
+    MIDDLEWARE_CLASSES += ('staticbuilder.middleware.BuildOnRequest',)
+
     # django-haystack.
     # ------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
