@@ -17,7 +17,7 @@
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name">{{ object.romanized_name }}</span>
-          {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
+          {% if object.former_names %}<div class="formerly-known-as">Formerly known as {{ object.former_names }}</div>{% endif %}
         </h1>
       </div>
       <aside class="profile-vitals">
@@ -32,13 +32,23 @@
         <div class="release">
         {% with object.latest_single as release %}
           <div class="pill-container"><span class="pill">Latest Single</span></div>
-          {% include "people/partials/shared_releases_music_latest.html" with release=release %}
+          <div class="release-image"></div>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
         {% endwith %}
         </div>
         <div class="release">
         {% with object.latest_album as release %}
           <div class="pill-container"><span class="pill">Latest Album</span></div>
-          {% include "people/partials/shared_releases_music_latest.html" with release=release %}
+          <div class="release-image"></div>
+          <div class="release-metadata">
+            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+            <span class="name">{{ release.name }}</span>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+          </div>
         {% endwith %}
         </div>
       </div>
@@ -50,22 +60,17 @@
       <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
   {% endif %}
 
-  <div class="profile-subgroups-container container">
-    <h2>Subgroups</h2>
-    <div class="profile-subgroups">
-      {% for subgroup in object.subgroups.all %}
-        <span class="name">{{ subgroup.name }}</span>
-        <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
-        <span class="ss-icon ss-calendar"></span>
-        <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-          {{ subgroup.started|date:"Y/m/d" }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date:"Y/m/d" }}{% else %}Present{% endif %}
-        </time>
-        <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
-      {% endfor %}
-    </div>
+  <div class="">
   </div>
 
 </section>
+
+<div class="profile-subgroups">
+  {% for subgroup in object.subgroups.all %}
+    <span class="name">{{ subgroup.name }}</span>
+    <span class="romanized-name">{{ subgroup.romanized_name }}</span>
+  {% endfor %}
+</div>
 
 <section class="memberships">
     <div class="container">
@@ -208,5 +213,5 @@
     </div><!-- .container -->
 </section><!-- .releases -->
 
-{% if debug %}{% print object %}{% endif %}
+{# {% if debug %}{% print object %}{% endif %} #}
 {% endblock content %}
