@@ -197,7 +197,7 @@ class Base(Configuration):
         'ecstatic',
         'staticbuilder',
     ]
-    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'static', 'staticmanifest.json')
+    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'staticmanifest.json')
     STATICBUILDER_BUILD_ROOT = join(DJANGO_ROOT, 'build')
     STATICBUILDER_BUILD_COMMANDS = [
         'yuglify {input} --type js --combine {output}'.format(
