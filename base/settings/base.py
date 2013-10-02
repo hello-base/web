@@ -1,77 +1,30 @@
+# -*- coding: utf-8 -*-
 import datetime
 import os
 
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
+from django.core.urlresolvers import reverse_lazy
+
 from configurations import Configuration, values
 from postgresify import postgresify
 
 
 class Base(Configuration):
-    # Path Configuration
+    # Path Configuration.
+    # ------------------------------------------------------------------
     DJANGO_ROOT = dirname(dirname(abspath(__file__)))
     SITE_ROOT = dirname(DJANGO_ROOT)
     SITE_NAME = basename(DJANGO_ROOT)
 
-    # Add our project to our pythonpath, this way we don't need to type our
-    # project name in our dotted import paths:
+    # Add our project to our pythonpath, this way we don't need to
+    # type our project name in our dotted import paths:
     path.append(DJANGO_ROOT)
 
-    # Default / Debug Settings
-    ALLOWED_HOSTS = []
-    AUTH_USER_MODEL = 'accounts.editor'
-    DATE_FORMAT = 'Y/m/d'
-    DEBUG = True
-    ROOT_URLCONF = '%s.urls' % SITE_NAME
-    SITE_ID = 1
-    TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
-    WSGI_APPLICATION = 'wsgi.application'
-
-    # Emails
-    ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
-    MANAGERS = [('Jennifer Verduzco', 'jen@hello-base.com')]
-
-    # Localization
-    LANGUAGE_CODE = 'en-us'
-    TIME_ZONE = 'UTC'
-    USE_I18N = True
-    USE_L10N = True
-    USE_TZ = True
-
-    # Database / Caching
-    DATABASES = postgresify()
-
-    # Template Settings
-    TEMPLATE_CONTEXT_PROCESSORS = (
-        'django.contrib.auth.context_processors.auth',
-        'django.core.context_processors.debug',
-        'django.core.context_processors.i18n',
-        'django.core.context_processors.media',
-        'django.core.context_processors.static',
-        'django.core.context_processors.request',
-        'django.core.context_processors.tz',
-        'django.contrib.messages.context_processors.messages',
-    )
-    TEMPLATE_DIRS = (normpath(join(DJANGO_ROOT, 'templates')),)
-    TEMPLATE_LOADERS = (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )
-
-    # Middleware
-    MIDDLEWARE_CLASSES = (
-        'django.middleware.gzip.GZipMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
-
-    # Installed Applications
-    DJANGO_APPLICATIONS = [
+    # Installed Applications.
+    # ------------------------------------------------------------------
+    DJANGO = [
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.humanize',
@@ -91,58 +44,181 @@ class Base(Configuration):
     ]
     PLUGINS = [
         'floppyforms',
-        'gunicorn',
         'haystack',
-        's3_folder_storage',
+        'imagekit',
         'south',
-        'storages',
         'typogrify',
     ]
     ADMINISTRATION = [
         'grappelli',
         'django.contrib.admin',
     ]
-    INSTALLED_APPS = DJANGO_APPLICATIONS + COMPONENTS + PLUGINS + ADMINISTRATION
+    INSTALLED_APPS = DJANGO + COMPONENTS + PLUGINS + ADMINISTRATION
 
-    # Sessions
-    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-
-    # File / Media / Static Media Settings
-    MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
-    MEDIA_URL = '/media/'
-    STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
-    STATIC_URL = '/static/'
-    STATICFILES_FINDERS = (
-        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-        'django.contrib.staticfiles.finders.FileSystemFinder',
+    # Middleware Configuration.
+    # ------------------------------------------------------------------
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.gzip.GZipMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
 
-    # Django Authentication (OAuth, etc.)
+    # Debug Settings.
+    # ------------------------------------------------------------------
+    DEBUG = values.BooleanValue(True)
+    TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
+
+    # Secret Key Configuration.
+    # ------------------------------------------------------------------
+    SECRET_KEY = '@5zyl)e#a#xmgzg*_%7=$m#kbvc%mi%j-+b(13yaml!dre7l!u'
+
+    # Manager Configuration.
+    # ------------------------------------------------------------------
+    ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
+    MANAGERS = [('Jennifer Verduzco', 'jen@hello-base.com')]
+
+    # Database Configuration.
+    # ------------------------------------------------------------------
+    DATABASES = postgresify()
+
+    # Caching Configuration.
+    # ------------------------------------------------------------------
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': ''
+        }
+    }
+
+    # General Configuration.
+    # ------------------------------------------------------------------
+    LANGUAGE_CODE = 'en-us'
+    SITE_ID = 1
+    TIME_ZONE = 'UTC'
+    USE_I18N = True
+    USE_L10N = True
+    USE_TZ = True
+
+    # Template Configuration.
+    # ------------------------------------------------------------------
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.core.context_processors.debug',
+        'django.core.context_processors.i18n',
+        'django.core.context_processors.media',
+        'django.core.context_processors.static',
+        'django.core.context_processors.request',
+        'django.core.context_processors.tz',
+        'django.contrib.messages.context_processors.messages',
+    )
+    TEMPLATE_DIRS = (normpath(join(DJANGO_ROOT, 'templates')),)
+    TEMPLATE_LOADERS = (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )
+
+    # Static File Configuration.
+    # ------------------------------------------------------------------
+    STATIC_ROOT = 'staticfiles'
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = (
+        normpath(join(DJANGO_ROOT, 'static')),
+    )
+    STATICFILES_FINDERS = (
+        'staticbuilder.finders.BuiltFileFinder',
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    )
+
+    # Media Configuration.
+    # ------------------------------------------------------------------
+    MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
+    MEDIA_URL = '/media/'
+
+    # URL Configuration.
+    # ------------------------------------------------------------------
+    ROOT_URLCONF = '%s.urls' % SITE_NAME
+    WSGI_APPLICATION = 'wsgi.application'
+
+    # Authentication Configuration.
+    # ------------------------------------------------------------------
     AUTHENTICATION_BACKENDS = (
         'components.accounts.backends.HelloBaseIDBackend',
         'django.contrib.auth.backends.ModelBackend',
     )
     HELLO_BASE_CLIENT_ID = values.Value('',  environ_prefix=None)
     HELLO_BASE_CLIENT_SECRET = values.Value('',  environ_prefix=None)
-    LOGIN_URL = 'oauth-authorize'
+    LOGIN_URL = reverse_lazy('oauth-authorize')
     # LOGOUT_URL = 'oauth-deauthorize'
 
-    # Django Grappelli
+    # Custom User Application Defaults.
+    # ------------------------------------------------------------------
+    AUTH_USER_MODEL = 'accounts.editor'
+
+    # Logging Configuration.
+    # ------------------------------------------------------------------
+    # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+    # A sample logging configuration. The only tangible logging
+    # performed by this configuration is to send an email to
+    # the site admins on every HTTP 500 error when DEBUG=False.
+    # See http://docs.djangoproject.com/en/dev/topics/logging for
+    # more details on how to customize your logging configuration.
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'filters': {
+            'require_debug_false': {
+                '()': 'django.utils.log.RequireDebugFalse'
+            }
+        },
+        'handlers': {
+            'mail_admins': {
+                'level': 'ERROR',
+                'filters': ['require_debug_false'],
+                'class': 'django.utils.log.AdminEmailHandler'
+            }
+        },
+        'loggers': {
+            'django.request': {
+                'handlers': ['mail_admins'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        }
+    }
+
+    # django-ecstatic / django-staticbuilder
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += [
+        'ecstatic',
+        'staticbuilder',
+    ]
+    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'static', 'staticmanifest.json')
+    STATICBUILDER_BUILD_ROOT = join(DJANGO_ROOT, 'build')
+    STATICBUILDER_BUILD_COMMANDS = [
+        'yuglify {input} --type js --combine {output}'.format(
+            input=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'application', '*.js'),
+            output=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'application')),
+        'yuglify {input} --type js --combine {output}'.format(
+            input=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'components', '*.js'),
+            output=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'components')),
+        'yuglify {input} --type css --combine {output}'.format(
+            input=join(STATICBUILDER_BUILD_ROOT, 'stylesheets', 'application.css'),
+            output=join(STATICBUILDER_BUILD_ROOT, 'stylesheets', 'production')),
+    ]
+
+    # django-grappelli.
+    # ------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
 
-    # Django Haystack
+    # django-haystack.
+    # ------------------------------------------------------------------
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
 
-    # Django Storages
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
-    AWS_HEADERS = {
-        'Expires': (datetime.date.today() + datetime.timedelta(days=365)).strftime('%a, %d %b %Y 20:00:00 GMT'),
-        'Cache-Control': 'max-age=31536000, private'
-    }
-    AWS_PRELOAD_METADATA = True
-    AWS_QUERYSTRING_AUTH = False
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
-    AWS_STORAGE_BUCKET_NAME = 'hello-base'
-
-    # South
+    # South.
+    # ------------------------------------------------------------------
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}

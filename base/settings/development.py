@@ -1,64 +1,48 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
+
+from configurations import values
 
 from .base import Base as Settings
 
 
 class Development(Settings):
-    # Default / Debug Settings
-    DEBUG = True
-    INTERNAL_IPS = ('127.0.0.1',)
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-    # Database / Caching
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        }
-    }
-
-    # Middleware
-    MIDDLEWARE_CLASSES = (
-        'django.middleware.gzip.GZipMiddleware',
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
-
-    # Installed Applications
+    # Installed Applications.
+    # ------------------------------------------------------------------
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        'debug_toolbar',
         'debugtools',
-        'devserver',
         'django_extensions',
     ]
 
-    # Secret Key
-    SECRET_KEY = '@5zyl)e#a#xmgzg*_%7=$m#kbvc%mi%j-+b(13yaml!dre7l!u'
+    # Site Configuration.
+    # ------------------------------------------------------------------
+    ALLOWED_HOSTS = ['*']
 
-    # Static Media Settings
-    STATIC_ROOT = ''
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = (
-        os.path.normpath(os.path.join(Settings.SITE_ROOT, 'static')),
-    )
+    # Debug Settings.
+    # ------------------------------------------------------------------
+    DEBUG = values.BooleanValue(True)
 
-    # Sessions
-    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-    SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-    SESSION_COOKIE_SECURE = False
-
-    # Django Authentication (OAuth, etc.)
+    # Authentication Configuration.
+    # ------------------------------------------------------------------
     MEISHI_ENDPOINT = 'https://localhost:8443/api/'
     OAUTH_AUTHORIZATION_URL = 'https://localhost:8443/authorize/'
     OAUTH_TOKEN_URL = 'https://localhost:8443/token/'
     OAUTH_REDIRECT_URL = 'https://localhost:8444/accounts/authenticated/'
 
-    # Django DevServer
+    # django-debugtoolbar.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['debug_toolbar',]
+    INTERNAL_IPS = ('127.0.0.1',)
+    MIDDLEWARE_CLASSES = Settings.MIDDLEWARE_CLASSES + ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+        'SHOW_TEMPLATE_CONTEXT': True,
+    }
+
+    # django-devserver.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['devserver',]
     DEVSERVER_MODULES = (
         'devserver.modules.sql.SQLSummaryModule',
         'devserver.modules.profile.ProfileSummaryModule',
@@ -66,7 +50,12 @@ class Development(Settings):
         'devserver.modules.cache.CacheSummaryModule',
     )
 
-    # Django Haystack
+    # django-ecstatic / django-staticbuilder
+    # ------------------------------------------------------------------
+    MIDDLEWARE_CLASSES += ('staticbuilder.middleware.BuildOnRequest',)
+
+    # django-haystack.
+    # ------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
         'default': {
             'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',

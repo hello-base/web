@@ -1,13 +1,12 @@
 # Package Requirements for Development
-# Include all the libraries we're using in production.
--r production.txt
+-r base.txt
 
-bpython == 0.12
-coverage == 3.6
+bpython >= 0.12, < 1.0
+coverage >= 3.6, < 4.0
 django-debug-toolbar == 0.9.4
-django-debugtools == 1.1.0
+django-debugtools >= 1.1.1, < 2.0.0
 django-devserver == 0.6.2
-django-extensions == 1.2.1
+django-extensions >= 1.2.2, < 2.0.0
 django-shortcuts == 1.5
 django-sslserver == 0.11
-invoke == 0.5.1
+invoke >= 0.5.1, < 1.0.0

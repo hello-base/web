@@ -11,6 +11,7 @@ from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.people.constants import CLASSIFICATIONS
+from components.people.models import ParticipationMixin
 
 from ..models import Merchandise
 # from .managers import (AlbumManager, EditionManager, SingleManager,
@@ -31,12 +32,6 @@ class Base(Merchandise):
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
-    # Denormalized Fields.
-    # Note: These fields should be 1) too frequently accessed to make
-    # sense as methods and 2) infrequently updated.
-    participating_idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss_attributed_to')
-    participating_groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss_attributed_to')
-
     class Meta:
         abstract = True
         get_latest_by = 'released'
@@ -44,51 +39,6 @@ class Base(Merchandise):
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
-
-    def save(self, *args, **kwargs):
-        # Denormalize the release's participants. We only ever have to
-        # calulcate this once and we shouldn't have to on request.
-        self._render_participants()
-        return super(Base, self).save(*args, **kwargs)
-
-    def _render_participants(self):
-        from components.people.models import Idol, Membership
-
-        # Do we have existing participants? Clear them out so we can
-        # calculate them again.
-        self.participating_idols.clear()
-        self.participating_groups.clear()
-
-        groups = self.groups.all()
-        if groups.exists():
-            # If a supergroup is one of the groups attributed, just
-            # show the supergroup.
-            if self.supergroup in groups:
-                return self.participating_groups.add(self.supergroup)
-
-            # Gather all of the individual idol's primary keys
-            # attributed to the single into a set().
-            idols = self.idols.all()
-
-            # Specify an empty set() that will contain all of the
-            # members of the groups attributed to the single. Then,
-            # loop through all of the groups and update the set with
-            # all of the individual members' primary keys.
-            group_ids = groups.values_list('id', flat=True)
-            group_members = Membership.objects.filter(group__in=group_ids).values_list('idol', flat=True)
-
-            # Subtract group_members from idols.
-            distinct_idols = idols.exclude(pk__in=group_members)
-
-            # Add the calculated groups and idols to our new list of
-            # participating groups and idols.
-            self.participating_groups.add(*list(groups))
-            self.participating_idols.add(*list(distinct_idols))
-            return
-
-        # No groups? Just add all the idols.
-        self.participating_idols.add(*list(self.idols.all()))
-        return
 
     @property
     def identifier(self):
@@ -122,7 +72,7 @@ class Single(Base):
         return reverse('single-detail', kwargs={'slug': self.slug})
 
 
-class Edition(TimeStampedModel):
+class Edition(models.Model):
     EDITIONS = Choices(
         (1, 'regular', 'Regular'),
         (2, 'limited', 'Limited'),
@@ -145,7 +95,7 @@ class Edition(TimeStampedModel):
     price = models.IntegerField(blank=True, null=True)
 
     # Contents
-    art = models.ImageField(blank=True, null=True, upload_to='releases/music/editions/')
+    art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
 
@@ -157,6 +107,9 @@ class Edition(TimeStampedModel):
         if self.parent:
             return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
         return u'%s' % (self.name)
+
+    def get_absolute_url(self):
+        return self.parent.get_absolute_url()
 
     def save(self, *args, **kwargs):
         if not self.romanized_name:
@@ -202,21 +155,20 @@ class Edition(TimeStampedModel):
         return tracklist
 
 
-class Track(TimeStampedModel):
-    idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='tracks')
-    groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='tracks')
-
-    # Metadata
+class Track(ParticipationMixin):
+    # Metadata.
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
 
-    # Alternate Versions
+    # Alternate Versions.
+    original_track = models.ForeignKey('self', blank=True, null=True, related_name='parent',
+        help_text='If this track is a cover or alternate, choose the original track it\'s based off of.')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
     romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
     name_alternate = models.CharField('alternate name', blank=True)
 
-    # Staff
+    # Staff.
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
@@ -233,6 +185,10 @@ class Track(TimeStampedModel):
 
     def participants(self):
         return list(chain(self.idols.all(), self.groups.all()))
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
 
 class TrackOrder(models.Model):
@@ -257,7 +213,7 @@ class TrackOrder(models.Model):
         return u'%s on %s' % (self.track, self.edition)
 
 
-class Video(TimeStampedModel):
+class Video(models.Model):
     VIDEO_TYPES = Choices(
         # Promotional Videos.
         (1, 'pv_regular', 'Regular'),
@@ -292,12 +248,11 @@ class Video(TimeStampedModel):
     released = models.DateField(blank=True, null=True)
 
     # Contents
-    still = models.ImageField(blank=True, null=True, upload_to='releases/music/videos/')
+    still = models.ImageField(blank=True, null=True, upload_to='merchandise/music/videos/')
     video_url = models.URLField(blank=True)
 
     class Meta:
         get_latest_by = 'released'
-        ordering = ('-modified',)
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)

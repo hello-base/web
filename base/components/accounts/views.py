@@ -41,7 +41,7 @@ class PostAuthorizationView(View):
         # Hooray! Somebody sent us up the token.
         # Now let's fetch their user from the Hello! Base ID API.
         hbi = OAuth2Session(CLIENT_ID, token=token)
-        profile = hbi.get('https://localhost:8443/api/user/').json()
+        profile = hbi.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/')).json()
         print profile
 
         # Now that we have the profile data, let's check for an
@@ -55,12 +55,14 @@ class PostAuthorizationView(View):
                 base_id=profile['id'],
             )
         user.username = profile['username']
+        user.name = profile['display_name']
         user.email = profile['email']
         user.is_active = profile['is_active']
         user.is_staff = profile['is_staff']
         user.is_superuser = profile['is_superuser']
         user.access_token = token['access_token']
         user.refresh_token = token['refresh_token']
+        user.token_expiration = token['expires_in']
         user.active_since = timezone.now()
         user.save()
 

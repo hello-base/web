@@ -1,24 +1,22 @@
 from django.contrib import admin
 
-from .models import (Album, Edition, Single, Track, TrackOrder, Video,
-    VideoTrackOrder)
+from components.accounts.admin import ContributorMixin
+
+from .models import (Album, Edition, Label, Single, Track, TrackOrder,
+    Video, VideoTrackOrder)
 
 
 class AlbumEditionInline(admin.StackedInline):
     exclude = ['single']
     extra = 1
-    fieldsets = (
-        (None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),
-    )
+    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),)
     model = Edition
 
 
 class SingleEditionInline(admin.StackedInline):
     exclude = ['album']
     extra = 1
-    fieldsets = (
-        (None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),
-    )
+    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), 'catalog_number', 'art')}),)
     model = Edition
 
 
@@ -49,7 +47,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['romanized_name']}
 
 
-class AlbumAdmin(MusicBaseAdmin):
+class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
@@ -85,7 +83,6 @@ class EditionAdmin(admin.ModelAdmin):
     list_display_links = ['parent', 'kind']
     list_filter = ['kind']
     list_select_related = True
-    ordering = ('-modified',)
     save_on_top = True
     search_fields = ['album__name', 'single__name', 'album__idols__name', 'album__groups__name', 'single__idols__name', 'single__groups__name', 'romanized_name']
 
@@ -94,7 +91,14 @@ class EditionAdmin(admin.ModelAdmin):
 admin.site.register(Edition, EditionAdmin)
 
 
-class SingleAdmin(MusicBaseAdmin):
+class LabelAdmin(admin.ModelAdmin):
+    fieldsets = ((None, {'fields': ('name', 'slug')}),)
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ['name']}
+admin.site.register(Label, LabelAdmin)
+
+
+class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
@@ -128,7 +132,7 @@ class TrackAdmin(admin.ModelAdmin):
         ('Relations', {'fields': ('idols', 'groups')}),
         ('Alternates', {
             'classes': ('collapse closed',),
-            'fields': ('is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
+            'fields': ('original_track', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
         }),
         ('Staff Involved', {
             'classes': ('collapse closed',),
@@ -140,12 +144,11 @@ class TrackAdmin(admin.ModelAdmin):
     list_display_links = ['romanized_name', 'name']
     list_filter = ['is_alternate']
     list_select_related = True
-    ordering = ('-modified',)
     save_on_top = True
     search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
 
     raw_id_fields = ('idols', 'groups',)
-    autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
+    autocomplete_lookup_fields = {'fk': ['original_track',], 'm2m': ['idols', 'groups']}
 admin.site.register(Track, TrackAdmin)
 
 
