@@ -199,17 +199,7 @@ class Base(Configuration):
     ]
     ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'staticmanifest.json')
     STATICBUILDER_BUILD_ROOT = join(DJANGO_ROOT, 'build')
-    STATICBUILDER_BUILD_COMMANDS = [
-        'yuglify {input} --type js --combine {output}'.format(
-            input=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'application', '*.js'),
-            output=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'application')),
-        'yuglify {input} --type js --combine {output}'.format(
-            input=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'components', '*.js'),
-            output=join(STATICBUILDER_BUILD_ROOT, 'javascripts', 'components')),
-        'yuglify {input} --type css --combine {output}'.format(
-            input=join(STATICBUILDER_BUILD_ROOT, 'stylesheets', 'application.css'),
-            output=join(STATICBUILDER_BUILD_ROOT, 'stylesheets', 'production')),
-    ]
+    STATICBUILDER_BUILD_COMMANDS = ['inv yuglify']
 
     # django-grappelli.
     # ------------------------------------------------------------------

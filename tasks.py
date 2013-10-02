@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import functools
+import os
 
 import invoke
 
@@ -33,6 +34,28 @@ def development_collectstatic(**kwargs):
     invoke.run('python manage.py createstaticmanifest --configuration=Production')
     invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput --dry-run')
 
+@invoke.task(name='yuglify')
+def development_yuglify(**kwargs):
+    out = functools.partial(_out, 'development.yuglify')
+    STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base', 'static')
+
+    # Compile the application-specific Javascript.
+    invoke.run('yuglify {input} --type js --combine {output}'.format(
+        input=os.path.join(STATIC_ROOT, 'javascripts', 'application', '*.js'),
+        output=os.path.join(STATIC_ROOT, 'javascripts', 'application')
+    ))
+
+    # Compile the 3rd-party Javascript components.
+    invoke.run('yuglify {input} --type js --combine {output}'.format(
+        input=os.path.join(STATIC_ROOT, 'javascripts', 'components', '*.js'),
+        output=os.path.join(STATIC_ROOT, 'javascripts', 'components')
+    ))
+
+    # Compile the stylesheets.
+    invoke.run('yuglify {input} --type js --combine {output}'.format(
+        input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
+        output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')
+    ))
 
 @invoke.task(name='server')
 def development_server(**kwargs):
@@ -63,6 +86,7 @@ ns = invoke.Collection(
     deploy,
     development_collectstatic,
     development_server,
+    development_yuglify,
     heroku=invoke.Collection(
         heroku_collectstatic,
         heroku_migrate,
