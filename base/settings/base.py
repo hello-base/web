@@ -197,7 +197,7 @@ class Base(Configuration):
         'ecstatic',
         'staticbuilder',
     ]
-    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'staticmanifest.json')
+    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'settings', 'manifest.json')
     STATICBUILDER_BUILD_ROOT = join(DJANGO_ROOT, 'build')
     STATICBUILDER_BUILD_COMMANDS = ['inv yuglify']
 

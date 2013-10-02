@@ -19,7 +19,7 @@ def development_collectstatic(**kwargs):
     # Build and send it off.
     invoke.run('python manage.py buildstatic --configuration=Production')
     invoke.run('python manage.py createstaticmanifest --configuration=Production')
-    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput --dry-run')
+    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput')
 
 
 @invoke.task(name='yuglify')
