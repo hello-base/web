@@ -10,4 +10,4 @@ class S3ManifestStorage(StaticManifestMixin, CachedStaticFilesMixin, StaticStora
     def hashed_name(self, name, content=None):
         if content is None:
             content = ContentFile(self.open(name).read(), name=name)
-        return super(S3PipelineStorage, self).hashed_name(name, content)
+        return super(S3ManifestStorage, self).hashed_name(name, content)
