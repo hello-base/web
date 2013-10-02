@@ -25,13 +25,13 @@ def deploy(**kwargs):
 def development_collectstatic(**kwargs):
     out = functools.partial(_out, 'development.collectstatic')
     # Pre-compile all of our assets.
-    invoke.run('handlebars base/templates/partials/handlebars -f static/javascripts/templates.js')
+    invoke.run('handlebars base/templates/partials/handlebars -f base/static/javascripts/application/templates.js')
     invoke.run('compass compile -e production --force')
 
     # Build and send it off.
-    invoke.run('python manage.py buildstatic')
-    invoke.run('python manage.py createstaticmanifest')
-    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput')
+    invoke.run('python manage.py buildstatic --configuration=Production')
+    invoke.run('python manage.py createstaticmanifest --configuration=Production')
+    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput --dry-run')
 
 
 @invoke.task(name='server')

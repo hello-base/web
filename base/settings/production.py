@@ -170,7 +170,6 @@ class Production(Settings):
         },
     }
 
-    # django-pipeline.
+    # django-ecstatic / django-staticbuilder
     # ------------------------------------------------------------------
-    PIPELINE_COFFEE_SCRIPT_BINARY = '/app/bin/node /app/node_modules/coffee-script/bin/coffee'
-    PIPELINE_YUGLIFY_BINARY = '/app/bin/node /app/node_modules/yuglify/bin/yuglify'
+    ECSTATIC_MANIFEST_CACHE = 'staticfiles'
