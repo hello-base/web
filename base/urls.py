@@ -47,7 +47,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # Authentication aliases.
-    url(r'^signin/$', name='signin' view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'))),
+    url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'))),
 
     # Core Modules.
     url(r'^accounts/', include('components.accounts.urls')),
