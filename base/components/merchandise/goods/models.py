@@ -140,3 +140,6 @@ class Set(Base):
 class SuperSet(Base):
     goods = models.ManyToManyField(Good)
     sets = models.ManyToManyField(Set)
+
+    class Meta:
+        verbose_name = 'superset'
