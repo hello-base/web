@@ -32,10 +32,10 @@ class Base(base.Merchandise):
     objects = InheritanceManager()
     tracker = FieldTracker()
 
-    is_graduation_good = models.BooleanField(default=False)
-    is_birthday_good = models.BooleanField(default=False)
-    is_online_exclusive = models.BooleanField(default=False)
-    is_mailorder_exclusive = models.BooleanField(default=False)
+    is_graduation_good = models.BooleanField('graduation good?', default=False)
+    is_birthday_good = models.BooleanField('birthday good?', default=False)
+    is_online_exclusive = models.BooleanField('online exclusive?', default=False)
+    is_mailorder_exclusive = models.BooleanField('mail-order exclusive?', default=False)
 
     event = models.ForeignKey('events.Event', blank=True, null=True,
         help_text='Is this good from an event?')
@@ -108,10 +108,10 @@ class Good(Base):
         help_text='Is this good a part of another good? (e.g., a photo that is part of a set)',
         verbose_name=u'parent good')
 
-    is_bonus_good = models.BooleanField(default=False)
-    is_campaign_good = models.BooleanField(default=False)
-    is_lottery_good = models.BooleanField(default=False)
-    is_set_exclusive = models.BooleanField(default=False)
+    is_bonus_good = models.BooleanField('bonus good?', default=False)
+    is_campaign_good = models.BooleanField('campaign good?', default=False)
+    is_lottery_good = models.BooleanField('lottery good?', default=False)
+    is_set_exclusive = models.BooleanField('set exclusive?', default=False)
 
     # Look into goods that are part of an event having the same available from/until date.
     # A Good is either from a Source or from an Event, not both. Exception: HelloShop.jp Goods section???
