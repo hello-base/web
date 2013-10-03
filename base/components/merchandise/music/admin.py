@@ -53,7 +53,12 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         (None, {
             'description': 'This is derived from this release\'s regular edition. Please change that date to change this one.',
             'fields': ('released',)}),
-        ('Relations', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
         ('Alternates', {'fields': ('is_compilation',)})
     )
     inlines = [AlbumEditionInline]
@@ -105,7 +110,12 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'This is derived from this release\'s regular edition. Please change that date to change this one.',
             'fields': ('released',)
         }),
-        ('Relations', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
         ('Alternates', {
             'classes': ('collapse closed',),
             'fields': ('is_indie', 'has_8cm', 'has_lp', 'has_cassette')
@@ -129,7 +139,12 @@ admin.site.register(Single, SingleAdmin)
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('romanized_name', 'name')}),
-        ('Relations', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
         ('Alternates', {
             'classes': ('collapse closed',),
             'fields': ('original_track', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
