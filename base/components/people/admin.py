@@ -26,7 +26,6 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
-    save_on_top = True
     search_fields = ['romanized_name', 'name']
 
     raw_id_fields = ('parent', 'groups',)
@@ -52,7 +51,6 @@ class IdolAdmin(admin.ModelAdmin):
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
     list_editable = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
-    save_on_top = True
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
 
     def save_model(self, request, obj, form, change):
@@ -67,6 +65,5 @@ class StaffAdmin(admin.ModelAdmin):
     )
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name']}
-    save_on_top = True
     search_fields = ['romanized_family_name', 'romanized_given_name']
 admin.site.register(Staff, StaffAdmin)

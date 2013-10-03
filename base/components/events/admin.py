@@ -30,7 +30,6 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
-    save_on_top = True
     search_fields = ['romanized_name', 'name']
 
     raw_id_fields = ('idols', 'groups',)
@@ -48,7 +47,6 @@ class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'day', 'start_time', 'end_time', 'event', 'venue']
     list_display_links = ['romanized_name', 'name']
     list_select_related = True
-    save_on_top = True
     search_fields = ['day', 'start_time', 'end_time', 'event', 'venue']
 
     raw_id_fields = ('event', 'venue')
@@ -64,6 +62,5 @@ class VenueAdmin(ContributorMixin, admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'former_names', 'romanized_address', 'country']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
-    save_on_top = True
     search_fields = ['romanized_name', 'name', 'country']
 admin.site.register(Venue, VenueAdmin)

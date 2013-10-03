@@ -65,7 +65,6 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list', 'is_compilation']
     list_editable = ['number', 'released', 'is_compilation']
     readonly_fields = ['released']
-    save_on_top = True
 
     raw_id_fields = ('idols', 'groups',)
     autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
@@ -88,7 +87,6 @@ class EditionAdmin(admin.ModelAdmin):
     list_display_links = ['parent', 'kind']
     list_filter = ['kind']
     list_select_related = True
-    save_on_top = True
     search_fields = ['album__name', 'single__name', 'album__idols__name', 'album__groups__name', 'single__idols__name', 'single__groups__name', 'romanized_name']
 
     raw_id_fields = ('album', 'single',)
@@ -125,7 +123,6 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list']
     list_editable = ['number', 'released']
     readonly_fields = ['released']
-    save_on_top = True
 
     raw_id_fields = ('idols', 'groups',)
     autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
@@ -159,7 +156,6 @@ class TrackAdmin(admin.ModelAdmin):
     list_display_links = ['romanized_name', 'name']
     list_filter = ['is_alternate']
     list_select_related = True
-    save_on_top = True
     search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
 
     raw_id_fields = ('idols', 'groups',)
@@ -180,7 +176,6 @@ class VideoAdmin(admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'kind', 'released', 'video_url']
     list_editable = ['kind']
     list_filter = ['kind']
-    save_on_top = True
     search_fields = ['romanized_name']
 
     raw_id_fields = ('album', 'single',)
