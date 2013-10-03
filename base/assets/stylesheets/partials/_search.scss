@@ -2,8 +2,8 @@
 // Shared set of standard classes that set the basic styles
 // for any and all search results.
 .results {
-  @include reset-box-model;
-  @include reset-list-style;
+  // // @include reset-box-model;
+  // // @include reset-list-style;
 }
 .result {
   padding: 11px 12px 9px;
@@ -11,19 +11,19 @@
   font-size: 13px;
 
   a {
-    @include link-colors(#333, $brand-green);
+    // // @include link-colors(#333, $brand-green);
     font-weight: normal;
   }
 }
-.result-item { @include clearfix; }
+// .result-item { // @include clearfix; }
 .result-query { border-bottom: none; }
 
 // .facet(s)
 // Standard classes for displaying facets (or simple statistics) around
 // the makeup of the search results; usually type or model, etc.
 .facets {
-  @include reset-box-model;
-  @include reset-list-style;
+  // // @include reset-box-model;
+  // // @include reset-list-style;
 }
 .facet {
   padding-top: 5px;
@@ -65,22 +65,26 @@
     background-color: $brand-dark;
   }
   .page-heading {
-    @include span-columns(2, 12);
+    // // @include span-columns(2, 12);
     margin: 0;
 
     color: #FFF;
     font-size: 24px;
     letter-spacing: -1px;
   }
-  .search-container { @include span-columns(10 omega, 12); }
+  .search-container {
+    // // @include span-columns(10 omega, 12);
+  }
   h1 { font-size: 18px; font-weight: 400; }
 
   .facets {
-    @include span-columns(2, 12);
+    // // @include span-columns(2, 12);
   }
 
   // .result-* overrides.
-  .results { @include span-columns(10 omega, 12); }
+  .results {
+    // // @include span-columns(10 omega, 12);
+  }
   .result {
     border: none;
     border-top: 1px solid $brand-paleGrey;
@@ -88,7 +92,9 @@
   }
 
   // .item-* overrides.
-  .item-object { @include span-columns(7, 10); }
+  .item-object {
+    // // @include span-columns(7, 10);
+  }
   .item-romanized-name {
     font-size: 16px;
     font-weight: 200;
@@ -99,7 +105,7 @@
     font-size: 12px;
   }
   .item-meta {
-    @include span-columns(3 omega, 10);
+    // // @include span-columns(3 omega, 10);
     color: $brand-lightGrey;
     position: relative;
     top: 20px;
@@ -130,7 +136,7 @@
 
   // Items.
   .item-type {
-    @include span-columns(1 omega, 8);
+    // // @include span-columns(1 omega, 8);
     padding-top: 2px;
 
     color: $brand-lightGrey;
@@ -138,7 +144,9 @@
     text-align: right;
     text-transform: capitalize;
   }
-  .item-object { @include span-columns(7, 8); }
+  .item-object {
+    // // @include span-columns(7, 8);
+  }
   .item-romanized-name { }
   .item-name {
     display: block;
@@ -153,8 +161,12 @@
     width: columns(6, 8);
   }
   .result { font-size: 13px; }
-  .item-object { @include span-columns(7, 8); }
-  .item-type { @include span-columns(1 omega, 8); }
+  .item-object {
+    // // @include span-columns(7, 8);
+  }
+  .item-type {
+    // // @include span-columns(1 omega, 8);
+  }
 }
 
 // Overrides for specific types of search results.

@@ -1,15 +1,15 @@
-@import "compass/css3/user-interface";
+// @import "compass/css3/user-interface";
 
 // Layout & Widths
 .music-profile {
-  .editions { @include span-columns(9 , 12); }
-  .participations { @include span-columns(3 omega, 12); }
+  // .editions { // // @include span-columns(9 , 12); }
+  // .participations { // // @include span-columns(3 omega, 12); }
 
-  .release-name { @include span-columns(9, 12); }
-  .release-metadata { @include span-columns(3 omega, 12); }
+  // .release-name { // // @include span-columns(9, 12); }
+  // .release-metadata { // // @include span-columns(3 omega, 12); }
 
-  .edition-image { @include span-columns(2, 9); height: 146px; }
-  .edition-contents { @include span-columns(7 omega, 9); }
+  // .edition-image { // // @include span-columns(2, 9); height: 146px; }
+  // .edition-contents { // // @include span-columns(7 omega, 9); }
   .edition-contents table { width: 100%; }
 }
 
@@ -56,11 +56,11 @@
 }
 
 .edition {
-  @include clearfix;
+  // @include clearfix;
   margin-bottom: 36px;
 }
 .edition-meta {
-  @include clearfix;
+  // @include clearfix;
   color: $brand-medGrey;
 }
 .edition-name {
@@ -137,7 +137,7 @@
 }
 
 .track-type {
-  @include user-select(none);
+  // @include user-select(none);
   text-align: right;
 
   .pill {

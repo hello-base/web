@@ -3,8 +3,8 @@
 }
 
 .tagline, .hero-search, .examples {
-  @include span-columns(8, $total-columns);
-  @include squish(2, 2);
+  // // @include span-columns(8, $total-columns);
+  // // @include squish(2, 2);
 }
 
 .hero {
@@ -14,7 +14,7 @@
   color: #FFF;
 
   a {
-    @include link-colors(#FFF);
+    // // @include link-colors(#FFF);
     font-weight: 700;
   }
   .tagline {
@@ -29,13 +29,13 @@
 
 .hero-search { position: relative; }
 .hero-search .search-container {
-  @include clearfix;
+  // // @include clearfix;
   padding: 4px 4px 3px;
   border-radius: 4px;
   background-color: #FFF;
 
   input {
-    @include span-columns(6, 8);
+    // // @include span-columns(6, 8);
     padding: 9px 12px 9px;
 
     border: none;
@@ -44,7 +44,7 @@
     &:focus { outline: none; }
   }
   button {
-    @include span-columns(2 omega, 8);
+    // // @include span-columns(2 omega, 8);
     padding: 10px 12px;
 
     background-color: $brand-green;
@@ -71,20 +71,20 @@
 }
 
 .reasonings {
-  @include reset-list-style;
+  // // @include reset-list-style;
   margin-top: 0; margin-bottom: 0;
   padding-top: 48px; padding-bottom: 48px;
 }
 .reasoning {
-  @include span-columns(4, $total-columns);
-  @include nth-omega(3n);
-  @include prefix(1);
+  // // @include span-columns(4, $total-columns);
+  // // @include nth-omega(3n);
+  // // @include prefix(1);
   position: relative;
   color: #666;
   font-size: 13px;
 
   a {
-    @include link-colors(#333, $brand-green);
+    // // @include link-colors(#333, $brand-green);
     font-weight: 700;
   }
   h2 {

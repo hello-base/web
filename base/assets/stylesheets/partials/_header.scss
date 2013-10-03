@@ -1,10 +1,10 @@
-@import "compass/css3/box-shadow";
-@import "compass/css3/images";
+// @import "compass/css3/box-shadow";
+// @import "compass/css3/images";
 
 .header {
-  // @include box-shadow(inset 0 1px 0 #1a5675, inset 0 -1px 0 #092c49);
-  // @include background(linear-gradient(#124969, #0c3a5b));
-  @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
+  // // @include box-shadow(inset 0 1px 0 #1a5675, inset 0 -1px 0 #092c49);
+  // // @include background(linear-gradient(#124969, #0c3a5b));
+  // // @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
   padding: 12px inherit;
 
   a { text-decoration: none; }
@@ -36,14 +36,14 @@
   margin-left: 8px;
   padding: 2px 0 2px 2px;
   position: relative;
-  width: columns(4, 12);
+  // width: columns(4, 12);
 
   border-radius: 4px;
   background-color: #FFF;
 
   input {
     padding: 4px 2px 5px 6px;
-    width: columns(3, 4);
+    // width: columns(3, 4);
 
     border: none;
     font-size: 12px;
@@ -61,7 +61,7 @@
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
-    width: columns(1, 4);
+    // width: columns(1, 4);
 
     .ss-icon { position: relative; top: 2px; }
   }

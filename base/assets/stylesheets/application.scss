@@ -23,7 +23,7 @@
   text-align: center;
 }
 .empty-image .ss-icon {
-  @include absolute-center();
+  // @include absolute-center();
   width: 42px; height: 42px;
 
   color: $brand-paleGrey;

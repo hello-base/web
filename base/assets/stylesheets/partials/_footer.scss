@@ -2,7 +2,7 @@
   border-top: 1px solid $brand-paleGrey;
 
   a {
-    @include link-colors($brand-lightGrey, $brand-blue);
+    // // @include link-colors($brand-lightGrey, $brand-blue);
     font-style: italic;
   }
   p {
@@ -11,7 +11,13 @@
   }
 
   .container { padding-top: 2em; padding-bottom: 2em; }
-  .copyright { @include span-columns(6, $total-columns); }
-  .description { @include span-columns(3, $total-columns); }
-  .disclaimer { @include span-columns(3 omega, $total-columns); }
+  .copyright {
+    // // @include span-columns(6, $total-columns);
+  }
+  .description {
+    // // @include span-columns(3, $total-columns);
+  }
+  .disclaimer {
+    // // @include span-columns(3 omega, $total-columns);
+  }
 }

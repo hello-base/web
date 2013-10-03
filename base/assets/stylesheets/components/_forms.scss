@@ -1,5 +1,4 @@
-@import "compass/reset/utilities";
-
+// @import "compass/reset/utilities";
 
 .form {
     padding-top: 24px; padding-bottom: 24px;
@@ -10,8 +9,8 @@
         text-transform: capitalize;
     }
     ul {
-        @include reset-box-model;
-        @include reset-list-style;
+        // // @include reset-box-model;
+        // // @include reset-list-style;
     }
 
     .help-block {

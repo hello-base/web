@@ -2,7 +2,7 @@
 // Set of classes that style large swaths of text such as the terms
 // of service and privacy policy pages.
 .fine-print {
-  h1 { @include reset-box-model; }
+  // h1 { // @include reset-box-model; }
   li, p {
     color: $brand-medGrey;
     font-size: 13px;
@@ -22,7 +22,7 @@
   }
 
   .flatpage-header {
-    @include span-columns(4, 12);
+    // // @include span-columns(4, 12);
     padding-top: 2em;
 
     h1 {
@@ -31,7 +31,7 @@
     }
   }
   .flatpage-content {
-    @include span-columns(8 omega, $total-columns);
+    // // @include span-columns(8 omega, $total-columns);
     padding-top: 2em;
 
     footer {

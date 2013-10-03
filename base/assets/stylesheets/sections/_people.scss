@@ -1,7 +1,7 @@
 .profile {
   ul {
-    @include reset-box-model;
-    @include reset-list-style;
+    // // @include reset-box-model;
+    // // @include reset-list-style;
   }
 }
 
@@ -11,21 +11,21 @@
   padding: 12px 0;
 
   background-color: #FFF;
-  @include box-shadow(0 0 0 1px $brand-paleGrey);
+  // // @include box-shadow(0 0 0 1px $brand-paleGrey);
 
   .profile-photo {
-    @include span-columns(1, 9);
+    // // @include span-columns(1, 9);
     height: 65px;
 
     background: #333;
   }
   .profile-metadata {
-    @include clearfix;
-    @include span-columns(9, 12);
+    // // @include clearfix;
+    // // @include span-columns(9, 12);
     padding: 12px 0;
   }
   .profile-name {
-    @include span-columns(8 omega, 9);
+    // // @include span-columns(8 omega, 9);
     margin-top: 0; margin-bottom: 0;
     padding: 6px 0;
 
@@ -50,9 +50,9 @@
   // .vitals
   // Set of classes that represent a list of "vital" information about
   // an idol or group.
-  .profile-vitals { @include span-columns(3 omega, 12); }
+  // .profile-vitals { // @include span-columns(3 omega, 12); }
   .vitals-list {
-    @include clearfix;
+    // @include clearfix;
     padding: 12px 0;
   }
   .vital {
@@ -62,7 +62,7 @@
     font-weight: 600;
 
     .ss-icon {
-      @include position(relative, 2px 0 0 0);
+      // @include position(relative, 2px 0 0 0);
       padding-right: 2px;
     }
   }
@@ -76,15 +76,15 @@
 }
 
 .latest-releases {
-  @include clearfix;
-  @include span-columns(9, 12);
+  // @include clearfix;
+  // // @include span-columns(9, 12);
   padding: 12px 0;
 
   .pill { margin-bottom: 6px; }
-  .release-metadata { @include span-columns(4 omega, 5); }
+  // .release-metadata { @include span-columns(4 omega, 5); }
   .release-names { padding-bottom: 6px; }
   .ss-icon {
-    @include position(relative, 1px 0 0 0);
+    // @include position(relative, 1px 0 0 0);
     padding-right: 2px;
   }
 }
@@ -94,10 +94,10 @@
 
 // .membership(s)
 section.memberships {
-  @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
+  // @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
   padding: 24px 0 36px;
 }
-.membership { @include clearfix(); }
+// .membership { @include clearfix(); }
 
 .romanized-name {
   display: block;
@@ -112,26 +112,28 @@ section.memberships {
 
 .idol-profile {
   .membership-primary .group-image {
-    @include span-columns(4, 12);
+    // // @include span-columns(4, 12);
     height: 174px;
   }
   .membership-list .group-image {
-    @include span-columns(1, 6);
+    // // @include span-columns(1, 6);
     height: 37px;
   }
 
   .membership-primary,
   .membership-secondary {
-    @include clearfix;
+    // @include clearfix;
   }
-  .membership-section-title { @include span-columns(2 omega, 12); }
+  .membership-section-title {
+    // // @include span-columns(2 omega, 12);
+  }
   .membership-list {
-    @include clearfix;
-    @include span-columns(10, 12);
+    // @include clearfix;
+    // // @include span-columns(10, 12);
   }
   .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
+    // // @include span-columns(5, 10);
+    // @include nth-omega(2n);
   }
 
   .membership {
@@ -146,7 +148,9 @@ section.memberships {
     text-align: right;
   }
 
-  .membership-primary .group-metadata { @include span-columns(6, 12); }
+  .membership-primary .group-metadata {
+    // // @include span-columns(6, 12);
+  }
 }
 
 .tenure {
@@ -158,8 +162,8 @@ section.memberships {
 
 
 .participation {
-  @include span-columns(3, 12);
-  @include nth-omega(4n);
+  // // @include span-columns(3, 12);
+  // @include nth-omega(4n);
 }
 
 .participation {
@@ -173,9 +177,9 @@ section.participations {
 }
 
 .participation-list {
-  @include clearfix;
-  @include reset-box-model;
-  @include reset-list-style;
+  // @include clearfix;
+  // @include reset-box-model;
+  // @include reset-list-style;
 
   // .ss-icon, .count strong { font-size: 36px; }
   // .count {
@@ -210,7 +214,7 @@ section.participations {
 }
 
 .participation {
-  @include position(relative);
+  // @include position(relative);
   min-height: 214px;
 
   a {
@@ -231,12 +235,12 @@ section.participations {
     font-weight: bold;
   }
   .ss-icon {
-    @include position(absolute, 32px 0 0 0);
+    // @include position(absolute, 32px 0 0 0);
     padding-left: 1px;
     color: $brand-lightGrey;
   }
   .type {
-    @include position(relative, -4px 0 0 0);
+    // @include position(relative, -4px 0 0 0);
     color: $brand-lightGrey;
     font-family: $font-family-secondary;
     font-size: 14px;
@@ -244,8 +248,8 @@ section.participations {
   }
 }
 
-// .participation .latest-heading { @include span-columns(1, 4); }
-// .participation .latest { @include span-columns(3 omega, 4); }
+// .participation .latest-heading { // // @include span-columns(1, 4); }
+// .participation .latest { // // @include span-columns(3 omega, 4); }
 
 
 
@@ -254,16 +258,18 @@ section.participations {
 .group-profile {
   .membership-list,
   .release-list {
-    @include clearfix;
-    @include reset-box-model;
-    @include reset-list-style;
+    // @include clearfix;
+    // @include reset-box-model;
+    // @include reset-list-style;
   }
 
   .memberships {
     .actives {}
     .inactives { border-top: 1px solid $brand-paleGrey; }
   }
-  .membership-section-title { @include span-columns(2 omega, 12); }
+  .membership-section-title {
+    // // @include span-columns(2 omega, 12);
+  }
   .membership .romanized-name {
     font-family: $font-family-secondary;
     font-size: 14px;
@@ -271,15 +277,17 @@ section.participations {
 }
 
 .active-members {
-  @include clearfix;
+  // @include clearfix;
 
-  .membership-list { @include span-columns(10, 12); }
+  .membership-list {
+    // // @include span-columns(10, 12);
+  }
   .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
+    // // @include span-columns(5, 10);
+    // @include nth-omega(2n);
   }
   .idol-image {
-    @include span-columns(1, 5);
+    // // @include span-columns(1, 5);
     height: 65px;
   }
 }
@@ -289,16 +297,16 @@ section.participations {
 // tenures of each leader (if the number of former leaders is more
 // than one).
 .inactive-leaders {
-  @include clearfix;
+  // @include clearfix;
   margin: 24px 0;
 
   .membership { position: relative; }
-  .membership-header { @include clearfix; }
-  .membership-header .membership-graph { @include squish(3, 2); }
-  .membership-names { @include span-columns(3, 12); }
-  .membership-numbers { @include span-columns(2 omega, 12); }
+  // .membership-header { // @include clearfix; }
+  // .membership-header .membership-graph { // @include squish(3, 2); }
+  // .membership-names { // // @include span-columns(3, 12); }
+  // .membership-numbers { // // @include span-columns(2 omega, 12); }
   .membership-graph {
-    @include span-columns(7, 12);
+    // // @include span-columns(7, 12);
     padding: 8px 0;
     position: relative;
 
@@ -320,7 +328,7 @@ section.participations {
     }
   }
   .leadership-tenure-count {
-    @include position(absolute, 13px 0 0 0);
+    // @include position(absolute, 13px 0 0 0);
     padding-left: 6px;
 
     color: $brand-primary-accent;
@@ -355,12 +363,12 @@ section.participations {
 }
 
 .inactive-members {
-  @include clearfix;
+  // @include clearfix;
 
-  .membership-list { @include span-columns(10, 12); }
+  // .membership-list { // // @include span-columns(10, 12); }
   .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
+    // // @include span-columns(5, 10);
+    // @include nth-omega(2n);
     padding-bottom: 12px;
   }
 }
@@ -371,15 +379,15 @@ section.participations {
 }
 .releases-singles,
 .releases-albums {
-  @include clearfix;
+  // @include clearfix;
   padding-top: 24px; padding-bottom: 24px;
 }
 .releases-albums { border-top: 1px solid $brand-paleGrey; }
 
 .release {
-  @include clearfix;
-  @include span-columns(6, 12);
-  @include nth-omega(2n);
+  // // @include clearfix;
+  // // @include span-columns(6, 12);
+  // // @include nth-omega(2n);
   // min-height: 88px;
 
   .romanized-name {
@@ -395,7 +403,7 @@ section.participations {
 
 }
 .release-image {
-  @include span-columns(1, 6);
+  // // @include span-columns(1, 6);
   height: 65px;
 
   .ss-icon {
@@ -404,7 +412,7 @@ section.participations {
   }
 }
 .release-meta {
-  @include span-columns(5 omega, 6);
+  // // @include span-columns(5 omega, 6);
   padding-top: 6px;
 }
 
