@@ -74,10 +74,9 @@ class PostAuthorizationView(View):
         # If login has succeeded (which it probably has), then redirect
         # the user to the page they initiated login on and delete the
         # appropriate cookies.
-        redirect = http.HttpResponseRedirect
-        redirect.delete_cookie('oauth_state')
         if 'oauth_referrer' in request.COOKIES and request.COOKIES['oauth_referrer'] != '':
-            referrer = request.COOKIES['oauth_referrer']
+            redirect = http.HttpResponseRedirect(request.COOKIES['oauth_referrer'])
+            redirect.delete_cookie('oauth_state')
             redirect.delete_cookie('oauth_referrer')
-            return redirect(referrer)
-        return redirect('/')
+            return redirect
+        return http.HttpResponseRedirect('/')
