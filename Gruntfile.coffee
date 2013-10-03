@@ -1,6 +1,3 @@
-assets_base = './base/assets'
-static_base = './base/static'
-
 module.exports = (grunt) ->
   # Configuration.
   grunt.initConfig
