@@ -27,7 +27,7 @@ class Shop(models.Model):
         return u'%s' % self.romanized_name
 
 
-class BaseGood(base.Merchandise):
+class Base(base.Merchandise):
     # Model Managers.
     objects = InheritanceManager()
     tracker = FieldTracker()
@@ -61,10 +61,10 @@ class BaseGood(base.Merchandise):
 
     def save(self, *args, **kwargs):
         self.released = self.available_from
-        super(BaseGood, self).save(*args, **kwargs)
+        super(Base, self).save(*args, **kwargs)
 
 
-class Good(BaseGood):
+class Good(Base):
     CATEGORIES = Choices(
         ('badge', 'Badge'),
         ('bandana', 'Bandana'),  # other?
@@ -119,7 +119,7 @@ class Good(BaseGood):
     # Goods that you get with releases. Example: Mano NFS photo for buying any of her PB's during graduation.
 
 
-class Set(BaseGood):
+class Set(Base):
     CATEGORIES = Choices(
         ('bandanaset', 'Bandana Set'),
         ('clearfileset', 'Clear File Set'),
@@ -137,6 +137,6 @@ class Set(BaseGood):
     category = models.CharField(choices=CATEGORIES, max_length=18)
 
 
-class SuperSet(BaseGood):
+class SuperSet(Base):
     goods = models.ManyToManyField(Good)
     sets = models.ManyToManyField(Set)

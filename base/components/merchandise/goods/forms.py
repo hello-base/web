@@ -28,9 +28,9 @@ class ShopForm(forms.ModelForm):
         model = models.Shop
 
 
-class BaseGoodForm(forms.ModelForm):
+class BaseForm(forms.ModelForm):
     def clean(self):
-        cleaned_data = super(BaseGoodForm, self).clean()
+        cleaned_data = super(BaseForm, self).clean()
 
         # Of course the date a good is available until cannot be earlier than
         # the date it was released.
@@ -59,7 +59,7 @@ class BaseGoodForm(forms.ModelForm):
         return cleaned_data
 
 
-class GoodForm(BaseGoodForm):
+class GoodForm(BaseForm):
     class Meta:
         model = models.Good
         fields = BASE_GOOD_FIELDS + [
@@ -69,14 +69,14 @@ class GoodForm(BaseGoodForm):
         widgets = BASE_GOOD_WIDGETS
 
 
-class SetForm(BaseGoodForm):
+class SetForm(BaseForm):
     class Meta:
         model = models.Set
         fields = BASE_GOOD_FIELDS + ['category']
         widgets = BASE_GOOD_WIDGETS
 
 
-class SuperSetForm(BaseGoodForm):
+class SuperSetForm(BaseForm):
     class Meta:
         model = models.SuperSet
         fields = BASE_GOOD_FIELDS + ['goods', 'sets']
