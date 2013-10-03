@@ -5,19 +5,19 @@ from .models import Good, Set, Shop, SuperSet
 
 class GoodAdmin(admin.ModelAdmin):
     pass
-admin.register(Good, GoodAdmin)
+admin.site.register(Good, GoodAdmin)
 
 
 class SetAdmin(admin.ModelAdmin):
     pass
-admin.register(Set, SetAdmin)
+admin.site.register(Set, SetAdmin)
 
 
 class ShopAdmin(admin.ModelAdmin):
     pass
-admin.register(Shop, ShopAdmin)
+admin.site.register(Shop, ShopAdmin)
 
 
 class SuperSetAdmin(admin.ModelAdmin):
     pass
-admin.register(SuperSet, SuperSetAdmin)
+admin.site.register(SuperSet, SuperSetAdmin)
