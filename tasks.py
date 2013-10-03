@@ -48,7 +48,7 @@ def collect(verbose=False, **kwargs):
     out('Updating `settings/manifest.json` with new asset hashes.')
     invoke.run('python manage.py createstaticmanifest --configuration=Production', hide=hide)
     out('Uploading and post-processing all of the assets.')
-    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput --dry-run', hide=hide)
+    invoke.run('python manage.py eccollect --pp=progressive --configuration=Production --noinput', hide=hide)
 
 
 @invoke.task(name='yuglify')
