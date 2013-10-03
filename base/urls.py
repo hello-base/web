@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView, TemplateView
 
 from haystack.forms import FacetedSearchForm
@@ -44,6 +45,9 @@ urlpatterns = patterns('',
     # Administration Modules.
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
+    # Authentication aliases.
+    url(r'^signin/$', name='signin' view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'))),
 
     # Core Modules.
     url(r'^accounts/', include('components.accounts.urls')),
