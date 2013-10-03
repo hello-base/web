@@ -172,3 +172,9 @@ class Production(Settings):
     # django-ecstatic / django-staticbuilder
     # ------------------------------------------------------------------
     ECSTATIC_MANIFEST_CACHE = 'staticfiles'
+
+    # django-imagekit.
+    # ------------------------------------------------------------------
+    IMAGEKIT_CACHE_BACKEND = 'staticfiles'
+    IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+    # IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Async'
