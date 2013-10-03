@@ -261,7 +261,8 @@ class ParticipationMixin(models.Model):
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
-    participating_idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss_attributed_to')
+    participating_idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss_attributed_to',
+        help_text='The remaining idols that are not a member of the given groups.')
     participating_groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss_attributed_to')
 
     class Meta:
