@@ -79,4 +79,7 @@ class PostAuthorizationView(View):
             redirect.delete_cookie('oauth_state')
             redirect.delete_cookie('oauth_referrer')
             return redirect
-        return http.HttpResponseRedirect('/')
+        else:
+            redirect = http.HttpResponseRedirect('/')
+            redirect.delete_cookie('oauth_state')
+            return redirect
