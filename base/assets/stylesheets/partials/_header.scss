@@ -7,10 +7,7 @@
   @include box-shadow(inset 0 -1px 0 $brand-paleGrey);
   padding: 12px inherit;
 
-  a {
-    @include link-colors(#FFF);
-    text-decoration: none;
-  }
+  a { text-decoration: none; }
   .container { }
 }
 .header-logo-wordmark {
@@ -68,4 +65,10 @@
 
     .ss-icon { position: relative; top: 2px; }
   }
+}
+
+.header-userbox {
+  // @@@: Temporary!
+  display: inline-block;
+  float: right;
 }
