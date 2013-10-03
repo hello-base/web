@@ -41,7 +41,8 @@ admin.site.register(Set, SetAdmin)
 
 
 class ShopAdmin(admin.ModelAdmin):
-    pass
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'slug', 'website_link',)}),)
+    list_display = ['romanized_name', 'name', 'website_link']
 admin.site.register(Shop, ShopAdmin)
 
 
