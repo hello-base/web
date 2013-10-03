@@ -47,16 +47,17 @@ class GoodAdmin(BaseAdmin):
     def get_fieldsets(self, request, obj=None):
         fs = super(GoodAdmin, self).get_fieldsets(request, obj)
         # fs now contains [(None, {'fields': fields})], do with it whatever you want
+        # all_fields = fs[0][1]['fields']
         return fs
 admin.site.register(Good, GoodAdmin)
 
 
-class SetAdmin(admin.ModelAdmin):
+class SetAdmin(BaseAdmin):
     pass
 admin.site.register(Set, SetAdmin)
 
 
-class ShopAdmin(admin.ModelAdmin):
+class ShopAdmin(BaseAdmin):
     pass
 admin.site.register(Shop, ShopAdmin)
 
