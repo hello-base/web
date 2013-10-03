@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 
@@ -56,4 +58,4 @@ urlpatterns = patterns('',
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
