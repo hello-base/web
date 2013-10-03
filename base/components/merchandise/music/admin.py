@@ -43,8 +43,12 @@ class MusicBaseAdmin(admin.ModelAdmin):
     filter_horizontal = ['idols', 'groups']
     list_select_related = True
     ordering = ('-modified',)
-    search_fields = ['romanized_name', 'name', 'idols__name', 'idols__family_kanji', 'idols__given_kanji', 'groups__name', 'groups__kanji']
     prepopulated_fields = {'slug': ['romanized_name']}
+    readonly_fields = ['participating_groups', 'participating_idols', 'released']
+    search_fields = ['romanized_name', 'name', 'idols__name', 'idols__family_kanji', 'idols__given_kanji', 'groups__name', 'groups__kanji']
+
+    raw_id_fields = ('idols', 'groups',)
+    autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
 
 
 class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
@@ -64,10 +68,6 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     inlines = [AlbumEditionInline]
     list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list', 'is_compilation']
     list_editable = ['number', 'released', 'is_compilation']
-    readonly_fields = ['released']
-
-    raw_id_fields = ('idols', 'groups',)
-    autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
@@ -116,16 +116,12 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         }),
         ('Alternates', {
             'classes': ('collapse closed',),
-            'fields': ('is_indie', 'has_8cm', 'has_lp', 'has_cassette')
+            'fields': ('is_indie', ('has_8cm', 'has_lp', 'has_cassette'))
         })
     )
     inlines = [SingleEditionInline]
     list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list']
     list_editable = ['number', 'released']
-    readonly_fields = ['released']
-
-    raw_id_fields = ('idols', 'groups',)
-    autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])

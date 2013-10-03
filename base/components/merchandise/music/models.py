@@ -5,6 +5,7 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
 
+from imagekit.models import ImageSpecField
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
