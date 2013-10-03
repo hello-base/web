@@ -73,7 +73,7 @@ class Production(Settings):
         's3_folder_storage',
         'storages',
     ]
-    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+    DEFAULT_FILE_STORAGE = 'components.storage.MediaFilesStorage'
     STATICFILES_STORAGE = 'components.storage.S3ManifestStorage'
 
     # Amazon Web Services
