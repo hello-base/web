@@ -9,10 +9,10 @@ $experimental-support-for-khtml: false; // What?
 // These are customized from the default values of 4em and 1em
 // to allow for a bit more breathing room between the columns.
 $total-columns: 12;
-// $column-width: 60px;
-// $gutter-width: 24px;
-// $grid-padding: 0px;
-// $container-style: static;
+$column-width: 4em;
+$gutter-width: 1em;
+$grid-padding: 10px;
+$container-style: static;
 $container-width: 990px;
 
 // Typographic variables.
