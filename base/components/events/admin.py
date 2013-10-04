@@ -56,10 +56,11 @@ admin.site.register(Performance, PerformanceAdmin)
 
 class VenueAdmin(ContributorMixin, admin.ModelAdmin):
     fieldsets = (
-        ('Names', {'fields': (('romanized_name', 'name'), 'former_names', 'slug')}),
-        ('Details', {'fields': ('romanized_address', 'address', 'country', 'photo')}),
+        ('Names', {'fields': (('romanized_name', 'name'), 'other_names', 'slug')}),
+        ('Details', {'fields': ('capacity', 'url', 'photo')}),
+        ('Location', {'fields': ('romanized_address', 'address', 'country')}),
     )
-    list_display = ['romanized_name', 'name', 'former_names', 'romanized_address', 'country']
+    list_display = ['romanized_name', 'name', 'other_names', 'romanized_address', 'country']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
     search_fields = ['romanized_name', 'name', 'country']
