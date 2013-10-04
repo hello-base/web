@@ -255,6 +255,10 @@ class Video(models.Model):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
     @property
     def parent(self):
         return filter(None, [self.album, self.single])[0]
