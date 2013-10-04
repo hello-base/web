@@ -56,6 +56,7 @@ class Venue(ContributorMixin):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     other_names = models.CharField(max_length=200, blank=True, null=True)
+    capacity = models.IntegerField(blank=True, null=True)
     url = models.URLField(blank=True)
     slug = models.SlugField()
 
