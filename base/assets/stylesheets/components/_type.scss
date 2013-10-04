@@ -2,23 +2,24 @@
 // Lovingly inspired by Bootstrap's type scaffolding library.
 // (http://getbootstrap.com)
 h1, h2, h3, h4, h5, h6 {
-    font-family: $headings-font-family;
-    font-weight: $headings-font-weight;
-    line-height: $headings-line-height;
+  color: $headings-font-color;
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
 
-    small {
-        font-weight: normal;
-        line-height: 1;
-    }
+  small {
+    font-weight: normal;
+    line-height: 1;
+  }
 }
 
 h1, h2, h3 {
-    margin-top: $line-height-computed;
-    margin-bottom: ($line-height-computed / 2);
+  margin-top: $line-height-computed;
+  margin-bottom: ($line-height-computed / 2);
 }
 h4, h5, h6 {
-    margin-top: ($line-height-computed / 2);
-    margin-bottom: ($line-height-computed / 2);
+  margin-top: ($line-height-computed / 2);
+  margin-bottom: ($line-height-computed / 2);
 }
 
 h1 { font-size: floor($font-size-base * 2.60); } // ~36px
