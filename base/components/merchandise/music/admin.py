@@ -152,6 +152,7 @@ class TrackAdmin(admin.ModelAdmin):
     list_display_links = ['romanized_name', 'name']
     list_filter = ['is_alternate']
     list_select_related = True
+    readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
 
     raw_id_fields = ('idols', 'groups',)

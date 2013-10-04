@@ -11,7 +11,6 @@ from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
 
-from components.people.constants import CLASSIFICATIONS
 from components.people.models import ParticipationMixin
 
 from ..models import Merchandise
@@ -48,12 +47,6 @@ class Base(Merchandise):
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
-
-    @cached_property
-    def supergroup(self):
-        for group in self.groups.all():
-            if group.classification == CLASSIFICATIONS.supergroup:
-                return group
 
 
 class Album(Base):

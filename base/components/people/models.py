@@ -1,7 +1,10 @@
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timesince
+from django.utils.functional import cached_property
 
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
@@ -255,43 +258,44 @@ class Membership(models.Model):
 
 
 class ParticipationMixin(models.Model):
-    idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss')
+    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
+    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
 
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
-    participating_idols = models.ManyToManyField('people.Idol', blank=True, null=True, related_name='%(class)ss_attributed_to',
+    participating_idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss_attributed_to',
         help_text='The remaining idols that are not a member of the given groups.')
-    participating_groups = models.ManyToManyField('people.Group', blank=True, null=True, related_name='%(class)ss_attributed_to')
+    participating_groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss_attributed_to')
 
     class Meta:
         abstract = True
 
-    def save(self, *args, **kwargs):
-        # Denormalize the release's participants. We only ever have to
-        # calulcate this once and we shouldn't have to on request.
-        self._render_participants()
-        return super(ParticipationMixin, self).save(*args, **kwargs)
+    @receiver(post_save)
+    def render_participants(sender, instance, created, **kwargs):
+        # Being a signal without a sender, we need to make sure models
+        # are actually subclasses of ParticipationMixin before we
+        # continue.
+        if not issubclass(instance.__class__, ParticipationMixin):
+            return
 
-    def _render_participants(self):
         from components.people.models import Idol, Membership
 
         # Do we have existing participants? Clear them out so we can
         # calculate them again.
-        self.participating_idols.clear()
-        self.participating_groups.clear()
+        instance.participating_idols.clear()
+        instance.participating_groups.clear()
 
-        groups = self.groups.all()
+        groups = instance.groups.all()
         if groups.exists():
             # If a supergroup is one of the groups attributed, just
             # show the supergroup.
-            if self.supergroup in groups:
-                return self.participating_groups.add(self.supergroup)
+            if instance.supergroup in groups:
+                return instance.participating_groups.add(instance.supergroup)
 
             # Gather all of the individual idol's primary keys
             # attributed to the single into a set().
-            idols = self.idols.all()
+            idols = instance.idols.all()
 
             # Specify an empty set() that will contain all of the
             # members of the groups attributed to the single. Then,
@@ -305,13 +309,19 @@ class ParticipationMixin(models.Model):
 
             # Add the calculated groups and idols to our new list of
             # participating groups and idols.
-            self.participating_groups.add(*list(groups))
-            self.participating_idols.add(*list(distinct_idols))
+            instance.participating_groups.add(*list(groups))
+            instance.participating_idols.add(*list(distinct_idols))
             return
 
         # No groups? Just add all the idols.
-        self.participating_idols.add(*list(self.idols.all()))
+        instance.participating_idols.add(*list(instance.idols.all()))
         return
+
+    @cached_property
+    def supergroup(self):
+        for group in self.groups.all():
+            if group.classification == CLASSIFICATIONS.supergroup:
+                return group
 
 
 class Trivia(models.Model):
