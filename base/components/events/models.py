@@ -57,7 +57,7 @@ class Venue(ContributorMixin):
     name = models.CharField(max_length=200)
     other_names = models.CharField(max_length=200, blank=True, null=True)
     capacity = models.IntegerField(blank=True, null=True)
-    url = models.URLField(blank=True)
+    url = models.URLField('URL', blank=True)
     slug = models.SlugField()
 
     # Location.
