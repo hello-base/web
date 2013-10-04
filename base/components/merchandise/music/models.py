@@ -247,7 +247,7 @@ class Video(models.Model):
 
     # Contents
     still = models.ImageField(blank=True, null=True, upload_to='merchandise/music/videos/')
-    video_url = models.URLField(blank=True)
+    video_url = models.URLField('video URL', blank=True)
 
     class Meta:
         get_latest_by = 'released'
