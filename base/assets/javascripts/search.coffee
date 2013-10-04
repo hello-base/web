@@ -24,16 +24,16 @@ class Results
       @$results.removeClass 'active'
 
   onFieldInput: =>
-    @$results.toggleClass 'active', @$field.val() isnt ""
+    @$results.toggleClass 'active', @$field.val() isnt ''
 
     $.ajax
-      url: "/search/autocomplete/"
+      url: '/search/autocomplete/'
       data:
         q: @$field.val()
       success: (data) =>
-        template = Handlebars.templates["autocomplete"]
+        template = Handlebars.templates['autocomplete']
         @$results.html(template(data))
 
 $(document).on 'click', '.result-item', ->
-  $('.js-search').val("")
+  $('#id_q').val('')
   return
