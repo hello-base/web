@@ -16,7 +16,7 @@ class Merchandise(ContributorMixin, ParticipationMixin):
     price = models.IntegerField(blank=True, null=True)
 
     # Secondary identifier.
-    uuid = models.UUIDField()
+    uuid = models.UUIDField(auto_add=True)
 
     class Meta:
         abstract = True
