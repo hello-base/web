@@ -55,11 +55,14 @@ class Performance(ContributorMixin):
 class Venue(ContributorMixin):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    former_names = models.CharField(max_length=200, blank=True, null=True)
+    other_names = models.CharField(max_length=200, blank=True, null=True)
+    url = models.URLField(blank=True)
+    slug = models.SlugField()
+
+    # Location.
     romanized_address = models.CharField(max_length=200, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     country = models.CharField(max_length=200, blank=True, null=True)  # Only filled if outside of Japan (maybe unnecessary).
-    slug = models.SlugField()
 
     # Imagery.
     photo = models.ImageField(blank=True, null=True, upload_to='events/venues/')
