@@ -45,7 +45,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
     ordering = ('-modified',)
     prepopulated_fields = {'slug': ['romanized_name']}
     readonly_fields = ['participating_groups', 'participating_idols', 'released']
-    search_fields = ['romanized_name', 'name', 'idols__name', 'idols__family_kanji', 'idols__given_kanji', 'groups__name', 'groups__kanji']
+    search_fields = ['romanized_name', 'name', 'idols__name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__name', 'groups__romanized_name']
 
     raw_id_fields = ('idols', 'groups',)
     autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
