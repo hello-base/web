@@ -1,3 +1,12 @@
+// .about
+// Set of classes that style the about page.
+.about {
+  ul {
+    @include reset-box-model;
+    @include reset-list-style;
+  }
+}
+
 // .fine-print
 // Set of classes that style large swaths of text such as the terms
 // of service and privacy policy pages.
