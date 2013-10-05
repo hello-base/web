@@ -1,10 +1,7 @@
-@import "compass/utilities/lists/inline-list";
+@import "compass/typography/lists/inline-list";
 
 .footer {
-  a {
-    @include link-colors($brand-lightGrey, $brand-blue);
-    // font-style: italic;
-  }
+  a { @include link-colors($brand-lightGrey, $brand-blue); }
   p {
     color: $brand-lightGrey;
     font-size: 11px;
