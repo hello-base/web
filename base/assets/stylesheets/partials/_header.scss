@@ -3,6 +3,7 @@
   .container {
     align-items: center;
     display: flex;
+    min-height: 61px;
     padding-top: 1rem; padding-bottom: 1rem;
   }
 }
@@ -18,11 +19,14 @@
 .header-logo-wordmark {
   width: calc(101px + 1rem);  // Width of the logo is 101px.
 }
+.landing-home .header-logo-wordmark {
+  width: 101px;
+}
 
 .header-tagline {
   display: inline-block;
   margin-top: 0; margin-bottom: 0; margin-left: 6px;
-  color: rgba(#FFF, 0.6);
+  color: #A0ABB6;
   font-size: 12px;
   font-style: italic;
   vertical-align: 0;
