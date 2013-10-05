@@ -13,6 +13,7 @@
   padding-top: 24px; padding-bottom: 72px;
 
   background-color: #2A2E33;
+  box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
   color: #FFF;
 
   a {
@@ -80,25 +81,40 @@
 .reasoning {
   @include span-columns(4, $total-columns);
   @include nth-omega(3n);
-  @include prefix(1);
   position: relative;
-  color: #666;
   font-size: 13px;
 
   a {
-    @include link-colors(#333, $brand-green);
-    font-weight: 700;
+    font-weight: 600;
+    &:link, &:visited { color: $headings-font-color; }
   }
   h2 {
-    color: #333;
-    min-height: 38px;
+    font-family: $font-family-primary;
     font-size: 18px;
     font-weight: 400;
   }
-  .ss-icon {
-    position: absolute;
-    top: 18px; left: 0;
-    color: #333;
-    font-size: 48px;
+
+  .reasoning-icon {
+    text-align: center;
+
+    .ss-icon {
+      display: inline-block;
+      padding: 13px 0px 7px;
+      width: 54px;
+
+      background: #333;
+      border-radius: 8px;
+      color: #FFF;
+      font-size: 24px;
+    }
+    .ss-books {
+      background: linear-gradient(#CC82EE, #B563E5);
+    }
+    .ss-analytics {
+      background: linear-gradient(#FF6931, #FF4C20);
+    }
+    .ss-search {
+      background: linear-gradient(#FF68A0, #FF4B81);
+    }
   }
 }
