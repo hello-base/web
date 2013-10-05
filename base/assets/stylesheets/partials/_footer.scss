@@ -7,9 +7,26 @@
     font-size: 11px;
   }
 
-  .container { padding-top: 2rem; padding-bottom: 2rem; }
-  .links ul {
+  .container {
+    align-items: center;
+    display: flex;
+    padding-top: 2rem; padding-bottom: 2rem;
+  }
+
+  .links {
     @include reset-box-model;
     @include inline-list;
+  }
+  .byline { flex: 1; }
+  .hicon-logo-hello,
+  .hicon-logo-base {
+    @include position(relative, 2px 0 0 0);
+    font-size: 16px;
+  }
+  .copyright { margin: 0.15rem 0; }
+  .description,
+  .disclaimer {
+    margin: 0;
+    width: columns(3, $total_columns);
   }
 }
