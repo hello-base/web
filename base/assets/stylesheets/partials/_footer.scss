@@ -1,9 +1,9 @@
 @import "compass/typography/lists/inline-list";
 
 .footer {
-  a { @include link-colors($brand-lightGrey, $brand-blue); }
+  a { @include link-colors(#646D77, $brand-blue); }
   p {
-    color: $brand-lightGrey;
+    color: #828B96;
     font-size: 11px;
   }
 
@@ -12,7 +12,10 @@
     padding-top: 2rem; padding-bottom: 2rem;
   }
 
-  .upper-footer {}
+  .upper-footer {
+    padding-top: 2rem;
+    border-top: 1px solid #F0F3F7;
+  }
   .lower-footer {
     align-items: center;
     display: flex;
