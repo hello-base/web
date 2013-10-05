@@ -1,19 +1,21 @@
 <footer class="footer" role="contentinfo">
-  <nav class="upper-footer container">
-    <ul class="links">
-      <li><a href="{% url "about" %}">About</a></li>
-      <li><a href="{% url "privacy" %}">Privacy</a></li>
-      <li><a href="{% url "terms" %}">Terms</a></li>
-    </ul>
-  </nav>
-  <div class="lower-footer container">
-    <div class="byline">
-      <a href="{% url "site-home" %}" class="logo-wordmark footer-logo-wordmark">
-          <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
-      </a>
-      <p class="copyright">©2013 <a href="{% url "site-home" %}">Hello! Base</a>. All Rights Reserved.</p>
+  <div class="container">
+    <nav class="upper-footer">
+      <ul class="links">
+        <li class="link"><a href="{% url "about" %}"><span class="ss-icon ss-info"></span> About</a></li>
+        <li class="link"><a href="{% url "privacy" %}"><span class="ss-icon ss-lock"></span> Privacy</a></li>
+        <li class="link"><a href="{% url "terms" %}"><span class="ss-icon ss-books"></span> Terms</a></li>
+      </ul>
+    </nav>
+    <div class="lower-footer">
+      <div class="byline">
+        <a href="{% url "site-home" %}" class="logo-wordmark footer-logo-wordmark">
+            <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+        </a>
+        <p class="copyright">©2013 <a href="{% url "site-home" %}">Hello! Base</a>. All Rights Reserved.</p>
+      </div>
+      <p class="description">This is part of a next-generation fansite brought to you by <a href="http://revyver.com" rel="external">Revyver</a>, with love.</p>
+      <p class="disclaimer"><a href="http://helloproject.com" rel="external">Hello! Project</a>, its idols, groups, and releases are trademark <a href="http://www.up-front-works.jp/" rel="external">Up-Front Works</a>.</p>
     </div>
-    <p class="description">This is part of a next-generation fansite brought to you by <a href="http://revyver.com" rel="external">Revyver</a>, with love.</p>
-    <p class="disclaimer"><a href="http://helloproject.com" rel="external">Hello! Project</a>, its idols, groups, and releases are trademark <a href="http://www.up-front-works.jp/" rel="external">Up-Front Works</a>.</p>
   </div>
 </footer>

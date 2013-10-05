@@ -8,14 +8,28 @@
   }
 
   .container {
+    color: #FFF;
+    padding-top: 2rem; padding-bottom: 2rem;
+  }
+
+  .upper-footer {}
+  .lower-footer {
     align-items: center;
     display: flex;
-    padding-top: 2rem; padding-bottom: 2rem;
+    padding-top: 1rem;
   }
 
   .links {
     @include reset-box-model;
     @include inline-list;
+
+    .link {
+      margin-right: 1rem;
+
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .ss-icon { @include position(relative, 1px 0 0 0); }
   }
   .byline { flex: 1; }
   .hicon-logo-hello,
