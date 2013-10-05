@@ -10,6 +10,6 @@ class Testing(Settings):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'base-test'
+            'NAME': ':memory:'
         }
     }
