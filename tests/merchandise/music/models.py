@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from components.base.merchandise.music.factories import (AlbumFactory,
-    BaseFactory, EditionFactory, SingleFactory)
+from components.merchandise.music.factories import (AlbumFactory,
+    BaseFactory, SingleFactory)
 
 
 class TestAlbums(TestCase):
@@ -13,6 +13,10 @@ class TestAlbums(TestCase):
         album = AlbumFactory()
         assert 'album' in album.romanized_name
 
+    def test_album_identifier(self):
+        album = AlbumFactory()
+        assert album.identifier == 'album'
+
 
 class TestSingles(TestCase):
     def test_single_factory(self):
@@ -22,3 +26,7 @@ class TestSingles(TestCase):
     def test_single_creation(self):
         single = SingleFactory()
         assert 'single' in single.romanized_name
+
+    def test_single_identifier(self):
+        single = SingleFactory()
+        assert single.identifier == 'single'
