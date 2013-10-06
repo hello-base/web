@@ -160,7 +160,7 @@ class TrackAdmin(admin.ModelAdmin):
     readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
 
-    raw_id_fields = ('idols', 'groups',)
+    raw_id_fields = ('idols', 'groups', 'original_track')
     autocomplete_lookup_fields = {'fk': ['original_track',], 'm2m': ['idols', 'groups']}
 admin.site.register(Track, TrackAdmin)
 
