@@ -7,7 +7,7 @@ from .models import Event, Performance, Venue
 
 class PerformanceInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', ('day', 'start_time', 'end_time'))}),)
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', 'venue_known_as', ('day', 'start_time', 'end_time'))}),)
     model = Performance
 
     raw_id_fields = ('venue',)
