@@ -17,7 +17,7 @@
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
           <span itemprop="name" class="romanized-name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
-          {% with object.primary_membership as primary %}<p class="standing"><span itemprop="title">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
+          {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>
       <aside class="profile-vitals">
