@@ -1,17 +1,21 @@
 @import "compass/reset/utilities";
 
-.landing {}
+// .landing-home
+// Set of classes that style the Hello! Base home page.
+// ---------------------------------------------------------------------
 .landing-home {
+  .header-tagline { color: rgba(#FFF, 0.75); }
+  .masthead.container { padding-top: 24px; padding-bottom: 72px; }
 }
 
-.tagline, .hero-search {
+.hero-tagline, .hero-search {
   @include span-columns(8, $total-columns);
   @include squish(2, 2);
+  position: relative;
 }
 
 .hero {
   @include position(relative);
-
   box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
   color: #FFF;
 
@@ -28,13 +32,12 @@
     background-color: #272E37;
 
     img {
-      margin-top: -140px;
+      margin-top: -120px;
       width: 100%;
       opacity: 0;
     }
   }
-  .header-tagline { color: rgba(#FFF, 0.75); }
-  .tagline {
+  .hero-tagline {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 
@@ -47,11 +50,6 @@
   }
 }
 
-.masthead.container {
-  padding-top: 24px; padding-bottom: 72px;
-}
-
-.hero-search { position: relative; }
 .hero-search .search-container {
   @include clearfix;
   padding: 4px;
@@ -82,7 +80,6 @@
     }
   }
 }
-
 .form-container {
   @include clearfix;
   margin: -4px;
@@ -94,7 +91,6 @@
 
   &.focus { background-color: rgba(#000, 0.5); }
 }
-
 .examples {
   padding: 1em 0;
 
@@ -103,6 +99,9 @@
   text-align: center;
 }
 
+// .reasonings
+// Set of classes that style the value propositions living below the
+// homepage's masthead.
 .reasonings {
   @include reset-list-style;
   margin-top: 0; margin-bottom: 0;
@@ -155,14 +154,11 @@
 // Error pages.
 // Styles for pages that error. Because I am Error.
 // <http://knowyourmeme.com/memes/i-am-error>
-//
-// .path-404
+// ---------------------------------------------------------------------
 .path-404 {
   h1 {}
   p {}
 }
-
-// .path-500
 .path-500 {
   h1 {}
   p {}
