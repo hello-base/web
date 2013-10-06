@@ -7,7 +7,7 @@ from .models import Event, Performance, Venue
 
 class PerformanceInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', 'venue_known_as', ('day', 'start_time', 'end_time'))}),)
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', 'venue_known_as', ('day', 'start_time'))}),)
     model = Performance
 
     raw_id_fields = ('venue',)
@@ -41,13 +41,13 @@ class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'day'
     fieldsets = (
         (None, {'fields': ('event', 'venue', 'venue_known_as')}),
-        ('Dates', {'fields': ('day', ('start_time', 'end_time'))}),
+        ('Dates', {'fields': (('day', 'start_time'),)}),
         ('Names', {'fields': (('romanized_name', 'name'),)}),
     )
-    list_display = ['romanized_name', 'name', 'day', 'start_time', 'end_time', 'event', 'venue']
+    list_display = ['romanized_name', 'name', 'day', 'start_time', 'event', 'venue']
     list_display_links = ['romanized_name', 'name']
     list_select_related = True
-    search_fields = ['day', 'start_time', 'end_time', 'event', 'venue']
+    search_fields = ['day', 'start_time', 'event', 'venue']
 
     raw_id_fields = ('event', 'venue')
     autocomplete_lookup_fields = {'fk': ['event', 'venue']}
