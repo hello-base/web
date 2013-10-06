@@ -5,52 +5,52 @@
 {% block body-class %}landing landing-home{% endblock %}
 {% block page %}
 <header class="header">
-    <div class="container">
-        <a href="{% url "site-home" %}" class="logo-wordmark header-logo-wordmark">
-            <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
-        </a>
-        <p class="header-tagline">{% block site-tagline %}The home base of your fandom.{% endblock %}</p>
-    </div>
+  <div class="container">
+    <a href="{% url "site-home" %}" class="logo-wordmark header-logo-wordmark">
+      <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+    </a>
+    <p class="header-tagline">{% block site-tagline %}The home base of your fandom.{% endblock %}</p>
+  </div>
 </header>
 
 <div class="hero">
-    <div class="container">
-        <p class="tagline">(Re)discover everything about <a href="http://helloproject.com">Hello! Project</a>.</p>
-        <p class="subtext"></p>
+  <div class="container">
+    <p class="tagline">(Re)discover everything about <a href="http://helloproject.com">Hello! Project</a>.</p>
+    <p class="subtext"></p>
 
-        <form accept-charset="utf-8" action="{% url "search" %}" class="hero-search searchbar" method="get">
-            {% include "partials/searchbar.html" %}
-        </form>
+    <form accept-charset="utf-8" action="{% url "search" %}" class="hero-search searchbar" method="get">
+      {% include "partials/searchbar.html" %}
+    </form>
 
-        <div class="examples">
-            <div class="terms">
-                {% url "search" as search %}
-                E.g. <a href="{{ search }}?q=sayashi">sayashi</a>, <a href="{{ search }}?q=musume">musume</a> or <a href="{{ search }}?q=wagamama">wagamama</a>
-            </div>
-            <div class="browse">
+    <div class="examples">
+      <div class="terms">
+        {% url "search" as search %}
+        E.g. <a href="{{ search }}?q=sayashi">sayashi</a>, <a href="{{ search }}?q=musume">musume</a> or <a href="{{ search }}?q=wagamama">wagamama</a>
+      </div>
+      <div class="browse">
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 {% filter typogrify %}
 <ul class="reasonings container">
-    <li class="reasoning">
-        <span class="reasoning-icon"><span class="ss-icon ss-books"></span></span>
-        <h2>The <i>most complete</i> Hello! Project database.</h2>
-        <p>From <a href="{% url 'single-detail' 'morning-coffee' %}">Morning Coffee's 8cm</a> CD release to the performances of <a href="">Morning Musume's recent tour</a>, we aim to have the most complete database on Hello! Project, its idols, and groups.</p>
-    </li>
-    <li class="reasoning">
-        <span class="reasoning-icon"><span class="ss-icon ss-analytics"></span></span>
-        <h2><i>All</i> the statistics you could ever want.</h2>
-        <p>Ever wonder how many singles <a href="{% url 'idol-detail' 'ishikawa-rika' %}">Charmy</a> took part in? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader? Hello! Base strives to answer those questions and more.</p>
-    </li>
-    <li class="reasoning">
-        <span class="reasoning-icon"><span class="ss-icon ss-search"></span></span>
-        <h2>A <i>comprehensive view</i> of Hello! Project.</h2>
-        <p>We take our data and find all sorts of correlations to give you an entirely new view of your favorite groups and idols.</p>
-    </li>
+  <li class="reasoning">
+    <span class="reasoning-icon"><span class="ss-icon ss-books"></span></span>
+    <h2>The <i>most complete</i> Hello! Project database.</h2>
+    <p>From <a href="{% url 'single-detail' 'morning-coffee' %}">Morning Coffee's 8cm</a> CD release to the performances of <a href="">Morning Musume's recent tour</a>, we aim to have the most complete database on Hello! Project, its idols, and groups.</p>
+  </li>
+  <li class="reasoning">
+    <span class="reasoning-icon"><span class="ss-icon ss-analytics"></span></span>
+    <h2><i>All the statistics</i> you could ever want.</h2>
+    <p>Ever wonder how many singles <a href="{% url 'idol-detail' 'ishikawa-rika' %}">Charmy</a> took part in? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader? Hello! Base strives to answer those questions and more.</p>
+  </li>
+  <li class="reasoning">
+    <span class="reasoning-icon"><span class="ss-icon ss-search"></span></span>
+    <h2>A <i>comprehensive view</i> of Hello! Project.</h2>
+    <p>We take our data and find all sorts of correlations to give you an entirely new view of your favorite groups and idols.</p>
+  </li>
 </ul>
 {% endfilter %}
 

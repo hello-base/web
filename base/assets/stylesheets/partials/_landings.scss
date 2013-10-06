@@ -89,9 +89,18 @@
     &:link, &:visited { color: $headings-font-color; }
   }
   h2 {
+    padding-right: 48px;
+
+    color: #454D57;
     font-family: $font-family-primary;
-    font-size: 18px;
+    font-size: 1.777em;
     font-weight: 400;
+    letter-spacing: -1px;
+
+    i {
+      color: #272E37;
+      font-weight: 600;
+    }
   }
 
   .reasoning-icon {
