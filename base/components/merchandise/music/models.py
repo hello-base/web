@@ -201,7 +201,7 @@ class TrackOrder(models.Model):
     is_instrumental = models.BooleanField('instrumental?', default=False)
 
     class Meta:
-        ordering = ('edition', 'position')
+        ordering = ('position',)
         unique_together = ('edition', 'track', 'is_instrumental')
         verbose_name = 'track'
 
@@ -279,7 +279,7 @@ class VideoTrackOrder(models.Model):
     position = models.PositiveSmallIntegerField()
 
     class Meta:
-        ordering = ('edition', 'position')
+        ordering = ('position',)
         unique_together = ('edition', 'video')
         verbose_name = 'video track'
 
