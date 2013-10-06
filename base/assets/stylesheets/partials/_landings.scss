@@ -26,10 +26,17 @@
     z-index: -1;
 
     background-color: #272E37;
+
+    img {
+      margin-top: -240px;
+      opacity: 0;
+    }
   }
+  .header-tagline { color: rgba(#FFF, 0.75); }
   .tagline {
     margin-bottom: 0.5em;
 
+    color: #FFF;
     font-size: 58px;
     font-weight: 200;
     letter-spacing: -2px;
