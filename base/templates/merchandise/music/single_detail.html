@@ -52,7 +52,7 @@
                             <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-music"></span> Tracklist</th></tr>
                             {% for position in edition.tracklist %}
                             <tr class="track {% if position.is_instrumental %}instrumental{% endif %}">
-                                <td class="track-number"><span class="pill number">{{ forloop.counter }}</span></td>
+                                <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                                 <td class="track-name">
                                     <span class="romanized-name">
                                         {{ position.track.romanized_name|typogrify }}
@@ -79,7 +79,7 @@
                             <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-video"></span> Videos</th></tr>
                             {% for position in edition.videos.all %}
                             <tr class="track">
-                                <td class="track-number"><span class="pill number">{{ forloop.counter }}</span></td>
+                                <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                                 <td class="track-name">
                                     <span class="romanized-name">{{ position.romanized_name|typogrify }}</span>
                                     <span class="name">{{ position.name }}</span>
