@@ -133,7 +133,10 @@ admin.site.register(Single, SingleAdmin)
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('romanized_name', 'name')}),
-        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants', {
+            'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
+            'fields': ('idols', 'groups')
+        }),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
             'description': 'This is calculated by the values inputted in "Participants."',
