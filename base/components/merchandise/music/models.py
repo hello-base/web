@@ -197,7 +197,7 @@ class TrackOrder(models.Model):
     # A-Side / B-Side / Options
     is_aside = models.BooleanField('a-side?', default=False)
     is_bside = models.BooleanField('b-side?', default=False)
-    is_album_track = models.BooleanField('album track?', default=False)
+    is_album_only = models.BooleanField('album only?', default=False)
     is_instrumental = models.BooleanField('instrumental?', default=False)
 
     class Meta:
