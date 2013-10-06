@@ -267,10 +267,12 @@ class Video(models.Model):
     def rendered_kind_display(self):
         if self.kind in [1, 2, 3, 4, 9, 11, 12]:
             return 'Music Video'
-        if self.kind in [21, 22, 23]:
+        elif self.kind in [21, 22, 23]:
             return 'Making of'
-        if self.kind in [31, 32]:
+        elif self.kind in [31, 32]:
             return 'Performance'
+        else:
+            return ''
 
 
 class VideoTrackOrder(models.Model):

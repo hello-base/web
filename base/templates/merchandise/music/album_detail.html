@@ -75,17 +75,17 @@
                             {% endfor %}
                         </tbody><!-- .tracklist -->
                         {% endif %}
-                        {% if edition.videos.exists %}
+                        {% if edition.video_order.exists %}
                         <tbody class="tracklist video-list">
                             <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-video"></span> Videos</th></tr>
-                            {% for position in edition.videos.all %}
+                            {% for position in edition.video_order.all %}
                             <tr class="track">
                                 <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                                 <td class="track-name">
-                                    <span class="romanized-name">{{ position.romanized_name|typogrify }}</span>
-                                    <span class="name">{{ position.name }}</span>
+                                    <span class="romanized-name">{{ position.video.romanized_name|typogrify }}</span>
+                                    <span class="name">{{ position.video.name }}</span>
                                 </td>
-                                <td class="track-type"><span class="pill">{{ position.get_kind_display }}</span></td>
+                                <td class="track-type">{% if position.video.rendered_kind_display %}<span class="pill">{{ position.video.rendered_kind_display }}</span>{% endif %}</td>
                             </tr>
                             {% endfor %}
                         </tbody><!-- .tracklist -->
