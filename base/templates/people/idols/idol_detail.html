@@ -7,7 +7,7 @@
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
-<section class="profile idol-profile">
+<section itemscope itemtype="http://schema.org/Person" class="profile idol-profile">
   <div class="profile-masthead"></div>
 
   <header class="profile-header">
@@ -16,14 +16,14 @@
         <div class="profile-photo"></div>
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
-          <span class="romanized-name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
-          {% with object.primary_membership as primary %}<p class="standing">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</p>{% endwith %}
+          <span itemprop="name" class="romanized-name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+          {% with object.primary_membership as primary %}<p class="standing"><span itemprop="title">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>
       <aside class="profile-vitals">
         <ul class="vitals-list">
           <li class="vital vital-age"><span class="ss-icon ss-exercise"></span> {% firstof object.age "Unknown" %} <span class="vital-label">Age</span></li>
-          <li class="vital vital-birthday"><span class="ss-icon ss-calendar"></span> <time datetime="{{ object.birthdate|date:"c" }}">{% firstof object.birthdate|date:"F j, Y" "Unknown" %}</time> <span class="vital-label">Birthday</span></li>
+          <li class="vital vital-birthday"><span class="ss-icon ss-calendar"></span> <time itemprop="birthDate" datetime="{{ object.birthdate|date:"c" }}">{% firstof object.birthdate|date:"F j, Y" "Unknown" %}</time> <span class="vital-label">Birthday</span></li>
           <li class="vital vital-bloodtype"><span class="ss-icon ss-anatomicalheart"></span> {% firstof object.bloodtype "Unknown" %} <span class="vital-label">Bloodtype</span></li>
           <li class="vital vital-height"><span class="ss-icon ss-tapemeasure"></span> {% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %} <span class="vital-label">Height</span></li>
         </ul>
