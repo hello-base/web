@@ -38,6 +38,8 @@ urlpatterns = patterns('',
     url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
 
     # "Flatpages."
+    url(r'^404/$', name='404', view=TemplateView(template_name='404.html')),
+    url(r'^500/$', name='500', view=TemplateView(template_name='500.html')),
     url(r'^about/$', name='about', view=TemplateView.as_view(template_name='landings/about.html')),
     url(r'^privacy/$', name='privacy', view=TemplateView.as_view(template_name='landings/privacy.html')),
     url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
