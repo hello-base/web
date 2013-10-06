@@ -1,31 +1,39 @@
-{% extends "base.html" %}
+{% extends "layouts/site_base.html" %}
 
-{% block body %}
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block content %}
+<section class="profile event-profile">
+  {% print object %}
+  <h1>
+    <span class="name">{{ object.name }}</span>
+    <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+  </h1>
 
-<h2>{{ object.romanized_name }}</h2>
-{{ object.name }}
+  <p class="header">Details</p>
+  Nickname: {{ object.nickname }}<br />
+  Span: {{ object.start_date | date:"Y/m/d" }}
+   to {{ object.end_date | date:"Y/m/d" }}<br />
+  Performance count:
+  {{ object.schedule.count }}
 
-<p class="header">Details</p>
-Nickname: {{ object.nickname }}<br />
-Span: {{ object.start_date | date:"Y/m/d" }}
- to {{ object.end_date | date:"Y/m/d" }}<br />
-Performance count: 
-{{ object.schedule.count }}
+  <p>Links:<br />
+  <a href="{{ object.info_link }}">HelloProject.com: {{ object.nickname }}</a>
+  {% if object.secondary_info_link %}
+  <br /><a href="{{ object.secondary_info_link }}">HelloProject.com:
+  {% for performance in object.schedule.all %} {{ performance.romanized_name }}
+  {% endfor %}</a>{% endif %}</p>
 
-<p>Links:<br />
-<a href="{{ object.info_link }}">HelloProject.com: {{ object.nickname }}</a>
-{% if object.secondary_info_link %}
-<br /><a href="{{ object.secondary_info_link }}">HelloProject.com: 
-{% for performance in object.schedule.all %} {{ performance.romanized_name }}
-{% endfor %}</a>{% endif %}</p>
+  <p class="header">Schedule</p>
+  <ul>{% for performance in object.schedule.all %}
+  <li>{{ performance.day | date:"Y/m/d" }}
+  ({{ performance.start_time | time:"H:i" }})
+  <a href="{% url "venue-detail" performance.venue.slug %}">{{ performance.venue }}</a>{% if performance.romanized_name %}<br />
+  {{ performance.romanized_name }}{% endif %}<br />
+  {% if performance.name %}{{ performance.name }}{% endif %}</li>
+  {% endfor %}</ul>
 
-<p class="header">Schedule</p>
-<ul>{% for performance in object.schedule.all %}
-<li>{{ performance.day | date:"Y/m/d" }} 
-({{ performance.start_time | time:"H:i" }}) 
-<a href="{% url "venue-detail" performance.venue.slug %}">{{ performance.venue }}</a>{% if performance.romanized_name %}<br />
-{{ performance.romanized_name }}{% endif %}<br />
-{% if performance.name %}{{ performance.name }}{% endif %}</li>
-{% endfor %}</ul>
-
-{% endblock body %}
+</section>
+{% endblock content %}

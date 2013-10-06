@@ -1,23 +1,31 @@
-{% extends "base.html" %}
+{% extends "layouts/site_base.html" %}
 
-{% block body %}
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block content %}
+<section class="profile venue-profile" itemscope itemtype="http://schema.org/MusicVenue">
+  {% print object %}
+  <h1>
+    <span class="name">{{ object.name }}</span>
+    <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+  </h1>
 
-<h2>{{ object.romanized_name }}</h2>
-{{ object.name }}
+  <p class="header">Details</p>
+  Performance count: {{ object.performances.count }}
+  <p>Located at:<br />
+  {{ object.romanized_address }}<br />
+  ({{ object.address }})</p>
 
-<p class="header">Details</p>
-Performance count: {{ object.performances.count }}
-<p>Located at:<br />
-{{ object.romanized_address }}<br />
-({{ object.address }})</p>
+  <p class="header">Events</p>
+  <ul>{% for event in object.performances.all %}
+  <li>{{ event.day | date:"Y/m/d" }} ({{ event.start_time | time:"H:i" }})<br />
+  <a href="{% url "event-detail" event.event.slug %}">
+  {{ event.event.romanized_name }}{% if event.romanized_name %}
+  {{ event.romanized_name }}{% endif %}</a>
+  </li>
+  {% endfor %}</ul>
 
-<p class="header">Events</p>
-<ul>{% for event in object.performances.all %}
-<li>{{ event.day | date:"Y/m/d" }} ({{ event.start_time | time:"H:i" }})<br />
-<a href="{% url "event-detail" event.event.slug %}">
-{{ event.event.romanized_name }}{% if event.romanized_name %} 
-{{ event.romanized_name }}{% endif %}</a>
-</li>
-{% endfor %}</ul>
-
-{% endblock body %}
+</section>
+{% endblock content %}
