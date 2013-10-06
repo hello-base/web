@@ -4,7 +4,7 @@
 .landing-home {
 }
 
-.tagline, .hero-search, .examples {
+.tagline, .hero-search {
   @include span-columns(8, $total-columns);
   @include squish(2, 2);
 }
@@ -28,20 +28,21 @@
     background-color: #272E37;
 
     img {
-      margin-top: -240px;
+      margin-top: -140px;
       width: 100%;
       opacity: 0;
     }
   }
   .header-tagline { color: rgba(#FFF, 0.75); }
   .tagline {
+    margin-top: 0.5em;
     margin-bottom: 0.5em;
 
     color: #FFF;
-    font-size: 58px;
+    font-size: 68px;
     font-weight: 200;
-    letter-spacing: -2px;
-    line-height: 1.1;
+    letter-spacing: -3px;
+    line-height: 1;
   }
 }
 
@@ -81,11 +82,23 @@
   }
 }
 
+.form-container {
+  @include clearfix;
+  margin: -4px;
+  padding: 4px;
+
+  background-color: rgba(#000, 0.0);
+  border-radius: 6px;
+  transition: all 250ms ease;
+
+  &.focus { background-color: rgba(#000, 0.5); }
+}
+
 .examples {
   padding: 1em 0;
 
   color: rgba(#FFF, 0.75);
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
 }
 

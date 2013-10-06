@@ -4,6 +4,13 @@
 
 # Search field highlighting.
 ($ document).ready ->
+  # Highlighting for the home page.
+  ($ '.landing-home #id_q').focus ->
+    ($ this).closest('.form-container').addClass 'focus'
+  ($ '.landing-home #id_q').blur ->
+    ($ this).closest('.form-container').removeClass 'focus'
+
+  # Header search field highlighting.
   ($ '#id_q').focus ->
     ($ this).closest('.header-search').addClass 'focus'
   ($ '#id_q').blur ->

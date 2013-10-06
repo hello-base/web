@@ -17,15 +17,17 @@
   <div class="masthead container">
     <p class="tagline">Discover everything about <a href="http://helloproject.com">Hello! Project</a>.</p>
     <form accept-charset="utf-8" action="{% url "search" %}" class="hero-search searchbar" method="get">
-      {% include "partials/searchbar.html" %}
-    </form>
-    <div class="examples">
-      <div class="terms">
-        {% url "search" as search %}
-        E.g. <a href="{{ search }}?q=sayashi">sayashi</a>, <a href="{{ search }}?q=musume">musume</a> or <a href="{{ search }}?q=wagamama">wagamama</a>
+      <div class="form-container">
+        {% include "partials/searchbar.html" %}
+        <div class="examples">
+          <div class="terms">
+            {% url "search" as search %}
+            E.g. <a href="{{ search }}?q=sayashi">sayashi</a>, <a href="{{ search }}?q=musume">musume</a> or <a href="{{ search }}?q=wagamama">wagamama</a>
+          </div>
+          <div class="browse"></div>
+        </div>
       </div>
-      <div class="browse"></div>
-    </div>
+    </form>
   </div>
   <div class="hero-image"><img src="{% static 'images/hero.jpg' %}"></div>
 </div>
