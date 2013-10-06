@@ -10,35 +10,46 @@
 }
 
 .hero {
-  padding-top: 24px; padding-bottom: 72px;
+  @include position(relative);
 
-  background-color: #2A2E33;
+  background-color: #272E37;
   box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
   color: #FFF;
 
   a {
     @include link-colors(#FFF);
-    font-weight: 700;
+    font-weight: 600;
+  }
+  .hero-image {
+    height: 200px;
+    overflow: hidden; }
+  img {
+    margin: -5px -5px;
+    filter: blur(5px);
   }
   .tagline {
     margin-bottom: 0.5em;
 
-    font-size: 54px;
+    font-size: 58px;
     font-weight: 200;
     letter-spacing: -2px;
-    line-height: 1.2;
+    line-height: 1.1;
   }
+}
+
+.masthead.container {
+  padding-top: 24px; padding-bottom: 72px;
 }
 
 .hero-search { position: relative; }
 .hero-search .search-container {
   @include clearfix;
-  padding: 4px 4px 3px;
+  padding: 4px;
   border-radius: 4px;
   background-color: #FFF;
 
   input {
-    @include span-columns(6, 8);
+    @include span-columns(7, 8);
     padding: 9px 12px 9px;
 
     border: none;
@@ -47,20 +58,17 @@
     &:focus { outline: none; }
   }
   button {
-    @include span-columns(2 omega, 8);
+    @include span-columns(1 omega, 8);
     padding: 10px 12px;
 
     background-color: $brand-green;
     border: none;
     border-radius: 3px;
-    color: #FFF;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
+    font-size: 18px;
 
     .ss-icon {
-      position: relative;
-      top: 2px;
+      @include position(relative, 2px 0 0 0);
+      color: #FFF;
     }
   }
 }
@@ -120,7 +128,7 @@
       background: linear-gradient(#CC82EE, #B563E5);
     }
     .ss-analytics {
-      background: linear-gradient(#FF6931, #FF4C20);
+      background: linear-gradient(#F5EA5B, #F0DD40);
     }
     .ss-search {
       background: linear-gradient(#FF68A0, #FF4B81);
