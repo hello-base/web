@@ -125,7 +125,7 @@ class Edition(models.Model):
     def _get_regular_edition(self):
         try:
             kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
-            edition = self._default_manager.filter(**kwargs)[0]
+            edition = self._default_manager.order_by('released').filter(**kwargs)[0]
         except IndexError:
             edition = self._default_manager.none()
         return edition
