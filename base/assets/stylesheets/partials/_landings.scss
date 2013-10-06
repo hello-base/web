@@ -12,7 +12,6 @@
 .hero {
   @include position(relative);
 
-  background-color: #272E37;
   box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
   color: #FFF;
 
@@ -21,11 +20,12 @@
     font-weight: 600;
   }
   .hero-image {
-    height: 200px;
-    overflow: hidden; }
-  img {
-    margin: -5px -5px;
-    filter: blur(5px);
+    @include position(absolute, 0px 0px 0px 0px);
+    overflow: hidden;
+    width: 100%;
+    z-index: -1;
+
+    background-color: #272E37;
   }
   .tagline {
     margin-bottom: 0.5em;
@@ -124,14 +124,8 @@
       color: #FFF;
       font-size: 24px;
     }
-    .ss-books {
-      background: linear-gradient(#CC82EE, #B563E5);
-    }
-    .ss-analytics {
-      background: linear-gradient(#F5EA5B, #F0DD40);
-    }
-    .ss-search {
-      background: linear-gradient(#FF68A0, #FF4B81);
-    }
+    .ss-books { background: linear-gradient(#CC82EE, #B563E5); }
+    .ss-analytics { background: linear-gradient(#F5EA5B, #F0DD40); }
+    .ss-search { background: linear-gradient(#FF68A0, #FF4B81); }
   }
 }

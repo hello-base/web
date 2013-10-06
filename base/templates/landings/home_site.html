@@ -5,8 +5,6 @@
 {% block title_override %}(Re)discover Hello! Project &middot; Welcome to Hello! Base{% endblock %}
 {% block body-class %}landing landing-home{% endblock %}
 {% block page %}
-{# <div class="hero-image"><img src="{% static '/static/images/hero.jpg' %}"></div> #}
-
 <div class="hero">
   <header class="header">
     <div class="container">
@@ -29,6 +27,7 @@
       <div class="browse"></div>
     </div>
   </div>
+  <div class="hero-image"><img src="{% static '/static/images/hero.jpg' %}"></div>
 </div>
 
 {% filter typogrify %}
