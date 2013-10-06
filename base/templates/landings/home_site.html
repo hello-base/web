@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load typogrify_tags %}
 
-{% block title_override %}(Re)discover Hello! Project &middot; Welcome to Hello! Base{% endblock %}
+{% block title_override %}Discover everything about Hello! Project &middot; Welcome to Hello! Base{% endblock %}
 {% block body-class %}landing landing-home{% endblock %}
 {% block page %}
 <div class="hero">
@@ -15,7 +15,7 @@
     </div>
   </header>
   <div class="masthead container">
-    <p class="tagline">(Re)discover everything about <a href="http://helloproject.com">Hello! Project</a>.</p>
+    <p class="tagline">Discover everything about <a href="http://helloproject.com">Hello! Project</a>.</p>
     <form accept-charset="utf-8" action="{% url "search" %}" class="hero-search searchbar" method="get">
       {% include "partials/searchbar.html" %}
     </form>
