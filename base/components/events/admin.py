@@ -40,7 +40,7 @@ admin.site.register(Event, EventAdmin)
 class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'day'
     fieldsets = (
-        (None, {'fields': ('event', 'venue')}),
+        (None, {'fields': ('event', 'venue', 'venue_known_as')}),
         ('Dates', {'fields': ('day', ('start_time', 'end_time'))}),
         ('Names', {'fields': (('romanized_name', 'name'),)}),
     )

@@ -35,12 +35,14 @@ class Event(ContributorMixin, ParticipationMixin):
 
 class Performance(ContributorMixin):
     day = models.DateField()
-    romanized_name = models.CharField(max_length=200, blank=True, null=True)
-    name = models.CharField(max_length=200, blank=True, null=True)
+    romanized_name = models.CharField(max_length=200, blank=True)
+    name = models.CharField(max_length=200, blank=True)
     start_time = models.TimeField(blank=True, null=True)
     end_time = models.TimeField(blank=True, null=True)
     event = models.ForeignKey(Event, related_name='schedule')
     venue = models.ForeignKey('Venue', blank=True, null=True, related_name='performances')
+    venue_known_as = models.CharField(max_length=200, blank=True,
+        help_text='Did the venue go by another name at the time of this performance?')
     # Add 'set list' field with convoluted ordering and everything...
 
     class Meta:
