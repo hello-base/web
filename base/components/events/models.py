@@ -28,6 +28,9 @@ class Event(ContributorMixin, ParticipationMixin):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
+    def get_absolute_url(self):
+        return reverse('event-detail', kwargs={'slug': self.slug})
+
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
@@ -71,6 +74,9 @@ class Venue(ContributorMixin):
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
+
+    def get_absolute_url(self):
+        return reverse('venue-detail', kwargs={'slug': self.slug})
 
     @staticmethod
     def autocomplete_search_fields():
