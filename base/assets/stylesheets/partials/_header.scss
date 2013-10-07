@@ -17,12 +17,10 @@
   .hicon-logo-base { margin-left: 2px; }
 }
 .header-logo-wordmark {
-  width: calc(101px + 1rem);  // Width of the logo is 101px.
-}
-.landing-home .header-logo-wordmark {
-  width: 101px;
-}
+  padding-right: 1rem;
 
+  .landing-home & { padding-right: 0; }
+}
 .header-tagline {
   display: inline-block;
   margin-top: 0; margin-bottom: 0; margin-left: 6px;
