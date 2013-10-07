@@ -116,6 +116,17 @@
   &:last-child .track-name { padding-bottom: 12px; }
 }
 
+.track-participants {
+  @include position(relative);
+  padding: 2px 0 6px 18px;
+  font-size: 12px;
+
+  &:before {
+    @include position(absolute, 0 0 0 0px);
+    content: '\2514';
+  }
+}
+
 .track-number {
   font-family: $font-family-secondary;
   width: 30px;
