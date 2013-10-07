@@ -170,6 +170,7 @@
       color: $brand-medGrey;
     }
   }
+  .pill.aside, .pill.bside { box-shadow: none; }
   .pill.aside { background: $brand-primary-accent; }
   .pill.bside { background: $brand-secondary-accent; }
 }
