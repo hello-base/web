@@ -183,8 +183,9 @@ class Track(ParticipationMixin):
     def get_absolute_url(self):
         return reverse('track-detail', kwargs={'pk': self.pk})
 
+    @cached_property
     def participants(self):
-        return list(chain(self.idols.all(), self.groups.all()))
+        return list(chain(self.participating_idols.all(), self.participating_groups.all()))
 
     @staticmethod
     def autocomplete_search_fields():
