@@ -90,6 +90,9 @@ class Idol(Person):
     # sense as methods and 2) infrequently updated.
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
+    class Meta:
+        ordering = ('birthdate',)
+
     def get_absolute_url(self):
         return reverse('idol-detail', kwargs={'slug': self.slug})
 
