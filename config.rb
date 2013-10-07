@@ -14,11 +14,3 @@ fonts_dir = "static/fonts"
 # Output options.
 line_comments = false
 output_style = (environment == :production) ? :compressed : :compact
-
-# Autoprefixer.
-on_stylesheet_saved do |file|
-    css = File.read(file)
-    File.open(file, "w") do |io|
-        io << Csso.optimize(AutoprefixerRails.compile(css))
-    end
-end
