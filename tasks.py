@@ -24,7 +24,7 @@ def deploy(verbose=False, **kwargs):
         invoke.run('git commit -m "Static manifest has updated; committing updated manifest.json."', hide=hide)
 
     # Ready? Let's go.
-    out('Deploying project to Heroku')
+    out('Deploying project to Heroku.')
     invoke.run('git push heroku master')
 
     # Done!
