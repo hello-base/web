@@ -84,6 +84,15 @@ def development_server(**kwargs):
     invoke.run('foreman start -f Procfile.dev', pty=True)
 
 
+@invoke.task(name='capture')
+def heroku_capture(verbose=False, **kwargs):
+    out = functools.partial(_out, 'heroku.capture')
+    hide = 'out' if not verbose else None
+
+    out('Snapshotting the production database.')
+    invoke.run('heroku pgbackups:capture', hide=hide)
+
+
 @invoke.task(name='migrate')
 def heroku_migrate(app='', **kwargs):
     out = functools.partial(_out, 'heroku.migrate')
@@ -99,6 +108,6 @@ def heroku_syncdb(**kwargs):
 ns = invoke.Collection(
     collect, deploy, development_server, development_yuglify,
     heroku=invoke.Collection(
-        heroku_migrate, heroku_syncdb,
+        heroku_capture, heroku_migrate, heroku_syncdb,
     )
 )
