@@ -13,6 +13,8 @@
   }
 
   .upper-footer {
+    align-items: center;
+    display: flex;
     padding-top: 2rem;
     border-top: 1px solid #F0F3F7;
   }
@@ -24,9 +26,11 @@
 
   .links {
     @include reset-box-model;
-    @include inline-list;
+    display: inline-block;
+    flex: 1;
 
     .link {
+      display: inline-block;
       margin-right: 1rem;
 
       font-size: 12px;
@@ -34,6 +38,23 @@
     }
     .ss-icon { @include position(relative, 1px 0 0 0); }
   }
+
+  .social-links {
+    height: 20px;
+
+    span {
+      padding-right: 6px;
+      vertical-align: 6px;
+
+      color: #A1ABB6;
+      font-size: 12px;
+    }
+    [id^="twitter-widget"] {
+        margin-right: 6px;
+        width: 76px !important;  // UGLY HACK. D;
+    }
+  }
+
   .byline { flex: 1; }
   .hicon-logo-hello,
   .hicon-logo-base {
