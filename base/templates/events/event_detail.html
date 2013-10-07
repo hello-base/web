@@ -5,35 +5,49 @@
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
-<section class="profile event-profile">
+<section class="profile event-profile" itemscope itemtype="http://schema.org/MusicEvent">
   {% print object %}
   <h1>
     <span class="name">{{ object.name }}</span>
     <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
   </h1>
 
+  {{ object.participating_idols.all }}
+  {{ object.participating_groups.all }}
+
   <p class="header">Details</p>
   Nickname: {{ object.nickname }}<br />
-  Span: {{ object.start_date | date:"Y/m/d" }}
-   to {{ object.end_date | date:"Y/m/d" }}<br />
+  Span:
+  <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date:"Y/m/d" }}</time>
+   to <time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date:"Y/m/d" }}</time>
+
   Performance count:
   {{ object.schedule.count }}
 
+  {{ object.idols.all }}
+  {{ object.groups.all }}
+
   <p>Links:<br />
-  <a href="{{ object.info_link }}">HelloProject.com: {{ object.nickname }}</a>
+  <a href="{{ object.info_link }}" itemprop="url">HelloProject.com: {{ object.nickname }}</a>
   {% if object.secondary_info_link %}
-  <br /><a href="{{ object.secondary_info_link }}">HelloProject.com:
+  <br /><a href="{{ object.secondary_info_link }}" itemprop="url">HelloProject.com:
   {% for performance in object.schedule.all %} {{ performance.romanized_name }}
   {% endfor %}</a>{% endif %}</p>
 
-  <p class="header">Schedule</p>
-  <ul>{% for performance in object.schedule.all %}
-  <li>{{ performance.day | date:"Y/m/d" }}
-  ({{ performance.start_time | time:"H:i" }})
-  <a href="{% url "venue-detail" performance.venue.slug %}">{{ performance.venue }}</a>{% if performance.romanized_name %}<br />
-  {{ performance.romanized_name }}{% endif %}<br />
-  {% if performance.name %}{{ performance.name }}{% endif %}</li>
-  {% endfor %}</ul>
+  <h3 class="header">Schedule</h3>
+  <ul class="performance-list">
+  <ul>
+  {% for performance in object.schedule.all %}
+    <li itemscope itemtype="http://schema.org/subEvent">
+      <time datetime="{{ performance.day|date:'c' }}T{{ performance.start_time|time:'H:i.u' }}" itemprop="startDate">
+        <span class="ss-icon ss-calendar"></span> {{ performance.day|date:"Y/m/d" }}
+        <span class="ss-icon ss-clock"></span> {{ performance.start_time|time:"H:i" }}
+        <a href="{% url 'venue-detail' performance.venue.slug %}">{{ performance.venue }}</a>
+        {% if performance.romanized_name %}{{ performance.romanized_name }}{% endif %}
+        {% if performance.name %}{{ performance.name }}{% endif %}
+    </li>
+  {% endfor %}
+  </ul>
 
 </section>
 {% endblock content %}
