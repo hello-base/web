@@ -173,6 +173,8 @@ class Track(ParticipationMixin):
 
     def __unicode__(self):
         if self.is_alternate:
+            if self.is_cover:
+                return u'%s [%s, Cover]' % (self.romanized_name, self.romanized_name_alternate)
             return u'%s [%s]' % (self.romanized_name, self.romanized_name_alternate)
         if self.is_cover and not self.is_alternate:
             return u'%s [Cover]' % (self.romanized_name)
