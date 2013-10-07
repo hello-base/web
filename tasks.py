@@ -39,8 +39,8 @@ def collect(verbose=False, **kwargs):
     # Pre-compile all of our assets.
     out('Compiling Handlebars templates.')
     invoke.run('handlebars base/templates/partials/handlebars -f base/static/javascripts/application/templates.js', hide=hide)
-    out('Compiling stylesheets using production environment settings.')
-    invoke.run('compass compile -e production --force', hide=hide)
+    # out('Compiling stylesheets using production environment settings.')
+    # invoke.run('compass compile -e production --force', hide=hide)
 
     # Build and send it off.
     out('Using `buildstatic` to concatenate assets.')
