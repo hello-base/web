@@ -26,7 +26,7 @@
   <h3 class="header">Events</h3>
   <ul class="event-list">
   {% for event in object.performances.all %}
-    <li class="event" itemscope itemtype="http://schema.org/MusicEvent">
+    <li class="event" itemprop="event" itemscope itemtype="http://schema.org/MusicEvent">
       <time datetime="{{ event.day|date:'c' }}T{{ event.start_time|time:'H:i.u' }}" itemprop="startDate">
         <span class="ss-icon ss-calendar"></span> {{ event.day|date:"Y/m/d" }}
         <span class="ss-icon ss-clock"></span> {{ event.start_time|time:"H:i" }}
