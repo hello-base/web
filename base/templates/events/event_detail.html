@@ -10,7 +10,12 @@
   <h1>
     <span class="name">{{ object.name }}</span>
     <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+    <span class="nickname">{{ object.nickname }}</span>
   </h1>
+
+  <img src="{{ MEDIA_URL }}{{ object.logo }}">
+  <img src="{{ MEDIA_URL }}{{ object.poster }}">
+  <img src="{{ MEDIA_URL }}{{ object.stage }}">
 
   {{ object.participating_idols.all }}
   {{ object.participating_groups.all }}
