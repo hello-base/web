@@ -14,7 +14,7 @@
   <header class="section-masthead">
     <div class="container">
       <div class="release-name">
-        <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name|typogrify }}</span></h1>
+        <h1><span class="romanized-name">{{ object.romanized_name }}</span> <span class="name">{{ object.name }}</span></h1>
       </div>
       <div class="release-metadata">
         {% filter typogrify %}
