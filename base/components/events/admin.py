@@ -35,6 +35,7 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
+    readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = ['romanized_name', 'name']
 
     raw_id_fields = ('idols', 'groups',)
