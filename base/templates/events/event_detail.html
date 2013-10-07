@@ -35,19 +35,33 @@
   {% endfor %}</a>{% endif %}</p>
 
   <h3 class="header">Schedule</h3>
-  <ul class="performance-list">
-  <ul>
-  {% for performance in object.schedule.all %}
-    <li itemscope itemtype="http://schema.org/subEvent">
-      <time datetime="{{ performance.day|date:'c' }}T{{ performance.start_time|time:'H:i.u' }}" itemprop="startDate">
-        <span class="ss-icon ss-calendar"></span> {{ performance.day|date:"Y/m/d" }}
-        <span class="ss-icon ss-clock"></span> {{ performance.start_time|time:"H:i" }}
-        <a href="{% url 'venue-detail' performance.venue.slug %}">{{ performance.venue }}</a>
-        {% if performance.romanized_name %}{{ performance.romanized_name }}{% endif %}
-        {% if performance.name %}{{ performance.name }}{% endif %}
-    </li>
-  {% endfor %}
-  </ul>
+  <table class="performance-list">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>Venue</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for performance in object.schedule.all %}
+      <tr itemscope itemtype="http://schema.org/subEvent">
+        <time datetime="{{ performance.day|date:'c' }}T{{ performance.start_time|time:'H:i.u' }}" itemprop="startDate">
+          <td><span class="ss-icon ss-calendar"></span> {{ performance.day|date:"Y/m/d" }}</td>
+          <td><span class="ss-icon ss-clock"></span> {{ performance.start_time|time:"H:i" }}</td>
+        </time>
+        <td>
+          <a href="{% url 'venue-detail' performance.venue.slug %}">{{ performance.venue }}</a>
+          {% if performance.romanized_name %}{{ performance.romanized_name }}{% endif %}
+          {% if performance.name %}{{ performance.name }}{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr><td colspan="3">{{ object.schedule.all|length }} performances</td></tr>
+    </tfoot>
+  </table>
 
 </section>
 {% endblock content %}
