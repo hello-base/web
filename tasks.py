@@ -93,7 +93,7 @@ def heroku_capture(verbose=False, **kwargs):
     invoke.run('heroku pgbackups:capture', hide=hide)
 
 
-@invoke.task(name='migrate')
+@invoke.task(name='migrate', pre=['capture'])
 def heroku_migrate(app='', **kwargs):
     out = functools.partial(_out, 'heroku.migrate')
     invoke.run('heroku run python manage.py migrate %s' % app)
