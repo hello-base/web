@@ -128,8 +128,6 @@
               <a href="{{ event.get_absolute_url }}">{{ event }}</a>
               <div class="subtext">
                 <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ event.start_date|date }}</b></time>
-                {# Released <time datetime="{{ album.released|date:"c" }}">{{ album.released|date }}</time> ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
-
               </div>
               {% endwith %}
             </div>
