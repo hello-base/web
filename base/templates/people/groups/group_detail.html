@@ -24,10 +24,11 @@
           {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
         </h1>
       </div>
-      {% if object.note %}
-      <div class="profile-note">
+      {% if object.note or object.get_status_display == "Other" %}
+      <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
         <h4><span class="ss-icon ss-notepad"></span> Note</h4>
-        {{ object.note_processed|typogrify }}
+        {% if object.note %}{{ object.note_processed|typogrify }}{% endif %}
+        {% if object.get_status_display == "Other" %}<p>We apologize, but we are unsure of this group's status due to insufficient information.</p>{% endif %}
       </div>
       {% endif %}
     </div>
@@ -60,10 +61,6 @@
       </div>
     </div>
   </header>
-
-  {% if object.get_status_display == "Other" %}
-      <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
-  {% endif %}
 
   <div class="profile-subgroups-container container">
     <h2>Subgroups</h2>
