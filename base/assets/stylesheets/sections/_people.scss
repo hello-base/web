@@ -332,3 +332,38 @@ section.memberships {
 .release-participants {
   font-size: 13px;
 }
+
+// .profile-note
+// Styles that represent a admonition presented for any profile
+// object (usually groups and idols).
+.profile-note {
+  @include squish(1, 3);
+  font-size: 12px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  border: 1px solid #eee;
+  border-radius: 4px;
+  color: $brand-medGrey;
+
+  h4 {
+    @include position(relative);
+    @include span-columns(1, 8);
+    margin-top: 2px;
+
+    color: $brand-medGrey;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:before {
+      @include position(absolute);
+      content: '';
+      border-top: 1px solid $brand-paleGrey;
+    }
+    .ss-icon { @include position(relative, 1px 0 0 0); }
+  }
+  p {
+    @include prefix(1, 8);
+    margin-top: 0; margin-bottom: 0;
+  }
+}
