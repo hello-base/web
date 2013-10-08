@@ -25,6 +25,10 @@
     <aside class="profile-vitals">
       <div class="container">
         <ul class="vitals-list">
+          <li class="vital vital-span">
+            <span class="vital-label"><span class="ss-icon ss-calendar"></span> Run</span>&nbsp;
+            <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date }}</time>&ndash;<time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date }}</time>
+          </li>
           <li class="vital vital-nickname"><span class="vital-label"><span class="ss-icon ss-tag"></span> Nickname</span> {{ object.nickname }}</li>
           <li class="vital vital-performances"><span class="vital-label"><span class="ss-icon ss-mic"></span> Performances</span> {{ object.schedule.count }}</li>
         </ul>
@@ -42,8 +46,6 @@
   <p class="header">Details</p>
   Nickname: {{ object.nickname }}<br />
   Span:
-  <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date }}</time>
-   to <time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date }}</time>
 
   {{ object.idols.all }}
   {{ object.groups.all }}
