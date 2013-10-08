@@ -8,18 +8,25 @@
 {% endblock %}
 {% block content %}
 <section class="profile group-profile" itemscope itemtype="http://schema.org/MusicGroup">
-  <div class="profile-masthead"></div>
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
 
+  <div class="profile-masthead"></div>
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
         <div class="profile-photo"></div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
-          <span itemprop="name" class="romanized-name">{{ object.romanized_name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
           {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
         </h1>
       </div>
+    </div>
+  </header>
+
+
+  <div class="wat">
+    <div class="container">
       <aside class="profile-vitals">
         <ul class="vitals-list">
           <li class="vital vital-age"><span class="ss-icon ss-clock"></span> {{ object.age }} <small>({{ object.age_in_days|intcomma }} days)</small> <span class="vital-label">Age</span></li>

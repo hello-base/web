@@ -8,8 +8,9 @@
 {% endblock %}
 {% block content %}
 <section class="profile idol-profile" itemscope itemtype="http://schema.org/Person">
-  <div class="profile-masthead"></div>
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
 
+  <div class="profile-masthead"></div>
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
@@ -20,6 +21,12 @@
           {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>
+    </div>
+  </header>
+
+
+  <div class="wat">
+    <div class="container">
       <aside class="profile-vitals">
         <ul class="vitals-list">
           <li class="vital vital-age"><span class="ss-icon ss-exercise"></span> {% firstof object.age "Unknown" %} <span class="vital-label">Age</span></li>

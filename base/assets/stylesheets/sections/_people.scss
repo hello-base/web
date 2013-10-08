@@ -1,42 +1,9 @@
-.profile {
-  ul {
-    @include reset-box-model;
-    @include reset-list-style;
-  }
-}
+@import "components/profiles";
 
 // .profile-header (*)
 // Classes tasked with styling the header section of a profile page.
 .profile-header {
-  padding: 1rem 0;
-
-  background-color: #FFF;
   // box-shadow: 0 0 0 1px $brand-paleGrey;
-
-  .profile-photo {
-    @include span-columns(1, 9);
-    height: 65px;
-
-    background: #333;
-  }
-  .profile-metadata {
-    @include clearfix;
-    @include span-columns(9, 12);
-    padding: 1rem 0;
-  }
-  .profile-name {
-    @include span-columns(8 omega, 9);
-    margin-top: 0; margin-bottom: 0;
-    padding: 6px 0;
-
-    font-weight: 300;
-
-    .name { font-size: 18px; }
-    .romanized-name {
-      font-family: $font-family-secondary;
-      font-size: 30px;
-    }
-  }
 
   .formerly-known-as,
   .standing {
@@ -46,33 +13,33 @@
     color: $brand-medGrey;
     font-size: 13px;
   }
+}
 
-  // .vitals
-  // Set of classes that represent a list of "vital" information about
-  // an idol or group.
-  .profile-vitals { @include span-columns(3 omega, 12); }
-  .vitals-list {
-    @include clearfix;
-    padding: 1rem 0;
+// .vitals
+// Set of classes that represent a list of "vital" information about
+// an idol or group.
+.profile-vitals { @include span-columns(3 omega, 12); }
+.vitals-list {
+  @include clearfix;
+  padding: 1rem 0;
+}
+.vital {
+  padding-bottom: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  .ss-icon {
+    @include position(relative, 2px 0 0 0);
+    padding-right: 2px;
   }
-  .vital {
-    padding-bottom: 6px;
+}
+.vital-label {
+  display: block;
 
-    font-size: 14px;
-    font-weight: 600;
-
-    .ss-icon {
-      @include position(relative, 2px 0 0 0);
-      padding-right: 2px;
-    }
-  }
-  .vital-label {
-    display: block;
-
-    color: $brand-lightGrey;
-    font-family: $font-family-secondary;
-    font-size: 10px;
-  }
+  color: $brand-lightGrey;
+  font-family: $font-family-secondary;
+  font-size: 10px;
 }
 
 .latest-releases {
