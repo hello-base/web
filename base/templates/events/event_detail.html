@@ -6,11 +6,31 @@
 {% endblock %}
 {% block content %}
 <section class="profile event-profile" itemscope itemtype="http://schema.org/MusicEvent">
-  <h1>
-    <span class="name">{{ object.name }}</span>
-    <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
-    <span class="nickname">{{ object.nickname }}</span>
-  </h1>
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
+
+  <div class="profile-masthead"></div>
+  <header class="profile-header">
+    <div class="container">
+      <div class="profile-metadata">
+        {# <div class="profile-photo"></div> #}
+        <h1 class="profile-name">
+          <span class="name">{{ object.name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-content">
+    <aside class="profile-vitals">
+      <div class="container">
+        <ul class="vitals-list">
+          <li class="vital vital-nickname"><span class="vital-label"><span class="ss-icon ss-tag"></span> Nickname</span> {{ object.nickname }}</li>
+          <li class="vital vital-performances"><span class="vital-label"><span class="ss-icon ss-mic"></span> Performances</span> {{ object.schedule.count }}</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
 
   <img src="{{ MEDIA_URL }}{{ object.logo }}">
   <img src="{{ MEDIA_URL }}{{ object.poster }}">
@@ -24,9 +44,6 @@
   Span:
   <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date }}</time>
    to <time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date }}</time>
-
-  Performance count:
-  {{ object.schedule.count }}
 
   {{ object.idols.all }}
   {{ object.groups.all }}

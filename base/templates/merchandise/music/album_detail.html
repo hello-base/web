@@ -7,23 +7,45 @@
 {% block meta %}
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
-{% block body-class %}profile music-profile{% endblock %}
 {% block content %}
-<header class="section-masthead">
+<section class="profile music-profile" itemscope itemtype="http://schema.org/MusicAlbum">
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
+
+  <div class="profile-masthead"></div>
+  <header class="profile-header">
     <div class="container">
-        <div class="release-name">
-            <h1><span class="name">{{ object.name }}</span> <span class="romanized-name">{{ object.romanized_name|typogrify }}</span></h1>
-        </div>
-        <div class="release-metadata">
-            {% filter typogrify %}
-            {% if object.participants|length > 1 %}by{% endif %}
-            {% for participant in object.participants %}<a class="participant" href="{{ participant.get_absolute_url }}">{{ participant }}{% if object.number %}'s{% endif %}</a>{% include "utilities/commaify.html" %}{% endfor %}
-            {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
-            <div class="release-date">Released {{ object.released | date:"F j, Y" }} in {{ editions|length }} edition{{ editions|length|pluralize }}</div>
-            {% endfilter %}
-        </div>
+      <div class="profile-metadata">
+        <div class="profile-photo"></div>
+        <h1 class="profile-name">
+          <span class="name">{{ object.name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+        </h1>
+      </div>
     </div>
-</header>
+  </header>
+
+  <div class="profile-content">
+    <aside class="profile-vitals">
+      <div class="container">
+        <ul class="vitals-list">
+          {% filter typogrify %}
+          <li class="vital vital-by">
+            <span class="vital-label"><span class="ss-icon ss-users"></span>{% if object.participants|length > 1 %} by{% endif %}</span>&nbsp;
+            <div class="vital-participants">
+            {% for participant in object.participants %}
+              <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup"><span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}</a>{% include "utilities/commaify.html" %}
+            {% endfor %}
+            {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
+            </div>
+          </li>
+          <li class="vital vital-released"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
+          <li class="vital vital-editions"><span class="vital-label"><span class="ss-icon ss-disc"></span> Editions</span> {{ editions|length }}</li>
+          {% endfilter %}
+        </ul>
+      </div>
+    </aside>
+  </div>
+
 <div class="container">
     <div class="editions">
         <h2 class="section-title">Editions</h2>
@@ -108,4 +130,6 @@
         </ul>
     </div>
 </div>
+
+</section>
 {% endblock content %}

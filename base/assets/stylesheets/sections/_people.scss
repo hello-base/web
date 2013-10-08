@@ -15,33 +15,6 @@
   }
 }
 
-// .vitals
-// Set of classes that represent a list of "vital" information about
-// an idol or group.
-.profile-vitals { @include span-columns(3 omega, 12); }
-.vitals-list {
-  @include clearfix;
-  padding: 1rem 0;
-}
-.vital {
-  padding-bottom: 6px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  .ss-icon {
-    @include position(relative, 2px 0 0 0);
-    padding-right: 2px;
-  }
-}
-.vital-label {
-  display: block;
-
-  color: $brand-lightGrey;
-  font-family: $font-family-secondary;
-  font-size: 10px;
-}
-
 .latest-releases {
   @include clearfix;
   @include span-columns(9, 12);
@@ -55,9 +28,6 @@
     padding-right: 2px;
   }
 }
-
-.ss-icon.ss-anatomicalheart { color: #ED3C51; }
-
 
 // .membership(s)
 section.memberships {
@@ -74,7 +44,7 @@ section.memberships {
 .name {
   display: block;
   color: $brand-lightGrey;
-  font-size: 1rem;
+  font-size: 12px;
 }
 
 .idol-profile {

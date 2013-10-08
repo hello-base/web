@@ -24,23 +24,29 @@
     </div>
   </header>
 
-  <header class="section-masthead">
-    <div class="container">
-      <div class="release-metadata">
-        {% filter typogrify %}
-        {% if object.participants|length > 1 %}by{% endif %}
-        {% for participant in object.participants %}
-          <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
-            <span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}
-          </a>
-          {% include "utilities/commaify.html" %}
-        {% endfor %}
-        {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
-        <div class="release-date">Released <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time> in {{ editions|length }} edition{{ editions|length|pluralize }}</div>
-        {% endfilter %}
+  <div class="profile-content">
+    <aside class="profile-vitals">
+      <div class="container">
+        <ul class="vitals-list">
+          {% filter typogrify %}
+          <li class="vital">
+            <span class="vital-label"><span class="ss-icon ss-users"></span>{% if object.participants|length > 1 %} by{% endif %}</span>&nbsp;
+            {% for participant in object.participants %}
+              <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
+                <span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}
+              </a>
+              {% include "utilities/commaify.html" %}
+            {% endfor %}
+            {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
+          </li>
+          <li class="vital"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
+          <li class="vital"><span class="vital-label"><span class="ss-icon ss-disc"></span> Editions</span> {{ editions|length }}</li>
+          {% endfilter %}
+        </ul>
       </div>
-    </div>
-  </header>
+    </aside>
+  </div>
+
   <div class="container">
     <div class="editions">
       <h2 class="section-title">Editions</h2>

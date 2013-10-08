@@ -25,15 +25,16 @@
   </header>
 
   <div class="profile-content">
-    <div class="container">
-      <aside class="profile-vitals">
+    <aside class="profile-vitals">
+      <div class="container">
         <ul class="vitals-list">
-          <li class="vital vital-age"><span class="ss-icon ss-clock"></span> {{ object.age }} <small>({{ object.age_in_days|intcomma }} days)</small> <span class="vital-label">Age</span></li>
-          <li class="vital vital-anniversary"><span class="ss-icon ss-calendar"></span> <time datetime="{{ object.started|date:"c" }}" itemprop="foundingDate">{{ object.started }}</time> <span class="vital-label">Anniversary</span></li>
-          {% if object.ended %}<li class="vital vital-disband"><span class="ss-icon ss-ban"></span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time> <span class="vital-label">Disbanded</span></li>{% endif %}
-          <li class="vital vital-actives"><span class="ss-icon ss-users"></span> {{ memberships.active_count }} <span class="vital-label">Active Members</span></li>
+          <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.age }} ({{ object.age_in_days|intcomma }} days)</li>
+          <li class="vital vital-anniversary"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Anniversary</span> <time datetime="{{ object.started|date:"c" }}" itemprop="foundingDate">{{ object.started }}</time></li>
+          {% if object.ended %}<li class="vital vital-disband"><span class="vital-label"><span class="ss-icon ss-ban"></span> Disbanded</span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time></li>{% endif %}
+          <li class="vital vital-actives"><span class="vital-label"><span class="ss-icon ss-users"></span> Active Members</span> {{ memberships.active_count }}</li>
         </ul>
-      </aside>
+      </div>
+    </aside>
       <div class="latest-releases">
         <div class="release">
         {% with object.latest_single as release %}
