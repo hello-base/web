@@ -26,6 +26,9 @@ class Event(ContributorMixin, ParticipationMixin):
     poster = models.ImageField(blank=True, null=True, upload_to='events/events/')
     stage = models.ImageField(blank=True, null=True, upload_to='events/events/')
 
+    class Meta:
+        get_latest_by = 'start_date'
+
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
@@ -49,6 +52,7 @@ class Performance(ContributorMixin):
     # Add 'set list' field with convoluted ordering and everything...
 
     class Meta:
+        get_latest_by = 'day'
         ordering = ('day', 'start_time')
 
     def __unicode__(self):
