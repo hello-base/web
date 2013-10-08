@@ -96,6 +96,7 @@ class Base(Configuration):
 
     # General Configuration.
     # ------------------------------------------------------------------
+    DATE_FORMAT = 'Y/m/d'
     LANGUAGE_CODE = 'en-us'
     SITE_ID = 1
     TIME_ZONE = 'UTC'

@@ -7,7 +7,7 @@
     <span class="name">{{ release.name }}</span>
   </div>
   <div class="release-data release-date">
-    <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date:"Y/m/d" }}</b></time>
+    <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
     <time datetime="{{ release.released|date:"c" }}/{% now "c" %}">({{ release.released|timesince }} ago)</time>
   </div>
   <div class="release-data release-editions">

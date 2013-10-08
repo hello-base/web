@@ -64,7 +64,7 @@
         <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
         <span class="ss-icon ss-calendar"></span>
         <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-          {{ subgroup.started|date:"Y/m/d" }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date:"Y/m/d" }}{% else %}Present{% endif %}
+          {{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}
         </time>
         <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
       {% endfor %}
@@ -118,8 +118,8 @@
                 <ul class="membership-list">
                     <li class="membership-header">
                         <div class="membership-graph">
-                            <span class="graph-started">{{ object.started|date:"Y/m/d" }}</span>
-                            <span class="graph-ended">{% if object.ended %}{{ object.ended|date:"Y/m/d" }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
+                            <span class="graph-started">{{ object.started|date }}</span>
+                            <span class="graph-ended">{% if object.ended %}{{ object.ended|date }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
                         </div>
                     </li>
                 {% for member in memberships.leaders %}
@@ -183,7 +183,7 @@
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
                         <div class="release-date">
-                            <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
+                            <time datetime="{{ release.released|date:"c" }}">{{ release.released|date }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
                         </div>
                     </div>
                 </li>
@@ -204,7 +204,7 @@
                         {{ release.number }}
                         <span class="name">{{ release.name }}</span>
                         <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                        <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+                        <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
                     </div>
                 </li>
             {% endfor %}

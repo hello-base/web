@@ -22,8 +22,8 @@
   <p class="header">Details</p>
   Nickname: {{ object.nickname }}<br />
   Span:
-  <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date:"Y/m/d" }}</time>
-   to <time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date:"Y/m/d" }}</time>
+  <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date }}</time>
+   to <time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date }}</time>
 
   Performance count:
   {{ object.schedule.count }}
@@ -51,7 +51,7 @@
     {% for performance in object.schedule.all %}
       <tr itemprop="subEvent" itemscope itemtype="http://schema.org/subEvent">
         <time datetime="{{ performance.day|date:'c' }}T{{ performance.start_time|time:'H:i.u' }}" itemprop="startDate">
-          <td><span class="ss-icon ss-calendar"></span> {{ performance.day|date:"Y/m/d" }}</td>
+          <td><span class="ss-icon ss-calendar"></span> {{ performance.day|date }}</td>
           <td><span class="ss-icon ss-clock"></span> {{ performance.start_time|time:"H:i" }}</td>
         </time>
         <td>

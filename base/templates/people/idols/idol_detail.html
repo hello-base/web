@@ -70,7 +70,7 @@
               <a href="{{ release.get_absolute_url }}">{{ release }}</a>
               <div class="subtext">
                 <div class="release-data release-date">
-                  <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date:"Y/m/d" }}</b></time>
+                  <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
                   <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
                 </div>
                 <div class="release-data release-editions">
@@ -91,7 +91,7 @@
               <a href="{{ release.get_absolute_url }}">{{ release }}</a>
               <div class="subtext">
                 <div class="release-data release-date">
-                  <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date:"Y/m/d" }}</b></time>
+                  <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
                   <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
                 </div>
                 <div class="release-data release-editions">
@@ -111,7 +111,9 @@
               <div class="latest-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
               <a href="{{ event.get_absolute_url }}">{{ event }}</a>
               <div class="subtext">
-                {# Released <time datetime="{{ album.released|date:"c" }}">{{ album.released|date:"Y/m/d" }}</time> ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
+                {{ event.start_date|date }}
+                {# Released <time datetime="{{ album.released|date:"c" }}">{{ album.released|date }}</time> ({{ album.released|timesince }} ago) in {{ album.editions.count }} edition{{ album.editions.count|pluralize }} #}
+
               </div>
               {% endwith %}
             </div>
@@ -209,7 +211,7 @@
             <span class="name">{{ release.name }}</span>
             <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
             <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
-            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
           </div><!-- .release-meta -->
         </li><!-- .release -->
       {% endfor %}
@@ -227,7 +229,7 @@
             <span class="name">{{ release.name }}</span>
             <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
             <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
-            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
           </div><!-- .release-meta -->
         </li><!-- .release -->
       {% endfor %}
