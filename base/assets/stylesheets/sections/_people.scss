@@ -8,7 +8,7 @@
 // .profile-header (*)
 // Classes tasked with styling the header section of a profile page.
 .profile-header {
-  padding: 12px 0;
+  padding: 1rem 0;
 
   background-color: #FFF;
   // box-shadow: 0 0 0 1px $brand-paleGrey;
@@ -22,7 +22,7 @@
   .profile-metadata {
     @include clearfix;
     @include span-columns(9, 12);
-    padding: 12px 0;
+    padding: 1rem 0;
   }
   .profile-name {
     @include span-columns(8 omega, 9);
@@ -53,7 +53,7 @@
   .profile-vitals { @include span-columns(3 omega, 12); }
   .vitals-list {
     @include clearfix;
-    padding: 12px 0;
+    padding: 1rem 0;
   }
   .vital {
     padding-bottom: 6px;
@@ -78,7 +78,7 @@
 .latest-releases {
   @include clearfix;
   @include span-columns(9, 12);
-  padding: 12px 0;
+  padding: 1rem 0;
 
   .pill { margin-bottom: 6px; }
   .release-metadata { @include span-columns(4 omega, 5); }
@@ -107,7 +107,7 @@ section.memberships {
 .name {
   display: block;
   color: $brand-lightGrey;
-  font-size: 12px;
+  font-size: 1rem;
 }
 
 .idol-profile {
@@ -135,7 +135,7 @@ section.memberships {
   }
 
   .membership {
-    padding-bottom: 12px;
+    padding-bottom: 1rem;
   }
 
   .membership-primary {
@@ -151,7 +151,7 @@ section.memberships {
 
 .tenure {
   color: $brand-lightGrey;
-  font-size: 12px;
+  font-size: 1rem;
 }
 
 
@@ -199,7 +199,7 @@ section.participations {
 
   //   .latest {
   //       color: #8C989C;
-  //       font-size: 12px;
+  //       font-size: 1rem;
   //   }
   //   .latest a {
   //       display: block;
@@ -311,12 +311,12 @@ section.participations {
 
     &.full-tenure {
       border-top: 1px solid rgba($brand-primary-accent, 0.25);
-      height: 12px;
+      height: 1rem;
     }
     &.leadership-tenure {
       background-color: $brand-primary-accent;
       top: -6px;
-      height: 12px;
+      height: 1rem;
     }
   }
   .leadership-tenure-count {
@@ -361,7 +361,7 @@ section.participations {
   .membership {
     @include span-columns(5, 10);
     @include nth-omega(2n);
-    padding-bottom: 12px;
+    padding-bottom: 1rem;
   }
 }
 
@@ -410,7 +410,7 @@ section.participations {
 
 .release-data {
   color: $brand-medGrey;
-  font-size: 12px;
+  font-size: 1rem;
 }
 
 .release-participants {
