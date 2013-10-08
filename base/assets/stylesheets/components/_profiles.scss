@@ -1,4 +1,6 @@
 .profile {
+  background-color: #F9FAFC;
+
   ul {
     @include reset-box-model;
     @include reset-list-style;
@@ -30,8 +32,15 @@
     font-weight: 300;
   }
   .romanized-name {
+    color: #454D57;
     font-family: $font-family-primary;
     font-size: 2.369rem;
-    font-weight: 300;
+    font-weight: 600;
+    letter-spacing: -1px;
+
+    b { color: $headings-font-color; }
   }
 }
+
+// .profile-content (*)
+.profile-content { }

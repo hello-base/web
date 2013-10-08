@@ -123,98 +123,73 @@ section.memberships {
 
 
 
-
-.participation {
-  @include span-columns(3, 12);
-  @include nth-omega(4n);
-}
-
-.participation {
-  border: 1px solid $brand-paleGrey;
-  border-radius: 4px;
-  padding: 24px;
-}
-
-section.participations {
-  padding: 24px 0 48px;
-}
-
-.participation-list {
-  @include clearfix;
-  @include reset-box-model;
-  @include reset-list-style;
-
-  // .ss-icon, .count strong { font-size: 36px; }
-  // .count {
-  //   position: relative; top: -4px;
-
-  //   font-size: 24px;
-  //   font-weight: 300;
-  //   letter-spacing: -1px; }
-
-  //   h2 {
-  //       margin-top: 2px;
-
-  //       font-size: 11px;
-  //       font-weight: 600;
-  //       font-family: $font-family-secondary;
-  //       text-transform: uppercase;
-  //   }
-
-  //   .latest-image {
-  //   }
-
-  //   .latest {
-  //       color: #8C989C;
-  //       font-size: 1rem;
-  //   }
-  //   .latest a {
-  //       display: block;
-  //       font-size: 13px;
-  //       font-weight: 700;
-  //   }
-
-}
-
+// .participation (*)
+// Set of classes that style "card-like" statistics. E.g. depicting
+// singles, albums, groups, and events that an idol was a part of.
+.participations { padding: 24px 0; }
+.participation-list { display: flex; }
 .participation {
   @include position(relative);
-  min-height: 214px;
+  flex: 1;
+  margin-right: 2rem;
+  height: 214px;
 
-  a {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .statistic {
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid $brand-paleGrey;
-    line-height: 1;
-    height: 96px;
-  }
-  .count {
-    font-size: 48px;
-    font-weight: bold;
-  }
+  background-color: #FFF;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 rgba(#000, 0.1), inset 0 0 0 1px rgba(#000, 0.2);
+
+  &:last-child { margin-right: 0; }
   .ss-icon {
-    @include position(absolute, 32px 0 0 0);
-    padding-left: 1px;
+    @include position(relative, 1px 0 0 0);
+    padding-right: 2px;
     color: $brand-lightGrey;
-  }
-  .type {
-    @include position(relative, -4px 0 0 0);
-    color: $brand-lightGrey;
-    font-family: $font-family-secondary;
-    font-size: 14px;
-    text-transform: uppercase;
   }
 }
+.statistic {
+  padding: 1rem;
+  line-height: 1;
+  text-align: center;
 
-// .participation .latest-heading { @include span-columns(1, 4); }
-// .participation .latest { @include span-columns(3 omega, 4); }
+  .count {
+    font-size: 58px;
+    font-weight: bold;
+  }
+}
+.participation-type {
+  margin: 0;
+  padding-bottom: 0.75rem;
 
+  color: $brand-medGrey;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.latest-heading {
+  @include position(relative, 0 0 0 0px);
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+  text-align: center;
 
+  &:before {
+    @include position(absolute, 10px 0 0 0px);
+    width: 100%;
+    z-index: 0;
+
+    border-top: 1px solid rgba(#000, 0.05);
+    content: '';
+  }
+  .pill {
+    @include position(relative);
+    z-index: 1;
+    box-shadow: none;
+  }
+}
+.participation-latest {
+  padding: 0 1rem 1rem;
+
+  a { font-weight: 600; }
+  .subtext { padding-top: 3px; }
+}
 
 
 // Groups
@@ -377,7 +352,7 @@ section.participations {
 
 .release-data {
   color: $brand-medGrey;
-  font-size: 1rem;
+  font-size: 12px;
 }
 
 .release-participants {
