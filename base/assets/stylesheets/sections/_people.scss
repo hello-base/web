@@ -127,12 +127,16 @@ section.memberships {
 // Set of classes that style "card-like" statistics. E.g. depicting
 // singles, albums, groups, and events that an idol was a part of.
 .participations { padding: 24px 0; }
-.participation-list { display: flex; }
+.participation-list {
+  align-content: stretch;
+  display: flex;
+}
 .participation {
   @include position(relative);
   flex: 1;
   margin-right: 2rem;
-  height: 214px;
+  min-height: 214px;
+  min-width: 214px;
 
   background-color: #FFF;
   border-radius: 4px;
