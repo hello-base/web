@@ -32,6 +32,11 @@ class Base(Merchandise):
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
+    # Denormalized Fields.
+    # Note: These fields should be 1) too frequently accessed to make
+    # sense as methods and 2) infrequently updated.
+    art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
+
     class Meta:
         abstract = True
         get_latest_by = 'released'
