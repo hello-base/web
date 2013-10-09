@@ -198,6 +198,7 @@
 
 <section class="releases">
   <div class="container">
+  {% if singles %}
     <div class="releases-singles">
       <h2 class="section-title">Singles {{ singles|length }}</h2>
       <ul class="release-list">
@@ -207,15 +208,23 @@
             <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
           </div><!-- .release-image -->
           <div class="release-meta">
-            <span class="name">{{ release.name }}</span>
             <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-            <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
-            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+            <span class="name">{{ release.name }}</span>
+            {% contextual_participants release=release idol=object %}
+            <div class="release-data release-date">
+              <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
+              <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
+            </div>
+            <div class="release-data release-editions">
+              <span class="ss-icon ss-disc"></span> <b>{{ release.editions.count }}</b> edition{{ release.editions.count|pluralize }}
+            </div>
           </div><!-- .release-meta -->
         </li><!-- .release -->
       {% endfor %}
       </ul><!-- .release-list -->
     </div><!-- .releases-singles -->
+    {% endif %}
+    {% if albums %}
     <div class="releases-albums">
       <h2 class="section-title">Albums {{ albums|length }}</h2>
       <ul class="release-list">
@@ -225,15 +234,22 @@
             <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
           </div><!-- .release-image -->
           <div class="release-meta">
-            <span class="name">{{ release.name }}</span>
             <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-            <span class="release-participants">{% contextual_participants release=release idol=object %}</span>
-            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
+            <span class="name">{{ release.name }}</span>
+            {% contextual_participants release=release idol=object %}
+            <div class="release-data release-date">
+              <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
+              <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
+            </div>
+            <div class="release-data release-editions">
+              <span class="ss-icon ss-disc"></span> <b>{{ release.editions.count }}</b> edition{{ release.editions.count|pluralize }}
+            </div>
           </div><!-- .release-meta -->
         </li><!-- .release -->
       {% endfor %}
       </ul><!-- .release-list -->
     </div><!-- .releases-albums -->
+  {% endif %}
   </div><!-- .container -->
 </section><!-- .releases -->
 
