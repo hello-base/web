@@ -300,19 +300,19 @@ section.memberships {
   @include clearfix;
   @include span-columns(6, 12);
   @include nth-omega(2n);
-  // min-height: 88px;
+  margin-bottom: 1rem;
 
+  &:nth-child(2n+1) { clear: both; }
   .romanized-name {
-    font-family: $font-family-secondary;
-    line-height: $headings-line-height;
+    margin-top: 1px;
     font-size: 14px;
+    font-weight: bold;
   }
   .name {
     display: block;
     color: $brand-lightGrey;
     font-size: 11px;
   }
-
 }
 .release-image {
   @include span-columns(1, 6);
@@ -325,16 +325,28 @@ section.memberships {
 }
 .release-meta {
   @include span-columns(5 omega, 6);
-  padding-top: 6px;
 }
 
+.release-date { padding-top: 3px; }
 .release-data {
   color: $brand-medGrey;
   font-size: 12px;
+
+  .ss-icon {
+    @include position(relative, 1px 0 0 0);
+    padding-right: 2px;
+  }
 }
 
 .release-participants {
-  font-size: 13px;
+  @include position(relative);
+  padding: 2px 0 0 18px;
+  font-size: 12px;
+
+  &:before {
+    @include position(absolute, 0 0 0 0px);
+    content: '\2514';
+  }
 }
 
 // .profile-note
@@ -357,7 +369,7 @@ section.memberships {
 
     color: $brand-medGrey;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
 
     &:before {
       @include position(absolute);
