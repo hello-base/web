@@ -171,11 +171,19 @@ class Group(TimeStampedModel):
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
+    def is_active(self):
+        if self.ended is None or self.ended >= date.today():
+            return True
+        return False
+
     def is_gaijin(self):
         return self.given_name in self.GAIJINS
 
     def latest_album(self):
         return self.albums.latest()
+
+    def latest_event(self):
+        return self.events.latest()
 
     def latest_single(self):
         return self.singles.latest()
