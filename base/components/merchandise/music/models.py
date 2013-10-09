@@ -45,11 +45,9 @@ class Base(Merchandise):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
-        if self.editions.exists():
-            if self.regular_edition.art:
-                self.art = self.regular_edition.art
-            if self.regular_edition.released:
-                self.released = self.regular_edition.released
+        if self.editions.exists() and self.regular_edition:
+            self.art = self.regular_edition.art
+            self.released = self.regular_edition.released
         super(Base, self).save(*args, **kwargs)
 
     @staticmethod
