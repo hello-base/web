@@ -57,7 +57,8 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
-            'fields': ('released', 'art')}),
+            'fields': ('released', 'art')
+        }),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
@@ -110,7 +111,7 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
-            'fields': ('released', 'art')}),
+            'fields': ('released', 'art'),
         }),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
