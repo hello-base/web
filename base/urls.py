@@ -10,9 +10,10 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from components.sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
-    SingleSitemap)
-from components.views import AutocompleteView, PlainTextView, SiteView
+from components.sitemaps import (AlbumSitemap, IdolSitemap,
+    GroupSitemap, SingleSitemap)
+from components.views import (AutocompleteView, PlainTextView,
+    SiteView, XMLView)
 
 
 # Administration system auto-discovery.
@@ -62,6 +63,7 @@ urlpatterns = patterns('',
     # Sitemaps, Favicons, Robots, and Humans.
     url(r'^favicon\.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
+    url(r'^opensearch.xml$', name='opensearch', view=XMLView.as_view(template_name='opensearch.xml'))
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
