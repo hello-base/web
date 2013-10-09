@@ -264,7 +264,6 @@
           <div class="release-meta">
             <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
             <span class="name">{{ release.name }}</span>
-            {% contextual_participants release=release idol=object %}
             <div class="release-data release-date">
               <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
               <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
@@ -290,7 +289,6 @@
           <div class="release-meta">
             <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
             <span class="name">{{ release.name }}</span>
-            {% contextual_participants release=release idol=object %}
             <div class="release-data release-date">
               <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
               <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
