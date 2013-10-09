@@ -45,7 +45,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
     list_select_related = True
     ordering = ('-modified',)
     prepopulated_fields = {'slug': ['romanized_name']}
-    readonly_fields = ['participating_groups', 'participating_idols', 'released']
+    readonly_fields = ['participating_groups', 'participating_idols', 'released', 'art']
     search_fields = ['romanized_name', 'name', 'idols__name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__name', 'groups__romanized_name']
 
     raw_id_fields = ('idols', 'groups',)
@@ -56,8 +56,8 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
-            'description': 'This is derived from this release\'s regular edition. Please change that date to change this one.',
-            'fields': ('released',)}),
+            'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
+            'fields': ('released', 'art')}),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
@@ -109,8 +109,8 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
-            'description': 'This is derived from this release\'s regular edition. Please change that date to change this one.',
-            'fields': ('released',)
+            'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
+            'fields': ('released', 'art')}),
         }),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
