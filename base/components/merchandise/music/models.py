@@ -11,11 +11,10 @@ from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
 
+from components.merchandise.models import Merchandise
 from components.people.models import ParticipationMixin
 
-from ..models import Merchandise
-# from .managers import (AlbumManager, EditionManager, SingleManager,
-#     TrackOrderManager, VideoTrackOrderManager)
+from .managers import EditionManager
 
 
 class Label(models.Model):
@@ -45,6 +44,14 @@ class Base(Merchandise):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
+    def save(self, *args, **kwargs):
+        if self.editions.exists():
+            if self.regular_edition.art:
+                self.art = self.regular_edition.art
+            if self.regular_edition.released:
+                self.released = self.regular_edition.released
+        super(Base, self).save(*args, **kwargs)
+
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
@@ -56,6 +63,10 @@ class Base(Merchandise):
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
+
+    @cached_property
+    def regular_edition(self):
+        return self.editions.regular_edition(release=self)
 
 
 class Album(Base):
@@ -85,6 +96,8 @@ class Edition(models.Model):
         (12, 'digital', 'Digital'),
         (99, 'other', 'Other'),
     )
+    # Model Managers.
+    objects = EditionManager()
 
     album = models.ForeignKey(Album, blank=True, null=True, related_name='editions')
     single = models.ForeignKey(Single, blank=True, null=True, related_name='editions')
@@ -128,12 +141,7 @@ class Edition(models.Model):
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
-        try:
-            kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
-            edition = self._default_manager.order_by('released').filter(**kwargs)[0]
-        except IndexError:
-            edition = self._default_manager.none()
-        return edition
+        return self._default_manager.regular_edition(edition=self)
 
     def _render_release_date(self):
         return self._get_regular_edition().released
