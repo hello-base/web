@@ -77,9 +77,11 @@
   .search-container {
     @include clearfix;
     padding: 4px;
+
+    background-color: #FEFEFE;
+    border: 1px solid #EBEFF5;
     border-radius: 4px;
-    border: 1px solid $brand-paleGrey;
-    background-color: #FFF;
+    border-bottom-color: #DFE3E8;
 
     input {
       @include span-columns(7, 8);
