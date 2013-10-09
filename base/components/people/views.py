@@ -41,6 +41,7 @@ class GroupDetailView(DetailView):
         }
 
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        context['events'] = self.object.events.all()
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
         return context
 
