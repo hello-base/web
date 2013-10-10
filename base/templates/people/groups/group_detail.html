@@ -255,7 +255,10 @@
   {% if singles %}
     <div class="releases-singles">
       <h2 class="section-title">
-        <span class="title"><span class="ss-icon ss-eighthnote"></span> <b class="count">{{ singles|length }}</b> Singles</span>
+        <span class="title">
+          <span class="ss-icon ss-eighthnote"></span> Singles
+          <b class="count">{{ singles|length }}</b>
+        </span>
       </h2>
       <ul class="release-list">
       {% for release in singles %}
@@ -267,7 +270,10 @@
     {% if albums %}
     <div class="releases-albums">
       <h2 class="section-title">
-        <span class="title"><span class="ss-icon ss-music"></span> <b class="count">{{ albums|length }}</b> Albums</span>
+        <span class="title">
+          <span class="ss-icon ss-music"></span> Albums
+          <b class="count">{{ albums|length }}</b>
+        </span>
       </h2>
       <ul class="release-list">
       {% for release in albums %}
