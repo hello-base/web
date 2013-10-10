@@ -32,16 +32,14 @@
 
 // .membership(s)
 // ---------------------------------------------------------------------
-section.memberships {
-  // box-shadow: inset 0 -1px 0 $brand-paleGrey;
-  padding: 24px 0 36px;
-}
+.profile-memberships { padding-bottom: 2rem; }
 .membership { @include clearfix(); }
 
 .romanized-name {
   display: block;
-  line-height: $headings-line-height;
   font-size: 16px;
+  font-weight: bold;
+  line-height: $headings-line-height;
 }
 .name {
   display: block;
@@ -50,27 +48,42 @@ section.memberships {
 }
 
 .idol-profile {
+  .group-image {
+    background-color: #B6BEC7;
+  }
+
+  .membership {
+    @include clearfix;
+
+    .ss-icon { @include position(relative, 1px 0 0 0); }
+  }
+
   .membership-primary .group-image {
-    @include span-columns(4, 12);
     height: 174px;
   }
+
+  .membership-primary {
+    @include span-columns(5, 12);
+    @include suffix(1);
+  }
+  .membership-secondary {
+    @include span-columns(7 omega, 12);
+  }
   .membership-list .group-image {
-    @include span-columns(1, 6);
+    @include span-columns(1, 7);
     height: 37px;
   }
 
-  .membership-primary,
-  .membership-secondary {
-    @include clearfix;
+  .membership-section-title {
+    // @include span-columns(2 omega, 12);
   }
-  .membership-section-title { @include span-columns(2 omega, 12); }
   .membership-list {
     @include clearfix;
-    @include span-columns(10, 12);
+    // @include span-columns(10, 12);
   }
   .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
+    // @include span-columns(5, 10);
+    // @include nth-omega(2n);
   }
 
   .membership {
@@ -85,21 +98,24 @@ section.memberships {
     text-align: right;
   }
 
-  .membership-primary .group-metadata { @include span-columns(6, 12); }
+  .membership-primary .group-metadata { @include span-columns(7, 12); }
 }
 
-.tenure {
-  color: $brand-lightGrey;
-  font-size: 1rem;
+.membership-data {
+  display: block;
+  color: #a0abb6;
+  font-size: 12px;
 }
-
 
 
 // .participation (*)
 // Set of classes that style "card-like" statistics. E.g. depicting
 // singles, albums, groups, and events that an idol was a part of.
 // ---------------------------------------------------------------------
-.profile-participations { padding: 24px 0; }
+.profile-participations {
+  padding: 1.5rem 0 2rem;
+  background-color: #DFE3E8;
+}
 .participation-cards {
   align-content: stretch;
   display: flex;
@@ -434,7 +450,6 @@ section.memberships {
     }
   }
 }
-
 .release-header { padding: 0.75rem; }
 .release-subtext {
   @include position(relative);
@@ -497,4 +512,14 @@ section.memberships {
     @include prefix(1, 8);
     margin-top: 0; margin-bottom: 0;
   }
+}
+
+// .
+// ---------------------------------------------------------------------
+.profile-memberships {
+  // padding: 1rem;
+
+  // background-color: #FFF;
+  // border-radius: 4px;
+  // box-shadow: 0 1px 1px rgba(#000, 0.15);
 }

@@ -138,62 +138,80 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="profile-memberships">
-      {% with object.primary_membership as primary %}
+    <div class="profile-memberships">
+      <div class="container">
+      {% with object.primary_membership as membership %}
         <div class="membership-primary">
-
+          <div class="membership">
+            <h2 class="section-title"><span class="ss-icon ss-star"></span> Primary Group</h2>
+            <div class="group-image">
+            </div>
+            <div class="membership-meta">
+              <div class="memberhsip-header">
+                <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
+                <span class="name">{{ membership.group.name }}</span>
+              </div>
+              <div class="membership-subtext">
+                <span class="membership-data tenure">
+                  <span class="ss-icon ss-calendar"></span>
+                  <time datetime="{{ membership.started|date:"c" }}/{% if membership.ended %}{{ membership.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    <b>{{ membership.started|date }}&ndash;{% if membership.ended %}{{ membership.ended|date }}{% else %}Present{% endif %}</b>
+                  </time>
+                  <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span>
+                </span>
+                {% if membership.is_leader %}
+                <span class="membership-data tenure leadership-tenure">
+                  <span class="ss-icon ss-checkcalendar"></span>
+                  <time datetime="{{ membership.leadership_started|date:"c" }}/{% if membership.leadership_ended %}{{ membership.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    Leader from <b>{{ membership.leadership_started|date }}&ndash;{% if membership.leadership_ended %}{{ membership.leadership_ended|date }}{% else %}Present{% endif %}</b>
+                  </time>
+                  <span class="tenure in-days">({{ membership.leadership_tenure_in_days }} days)</span>
+                </span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
         </div>
       {% endwith %}
+      {% if memberships %}
+        <div class="membership-secondary">
+          <h2 class="section-title"><span class="ss-icon ss-star"></span> Secondary Groups <span class="count">{{ memberships|length }}</span></h2>
+          <ul class="membership-list">
+          {% for membership in memberships %}
+            <li class="membership">
+              <div class="group-image">
+              </div>
+              <div class="membership-meta">
+                <div class="membership-header">
+                  <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
+                  <span class="name">{{ membership.group.name }}</span>
+                </div>
+                <div class="membership-subtext">
+                  <span class="membership-data tenure">
+                    <span class="ss-icon ss-calendar"></span>
+                    <time datetime="{{ membership.started|date:"c" }}/{% if membership.ended %}{{ membership.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                      <b>{{ membership.started|date }}&ndash;{% if membership.ended %}{{ membership.ended|date }}{% else %}Present{% endif %}</b>
+                    </time>
+                    <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span>
+                  </span>
+                  {% if membership.is_leader %}
+                  <span class="membership-data tenure leadership-tenure">
+                    <span class="ss-icon ss-checkcalendar"></span>
+                    <time datetime="{{ membership.leadership_started|date:"c" }}/{% if membership.leadership_ended %}{{ membership.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                      Leader from <b>{{ membership.leadership_started|date }}&ndash;{% if membership.leadership_ended %}{{ membership.leadership_ended|date }}{% else %}Present{% endif %}</b>
+                    </time>
+                    <span class="tenure in-days">({{ membership.leadership_tenure_in_days }} days)</span>
+                  </span>
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
       </div>
     </div>
-
-<section class="memberships">
-  <div class="container">
-    {% with object.primary_membership as primary %}
-    <div class="membership-primary">
-      <div class="membership-section-title"><span class="pill">Primary Focus</span></div>
-      <div class="group-image">
-        <div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>
-      </div><!-- .group-image -->
-      <div class="group-metadata">
-        <span class="name">{{ primary.group.name }}</span>
-        <a href="{{ primary.group.get_absolute_url }}"><span class="romanized-name">{{ primary.group }}</span></a>
-        <span class="tenure">
-          <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-            {{ primary.started }}&ndash;{% if primary.ended %}{{ primary.ended }}{% else %}Present{% endif %}
-          </time>
-          <span class="tenure in-days">({{ primary.tenure_in_days }} days)</span>
-        </span>
-      </div><!-- .group-metadata -->
-    </div><!-- .membership-primary -->
-    {% endwith %}
-    {% if memberships %}
-    <div class="membership-secondary">
-      <div class="membership-section-title"><span class="pill">Other Groups</span></div>
-      <ul class="membership-list">
-      {% for membership in memberships %}
-        <li class="membership">
-          <div class="group-image">
-            <div class="empty-image"></div>
-          </div><!-- .group-image -->
-          <span class="name">{{ membership.group.name }}</span>
-          <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
-          <span class="tenure">
-            <time datetime="{{ membership.started|date:"c" }}/{% if membership.ended %}{{ membership.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-              {{ membership.started }}&ndash;{% if membership.ended %}{{ membership.ended }}{% else %}Present{% endif %}
-            </time>
-            <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span>
-          </span>
-        </li><!-- .membership -->
-      {% endfor %}
-      </ul><!-- .membership-list -->
-    </div><!-- .membership-secondary -->
-    {% else %}
-    {# @TODO: Empty state. #}
-    {% endif %}
-  </div><!-- .container -->
-</section><!-- .memberships -->
 
 <div class="profile-releases">
   <div class="container">
