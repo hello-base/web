@@ -285,14 +285,21 @@ section.memberships {
   }
 }
 
-.releases {
-  border-top: 1px solid $brand-paleGrey;
-  // border-bottom: 1px solid $brand-paleGrey;
-}
+.profile-releases {}
 .releases-singles,
 .releases-albums {
   @include clearfix;
-  padding-top: 24px; padding-bottom: 24px;
+  // padding-top: 24px; padding-bottom: 24px;
+  display: flex;
+  flex-flow: row wrap;
+
+  .release-data {
+    color: #646D77;
+    font-size: 11px;
+  }
+  .release-editions {
+    @include position(absolute, 0.75rem 1rem 0 0);
+  }
 }
 .releases-albums { border-top: 1px solid $brand-paleGrey; }
 
@@ -317,20 +324,58 @@ section.memberships {
 .release-image {
   @include span-columns(1, 6);
   height: 65px;
+  overflow: hidden;
 
+  img { width: 100%; }
   .ss-icon {
     font-size: 24px;
     width: 30px; height: 30px;
   }
 }
 .release-meta {
+  @include position(relative);
   @include span-columns(5 omega, 6);
+  background-color: #FFF;
+  border: 1px solid #DFE3E8;
+  border-radius: 4px;
+
+  &:after, &:before {
+    @include position(absolute, 0 100% 0 0);
+    content: '';
+    pointer-events: none;
+    width: 0; height: 0;
+
+    border: solid transparent;
+  }
+  &:after {
+    margin-top: -8px;
+    top: 20px;
+
+    border-color: rgba(#FFF, 0);
+    border-right-color: #FFF;
+    border-width: 8px;
+  }
+  &:before {
+    margin-top: -9px;
+    top: 20px;
+
+    border-color: rgba(#DFE3E8, 0);
+    border-right-color: #DFE3E8;
+    border-width: 9px;
+  }
 }
 
-.release-date { padding-top: 3px; }
+.release-header { padding: 0.75rem 1rem; }
+.release-subtext {
+  @include position(relative);
+  padding: 0.75rem 1rem;
+
+  background-color: #F9FAFC;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
 .release-data {
   color: $brand-medGrey;
-  font-size: 12px;
 
   .ss-icon {
     @include position(relative, 1px 0 0 0);
