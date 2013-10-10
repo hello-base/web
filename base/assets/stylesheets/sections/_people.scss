@@ -304,10 +304,8 @@ section.memberships {
   display: flex;
   flex-flow: row wrap;
 }
-.releases-albums { border-top: 1px solid $brand-paleGrey; }
 
 .release {
-  @include clearfix;
   @include span-columns(6, 12);
   @include nth-omega(2n);
   margin-bottom: 1rem;
@@ -339,7 +337,7 @@ section.memberships {
   @include position(relative);
   @include span-columns(5 omega, 6);
   background-color: #FFF;
-  border: 1px solid #DFE3E8;
+  border: 1px solid #EBEFF5;
   border-radius: 4px;
 
   &:after, &:before {
@@ -362,8 +360,8 @@ section.memberships {
     margin-top: -9px;
     top: 20px;
 
-    border-color: rgba(#DFE3E8, 0);
-    border-right-color: #DFE3E8;
+    border-color: rgba(#EBEFF5, 0);
+    border-right-color: #EBEFF5;
     border-width: 9px;
   }
 }
