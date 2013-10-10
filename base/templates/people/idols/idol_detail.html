@@ -140,7 +140,6 @@
 
     <div class="container">
       <div class="profile-memberships">
-        <h2><span class="ss-icon ss-usergroup"></span> Memberships</h2>
       {% with object.primary_membership as primary %}
         <div class="membership-primary">
 
@@ -200,7 +199,12 @@
   <div class="container">
   {% if singles %}
     <div class="releases-singles">
-      <h2 class="section-title">Singles {{ singles|length }}</h2>
+      <h2 class="section-title">
+        <span class="title">
+          <span class="ss-icon ss-eighthnote"></span> Singles
+          <b class="count">{{ singles|length }}</b>
+        </span>
+      </h2>
       <ul class="release-list">
       {% for release in singles %}
         {% include "people/single_list_item.html" with release=release show_participants=True %}
@@ -210,7 +214,12 @@
     {% endif %}
     {% if albums %}
     <div class="releases-albums">
-      <h2 class="section-title">Albums {{ albums|length }}</h2>
+      <h2 class="section-title">
+        <span class="title">
+          <span class="ss-icon ss-music"></span> Albums
+          <b class="count">{{ albums|length }}</b>
+        </span>
+      </h2>
       <ul class="release-list">
       {% for release in albums %}
         {% include "people/album_list_item.html" with release=release show_participants=True %}
