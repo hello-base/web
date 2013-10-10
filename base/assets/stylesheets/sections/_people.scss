@@ -326,6 +326,14 @@ section.memberships {
     color: $brand-lightGrey;
     font-size: 11px;
   }
+  .pill {
+    float: right;
+    box-shadow: none;
+    color: #FFF;
+
+    &.compilation { background-color: #B563E5; }
+    &.indie { background-color: #F3E44E; }
+  }
 }
 .release-image {
   @include span-columns(1, 6);
@@ -370,7 +378,6 @@ section.memberships {
     border-width: 9px;
   }
 }
-
 .release-header { padding: 0.75rem 1rem; }
 .release-subtext {
   @include position(relative);
@@ -388,7 +395,6 @@ section.memberships {
     padding-right: 2px;
   }
 }
-
 .release-participants {
   @include position(relative);
   padding: 2px 0 0 18px;
