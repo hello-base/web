@@ -343,8 +343,7 @@ section.memberships {
 }
 .release-image {
   @include span-columns(1, 6);
-  height: 65px;
-  overflow: hidden;
+  height: 64px;
 
   img { width: 100%; }
   .ss-icon {
@@ -358,7 +357,7 @@ section.memberships {
 
   background-color: #FFF;
   border-radius: 4px;
-  border: 2px solid #CBD1D8;
+  border: 2px solid #DFE3E8;
   // box-shadow: 0 1px 0 #A0ABB6;
   transition: all 0.2s ease;
 
@@ -382,8 +381,8 @@ section.memberships {
     margin-top: -11px;
     top: 20px;
 
-    border-color: rgba(#CBD1D8, 0);
-    border-right-color: #CBD1D8;
+    border-color: rgba(#DFE3E8, 0);
+    border-right-color: #DFE3E8;
     border-width: 11px;
     transition: all 0.2s ease;
   }
@@ -401,13 +400,10 @@ section.memberships {
 .release-meta {
   .major-release & {  }
   .minor-release & {
-    border: 1px solid #DFE3E8;
+    border-width: 1px;
 
     &:before {
       margin-top: -9px;
-
-      border-color: rgba(#DFE3E8, 0);
-      border-right-color: #DFE3E8;
       border-width: 9px;
     }
     .release-subtext {
