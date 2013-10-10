@@ -355,9 +355,11 @@ section.memberships {
 .release-meta {
   @include position(relative);
   @include span-columns(5 omega, 6);
+
   background-color: #FFF;
-  border: 2px solid #EBEFF5;
   border-radius: 4px;
+  border: 2px solid #EBEFF5;
+  box-shadow: 0 1px 0 rgba(#000, 0.1);
 
   &:after, &:before {
     @include position(absolute, 0 100% 0 0);
