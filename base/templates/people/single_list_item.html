@@ -1,0 +1,27 @@
+{% load music_tags %}
+{% load typogrify_tags %}
+
+<li class="release {% if release.number %}major{% else %}minor{% endif %}{% if release.is_indie %}indie{% endif %}-release">
+  <div class="release-image">
+    {# <img src="{{ MEDIA_URL }}{{ release.art }}"> #}
+    <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
+    <span class="release-number">{{ release.number }}</span>
+  </div>
+  <div class="release-meta">
+    <div class="release-header">
+      {% if release.is_indie %}<span class="pill indie">Indie</span>{% endif %}
+      <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+      <span class="name">{{ release.name }}</span>
+      {% if show_participants %}{% contextual_participants release=release idol=object %}{% endif %}
+    </div>
+    <div class="release-subtext">
+      <div class="release-data release-date">
+        <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
+        <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
+      </div>
+      <div class="release-data release-editions">
+        <span class="ss-icon ss-disc"></span> <b>{{ release.editions.count }}</b> edition{{ release.editions.count|pluralize }}
+      </div>
+    </div>
+  </div>
+</li>
