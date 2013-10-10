@@ -31,9 +31,41 @@
 }
 
 .section-title {
+  @include position(relative);
+  margin: 2rem 0;
+
   font-family: $font-family-secondary;
-  font-weight: 300;
+  font-weight: 600;
   font-size: 18px;
+
+  &:before {
+    @include position(absolute, 0px 0 0 0px);
+    width: 100%;
+
+    // border-top: 1px solid $brand-paleGrey;
+    content: '';
+  }
+  b {
+    font-family: $font-family-primary;
+    font-size: 24px;
+  }
+  .count {
+    @include position(relative, -2px 0 0 0);
+    display: inline-block;
+    margin-left: 0.5rem;
+    min-width: 22px;
+    padding: 2px 4px;
+
+    background: #454D57;
+    border-radius: 3px;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+  }
+  .ss-icon {
+    @include position(relative, 2px 0 0 0);
+    color: #00D9FA;
+  }
 }
 
 .section-masthead {

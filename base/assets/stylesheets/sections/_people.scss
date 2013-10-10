@@ -291,7 +291,7 @@ section.memberships {
 
 // .profile-releases
 // ---------------------------------------------------------------------
-.profile-releases {}
+.profile-releases { background-color: #FFF; }
 .releases-singles,
 .releases-albums {
   @include clearfix;
