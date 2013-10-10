@@ -160,6 +160,8 @@ class Group(TimeStampedModel):
         return reverse('group-detail', kwargs={'slug': self.slug})
 
     def age(self):
+        if self.ended:
+            return calculate_age(self.started, target=self.ended)
         return calculate_age(self.started)
 
     def age_in_days(self):
