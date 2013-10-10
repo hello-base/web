@@ -285,13 +285,12 @@ section.memberships {
   }
 }
 
+// .profile-releases
 .profile-releases {}
 .releases-singles,
 .releases-albums {
   @include clearfix;
   // padding-top: 24px; padding-bottom: 24px;
-  display: flex;
-  flex-flow: row wrap;
 
   .release-data {
     color: #646D77;
@@ -300,6 +299,10 @@ section.memberships {
   .release-editions {
     @include position(absolute, 0.75rem 1rem 0 0);
   }
+}
+.release-list {
+  display: flex;
+  flex-flow: row wrap;
 }
 .releases-albums { border-top: 1px solid $brand-paleGrey; }
 
