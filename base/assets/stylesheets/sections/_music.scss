@@ -204,9 +204,14 @@
 }
 
 .participant {
+  @include clearfix;
   font-size: 13px;
 
   .age {
+    @include span-columns(1, 8);
     font-weight: 600;
+  }
+  .romanized-name {
+    @include span-columns(5 omega, 8);
   }
 }
