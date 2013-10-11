@@ -94,6 +94,7 @@
   padding: 0.75rem 1rem;
   vertical-align: top;
 
+  border-top-left-radius: 2px;
   color: $brand-darkGrey;
   font-size: 18px;
   line-height: $headings-line-height;
@@ -106,6 +107,8 @@
   text-align: right;
   vertical-align: top;
   width: 184px;
+
+  border-top-right-radius: 2px;
 }
 .edition-released,
 .edition-number {
