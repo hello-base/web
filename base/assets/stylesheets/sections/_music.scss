@@ -59,8 +59,8 @@
     margin-top: -4px;
     top: 20px;
 
-    border-color: rgba(#FFF, 0);
-    border-right-color: #FFF;
+    border-color: rgba(#F9FAFC, 0);
+    border-right-color: #F9FAFC;
     border-width: 8px;
   }
   &:before {
@@ -83,12 +83,13 @@
 }
 .edition-meta {
   @include clearfix;
+  background-color: #F9FAFC;
   color: $brand-medGrey;
 }
 .edition-name {
   margin: 0;
   height: 54px;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   vertical-align: top;
 
   color: $brand-darkGrey;
@@ -100,7 +101,7 @@
   .name { padding-top: 3px; }
 }
 .edition-subtext {
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   text-align: right;
   vertical-align: top;
   width: 184px;
@@ -110,6 +111,10 @@
   color: $brand-lightGrey;
   display: block;
   font-size: 12px;
+}
+.edition-released {
+  color: $brand-medGrey;
+  .ss-icon { @include position(relative, 1px 0 0 0); }
 }
 
 .tracklist-heading {

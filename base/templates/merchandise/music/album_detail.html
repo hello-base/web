@@ -67,7 +67,7 @@
                       <span class="name">{{ edition.name }}</span>
                   </td>
                   <td class="edition-subtext" colspan="1">
-                    <span class="edition-released">Released {{ edition.released | date:"Y/m/d" }}</span>
+                    <span class="edition-released"><span class="ss-icon ss-calendar"></span> <b>{{ edition.released | date:"Y/m/d" }}</b></span>
                     <span class="edition-number">{{ edition.catalog_number }}</span>
                   </td>
                 </tr><!-- .edition-meta -->
