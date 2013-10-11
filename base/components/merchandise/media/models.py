@@ -1,9 +1,9 @@
 from base64 import urlsafe_b64encode
 
 from django.core.urlresolvers import reverse
-from django.db import models
 
 from model_utils import Choices
+from ohashi.db import models
 
 from components.accounts.models import ContributorMixin
 from components.people.models import ParticipationMixin
