@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from base64 import urlsafe_b64encode
+from datetime import date
 
 from django.core.urlresolvers import reverse
 
@@ -23,6 +25,7 @@ class Videodisc(Merchandise):
             (11, 'pvcollections', 'PV Collections'),
             (12, 'tvsegments', 'Television Segments'),
         ]),
+        (99, 'other', 'Other'),
     )
 
     kind = models.IntegerField(choices=VIDEO_TYPES, default=VIDEO_TYPES.concert)
