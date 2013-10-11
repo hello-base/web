@@ -42,11 +42,36 @@
   margin-bottom: 36px;
 }
 .edition-contents {
-  padding: 1rem;
-
+  @include position(relative);
   background: #FFF;
   border: 2px solid #DFE3E8;
   border-radius: 4px;
+
+  &:after, &:before {
+    @include position(absolute, 0 100% 0 0);
+    content: '';
+    pointer-events: none;
+    width: 0; height: 0;
+
+    border: solid transparent;
+  }
+  &:after {
+    margin-top: -4px;
+    top: 20px;
+
+    border-color: rgba(#FFF, 0);
+    border-right-color: #FFF;
+    border-width: 8px;
+  }
+  &:before {
+    margin-top: -7px;
+    top: 20px;
+
+    border-color: rgba(#DFE3E8, 0);
+    border-right-color: #DFE3E8;
+    border-width: 11px;
+    transition: all 0.2s ease;
+  }
 }
 .edition-image {
   @include span-columns(2, 9);
@@ -63,7 +88,7 @@
 .edition-name {
   margin: 0;
   height: 54px;
-  padding-bottom: 12px;
+  padding: 1rem;
   vertical-align: top;
 
   color: $brand-darkGrey;
@@ -71,13 +96,11 @@
   font-weight: 600;
   line-height: $headings-line-height;
 
-  .romanized-name {
-    display: block;
-    padding-top: 3px;
-  }
+  .romanized-name { display: block; }
   .name { padding-top: 3px; }
 }
 .edition-subtext {
+  padding: 1rem;
   text-align: right;
   vertical-align: top;
   width: 184px;
@@ -90,7 +113,7 @@
 }
 
 .tracklist-heading {
-  padding: 12px 0;
+  padding: 1rem;
 
   border-top: 1px solid $brand-paleGrey;
   color: $brand-medGrey;
@@ -111,7 +134,7 @@
 
   td { vertical-align: top; }
   .track-name { padding-bottom: 6px; }
-  &:last-child .track-name { padding-bottom: 12px; }
+  &:last-child .track-name { padding-bottom: 1rem; }
 }
 
 .track-participants {
@@ -127,6 +150,7 @@
 
 .track-number {
   font-family: $font-family-secondary;
+  padding-left: 1rem;
   width: 30px;
 
   .pill {
@@ -144,9 +168,9 @@
     text-align: center;
   }
 }
-
 .track-type {
   @include user-select(none);
+  padding-right: 1rem;
   text-align: right;
 
   .pill {
