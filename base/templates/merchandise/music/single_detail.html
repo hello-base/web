@@ -57,7 +57,7 @@
       {% for edition in editions %}
         <li class="edition">
           <div class="edition-image">
-            <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
+            {% if edition.art %}<img src="{{ MEDIA_URL }}{{ edition.art }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
           </div><!-- .edition-image -->
           <div class="edition-contents">
             <table>
@@ -69,7 +69,7 @@
                   </td>
                   <td class="edition-subtext" colspan="1">
                     <span class="edition-released"><span class="ss-icon ss-calendar"></span> <b>{{ edition.released | date:"Y/m/d" }}</b></span>
-                    <span class="edition-number">{{ edition.catalog_number }}</span>
+                    <span class="edition-number">{% if edition.price %}&yen;{{ edition.price }} / {% endif %}{{ edition.catalog_number }}</span>
                   </td>
                 </tr><!-- .edition-meta -->
               </thead>
