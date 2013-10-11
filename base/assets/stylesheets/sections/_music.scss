@@ -208,6 +208,7 @@
 
 .participant {
   @include clearfix;
+  margin-bottom: 0.25rem;
   font-size: 13px;
 
   .age {
