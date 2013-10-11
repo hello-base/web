@@ -1,3 +1,4 @@
+from base64 import urlsafe_b64encode
 from datetime import date
 from itertools import chain
 
@@ -184,6 +185,7 @@ class Track(ParticipationMixin):
 
     # Secondary identifier.
     uuid = models.UUIDField(auto_add=True, blank=True, null=True)
+    slug = models.SlugField(blank=True)
 
     def __unicode__(self):
         if self.is_alternate:
@@ -194,8 +196,13 @@ class Track(ParticipationMixin):
             return u'%s [Cover]' % (self.romanized_name)
         return u'%s' % (self.romanized_name)
 
+    def save(self, *args, **kwargs):
+        slug = urlsafe_b64encode(self.uuid.bytes)
+        self.slug = slug.replace('=', '')
+        super(Track, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse('track-detail', kwargs={'pk': self.pk})
+        return reverse('track-detail', kwargs={'slug': self.slug})
 
     @cached_property
     def participants(self):

@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     # url(r'^music/albums/$', name='album-browse', view=AlbumBrowseView.as_view()),
     # url(r'^music/singles/$', name='single-browse', view=SingleBrowseView.as_view()),
 
-    url(r'^music/tracks/(?P<uuid>\d+)/$', name='track-detail', view=TrackDetailView.as_view()),
+    url(r'^music/tracks/(?P<slug>[-\w]+)/$', name='track-detail', view=TrackDetailView.as_view()),
     # url(r'^music/tracks/$', name='track-browse', view=TrackBrowseView.as_view()),
 
     # url(r'^music/browse/$', name='music-browse', view=MusicBrowseView.as_view()),
