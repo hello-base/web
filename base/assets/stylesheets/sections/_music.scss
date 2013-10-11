@@ -75,11 +75,13 @@
 }
 .edition-image {
   @include span-columns(2, 9);
-  height: 146px;
   padding: 2px;
 
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px #B6BEC7;
+
+  img { width: 136px; }
+  .empty-image { height: 136px; }
 }
 .edition-meta {
   @include clearfix;
