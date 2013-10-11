@@ -5,6 +5,7 @@ from datetime import date
 from django.core.urlresolvers import reverse
 
 from model_utils import Choices
+from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.people.models import ParticipationMixin
