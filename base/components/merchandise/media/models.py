@@ -6,7 +6,7 @@ from model_utils import Choices
 from ohashi.db import models
 
 from components.people.models import ParticipationMixin
-from components.merchandise.media.models import Merchandise
+from components.merchandise.models import Merchandise
 
 
 class Videodisc(Merchandise):
