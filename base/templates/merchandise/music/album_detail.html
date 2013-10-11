@@ -51,6 +51,7 @@
 
   <div class="container">
     <div class="editions">
+      <h2 class="section-title"><span class="ss-icon ss-disc"></span> Editions</h2>
       <ul class="edition-list">
       {% for edition in editions %}
         <li class="edition">
@@ -121,7 +122,7 @@
       </ul><!-- .edition-list -->
     </div><!-- .editions -->
     <div class="participations">
-      <h2 class="section-title">Participants</h2>
+      <h2 class="section-title"><span class="ss-icon ss-users"></span> Participants</h2>
       <p class="subtext"><em>{{ idols|length }} idols</em> participated in this {{ object.identifier }}. They are listed below alongside their age at the time of release, starting from the oldest.</p>
       <ul class="participant-list">
       {% for idol in idols %}

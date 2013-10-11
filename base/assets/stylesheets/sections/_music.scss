@@ -16,11 +16,11 @@
 //
 .editions { padding-right: 24px; }
 
-.music-profile {
+.profile.music-profile {
+  background-color: #FFF;
+
   .editions { }
-  .edition-list {
-    padding: 1.5rem 0;
-  }
+  .edition-list { }
 
   .romanized-name { }
   .name {
