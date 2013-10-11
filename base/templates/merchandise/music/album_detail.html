@@ -68,7 +68,7 @@
                   </td>
                   <td class="edition-subtext" colspan="1">
                     <span class="edition-released"><span class="ss-icon ss-calendar"></span> <b>{{ edition.released | date:"Y/m/d" }}</b></span>
-                    <span class="edition-number">{{ edition.catalog_number }}</span>
+                    <span class="edition-number">{% if edition.price %}&yen;{{ edition.price }} / {% endif %}{{ edition.catalog_number }}</span>
                   </td>
                 </tr><!-- .edition-meta -->
               </thead>
