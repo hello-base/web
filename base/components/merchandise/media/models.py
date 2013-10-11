@@ -40,7 +40,7 @@ class Videodisc(ContributorMixin, Merchandise):
 
 class VideodiscFormat(models.Model):
     FORMAT_TYPES = Choices((1, 'dvd', 'DVD'), (2, 'bluray', 'Blu-ray Disc'))
-    parent = models.ForeignKey(Videodisc, blank=True, null=True, , related_name='formats')
+    parent = models.ForeignKey(Videodisc, blank=True, null=True, related_name='formats')
 
     # Metadata
     kind = models.IntegerField(choices=FORMAT_TYPES, default=FORMAT_TYPES.dvd)
