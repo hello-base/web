@@ -182,6 +182,9 @@ class Track(ParticipationMixin):
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
 
+    # Secondary identifier.
+    uuid = models.UUIDField(auto_add=True)
+
     def __unicode__(self):
         if self.is_alternate:
             if self.is_cover:
