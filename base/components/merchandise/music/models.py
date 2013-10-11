@@ -183,7 +183,7 @@ class Track(ParticipationMixin):
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
 
     # Secondary identifier.
-    uuid = models.UUIDField(auto_add=True)
+    uuid = models.UUIDField(auto_add=True, blank=True, null=True)
 
     def __unicode__(self):
         if self.is_alternate:
