@@ -5,12 +5,11 @@ from django.core.urlresolvers import reverse
 from model_utils import Choices
 from ohashi.db import models
 
-from components.accounts.models import ContributorMixin
 from components.people.models import ParticipationMixin
 from components.merchandise.media.models import Merchandise
 
 
-class Videodisc(ContributorMixin, Merchandise):
+class Videodisc(Merchandise):
     VIDEO_TYPES = Choices(
         ('Performances', [
             (1, 'bestshot', 'Best Shot'),
