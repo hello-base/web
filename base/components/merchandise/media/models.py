@@ -5,11 +5,12 @@ from django.db import models
 
 from model_utils import Choices
 
+from components.accounts.models import ContributorMixin
 from components.people.models import ParticipationMixin
 from components.merchandise.media.models import Merchandise
 
 
-class Videodisc(ParticipationMixin, Merchandise):
+class Videodisc(ContributorMixin, Merchandise):
     VIDEO_TYPES = Choices(
         ('Performances', [
             (1, 'bestshot', 'Best Shot'),
@@ -53,6 +54,25 @@ class VideodiscFormat(models.Model):
     class Meta:
         get_latest_by = 'released'
         ordering = ('-released',)
+        verbose_name = 'format'
 
     def __unicode__(self):
         return u'%s' % (self.parent.romanized_name)
+
+
+class Clip(ParticipationMixin):
+    name = models.CharField(blank=True, help_text='This should be filled out if there is no coorresponding track or if the clip was an MC.')
+    kanji = models.CharField(blank=True)
+    format = models.ForeignKey(VideodiscFormat, related_name='order')
+    track = models.ForeignKey('music.Track', blank=True, null=True, related_name='on_formats')
+    disc = models.PositiveSmallIntegerField(default=1)
+    position = models.PositiveSmallIntegerField()
+
+    class Meta:
+        ordering = ('format', 'disc', 'position')
+        unique_together = ('format', 'track')
+
+    def __unicode__(self):
+        if self.name:
+            return u'%s on %s' % (self.name, self.format)
+        return u'%s on %s' % (self.track, self.format)
