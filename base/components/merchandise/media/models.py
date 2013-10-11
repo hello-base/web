@@ -73,7 +73,6 @@ class Clip(ParticipationMixin):
 
     class Meta:
         ordering = ('format', 'disc', 'position')
-        unique_together = ('format', 'track')
 
     def __unicode__(self):
         if self.name:
