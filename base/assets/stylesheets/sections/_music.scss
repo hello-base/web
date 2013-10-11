@@ -15,15 +15,13 @@
 }
 
 //
-.editions {
-  padding-right: 24px;
-  border-right: 1px solid $brand-paleGrey;
-}
-
-
+.editions { padding-right: 24px; }
 
 .music-profile {
-  .editions { background-color: #FFF; }
+  .editions { }
+  .edition-list {
+    padding: 1.5rem 0;
+  }
 
   .romanized-name { }
   .name {
@@ -43,6 +41,13 @@
 .edition {
   @include clearfix;
   margin-bottom: 36px;
+}
+.edition-contents {
+  padding: 1rem;
+
+  background: #FFF;
+  border: 2px solid #DFE3E8;
+  border-radius: 4px;
 }
 .edition-meta {
   @include clearfix;
@@ -90,6 +95,7 @@
   .ss-icon {
     position: relative; top: 1px;
     margin-right: 2px;
+    color: #00ACE4;
   }
 }
 
