@@ -99,6 +99,20 @@ def heroku_migrate(app='', **kwargs):
     invoke.run('heroku run python manage.py migrate %s' % app)
 
 
+@invoke.task(name='pull', pre=['heroku.capture'])
+def heroku_pull(verbose=False, database='hello-base', **kwargs):
+    out = functools.partial(_out, 'heroku.pull')
+    hide = 'out' if not verbose else None
+
+    # Fetch the latest database dump.
+    invoke.run('curl -o latest.dump `heroku pgbackups:url`')
+    out('Latest database dump (latest.dump) grabbed via curl.', hide=hide)
+
+    # Restore it.
+    invoke.run('pg_restore --verbose --clean --no-acl --no-owner -h localhost -d %s latest.dump' % database, hide=hide)
+    out('Restored latest production dump to local database.')
+
+
 @invoke.task(name='syncdb')
 def heroku_syncdb(**kwargs):
     out = functools.partial(_out, 'heroku.syncdb')
@@ -108,6 +122,6 @@ def heroku_syncdb(**kwargs):
 ns = invoke.Collection(
     collect, deploy, development_server, development_yuglify,
     heroku=invoke.Collection(
-        heroku_capture, heroku_migrate, heroku_syncdb,
+        heroku_capture, heroku_migrate, heroku_pull, heroku_syncdb,
     )
 )
