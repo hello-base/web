@@ -54,10 +54,10 @@
   {{ object.groups.all }}
 
   <p>Links:<br />
-  <a href="{{ object.info_link }}" itemprop="url">HelloProject.com: {{ object.nickname }}</a>
+  <a href="{{ object.info_link }}" itemprop="url">{{ object.nickname }} Schedule</a>
   {% if object.secondary_info_link %}
-  <br /><a href="{{ object.secondary_info_link }}" itemprop="url">HelloProject.com:
-  {% for performance in object.schedule.all %} {{ performance.romanized_name }}
+  <br /><a href="{{ object.secondary_info_link }}" itemprop="url">
+  {% for performance in object.schedule.all %} {{ performance.romanized_name }} Schedule
   {% endfor %}</a>{% endif %}</p>
 
   <h3 class="header">Schedule</h3>
