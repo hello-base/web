@@ -1,4 +1,3 @@
-from base64 import urlsafe_b64encode
 from datetime import date
 from itertools import chain
 
@@ -13,6 +12,7 @@ from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.merchandise.models import Merchandise
+from components.merchandise.utils import uuid_encode
 from components.people.models import ParticipationMixin
 
 from .managers import EditionManager
@@ -202,8 +202,7 @@ class Track(ParticipationMixin):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
-        slug = urlsafe_b64encode(self.uuid.bytes)
-        self.slug = slug.replace('=', '')
+        self.slug = uuid_encode(self.uuid)
         super(Track, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
