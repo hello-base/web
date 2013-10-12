@@ -184,9 +184,9 @@ class Track(ParticipationMixin):
     translated_lyrics = models.TextField(blank=True)
 
     # Staff.
-    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
+    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
 
     # Secondary identifier.
     uuid = models.UUIDField(auto_add=True, blank=True, null=True)
