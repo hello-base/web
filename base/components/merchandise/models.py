@@ -20,4 +20,4 @@ class Merchandise(ContributorMixin, ParticipationMixin):
         abstract = True
 
     def __unicode__(self):
-        return '%s' % self.name
+        return '%s' % self.romanized_name

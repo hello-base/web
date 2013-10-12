@@ -17,6 +17,8 @@ class ClipInline(admin.StackedInline):
         }),
     )
     model = Clip
+    readonly_fields = ['participating_groups', 'participating_idols']
+
     raw_id_fields = ('idols', 'groups', 'track',)
     autocomplete_lookup_fields = {
         'fk': ['track'],
@@ -24,7 +26,7 @@ class ClipInline(admin.StackedInline):
     }
 
 
-class VideodiscFormatInline(admin.StackedInline):
+class VideodiscFormatInline(admin.TabularInline):
     extra = 1
     model = VideodiscFormat
 
@@ -33,12 +35,14 @@ class VideodiscFormatAdmin(admin.ModelAdmin):
     date_hierarchy = 'released'
     fieldsets = (
         (None, {'fields': ('kind',)}),
+        ('Relations', {'fields': ('parent',)}),
         ('Content', {'fields': ('released', 'catalog_number', 'art')})
     )
     inlines = [ClipInline]
-    list_display = ['released', 'kind', 'catalog_number']
-    list_editable = ['kind', 'catalog_number']
-    save_on_top = True
+    list_display = ['parent', 'kind', 'released', 'catalog_number']
+    list_display_links = ['parent', 'kind']
+    list_filter = ['kind']
+    list_select_related = True
     search_fields = ['parent__romanized_name', 'parent__name', 'catalog_number']
 admin.site.register(VideodiscFormat, VideodiscFormatAdmin)
 
@@ -58,7 +62,7 @@ class VideodiscAdmin(ContributorMixin):
     inlines = [VideodiscFormatInline]
     list_display = ['romanized_name', 'name', 'released', 'kind']
     list_editable = ['kind']
-    save_on_top = True
+    readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = ['romanized_name', 'name']
 
     raw_id_fields = ('idols', 'groups',)
