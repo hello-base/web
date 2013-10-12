@@ -150,6 +150,9 @@ class Edition(models.Model):
             return self._get_regular_edition().order.select_related('track')
         return self.order.select_related('track').prefetch_related('track__participating_idols')
 
+    def _render_videolist(self):
+        return self.video_order.select_related('video')
+
     def participants(self):
         return self.parent.participants()
 
@@ -163,6 +166,11 @@ class Edition(models.Model):
             return self.order.none()
         tracklist = self._render_tracklist()
         return tracklist
+
+    @cached_property
+    def videolist(self):
+        videolist = self._render_videolist()
+        return videolist
 
 
 class Track(ParticipationMixin):
