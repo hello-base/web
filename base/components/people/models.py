@@ -362,9 +362,10 @@ class Trivia(models.Model):
 
 class Groupshot(models.Model):
     group = models.ForeignKey(Group, related_name='photos')
+
+    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(upload_to='people/groups/')
     taken = models.DateField()
-    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
 
     class Meta:
         get_latest_by = 'taken'
@@ -383,9 +384,10 @@ class Groupshot(models.Model):
 
 class Headshot(models.Model):
     idol = models.ForeignKey(Idol, related_name='photos')
+
+    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(upload_to='people/idols/')
     taken = models.DateField()
-    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
 
     class Meta:
         get_latest_by = 'taken'
