@@ -206,8 +206,8 @@ class Track(ParticipationMixin):
         super(Track, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        if self.parent:
-            return reverse('track-detail', kwargs={'slug': self.parent.slug})
+        if self.original_track:
+            return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
 
     @cached_property
