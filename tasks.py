@@ -71,7 +71,7 @@ def development_yuglify(**kwargs):
     out('javascripts/components.min.js created and minified.')
 
     # Compile the stylesheets.
-    invoke.run('yuglify {input} --type js --combine {output}'.format(
+    invoke.run('yuglify {input} --type css --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
         output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')))
     out('stylesheets/production.min.css created and minified.')
