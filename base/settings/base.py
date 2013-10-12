@@ -39,6 +39,7 @@ class Base(Configuration):
         'components.events',
         'components.merchandise',
         'components.merchandise.goods',
+        'components.merchandise.media',
         'components.merchandise.music',
         'components.people',
     ]
