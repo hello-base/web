@@ -1,7 +1,5 @@
 # Require any additional compass plugins here.
-require "autoprefixer-rails"
 require "compass-normalize"
-require "csso"
 require "susy"
 
 http_path = "/"
