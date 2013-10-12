@@ -148,7 +148,7 @@ class Edition(models.Model):
     def _render_tracklist(self):
         if self.kind != self.EDITIONS.regular and not self.order.exists():
             return self._get_regular_edition().order.select_related('track')
-        return self.order.select_related('track')
+        return self.order.select_related('track').prefetch_related('track__participating_idols')
 
     def participants(self):
         return self.parent.participants()
@@ -177,6 +177,11 @@ class Track(ParticipationMixin):
     is_alternate = models.BooleanField('alternate?', default=False)
     romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
     name_alternate = models.CharField('alternate name', blank=True)
+
+    # Lyrics.
+    lyrics = models.TextField(blank=True)
+    romanized_lyrics = models.TextField(blank=True)
+    translated_lyrics = models.TextField(blank=True)
 
     # Staff.
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')

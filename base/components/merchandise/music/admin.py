@@ -147,13 +147,17 @@ class TrackAdmin(admin.ModelAdmin):
             'fields': ('participating_idols', 'participating_groups')
         }),
         ('Alternates', {
-            'classes': ('collapse closed',),
+            'classes': ('grp-collapse grp-closed',),
             'fields': ('original_track', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
         }),
         ('Staff Involved', {
-            'classes': ('collapse closed',),
+            'classes': ('grp-collapse grp-closed',),
             'fields': ('arrangers', 'composers', 'lyricists')
-        })
+        }),
+        ('Lyrics', {
+            'classes': ('grp-collapse grp-closed',),
+            'fields': ('lyrics', 'romanized_lyrics', 'translated_lyrics')
+        }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
