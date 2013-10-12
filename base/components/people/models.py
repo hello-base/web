@@ -384,7 +384,7 @@ class Groupshot(models.Model):
         super(Groupshot, self).save(*args, **kwargs)
         if self.kind:
             photo = self.objects.latest()
-            self.group.photo = photo.photo
+            self.group.photo = photo
             self.group.save()
 
 
@@ -406,5 +406,5 @@ class Headshot(models.Model):
         super(Headshot, self).save(*args, **kwargs)
         if self.id:
             photo = self.objects.latest()
-            self.idol.photo = photo.photo
+            self.idol.photo = photo
             self.idol.save()
