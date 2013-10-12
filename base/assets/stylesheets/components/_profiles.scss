@@ -102,3 +102,8 @@
   .profile-vitals { padding-bottom: 3rem; }
   .participation-cards { margin-top: -3.5rem; }
 }
+
+.event-profile {
+  .profile-photo { @include span-columns(2, 12); }
+  .profile-photo img { width: 145px; }
+}
