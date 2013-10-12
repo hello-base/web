@@ -89,6 +89,7 @@ class Idol(Person):
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
+    photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     class Meta:
@@ -153,6 +154,11 @@ class Group(TimeStampedModel):
     former_names = models.CharField(blank=True)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
+
+    # Denormalized Fields.
+    # Note: These fields should be 1) too frequently accessed to make
+    # sense as methods and 2) infrequently updated.
+    photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
