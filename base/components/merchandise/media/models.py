@@ -64,8 +64,9 @@ class VideodiscFormat(models.Model):
 
 
 class Clip(ParticipationMixin):
-    name = models.CharField(blank=True, help_text='This should be filled out if there is no coorresponding track or if the clip was an MC.')
-    kanji = models.CharField(blank=True)
+    romanized_name = models.CharField(blank=True,
+        help_text='This should be filled out if there is no coorresponding track or if the clip was an MC.')
+    name = models.CharField(blank=True)
     format = models.ForeignKey(VideodiscFormat, related_name='order')
     track = models.ForeignKey('music.Track', blank=True, null=True, related_name='on_formats')
     disc = models.PositiveSmallIntegerField(default=1)
@@ -75,6 +76,6 @@ class Clip(ParticipationMixin):
         ordering = ('format', 'disc', 'position')
 
     def __unicode__(self):
-        if self.name:
-            return u'%s on %s' % (self.name, self.format)
+        if self.romanized_name:
+            return u'%s on %s' % (self.romanized_name, self.format)
         return u'%s on %s' % (self.track, self.format)

@@ -47,7 +47,7 @@ class VideodiscAdmin(ContributorMixin):
     date_hierarchy = 'released'
     fieldsets = (
         (None, {'fields': ('kind',)}),
-        ('Basics', {'fields': (('name', 'kanji'),)}),
+        ('Basics', {'fields': (('romanized_name', 'name'),)}),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
@@ -55,7 +55,7 @@ class VideodiscAdmin(ContributorMixin):
             'fields': ('participating_idols', 'participating_groups')
         }),
     )
-    inlines = [FormatInline]
+    inlines = [VideodiscFormatInline]
     list_display = ['romanized_name', 'name', 'released', 'kind']
     list_editable = ['kind']
     save_on_top = True
