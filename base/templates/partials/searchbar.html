@@ -2,4 +2,4 @@
     <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking to discover?" value="{{ value }}">
     <button type="submit"><span class="ss-icon ss-search"></span></button>
 </div>
-{# <div class="search-results js-search-results"></div> #}
+{% if autocomplete %}<div class="search-results js-search-results"></div>{% endif %}
