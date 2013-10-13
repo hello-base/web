@@ -17,7 +17,7 @@
                 {% if object.number %}<span class="number">{{ object.number | ordinal }}</span>{% endif %}
                 {% if object.is_indie %}<span class="indie">Indie</span>{% endif %}
                 {{ object.identifier }}
-            </span> in {{ object.editions.count }} edition{{ object.editions.count|pluralize }}
+            </span>
         </div>
         <div class="item-released">{{ object.released | date:"F j, Y" }}</div>
     </div>
