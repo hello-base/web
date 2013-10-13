@@ -22,10 +22,12 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="{% static 'javascripts/components.min.js' %}" data-turbolinks-track></script>
 <script src="{% static 'javascripts/application.min.js' %}" data-turbolinks-track></script>
+{% if not debug %}
 <script type="text/javascript">
   var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
   analytics.load("qs70qk1");
 </script>
+{% endif %}
 </head>
 <body id="hello-base" class="path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
 {% block body %}
