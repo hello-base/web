@@ -78,63 +78,8 @@
             {% endwith %}
             </div>
           </li><!-- .group-participation -->
-          <li class="participation-card single-participation">
-            <div class="card-statistic">
-              <h3 class="card-type"><span class="ss-icon ss-eighthnote"></span> <span>Singles</span></h3>
-              <span class="count">{{ singles|length }}</span>
-            </div>
-            <div class="card-example">
-              {% with object.latest_single as release %}
-              <div class="example-heading"><span class="pill">{% if object.is_active %}Latest{% else %}Last{% endif %}</span></div>
-              <a href="{{ release.get_absolute_url }}">{{ release }}</a>
-              <div class="example-subtext">
-                <div class="release-data release-date">
-                  <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
-                  <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
-                </div>
-                <div class="release-data release-editions">
-                  <span class="ss-icon ss-disc"></span> <b>{{ release.editions.count }}</b> edition{{ release.editions.count|pluralize }}
-                </div>
-              </div>
-              {% endwith %}
-            </div>
-          </li><!-- .single-participation -->
-          <li class="participation-card album-participation">
-            <div class="card-statistic">
-              <h3 class="card-type"><span class="ss-icon ss-music"></span> <span>Albums</span></h3>
-              <span class="count">{{ albums|length }}</span>
-            </div>
-            <div class="card-example">
-              {% with object.latest_album as release %}
-              <div class="example-heading"><span class="pill">{% if object.is_active %}Latest{% else %}Last{% endif %}</span></div>
-              <a href="{{ release.get_absolute_url }}">{{ release }}</a>
-              <div class="example-subtext">
-                <div class="release-data release-date">
-                  <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
-                  <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
-                </div>
-                <div class="release-data release-editions">
-                  <span class="ss-icon ss-disc"></span> <b>{{ release.editions.count }}</b> edition{{ release.editions.count|pluralize }}
-                </div>
-              </div>
-              {% endwith %}
-            </div>
-          </li><!-- .album-participation -->
-          <li class="participation-card event-participation">
-            <div class="card-statistic">
-              <h3 class="card-type"><span class="ss-icon ss-mic"></span> <span>Events</span></h3>
-              <span class="count">{{ events|length }}</span>
-            </div>
-            <div class="card-example">
-              {% with object.latest_event as event %}
-              <div class="example-heading"><span class="pill">{% if object.is_active %}Latest{% else %}Last{% endif %}</span></div>
-              <a href="{{ event.get_absolute_url }}">{{ event }}</a>
-              <div class="example-subtext">
-                <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ event.start_date|date }}</b></time>
-              </div>
-              {% endwith %}
-            </div>
-          </li><!-- .event-participation -->
+          {% include "people/partials/single_card.html" %}
+          {% include "people/partials/album_card.html" %}
         </ul><!-- .participation-list -->
       </div><!-- .container -->
     </div><!-- .participations -->

@@ -1,0 +1,15 @@
+<li class="participation-card event-card">
+  <div class="card-statistic">
+    <h3 class="card-type"><span class="ss-icon ss-mic"></span> <span>Events</span></h3>
+    <span class="count">{{ events|length }}</span>
+  </div>
+  <div class="card-example">
+    {% with object.latest_event as event %}
+    <div class="example-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
+    <a href="{{ event.get_absolute_url }}">{{ event }}</a>
+    <div class="example-subtext">
+      <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ event.start_date|date }}</b></time>
+    </div>
+    {% endwith %}
+  </div>
+</li>
