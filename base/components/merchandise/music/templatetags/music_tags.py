@@ -4,7 +4,7 @@ register = template.Library()
 from ..models import Base
 
 
-@register.inclusion_tag('people/idols/idol_contexted_participants.html')
+@register.inclusion_tag('people/partials/idol_contexted_participants.html')
 def contextual_participants(release, idol):
     groups = idol.groups.all()
     participants = release.participants

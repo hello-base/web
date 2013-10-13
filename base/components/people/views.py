@@ -12,7 +12,7 @@ from .models import Group, Idol, Membership, Staff
 
 class GroupBrowseView(ListView):
     queryset = Group.objects.order_by('slug')
-    template_name = 'people/groups/group_browse.html'
+    template_name = 'people/group_browse.html'
 
     def get_context_data(self, **kwargs):
         context = super(GroupBrowseView, self).get_context_data(**kwargs)
@@ -23,7 +23,7 @@ class GroupBrowseView(ListView):
 
 class GroupDetailView(DetailView):
     queryset = Group.objects.all()
-    template_name = 'people/groups/group_detail.html'
+    template_name = 'people/group_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(GroupDetailView, self).get_context_data(**kwargs)
@@ -48,11 +48,11 @@ class GroupDetailView(DetailView):
 
 class GroupMembershipView(DetailView):
     queryset = Group.objects.all()
-    template_name = 'people/groups/group_membership.html'
+    template_name = 'people/group_membership.html'
 
 
 class IdolBrowseView(TemplateView):
-    template_name = 'people/idols/idol_browse.html'
+    template_name = 'people/idol_browse.html'
 
 #     def get_context_data(self, **kwargs):
 #         context = super(IdolBrowseView, self).get_context_data(**kwargs)
@@ -85,7 +85,7 @@ class IdolBrowseView(TemplateView):
 class IdolDetailView(PrefetchRelatedMixin, DetailView):
     model = Idol
     prefetch_related = ['memberships__group']
-    template_name = 'people/idols/idol_detail.html'
+    template_name = 'people/idol_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(IdolDetailView, self).get_context_data(**kwargs)
