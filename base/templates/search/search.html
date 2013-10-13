@@ -1,8 +1,9 @@
 {% extends "layouts/site_base.html" %}
 
 {% block title %}{% if query %}Search results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
+{% block body-class %}{% if query %}with-results{% else %}no-results{% endif %}{% endblock %}
 {% block content %}
-<section class="search {% if query %}with-results{% else %}no-results{% endif %}">
+<section class="search">
   <header class="masthead">
     <div class="container">
       <h1 class="page-heading"><span class="ss-icon ss-search"></span> Search</h1>

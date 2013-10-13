@@ -1,3 +1,18 @@
+// .no-results
+.no-results {
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .content {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
+
 // .result-*
 // Shared set of standard classes that set the basic styles
 // for any and all search results.
