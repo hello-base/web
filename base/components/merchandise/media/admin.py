@@ -51,7 +51,7 @@ class VideodiscAdmin(ContributorMixin):
     date_hierarchy = 'released'
     fieldsets = (
         (None, {'fields': ('kind',)}),
-        ('Basics', {'fields': (('romanized_name', 'name'),)}),
+        ('Basics', {'fields': (('romanized_name', 'name', 'slug'),)}),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
