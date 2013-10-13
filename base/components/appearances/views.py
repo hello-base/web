@@ -1,4 +1,4 @@
-from django.views.generic import (ListView, DetailView, TemplateView, 
+from django.views.generic import (ListView, DetailView, TemplateView,
     CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
 
@@ -8,12 +8,12 @@ from .models import Show, Episode, Magazine, Issue
 
 class ShowListView(ListView):
     queryset = Show.objects.all()
-    template_name = 'appearances/show-list.html'
+    template_name = 'appearances/show_list.html'
 
 
 class ShowDetailView(DetailView):
     queryset = Show.objects.all()
-    template_name = 'appearances/show-detail.html'
+    template_name = 'appearances/show_detail.html'
 
 
 class ShowCreateView(CreateView):
@@ -30,7 +30,7 @@ class ShowUpdateView(UpdateView):
 
 class EpisodeDetailView(DetailView):
     queryset = Episode.objects.all()
-    template_name = 'appearances/episode-detail.html'
+    template_name = 'appearances/episode_detail.html'
 
 
 class EpisodeCreateView(CreateView):
@@ -47,12 +47,12 @@ class EpisodeUpdateView(UpdateView):
 
 class MagazineListView(ListView):
     queryset = Magazine.objects.all()
-    template_name = 'appearances/magazine-list.html'
+    template_name = 'appearances/magazine_list.html'
 
 
 class MagazineDetailView(DetailView):
     queryset = Magazine.objects.all()
-    template_name = 'appearances/magazine-detail.html'
+    template_name = 'appearances/magazine_detail.html'
 
 
 class MagazineCreateView(CreateView):
@@ -69,7 +69,7 @@ class MagazineUpdateView(UpdateView):
 
 class IssueDetailView(DetailView):
     queryset = Issue.objects.all()
-    template_name = 'appearances/issue-detail.html'
+    template_name = 'appearances/issue_detail.html'
 
 
 class IssueCreateView(CreateView):
