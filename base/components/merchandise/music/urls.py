@@ -11,8 +11,8 @@ from .views import (AlbumDetailView, AlbumBrowseView, MusicBrowseView, SingleDet
 urlpatterns = patterns('',
     # MultiURL allows us to unite all of the music under a simpler URL.
     multiurl(
-        url('^music/(?P<slug>[-\w]+)/$', name='album-detail', view=AlbumDetailView.as_view()),
-        url('^music/(?P<slug>[-\w]+)/$', name='single-detail', view=SingleDetailView.as_view()),
+        url(r'^music/(?P<slug>[-\w]+)/$', name='album-detail', view=AlbumDetailView.as_view()),
+        url(r'^music/(?P<slug>[-\w]+)/$', name='single-detail', view=SingleDetailView.as_view()),
         catch=(Http404, ContinueResolving)
     ),
 
