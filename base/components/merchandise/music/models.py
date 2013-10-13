@@ -3,6 +3,8 @@ from itertools import chain
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.functional import cached_property
 
 from imagekit.models import ImageSpecField
@@ -209,14 +211,17 @@ class Track(ParticipationMixin):
             return u'%s [Cover]' % (self.romanized_name)
         return u'%s' % (self.romanized_name)
 
-    def save(self, *args, **kwargs):
-        self.slug = uuid_encode(self.uuid)
-        super(Track, self).save(*args, **kwargs)
-
     def get_absolute_url(self):
         if self.original_track:
             return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
+
+    @receiver(post_save, sender=Track)
+    def create_slug(sender, instance, created, **kwargs):
+        # Calculate the slug.
+        instance.slug = uuid_encode(instance.uuid)
+        instance.save()
+        return
 
     @cached_property
     def participants(self):
