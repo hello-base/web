@@ -11,7 +11,8 @@ from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
 from ohashi.db import models
 
-from .constants import (BLOOD_TYPE, CLASSIFICATIONS, SCOPE, STATUS)
+from .constants import (BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES,
+    SCOPE, STATUS)
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
 from .utils import calculate_age, calculate_average_age
 
@@ -88,6 +89,7 @@ class Idol(Person):
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
+    photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     class Meta:
@@ -152,6 +154,11 @@ class Group(TimeStampedModel):
     former_names = models.CharField(blank=True)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
+
+    # Denormalized Fields.
+    # Note: These fields should be 1) too frequently accessed to make
+    # sense as methods and 2) infrequently updated.
+    photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
@@ -357,3 +364,47 @@ class Trivia(models.Model):
             return u'%s trivia (%s)' % (self.group.romanized_name, self.idol.romanized_name)
         return u'trivia'
     # If multiple idols/groups are named in trivia, how do you return multiple idol/group names?
+
+
+class Groupshot(models.Model):
+    group = models.ForeignKey(Group, related_name='photos')
+
+    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
+    photo = models.ImageField(upload_to='people/groups/')
+    taken = models.DateField()
+
+    class Meta:
+        get_latest_by = 'taken'
+        ordering = ('-taken',)
+
+    def __unicode__(self):
+        return u'Photo of %s (%s)' % (self.group.name, self.taken)
+
+    def save(self, *args, **kwargs):
+        super(Groupshot, self).save(*args, **kwargs)
+        if self.kind:
+            photo = self.objects.latest()
+            self.group.photo = photo
+            self.group.save()
+
+
+class Headshot(models.Model):
+    idol = models.ForeignKey(Idol, related_name='photos')
+
+    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
+    photo = models.ImageField(upload_to='people/idols/')
+    taken = models.DateField()
+
+    class Meta:
+        get_latest_by = 'taken'
+        ordering = ('-taken',)
+
+    def __unicode__(self):
+        return u'Photo of %s (%s)' % (self.idol.name, self.taken)
+
+    def save(self, *args, **kwargs):
+        super(Headshot, self).save(*args, **kwargs)
+        if self.id:
+            photo = self.objects.latest()
+            self.idol.photo = photo
+            self.idol.save()
