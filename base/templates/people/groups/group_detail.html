@@ -262,7 +262,7 @@
       </h2>
       <ul class="release-list">
       {% for release in singles %}
-        {% include "people/single_list_item.html" with release=release show_participants=False %}
+        {% include "people/partials/single_list_item.html" with release=release show_participants=False %}
       {% endfor %}
       </ul>
     </div>
@@ -277,7 +277,7 @@
       </h2>
       <ul class="release-list">
       {% for release in albums %}
-        {% include "people/album_list_item.html" with release=release show_participants=False %}
+        {% include "people/partials/album_list_item.html" with release=release show_participants=False %}
       {% endfor %}
       </ul><!-- .release-list -->
     </div><!-- .releases-albums -->
