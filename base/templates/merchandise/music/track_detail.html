@@ -1,4 +1,6 @@
 {% extends "layouts/site_base.html" %}
+{% load typogrify_tags %}
+{% load people_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block meta %}
@@ -44,12 +46,21 @@
   </div>
   
   <p>
-    Included in:<br />
-    {% for release in base %}
-        <li class="participant">
-          <a href="{{ idol.get_absolute_url }}">{{ idol }} ({{ idol.birthdate|age:object.released }})</a>
-        </li>
-    {% endfor %}
+    This song is included on <em>{{ object.appears_on.count }} release{{ object.appears_on.count|pluralize }}</em>.
+        <ul class="release-list">
+          {% for release in object.appears_on.all %}
+            <li class="release">
+              <img src="{{ MEDIA_URL }}{{ release.edition.art }}"> <a href="{{ release.edition.parent.get_absolute_url }}">{{ release.edition.parent }}</a> {% if release.is_cover %}<span class="pill cover">Cover</span>{% endif %} {% if release.is_aside %}<span class="pill cover">A-side</span>{% endif %} {% if release.is_bside %}<span class="pill cover">B-side</span>{% endif %} {% if release.is_album_only %}<span class="pill cover">Album only</span>{% endif %}
+              <ul class="participant-list">
+                  {% for idol in object.idols.all %}
+                      <li class="participant">
+                        <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>
+                      </li>
+                  {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+          </ul>
   </p>
   
   <p>
@@ -58,7 +69,7 @@
       {% endfor %}<br />{% endif %}
       {% if object.lyricists %}Lyrics by: {% for person in object.lyricists.all %}
       <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
-      {% endfor %}<br />
+      {% endfor %}<br />{% endif %}
       {% if object.composers %}Arranged by: {% for person in object.arrangers.all %}
       <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
       {% endfor %}{% endif %}
@@ -81,7 +92,6 @@
       {{ object.translated_lyrics }}
     </p>
   {% endif %}
- 
 
 </section>
 {% endblock content %}
