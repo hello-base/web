@@ -62,6 +62,7 @@ class VideodiscAdmin(ContributorMixin):
     inlines = [VideodiscFormatInline]
     list_display = ['romanized_name', 'name', 'released', 'kind']
     list_editable = ['kind']
+    prepopulated_fields = {'slug': ['romanized_name']}
     readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = ['romanized_name', 'name']
 
