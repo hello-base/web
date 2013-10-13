@@ -216,13 +216,6 @@ class Track(ParticipationMixin):
             return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
 
-    @receiver(post_save, sender=Track)
-    def create_slug(sender, instance, created, **kwargs):
-        # Calculate the slug.
-        instance.slug = uuid_encode(instance.uuid)
-        instance.save()
-        return
-
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
@@ -330,3 +323,12 @@ class VideoTrackOrder(models.Model):
 
     def __unicode__(self):
         return u'%s on %s' % (self.video, self.edition)
+
+
+@receiver(post_save, sender=Track)
+def create_slug(sender, instance, created, **kwargs):
+    if created:
+        # Calculate the slug.
+        instance.slug = uuid_encode(instance.uuid)
+        instance.save()
+    return
