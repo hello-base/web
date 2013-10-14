@@ -39,6 +39,7 @@ class Base(Merchandise):
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
+    art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
     class Meta:
         abstract = True
@@ -114,7 +115,7 @@ class Edition(models.Model):
 
     # Contents
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
-    art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 80})
+    art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
 
