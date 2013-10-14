@@ -86,6 +86,21 @@
   font-weight: 600;
 }
 
+.administration {
+  background-color: #272E37;
+  padding: 0.5rem 0;
+  font-weight: bold;
+  font-size: 11px;
+
+  a { color: #FFF; }
+  a.object {
+    float: right;
+    color: #CBD1D8;
+  }
+  a:hover { color: #00ACE4; }
+  .ss-icon { @include position(relative, 2px 0 0 0); }
+}
+
 @import "sections/flatpages";
 @import "sections/music";
 @import "sections/people";
