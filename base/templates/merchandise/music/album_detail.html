@@ -76,10 +76,10 @@
               <tbody class="tracklist music-list">
                 <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-music"></span> Tracklist</th></tr>
                 {% for position in edition.tracklist %}
-                <tr class="track {% if position.is_instrumental %}instrumental{% endif %}">
+                <tr class="track {% if position.is_instrumental %}instrumental{% endif %}" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                   <td class="track-name">
-                    <span class="romanized-name">
+                    <span class="romanized-name" itemprop="name">
                       {{ position.track.romanized_name|typogrify }}
                       {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
                       {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
