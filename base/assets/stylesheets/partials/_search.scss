@@ -1,5 +1,5 @@
-// .no-results
-.no-results {
+// .no-query
+.no-query {
   .page {
     display: flex;
     flex-direction: column;
@@ -10,6 +10,20 @@
     justify-content: center;
     align-items: center;
     display: flex;
+  }
+}
+
+.no-results {
+  .empty {
+    padding: 2rem 0;
+    text-align: center;
+
+    h2 {
+      margin: 1rem 0;
+      font-size: 7.478rem;
+      font-weight: 200;
+      letter-spacing: -1rem;
+    }
   }
 }
 
