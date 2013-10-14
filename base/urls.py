@@ -12,8 +12,8 @@ from haystack.views import FacetedSearchView
 
 from components.sitemaps import (AlbumSitemap, IdolSitemap,
     GroupSitemap, SingleSitemap)
-from components.views import (AutocompleteView, PlainTextView,
-    SiteView, XMLView)
+from components.views import (AutocompleteView, ImageDetailView,
+    PlainTextView, SiteView, XMLView)
 
 
 # Administration system auto-discovery.
@@ -37,6 +37,9 @@ urlpatterns = patterns('',
     url(r'^$', name='site-home', view=SiteView.as_view()),
     url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
     url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
+
+    # Imagery.
+    url(r'^image/(?P<slug>([a-zA-Z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif)))/$', name='image-detail', view=ImageDetailView.as_view()),
 
     # "Flatpages."
     url(r'^404/$', name='404', view=TemplateView.as_view(template_name='404.html')),

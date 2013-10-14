@@ -28,6 +28,10 @@ class SiteView(TemplateView):
     template_name = 'landings/home_site.html'
 
 
+class ImageDetailView(TemplateView):
+    template_name = 'landings/image_detail.html'
+
+
 class PlainTextView(TemplateView):
     def render_to_response(self, context, **kwargs):
         return super(TemplateView, self).render_to_response(context, content_type='text/plain', **kwargs)

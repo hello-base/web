@@ -151,6 +151,37 @@
   }
 }
 
+// .image-*
+body[class^="path-image"] {
+  background-color: #272E37;
+  padding: 2rem;
+}
+.image-detail {
+  display: flex;
+}
+.image-header {
+  margin-left: 2rem;
+  order: 1;
+  padding: 1rem 0;
+  width: 25%;
+
+  border-top: 1px solid rgba(#FFF, 0.1);
+
+  a { color: #fff; }
+}
+.image-viewer img {
+  display: block;
+  max-width: 100%;
+
+  box-shadow: 0 0 24px rgba(#000, 0.8);
+
+  &:hover {
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+  }
+}
+
 // Error pages.
 // Styles for pages that error. Because I am Error.
 // <http://knowyourmeme.com/memes/i-am-error>
