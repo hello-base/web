@@ -1,4 +1,5 @@
 {% extends "layouts/site_base.html" %}
+{% load typogrify_tags %}
 
 {% block title %}{% if query %}Search results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
 {% block body-class %}{% if query %}with-query{% else %}no-query{% endif %} {% if page.object_list %}with-results{% else %}no-results{% endif %}{% endblock %}
@@ -18,7 +19,7 @@
   {% if not page.object_list %}
     <div class="empty">
       <h2>OTZ</h2>
-      <p>Sorry, we couldn't find anything for the term "{{ query }}".</p>
+      <p>{% filter typogrify %}Sorry, we couldn't find anything for the term "{{ query }}".{% endfilter %}</p>
     </div>
   {% else %}
     <h1>We found <strong>{{ page.paginator.count }}</strong> results for "{{ query }}"</h1>
