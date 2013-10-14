@@ -1,5 +1,4 @@
 # Require any additional compass plugins here.
-require "compass-normalize"
 require "susy"
 
 http_path = "/"
