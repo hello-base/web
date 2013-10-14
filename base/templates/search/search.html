@@ -13,12 +13,16 @@
     </div>
   </header>
 
-  {% if query %}
+{% if query %}
   <div class="container">
+  {% if not page.object_list %}
+    <div class="empty">
+      <h2>OTZ</h2>
+      <p>Sorry, we couldn't find anything for the term "{{ query }}".</p>
+    </div>
+  {% else %}
     <h1>We found <strong>{{ page.paginator.count }}</strong> results for "{{ query }}"</h1>
-  </div>
 
-  <div class="container">
     <ul class="facets">
     {% for model in facets.fields.model %}
       <li class="facet">
@@ -37,15 +41,10 @@
         {% if result.content_type == "people.idol" %}{% include "search/includes/people/idol.html" %}{% endif %}
         {% if result.content_type == "people.group" %}{% include "search/includes/people/group.html" %}{% endif %}
       </li>
-    {% empty %}
-      <li class="empty">
-        <h2>OTZ</h2>
-        <p>Sorry, we couldn't find anything for the term "{{ query }}".</p>
-      </li>
     {% endfor %}
     </ul>
   </div>
-  {% else %}
   {% endif %}
+{% endif %}
 </section>
 {% endblock content %}
