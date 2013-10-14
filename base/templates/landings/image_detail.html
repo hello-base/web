@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block page %}
+<section class="image-detail">
+  <header class="image-header" role="banner">
+    <a href="{% url "site-home" %}" class="logo-wordmark header-logo-wordmark">
+        <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+    </a>
+  </header>
+  <div class="image-viewer">
+    <img src="{{ MEDIA_URL }}{{ slug }}">
+  </div>
+</section>
+
+<script>
+$(document).ready(function() {
+  $('.image-detail img').click(function() {
+    $(this).toggleClass('zoomed');
+    // $('#viewer').toggleClass('zoomed');
+    // $('#secondary').toggleClass('zoomed');
+    return false;
+  });
+});
+</script>
+{% endblock page %}
