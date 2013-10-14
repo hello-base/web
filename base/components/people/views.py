@@ -6,6 +6,7 @@ from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
 from ohashi.shortcuts import get_object_or_none
 
 # from components.merchandise.music import constants as music
+from components.accounts.views import QuicklinksMixin
 from .models import Group, Idol, Membership, Staff
 # from .utils import attach_primary_groups
 
@@ -21,7 +22,7 @@ class GroupBrowseView(ListView):
         return context
 
 
-class GroupDetailView(DetailView):
+class GroupDetailView(QuicklinksMixin, DetailView):
     queryset = Group.objects.all()
     template_name = 'people/group_detail.html'
 
@@ -82,7 +83,7 @@ class IdolBrowseView(TemplateView):
 #         return context
 
 
-class IdolDetailView(PrefetchRelatedMixin, DetailView):
+class IdolDetailView(QuicklinksMixin, PrefetchRelatedMixin, DetailView):
     model = Idol
     prefetch_related = ['memberships__group']
     template_name = 'people/idol_detail.html'

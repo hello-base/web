@@ -83,3 +83,11 @@ class PostAuthorizationView(View):
             redirect = http.HttpResponseRedirect('/')
             redirect.delete_cookie('oauth_state')
             return redirect
+
+
+class QuicklinksMixin(object):
+    def get_context_data(self, **kwargs):
+        # Activates quicklinks to the administration system.
+        context = super(QuicklinksMixin, self).get_context_data(**kwargs)
+        context['opts'] = self.object._meta
+        return context
