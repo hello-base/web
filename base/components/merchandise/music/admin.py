@@ -24,6 +24,7 @@ class TrackOrderInline(admin.TabularInline):
     extra = 1
     fieldsets = ((None, {'fields': ('track', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
     model = TrackOrder
+    sortable_field_name = 'position'
     verbose_name_plural = 'Track Order'
 
     raw_id_fields = ['track']
@@ -33,6 +34,7 @@ class TrackOrderInline(admin.TabularInline):
 class VideoTrackOrderInline(admin.TabularInline):
     extra = 1
     model = VideoTrackOrder
+    sortable_field_name = 'position'
     verbose_name_plural = 'Video Track Order'
 
     raw_id_fields = ['video']
