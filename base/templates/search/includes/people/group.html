@@ -1,11 +1,11 @@
 {% with result.object as object %}
 <div class="result-item people group">
-    <div class="item-icon"><span class="ss-icon ss-usergroup"></span></div>
-    <div class="item-object">
-        <a href="{{ object.get_absolute_url }}">
-            <span class="item-name">{{ object.name }}{% if object.alias %} ({{ object.alias }}){% endif %}</span>
-            <span class="item-romanized-name">{{ object }}{% if object.romanized_alias %} ({{ object.romanized_alias }}){% endif %}</span>
-        </a>
-    </div>
+  <div class="item-icon"><span class="ss-icon ss-usergroup"></span></div>
+  <div class="item-object">
+    <a href="{{ object.get_absolute_url }}">
+      <span class="item-name">{{ object.name }}{% if object.alias %} ({{ object.alias }}){% endif %}</span>
+      <span class="item-romanized-name">{{ object }}{% if object.romanized_alias %} ({{ object.romanized_alias }}){% endif %}</span>
+    </a>
+  </div>
 </div>
 {% endwith %}
