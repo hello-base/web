@@ -6,7 +6,7 @@
 <div class="administration">
   <div class="container">
   <a href="/admin" data-no-turbolink><span class="ss-icon ss-rocket"></span> Administration</a>
-  {% if object and opts %}<a class="object" href="{% url opts|admin_urlname:'change' object.id %}" data-no-turbolink>View "{{ object }}" in the adminstration system. <span class="ss-icon ss-navigateright"></span></a>{% endif %}
+  {% if object and opts %}<a class="object" href="{% url opts|admin_urlname:'change' object.id %}" data-no-turbolink>View "{{ object }}" in the admin. <span class="ss-icon ss-navigateright"></span></a>{% endif %}
   </div>
 </div>
 {% endif %}
