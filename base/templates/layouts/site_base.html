@@ -5,7 +5,7 @@
 {% if request.user.is_staff %}
 <div class="administration">
   <div class="container">
-  <a href="/admin" data-no-turbolink><span class="ss-icon ss-rocket"></span> Administration</a>
+  Hi <strong>{{ request.user.username }}</strong>! &middot; <a href="/admin" data-no-turbolink><span class="ss-icon ss-rocket"></span> Administration</a>
   {% if object and opts %}<a class="object" href="{% url opts|admin_urlname:'change' object.id %}" data-no-turbolink>View "{{ object }}" in the admin. <span class="ss-icon ss-navigateright"></span></a>{% endif %}
   </div>
 </div>
@@ -27,7 +27,7 @@
 
     <div class="header-userbox">
     {% if request.user.is_authenticated %}
-      Hi {{ request.user.username }}! {# <a href="{% url "signout" %}">Sign out</a> #}
+       {# <a href="{% url "signout" %}">Sign out</a> #}
     {% else %}
       {# <a href="{% url "signin" %}">Sign in</a> #}
     {% endif %}
