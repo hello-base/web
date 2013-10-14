@@ -113,6 +113,7 @@ class Edition(models.Model):
 
     # Contents
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
+    art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 80})
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
 
