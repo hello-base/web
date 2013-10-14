@@ -327,9 +327,6 @@ class VideoTrackOrder(models.Model):
 
 @receiver(post_save, sender=Track)
 def create_slug(sender, instance, created, **kwargs):
-    if sender is not Track:
-        return
-
     if created:
         # Calculate the slug.
         instance.slug = uuid_encode(instance.uuid)
