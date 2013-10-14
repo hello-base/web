@@ -36,8 +36,6 @@ class Videodisc(Merchandise):
         return reverse('videodisc-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        slug = urlsafe_b64encode(self.uuid.bytes)
-        self.slug = slug.replace('=', '')
         super(Videodisc, self).save(*args, **kwargs)
 
 
