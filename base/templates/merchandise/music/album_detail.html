@@ -56,7 +56,7 @@
       {% for edition in editions %}
         <li class="edition">
           <div class="edition-image">
-            <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
+            {% if edition.art %}<img src="{{ MEDIA_URL }}{{ edition.art_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
           </div><!-- .edition-image -->
           <div class="edition-contents">
             <table>
