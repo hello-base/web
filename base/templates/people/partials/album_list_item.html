@@ -4,8 +4,7 @@
 
 <li class="release {% if release.number %}major{% else %}minor{% endif %}{% if release.is_indie %}indie{% endif %}-release">
   <div class="release-image">
-    <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
-    {# {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %} #}
+    {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
     {% if release.number %}<span class="release-number">{{ release.number|ordinal }}</span>{% endif %}
   </div>
   <div class="release-meta">
