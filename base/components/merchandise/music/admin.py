@@ -87,15 +87,17 @@ class EditionAdmin(admin.ModelAdmin):
         ('Content', {'fields': ('romanized_name', 'released', 'catalog_number', 'price', 'art')})
     )
     inlines = [TrackOrderInline, VideoTrackOrderInline]
-    list_display = ['parent', 'kind', 'romanized_name', 'released', 'catalog_number']
-    list_display_links = ['parent', 'kind']
+    list_display = ['__unicode__', 'kind', 'romanized_name', 'name', 'released', 'catalog_number']
+    list_display_links = ['__unicode__', 'kind']
     list_filter = ['kind']
     list_select_related = True
+    ordering = ('-released',)
     search_fields = [
-        'album__name', 'album__idols__name', 'album__groups__name', 'album__romanized_name', 'album__idols__romanized_name', 'album__groups__romanized_name',
-        'single__name', 'single__idols__name', 'single__groups__name', 'single__romanized_name', 'single__idols__romanized_name', 'single__groups__romanized_name',
-        'name', 'romanized_name'
+        'album__romanized_name', 'album__name',
+        'single__romanized_name', 'single__name',
+        'romanized_name', 'name',
     ]
+
     raw_id_fields = ('album', 'single',)
     autocomplete_lookup_fields = {'fk': ['album', 'single']}
 admin.site.register(Edition, EditionAdmin)
