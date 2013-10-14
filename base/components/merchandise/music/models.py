@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.utils.functional import cached_property
 
 from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
