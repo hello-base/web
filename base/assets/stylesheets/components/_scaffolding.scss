@@ -1,10 +1,9 @@
-// Import our required basic modules: Compass and Normalize.
-@import "normalize";
-@import "susy";
-
 // Import our internal components.
+@import "components/normalize";
 @import "components/variables";
 @import "components/mixins";
+
+@import "susy";
 
 // Start the markup scaffolding!
 @import "compass/reset/utilities";
