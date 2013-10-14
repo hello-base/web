@@ -395,6 +395,11 @@
       box-shadow: inset 0 0 0 1px rgba(#FF773A, 0.25);
       color: rgba(#FF773A, 0.75);
     }
+    &.status-solo {
+      top: -33px;
+      box-shadow: inset 0 0 0 1px rgba(#00E0BB, 0.25);
+      color: #00E0BB;
+    }
   }
 }
 .release-image {
