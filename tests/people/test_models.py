@@ -16,7 +16,21 @@ def test_group_factory():
 def test_idol_factory():
     factory = IdolFactory()
     assert isinstance(factory, Idol)
-    assert 'idol' in factory.romanized_name
+    assert 'family' in factory.romanized_family_name
+    assert 'given' in factory.romanized_given_name
+
+
+@pytest.mark.django_db
+def test_idol_romanized_name():
+    pass
+
+
+@pytest.mark.django_db
+def test_staff_factory():
+    factory = StaffFactory()
+    assert isinstance(factory, Staff)
+    assert 'family' in factory.romanized_family_name
+    assert 'given' in factory.romanized_given_name
 
 
 @pytest.mark.django_db
