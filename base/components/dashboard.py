@@ -15,6 +15,10 @@ class CustomIndexDashboard(Dashboard):
                     models=('components.people.*',),
                 ),
                 modules.ModelList(
+                    title='Events', column=1, collapsible=False,
+                    models=('components.events.*',),
+                ),
+                modules.ModelList(
                     title='Media', column=1, collapsible=False,
                     models=('components.merchandise.media.*',),
                 ),
