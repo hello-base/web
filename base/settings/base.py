@@ -48,6 +48,7 @@ class Base(Configuration):
     PLUGINS = [
         'floppyforms',
         'imagekit',
+        'rest_framework',
         'south',
         'typogrify',
     ]
