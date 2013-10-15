@@ -26,4 +26,4 @@ class Meishi(object):
     def get(self, path, user):
         user = self.refresh_token_if_necessary(user)
         session = OAuth2Session(self.client_id, token=user.access_token)
-        return session.get('%s%s' % (MEISHI_ENDPOINT, path).json()
+        return session.get('%s%s' % (MEISHI_ENDPOINT, path)).json()
