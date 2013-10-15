@@ -1,9 +1,17 @@
 language: python
 install:
-  - "pip install -r requirements/testing.txt --use-mirrors"
+- pip install -r requirements/testing.txt --use-mirrors
 before_script:
-  - "psql -c 'create database base_test;' -U postgres"
+- psql -c 'create database base_test;' -U postgres
 script:
-  - "py.test tests/"
+- py.test tests/
 notifications:
   email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: C7IMYzLFYIDzt0L/SB4c0i6h7F1dBYwiKMFjpluVgBMAK84LV+wM9A/fOwkc4RFQcf/aVAr2e2zdBzpu9jYdJZYMCXTwSZbeIcj9rlA9Mts+CGF/AoFNjvm+wmtPbeasHnG2vMD/KdyYvutk0bwtyagNbD383anWrG/nCjuLyuw=
+  app:
+    master: hello-base
+  on:
+    repo: revyver/hello-base
