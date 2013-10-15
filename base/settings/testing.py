@@ -25,3 +25,11 @@ class Testing(Settings):
             'NAME': 'test-base',
         }
     }
+
+    # django-haystack.
+    # ------------------------------------------------------------------
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        },
+    }
