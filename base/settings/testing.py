@@ -5,18 +5,6 @@ from .base import Base as Settings
 
 
 class Testing(Settings):
-    # Installed Applications.
-    # ------------------------------------------------------------------
-    INSTALLED_APPS = [
-        'components.accounts',
-        'components.events',
-        'components.merchandise',
-        'components.merchandise.goods',
-        'components.merchandise.media',
-        'components.merchandise.music',
-        'components.people',
-    ]
-
     # Database Configuration.
     # ------------------------------------------------------------------
     DATABASES = {
