@@ -21,11 +21,6 @@ def test_idol_factory():
 
 
 @pytest.mark.django_db
-def test_idol_romanized_name():
-    pass
-
-
-@pytest.mark.django_db
 def test_staff_factory():
     factory = StaffFactory()
     assert isinstance(factory, Staff)
