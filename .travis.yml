@@ -1,0 +1,9 @@
+language: python
+install:
+  - "pip install -r requirements/testing.txt --use-mirrors"
+before_script:
+  - "psql -c 'create database base_test;' -U postgres"
+script:
+  - "py.test tests/"
+notifications:
+  email: false
