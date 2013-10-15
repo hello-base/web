@@ -84,6 +84,18 @@ def development_server(**kwargs):
     invoke.run('foreman start -f Procfile.dev', pty=True)
 
 
+@invoke.task(name='test')
+def development_test(coverage=False, **kwargs):
+    out = functools.partial(_out, 'development.test')
+    pytest = 'py.test tests/'
+
+    if coverage:
+        invoke.run('coverage run --source base -m %s' % pytest)
+        invoke.run('coverage report')
+    else:
+        invoke.run('%s' % pytest, pty=True)
+
+
 @invoke.task(name='capture')
 def heroku_capture(verbose=False, **kwargs):
     out = functools.partial(_out, 'heroku.capture')
@@ -129,7 +141,7 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    collect, deploy, development_server, development_yuglify,
+    collect, deploy, development_server, development_test, development_yuglify,
     heroku=invoke.Collection(
         heroku_capture, heroku_imagekit, heroku_migrate, heroku_pull, heroku_syncdb,
     )
