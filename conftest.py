@@ -1,12 +1,15 @@
-import django
 import os
 import sys
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(PROJECT_ROOT)
+from django import get_version
+from django.conf import settings
 
-# Ignore the Gunicorn configuration.
-collect_ignore = ['gunicorn.conf.py']
 
 def pytest_report_header(config):
-    return 'django: ' + django.get_version()
+    return 'django: ' + get_version()
+
+
+def pytest_configure():
+    if not settings.configured:
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'base.settings'
+        os.environ['DJANGO_CONFIGURATION'] = 'Testing'
