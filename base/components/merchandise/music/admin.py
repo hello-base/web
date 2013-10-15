@@ -158,9 +158,9 @@ class TrackAdmin(admin.ModelAdmin):
         }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
-    list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate', 'participant_list']
+    list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
     list_display_links = ['romanized_name', 'name']
-    list_filter = ['is_alternate']
+    list_filter = ['is_cover', 'is_alternate']
     list_select_related = True
     ordering = ('-id',)
     readonly_fields = ['participating_groups', 'participating_idols']
