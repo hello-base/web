@@ -1,0 +1,9 @@
+{% load static from staticfiles %}
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Hello! Base</ShortName>
+  <Description>Discover everything about Hello! Project.</Description>
+  <Image width="16" height="16" type="image/png">{% static "images/favicon.ico" %}</Image>
+  <Url type="text/html" template="https://hello-base.com/search/?q={searchTerms}"/>
+</OpenSearchDescription>

@@ -3,19 +3,22 @@ from itertools import chain
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.functional import cached_property
 
 from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from ohashi.constants import OTHER
 from ohashi.db import models
 
+from components.merchandise.models import Merchandise
+from components.merchandise.utils import uuid_encode
 from components.people.models import ParticipationMixin
 
-from ..models import Merchandise
-# from .managers import (AlbumManager, EditionManager, SingleManager,
-#     TrackOrderManager, VideoTrackOrderManager)
+from .managers import EditionManager
 
 
 class Label(models.Model):
@@ -32,6 +35,12 @@ class Base(Merchandise):
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
+    # Denormalized Fields.
+    # Note: These fields should be 1) too frequently accessed to make
+    # sense as methods and 2) infrequently updated.
+    art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
+    art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+
     class Meta:
         abstract = True
         get_latest_by = 'released'
@@ -39,6 +48,12 @@ class Base(Merchandise):
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
+
+    def save(self, *args, **kwargs):
+        if self.editions.exists() and self.regular_edition:
+            self.art = self.regular_edition.art
+            self.released = self.regular_edition.released
+        super(Base, self).save(*args, **kwargs)
 
     @staticmethod
     def autocomplete_search_fields():
@@ -51,6 +66,10 @@ class Base(Merchandise):
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
+
+    @cached_property
+    def regular_edition(self):
+        return self.editions.regular_edition(release=self)
 
 
 class Album(Base):
@@ -80,6 +99,8 @@ class Edition(models.Model):
         (12, 'digital', 'Digital'),
         (99, 'other', 'Other'),
     )
+    # Model Managers.
+    objects = EditionManager()
 
     album = models.ForeignKey(Album, blank=True, null=True, related_name='editions')
     single = models.ForeignKey(Single, blank=True, null=True, related_name='editions')
@@ -94,6 +115,7 @@ class Edition(models.Model):
 
     # Contents
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
+    art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
     videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
 
@@ -123,12 +145,7 @@ class Edition(models.Model):
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
-        try:
-            kwargs = {self.parent.identifier: self.parent, 'kind': self.EDITIONS.regular}
-            edition = self._default_manager.filter(**kwargs)[0]
-        except IndexError:
-            edition = self._default_manager.none()
-        return edition
+        return self._default_manager.regular_edition(edition=self)
 
     def _render_release_date(self):
         return self._get_regular_edition().released
@@ -136,7 +153,10 @@ class Edition(models.Model):
     def _render_tracklist(self):
         if self.kind != self.EDITIONS.regular and not self.order.exists():
             return self._get_regular_edition().order.select_related('track')
-        return self.order.select_related('track')
+        return self.order.select_related('track').prefetch_related('track__participating_idols')
+
+    def _render_videolist(self):
+        return self.video_order.select_related('video')
 
     def participants(self):
         return self.parent.participants()
@@ -152,6 +172,11 @@ class Edition(models.Model):
         tracklist = self._render_tracklist()
         return tracklist
 
+    @cached_property
+    def videolist(self):
+        videolist = self._render_videolist()
+        return videolist
+
 
 class Track(ParticipationMixin):
     # Metadata.
@@ -166,23 +191,37 @@ class Track(ParticipationMixin):
     romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
     name_alternate = models.CharField('alternate name', blank=True)
 
+    # Lyrics.
+    lyrics = models.TextField(blank=True)
+    romanized_lyrics = models.TextField(blank=True)
+    translated_lyrics = models.TextField(blank=True)
+
     # Staff.
-    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
+    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
+
+    # Secondary identifier.
+    uuid = models.UUIDField(auto_add=True, blank=True, null=True)
+    slug = models.SlugField(blank=True)
 
     def __unicode__(self):
         if self.is_alternate:
+            if self.is_cover:
+                return u'%s [%s, Cover]' % (self.romanized_name, self.romanized_name_alternate)
             return u'%s [%s]' % (self.romanized_name, self.romanized_name_alternate)
         if self.is_cover and not self.is_alternate:
             return u'%s [Cover]' % (self.romanized_name)
         return u'%s' % (self.romanized_name)
 
     def get_absolute_url(self):
-        return reverse('track-detail', kwargs={'pk': self.pk})
+        if self.original_track:
+            return reverse('track-detail', kwargs={'slug': self.original_track.slug})
+        return reverse('track-detail', kwargs={'slug': self.slug})
 
+    @cached_property
     def participants(self):
-        return list(chain(self.idols.all(), self.groups.all()))
+        return list(chain(self.participating_idols.all(), self.participating_groups.all()))
 
     @staticmethod
     def autocomplete_search_fields():
@@ -197,11 +236,11 @@ class TrackOrder(models.Model):
     # A-Side / B-Side / Options
     is_aside = models.BooleanField('a-side?', default=False)
     is_bside = models.BooleanField('b-side?', default=False)
-    is_album_track = models.BooleanField('album track?', default=False)
+    is_album_only = models.BooleanField('album only?', default=False)
     is_instrumental = models.BooleanField('instrumental?', default=False)
 
     class Meta:
-        ordering = ('edition', 'position')
+        ordering = ('position',)
         unique_together = ('edition', 'track', 'is_instrumental')
         verbose_name = 'track'
 
@@ -267,10 +306,12 @@ class Video(models.Model):
     def rendered_kind_display(self):
         if self.kind in [1, 2, 3, 4, 9, 11, 12]:
             return 'Music Video'
-        if self.kind in [21, 22, 23]:
+        elif self.kind in [21, 22, 23]:
             return 'Making of'
-        if self.kind in [31, 32]:
+        elif self.kind in [31, 32]:
             return 'Performance'
+        else:
+            return ''
 
 
 class VideoTrackOrder(models.Model):
@@ -279,9 +320,18 @@ class VideoTrackOrder(models.Model):
     position = models.PositiveSmallIntegerField()
 
     class Meta:
-        ordering = ('edition', 'position')
+        ordering = ('position',)
         unique_together = ('edition', 'video')
         verbose_name = 'video track'
 
     def __unicode__(self):
         return u'%s on %s' % (self.video, self.edition)
+
+
+@receiver(post_save, sender=Track)
+def create_slug(sender, instance, created, **kwargs):
+    if created:
+        # Calculate the slug.
+        instance.slug = uuid_encode(instance.uuid)
+        instance.save()
+    return

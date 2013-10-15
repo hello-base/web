@@ -1,0 +1,109 @@
+.profile {
+  background-color: #F9FAFC;
+
+  ul {
+    @include reset-box-model;
+    @include reset-list-style;
+  }
+}
+
+// .profile-header (*)
+// Classes tasked with styling the header section of a profile page.
+.profile-header {
+  padding: 1rem 0;
+  background-color: #FFF;
+}
+.profile-metadata {
+  @include clearfix;
+  padding-bottom: 1rem;
+}
+.profile-photo {
+  @include span-columns(1, 12);
+  height: 64px;
+  background: #333;
+}
+.profile-name {
+  @include span-columns(8, 12);
+  margin-top: 0; margin-bottom: 0;
+  padding: 3px 0;
+
+  .name {
+    font-size: 1.333rem;
+    font-weight: 300;
+  }
+  .romanized-name {
+    color: #454D57;
+    font-family: $font-family-primary;
+    font-size: 2.369rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+
+    b { color: $headings-font-color; }
+  }
+}
+
+// .profile-content (*)
+.profile-content { }
+
+// .vitals
+// Set of classes that represent a list of "vital" information about
+// an idol or group. Can also contain calls to action.
+.profile-vitals {
+  padding: 1rem 0;
+  background-color: $brand-darkerGrey;
+}
+.vitals-list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.vital {
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 600;
+
+  & a:link, & a:visited { color: #FFF; }
+}
+.vital-label {
+  @include position(relative, -1px 0 0 0);
+  display: inline-block;
+  margin-right: 4px;
+  padding: 2px 6px 2px 0;
+
+  border-radius: 4px;
+  border-right: 1px solid $brand-lightGrey;
+  color: #EBEFF5;
+  font-family: $font-family-secondary;
+  font-size: 10px;
+
+  .ss-icon {
+    @include position(relative, 2px 0 0 0);
+    font-size: 12px;
+    padding-right: 1px;
+  }
+  .ss-anatomicalheart, .ss-ban { color: #ED3C51; }
+  .ss-cocktail, .ss-handbag, .ss-balloon, .ss-clock { color: #F8EF68; }
+  .ss-calendar { color: #00BAEB; }
+  .ss-tapemeasure, .ss-users { color: #00E8C9; }
+}
+.vital-by {
+  max-width: columns(6, $total_columns);
+}
+.vital-participants {
+  display: inline-block;
+  max-width: columns(5, 6);
+  vertical-align: top;
+
+  font-weight: normal;
+
+  a { font-weight: 600; }
+}
+.group-profile, .idol-profile {
+  .profile-vitals { padding-bottom: 3rem; }
+  .participation-cards { margin-top: -3.5rem; }
+}
+
+.event-profile {
+  .profile-photo { @include span-columns(2, 12); }
+  .profile-photo img { width: 145px; }
+}

@@ -3,7 +3,17 @@ from django.contrib import admin
 from markdown import markdown
 from typogrify.templatetags.typogrify_tags import typogrify
 
-from .models import Group, Idol, Membership, Staff
+from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
+
+
+class GroupshotInline(admin.TabularInline):
+    extra = 1
+    model = Groupshot
+
+
+class HeadshotInline(admin.TabularInline):
+    extra = 1
+    model = Headshot
 
 
 class MembershipInline(admin.TabularInline):
@@ -22,7 +32,7 @@ class GroupAdmin(admin.ModelAdmin):
         ('Details & Options', {'fields': ('former_names', 'note', 'has_discussions')}),
     )
     filter_horizontal = ['groups']
-    inlines = [MembershipInline]
+    inlines = [MembershipInline, GroupshotInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
@@ -47,7 +57,7 @@ class IdolAdmin(admin.ModelAdmin):
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
         ('Details & Options', {'fields': ('height', 'bloodtype', 'note', 'has_discussions')}),
     )
-    inlines = [MembershipInline]
+    inlines = [MembershipInline, HeadshotInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
     list_editable = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}

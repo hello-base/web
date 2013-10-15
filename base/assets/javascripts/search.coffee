@@ -8,7 +8,7 @@ class Results
     @$form = $ field.form
     @$field.on 'keydown.results', @onFieldKeyDown
     @$field.on 'input.results', @onFieldInput
-    @$field.on 'focusout.results', @teardown
+    # @$field.on 'focusout.results', @teardown
     @$form.on 'submit.results', @teardown
 
     @$template = $ '#js-search-results-template'

@@ -1,3 +1,88 @@
+// .about
+// Set of classes that style the about page.
+[class^="path-about"] {
+  .searchbar { display: none; }
+  .header-logo-wordmark { color: #FFF; }
+}
+.about {
+  > header {
+    margin-top: -61px;
+    padding: 6rem 0 12rem;
+    background-color: #009DDD;
+  }
+  .tagline {
+    text-align: center;
+
+    h1, h2, a { color: #FFF; }
+    h2, p {
+      @include pad(3, 3);
+      color: rgba(#FFF, 0.75);
+    }
+    h1 {
+      @include pad(1, 1);
+      font-family: $font-family-primary;
+      font-size: 4.909rem;
+      font-weight: 600;
+      font-style: italic;
+      letter-spacing: -2px;
+    }
+  }
+  ul {
+    @include reset-box-model;
+    @include reset-list-style;
+  }
+}
+
+.people.founders {
+  @include span-columns(6, 12);
+}
+.people.editors {
+  @include span-columns(6 omega, 12);
+}
+
+.person-position {
+  color: #A0ABB6;
+  font-family: $font-family-secondary;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.the-team {
+  margin-top: -10rem;
+}
+.the-team .container { border-top: 1px solid rgba(#FFF, 0.1); }
+.people h2 {
+  margin: 1rem 0;
+
+  color: rgba(#FFF, 0.5);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+.person {
+  overflow: hidden;
+  width: columns(3, 7);
+
+  background-color: #FFF;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(#000, 0.15);
+}
+.person-photo {
+  background-color: #333;
+  height: 192px;
+  overflow: hidden;
+
+  img { width: 100%; }
+}
+.person-meta {
+  padding: 1rem;
+}
+.team-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+
 // .fine-print
 // Set of classes that style large swaths of text such as the terms
 // of service and privacy policy pages.

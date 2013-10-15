@@ -1,42 +1,10 @@
-.profile {
-  ul {
-    @include reset-box-model;
-    @include reset-list-style;
-  }
-}
+@import "components/profiles";
 
 // .profile-header (*)
 // Classes tasked with styling the header section of a profile page.
+// ---------------------------------------------------------------------
 .profile-header {
-  padding: 12px 0;
-
-  background-color: #FFF;
   // box-shadow: 0 0 0 1px $brand-paleGrey;
-
-  .profile-photo {
-    @include span-columns(1, 9);
-    height: 65px;
-
-    background: #333;
-  }
-  .profile-metadata {
-    @include clearfix;
-    @include span-columns(9, 12);
-    padding: 12px 0;
-  }
-  .profile-name {
-    @include span-columns(8 omega, 9);
-    margin-top: 0; margin-bottom: 0;
-    padding: 6px 0;
-
-    font-weight: 300;
-
-    .name { font-size: 18px; }
-    .romanized-name {
-      font-family: $font-family-secondary;
-      font-size: 30px;
-    }
-  }
 
   .formerly-known-as,
   .standing {
@@ -46,39 +14,12 @@
     color: $brand-medGrey;
     font-size: 13px;
   }
-
-  // .vitals
-  // Set of classes that represent a list of "vital" information about
-  // an idol or group.
-  .profile-vitals { @include span-columns(3 omega, 12); }
-  .vitals-list {
-    @include clearfix;
-    padding: 12px 0;
-  }
-  .vital {
-    padding-bottom: 6px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    .ss-icon {
-      @include position(relative, 2px 0 0 0);
-      padding-right: 2px;
-    }
-  }
-  .vital-label {
-    display: block;
-
-    color: $brand-lightGrey;
-    font-family: $font-family-secondary;
-    font-size: 10px;
-  }
 }
 
 .latest-releases {
   @include clearfix;
   @include span-columns(9, 12);
-  padding: 12px 0;
+  padding: 1rem 0;
 
   .pill { margin-bottom: 6px; }
   .release-metadata { @include span-columns(4 omega, 5); }
@@ -89,20 +30,16 @@
   }
 }
 
-.ss-icon.ss-anatomicalheart { color: #ED3C51; }
-
-
 // .membership(s)
-section.memberships {
-  // box-shadow: inset 0 -1px 0 $brand-paleGrey;
-  padding: 24px 0 36px;
-}
+// ---------------------------------------------------------------------
+.profile-memberships { padding-bottom: 2rem; }
 .membership { @include clearfix(); }
 
 .romanized-name {
   display: block;
-  line-height: $headings-line-height;
   font-size: 16px;
+  font-weight: bold;
+  line-height: $headings-line-height;
 }
 .name {
   display: block;
@@ -111,146 +48,188 @@ section.memberships {
 }
 
 .idol-profile {
+  .group-image {
+    box-shadow: inset 0 0 0 1px #B6BEC7;
+  }
+
+  .membership {
+    @include clearfix;
+
+    .ss-icon { @include position(relative, 1px 0 0 0); }
+  }
+
   .membership-primary .group-image {
-    @include span-columns(4, 12);
-    height: 174px;
-  }
-  .membership-list .group-image {
-    @include span-columns(1, 6);
-    height: 37px;
-  }
-
-  .membership-primary,
-  .membership-secondary {
-    @include clearfix;
-  }
-  .membership-section-title { @include span-columns(2 omega, 12); }
-  .membership-list {
-    @include clearfix;
-    @include span-columns(10, 12);
-  }
-  .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
-  }
-
-  .membership {
-    padding-bottom: 12px;
+    height: 172px;
   }
 
   .membership-primary {
-    margin-bottom: 24px;
+    @include span-columns(5, 12);
+    @include suffix(1);
   }
+  .membership-secondary {
+    @include span-columns(7 omega, 12);
+  }
+  .membership-list .group-image {
+    @include span-columns(2, 7);
+    height: 82px;
+  }
+
+  .membership-section-title {
+    // @include span-columns(2 omega, 12);
+  }
+  .membership-list {
+    @include clearfix;
+    // @include span-columns(10, 12);
+  }
+  .membership {
+    // @include span-columns(5, 10);
+    // @include nth-omega(2n);
+  }
+
+  .membership,
+  .membership-primary {
+    padding-bottom: 1rem;
+  }
+
   .membership-section-title {
     margin: 0;
     text-align: right;
   }
-
-  .membership-primary .group-metadata { @include span-columns(6, 12); }
 }
 
-.tenure {
-  color: $brand-lightGrey;
-  font-size: 12px;
-}
-
-
-
-
-.participation {
-  @include span-columns(3, 12);
-  @include nth-omega(4n);
-}
-
-.participation {
-  border: 1px solid $brand-paleGrey;
-  border-radius: 4px;
-  padding: 24px;
-}
-
-section.participations {
-  padding: 24px 0 48px;
-}
-
-.participation-list {
-  @include clearfix;
-  @include reset-box-model;
-  @include reset-list-style;
-
-  // .ss-icon, .count strong { font-size: 36px; }
-  // .count {
-  //   position: relative; top: -4px;
-
-  //   font-size: 24px;
-  //   font-weight: 300;
-  //   letter-spacing: -1px; }
-
-  //   h2 {
-  //       margin-top: 2px;
-
-  //       font-size: 11px;
-  //       font-weight: 600;
-  //       font-family: $font-family-secondary;
-  //       text-transform: uppercase;
-  //   }
-
-  //   .latest-image {
-  //   }
-
-  //   .latest {
-  //       color: #8C989C;
-  //       font-size: 12px;
-  //   }
-  //   .latest a {
-  //       display: block;
-  //       font-size: 13px;
-  //       font-weight: 700;
-  //   }
-
-}
-
-.participation {
+.membership-secondary .membership-meta {
   @include position(relative);
-  min-height: 214px;
+  @include span-columns(5 omega, 7);
 
-  a {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  // background-color: #FFF;
+  // border-radius: 4px;
+  // border: 2px solid #DFE3E8;
+  // // box-shadow: 0 1px 0 #A0ABB6;
+  // transition: all 0.2s ease;
+
+  // &:after, &:before {
+  //   @include position(absolute, 0 100% 0 0);
+  //   content: '';
+  //   pointer-events: none;
+  //   width: 0; height: 0;
+
+  //   border: solid transparent;
+  // }
+  // &:after {
+  //   margin-top: -8px;
+  //   top: 20px;
+
+  //   border-color: rgba(#FFF, 0);
+  //   border-right-color: #FFF;
+  //   border-width: 8px;
+  // }
+  // &:before {
+  //   margin-top: -11px;
+  //   top: 20px;
+
+  //   border-color: rgba(#DFE3E8, 0);
+  //   border-right-color: #DFE3E8;
+  //   border-width: 11px;
+  //   transition: all 0.2s ease;
+  // }
+  // a { color: #454D57; }
+}
+
+
+.membership-header {
+  padding: 0.75rem;
+}
+.membership-data {
+  display: block;
+  color: #a0abb6;
+  font-size: 11px;
+
+  b { color: $brand-medGrey; }
+}
+
+
+// .participation (*)
+// Set of classes that style "card-like" statistics. E.g. depicting
+// singles, albums, groups, and events that an idol was a part of.
+// ---------------------------------------------------------------------
+.profile-participations {
+  padding: 1.5rem 0 2rem;
+  background-color: #DFE3E8;
+}
+.participation-cards {
+  align-content: stretch;
+  display: flex;
+}
+.participation-card {
+  @include position(relative);
+  flex: 1;
+  margin-right: 2rem;
+  min-height: 214px;
+  min-width: 214px;
+
+  background-color: #FFF;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(#000, 0.15);
+
+  &:last-child { margin-right: 0; }
+  .ss-icon {
+    @include position(relative, 1px 0 0 0);
+    padding-right: 2px;
+    color: $brand-lightGrey;
   }
-  .statistic {
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid $brand-paleGrey;
-    line-height: 1;
-    height: 96px;
-  }
+}
+.card-statistic {
+  padding: 1rem;
+  line-height: 1;
+  text-align: center;
+
   .count {
-    font-size: 48px;
+    font-size: 58px;
     font-weight: bold;
   }
-  .ss-icon {
-    @include position(absolute, 32px 0 0 0);
-    padding-left: 1px;
-    color: $brand-lightGrey;
+}
+.card-type {
+  margin: 0;
+  padding-bottom: 0.75rem;
+
+  color: $brand-medGrey;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.example-heading {
+  @include position(relative, 0 0 0 0px);
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+  text-align: center;
+
+  &:before {
+    @include position(absolute, 10px 0 0 0px);
+    width: 100%;
+    z-index: 0;
+
+    border-top: 1px solid rgba(#000, 0.05);
+    content: '';
   }
-  .type {
-    @include position(relative, -4px 0 0 0);
-    color: $brand-lightGrey;
-    font-family: $font-family-secondary;
-    font-size: 14px;
-    text-transform: uppercase;
+  .pill {
+    @include position(relative);
+    z-index: 1;
+    box-shadow: none;
+  }
+}
+.card-example {
+  padding: 0 1rem 1rem;
+
+  a { font-weight: 600; }
+  .example-subtext {
+    padding-top: 3px;
+    color: $brand-medGrey;
+    font-size: 12px;
   }
 }
 
-// .participation .latest-heading { @include span-columns(1, 4); }
-// .participation .latest { @include span-columns(3 omega, 4); }
-
-
-
-
-// Groups
+// .group-profile
+// ---------------------------------------------------------------------
 .group-profile {
   .membership-list,
   .release-list {
@@ -288,6 +267,7 @@ section.participations {
 // Classes tasked with displaying a timeline-like graph depicting the
 // tenures of each leader (if the number of former leaders is more
 // than one).
+// ---------------------------------------------------------------------
 .inactive-leaders {
   @include clearfix;
   margin: 24px 0;
@@ -311,12 +291,12 @@ section.participations {
 
     &.full-tenure {
       border-top: 1px solid rgba($brand-primary-accent, 0.25);
-      height: 12px;
+      height: 1rem;
     }
     &.leadership-tenure {
       background-color: $brand-primary-accent;
       top: -6px;
-      height: 12px;
+      height: 1rem;
     }
   }
   .leadership-tenure-count {
@@ -361,58 +341,230 @@ section.participations {
   .membership {
     @include span-columns(5, 10);
     @include nth-omega(2n);
-    padding-bottom: 12px;
+    padding-bottom: 1rem;
   }
 }
 
-.releases {
-  border-top: 1px solid $brand-paleGrey;
-  // border-bottom: 1px solid $brand-paleGrey;
-}
+// .profile-releases
+// ---------------------------------------------------------------------
+.profile-releases { background-color: #FFF; }
 .releases-singles,
 .releases-albums {
   @include clearfix;
-  padding-top: 24px; padding-bottom: 24px;
+  // padding-top: 24px; padding-bottom: 24px;
+
+  .release-data {
+    color: $brand-lightGrey;
+    font-size: 11px;
+
+    b { color: $brand-medGrey; }
+  }
+  .release-editions { @include position(absolute, 0.5rem 0.75rem 0 0); }
 }
-.releases-albums { border-top: 1px solid $brand-paleGrey; }
+.release-list {
+  display: flex;
+  flex-flow: row wrap;
+}
 
 .release {
-  @include clearfix;
   @include span-columns(6, 12);
   @include nth-omega(2n);
-  // min-height: 88px;
+  margin-bottom: 1rem;
 
+  &:nth-child(2n+1) { clear: both; }
   .romanized-name {
-    font-family: $font-family-secondary;
-    line-height: $headings-line-height;
+    margin-top: 1px;
     font-size: 14px;
+    font-weight: bold;
   }
   .name {
     display: block;
     color: $brand-lightGrey;
     font-size: 11px;
   }
+  .pill {
+    @include position(relative, -2px -2px 0 0);
+    float: right;
+    margin-left: 6px;
 
+    &.compilation {
+      box-shadow: inset 0 0 0 1px rgba(#FF76AF, 0.25);
+      color: rgba(#FF76AF, 0.75);
+    }
+    &.indie {
+      box-shadow: inset 0 0 0 1px rgba(#FF773A, 0.25);
+      color: rgba(#FF773A, 0.75);
+    }
+    &.status-solo {
+      top: -33px;
+      box-shadow: inset 0 0 0 1px rgba(#00E0BB, 0.25);
+      color: #00E0BB;
+    }
+  }
 }
 .release-image {
+  @include position(relative);
   @include span-columns(1, 6);
-  height: 65px;
+  padding: 2px;
 
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #CBD1D8;
+  color: #454D57;
+  text-align: right;
+
+  img {
+    max-height: 60px;
+    width: 60px;
+  }
+  .empty-image { height: 60px; }
   .ss-icon {
     font-size: 24px;
     width: 30px; height: 30px;
   }
 }
-.release-meta {
-  @include span-columns(5 omega, 6);
-  padding-top: 6px;
-}
+.release-number {
+  @include position(absolute, 0 -4px -4px 0);
+  padding: 3px 5px;
 
+  border-radius: 2px;
+  background: #00E0BB;
+  color: #FFF;
+  font-size: 11px;
+  font-weight: bold;
+}
+.release-meta {
+  @include position(relative);
+  @include span-columns(5 omega, 6);
+
+  background-color: #FFF;
+  border-radius: 4px;
+  border: 2px solid #DFE3E8;
+  // box-shadow: 0 1px 0 #A0ABB6;
+  transition: all 0.2s ease;
+
+  &:after, &:before {
+    @include position(absolute, 0 100% 0 0);
+    content: '';
+    pointer-events: none;
+    width: 0; height: 0;
+
+    border: solid transparent;
+  }
+  &:after {
+    margin-top: -8px;
+    top: 20px;
+
+    border-color: rgba(#FFF, 0);
+    border-right-color: #FFF;
+    border-width: 8px;
+  }
+  &:before {
+    margin-top: -11px;
+    top: 20px;
+
+    border-color: rgba(#DFE3E8, 0);
+    border-right-color: #DFE3E8;
+    border-width: 11px;
+    transition: all 0.2s ease;
+  }
+  a { color: #454D57; }
+}
+.release-meta:hover,
+.minor-release .release-meta:hover {
+  border-color: #009DDD;
+  box-shadow: 0 0 5px rgba(#009DDD, 0.25);
+
+  &:before { border-right-color: #009DDD; }
+  a { color: #009DDD; }
+}
+.major-release {
+  .release-image { box-shadow: inset 0 0 0 1px #B6BEC7; }
+}
+.minor-release {
+  .release-image { box-shadow: inset 0 0 0 1px #DFE3E8; }
+  .release-meta {
+    border-width: 1px;
+
+    &:before {
+      margin-top: -9px;
+      border-width: 9px;
+    }
+    .release-subtext {
+      background-color: #FFF;
+      box-shadow: 0 -1px 0 #EBEFF5;
+    }
+  }
+}
+.release-header { padding: 0.75rem; }
+.release-subtext {
+  @include position(relative);
+  padding: 0.5rem 0.75rem;
+
+  background-color: #F9FAFC;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
 .release-data {
   color: $brand-medGrey;
+
+  .ss-icon {
+    @include position(relative, 1px 0 0 0);
+    padding-right: 2px;
+  }
+}
+.release-participants {
+  @include position(relative);
+  padding: 2px 0 0 18px;
   font-size: 12px;
+
+  &:before {
+    @include position(absolute, 0 0 0 0px);
+    content: '\2514';
+  }
 }
 
-.release-participants {
-  font-size: 13px;
+// .profile-note
+// Styles that represent a admonition presented for any profile
+// object (usually groups and idols).
+// ---------------------------------------------------------------------
+.profile-note {
+  @include squish(1, 3);
+  font-size: 12px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  border: 1px solid #eee;
+  border-radius: 4px;
+  color: $brand-medGrey;
+
+  h4 {
+    @include position(relative);
+    @include span-columns(1, 8);
+    margin-top: 2px;
+
+    color: $brand-medGrey;
+    font-size: 12px;
+    font-weight: 600;
+
+    &:before {
+      @include position(absolute);
+      content: '';
+      border-top: 1px solid $brand-paleGrey;
+    }
+    .ss-icon { @include position(relative, 1px 0 0 0); }
+  }
+  p {
+    @include prefix(1, 8);
+    margin-top: 0; margin-bottom: 0;
+  }
+}
+
+// .
+// ---------------------------------------------------------------------
+.profile-memberships {
+  // padding: 1rem;
+
+  // background-color: #FFF;
+  // border-radius: 4px;
+  // box-shadow: 0 1px 1px rgba(#000, 0.15);
 }

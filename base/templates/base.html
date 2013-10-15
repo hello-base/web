@@ -1,29 +1,33 @@
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="{{ LANGUAGE_CODE|slice:"2" }}">
+<html class="no-js" lang="{{ LANGUAGE_CODE|slice:"2" }}" prefix="og: http://ogp.me/ns#">
 <head>
 <title>{% block title_override %}{% block title %}{% endblock %} &middot; Hello! Base{% endblock %}</title>
 <meta charset="utf-8">
 <meta name="author" content="Revyver, Inc.">
 <meta name="google" value="notranslate">
+<meta name="og:site_name" content="Hello! Base">
 {% block meta %}{% endblock %}
 
 <link rel="author" href="{% url "humans" %}" type="text/plain" />
 <link rel="dns-prefetch" href="//ajax.googleapis.com">
-<link rel="dns-prefetch" href="//hello-base.s3.amazonaws.com">
+<link rel="dns-prefetch" href="//hellobase-revyverinc.netdna-ssl.com">
 <link rel="icon" href="{% static 'images/favicon.ico' %}">
+<link rel="search" type="application/opensearchdescription+xml" title="Hello! Base Search" href="{% url 'opensearch' %}">
 <!-- Stylesheets -->
 <link rel="stylesheet" href="//cloud.typography.com/7547452/745842/css/fonts.css">
-<link rel="stylesheet" href="{% static 'stylesheets/application.css' %}">
+<link rel="stylesheet" href="{% if debug %}{% static 'stylesheets/application.css' %}{% else %}{% static 'stylesheets/production.min.css' %}{% endif %}" data-turbolinks-track>
 <!-- Javascripts -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="{% static 'javascripts/components.min.js' %}"></script>
-<script src="{% static 'javascripts/application.min.js' %}"></script>
+<script src="{% static 'javascripts/components.min.js' %}" data-turbolinks-track></script>
+<script src="{% static 'javascripts/application.min.js' %}" data-turbolinks-track></script>
+{% if not debug %}
 <script type="text/javascript">
   var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
   analytics.load("qs70qk1");
 </script>
+{% endif %}
 </head>
 <body id="hello-base" class="path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
 {% block body %}

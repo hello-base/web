@@ -1,3 +1,6 @@
+User-agent: sistrix
+Disallow: /
+
 User-agent: *
 Disallow: /accounts/authorize/
 Disallow: /accounts/authenticated/

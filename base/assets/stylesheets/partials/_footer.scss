@@ -1,17 +1,71 @@
-.footer {
-  border-top: 1px solid $brand-paleGrey;
+@import "compass/typography/lists/inline-list";
 
-  a {
-    @include link-colors($brand-lightGrey, $brand-blue);
-    font-style: italic;
-  }
+.footer {
+  a { @include link-colors(#646D77, $brand-blue); }
   p {
-    color: $brand-lightGrey;
+    color: #828B96;
     font-size: 11px;
   }
 
-  .container { padding-top: 2em; padding-bottom: 2em; }
-  .copyright { @include span-columns(6, $total-columns); }
-  .description { @include span-columns(3, $total-columns); }
-  .disclaimer { @include span-columns(3 omega, $total-columns); }
+  .container {
+    color: #FFF;
+    padding-top: 2rem; padding-bottom: 2rem;
+  }
+
+  .upper-footer {
+    align-items: center;
+    display: flex;
+    padding-top: 2rem;
+    border-top: 1px solid #F0F3F7;
+  }
+  .lower-footer {
+    align-items: center;
+    display: flex;
+    padding-top: 1rem;
+  }
+
+  .links {
+    @include reset-box-model;
+    display: inline-block;
+    flex: 1;
+
+    .link {
+      display: inline-block;
+      margin-right: 1rem;
+
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .ss-icon { @include position(relative, 1px 0 0 0); }
+  }
+
+  .social-links {
+    height: 20px;
+
+    span {
+      padding-right: 6px;
+      vertical-align: 6px;
+
+      color: #A1ABB6;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    [id^="twitter-widget"] {
+        margin-right: 6px;
+        width: 206px !important;  // UGLY HACK. D;
+    }
+  }
+
+  .byline { flex: 1; }
+  .hicon-logo-hello,
+  .hicon-logo-base {
+    @include position(relative, 2px 0 0 0);
+    font-size: 16px;
+  }
+  .copyright { margin: 0.15rem 0; }
+  .description,
+  .disclaimer {
+    margin: 0;
+    width: columns(3, $total_columns);
+  }
 }

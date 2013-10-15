@@ -1,47 +1,51 @@
 {% extends "layouts/site_base.html" %}
+{% load typogrify_tags %}
 
 {% block title %}{% if query %}Search results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
+{% block body-class %}{% if query %}with-query{% else %}no-query{% endif %} {% if page.object_list %}with-results{% else %}no-results{% endif %}{% endblock %}
 {% block content %}
-<header class="masthead">
+<section class="search">
+  <header class="masthead">
     <div class="container">
-        <h1 class="page-heading">Search</h1>
-        <form accept-charset="utf-8" action="{% url "search" %}" class="searchbar" method="get">
-            {% include "partials/searchbar.html" with value=query %}
-        </form>
+      <h1 class="page-heading"><span class="ss-icon ss-search"></span> Search</h1>
+      <form accept-charset="utf-8" action="{% url "search" %}" class="searchbar" method="get">
+        {% include "partials/searchbar.html" with value=query autocomplete=False %}
+      </form>
     </div>
-</header>
+  </header>
 
 {% if query %}
-<div class="container">
+  <div class="container">
+  {% if not page.object_list %}
+    <div class="empty">
+      <h2>OTZ</h2>
+      <p>{% filter typogrify %}Sorry, we couldn't find anything for the term "{{ query }}".{% endfilter %}</p>
+    </div>
+  {% else %}
     <h1>We found <strong>{{ page.paginator.count }}</strong> results for "{{ query }}"</h1>
-</div>
 
-<div class="container">
     <ul class="facets">
     {% for model in facets.fields.model %}
-        <li class="facet">
-            <span class="facet-chart" style="width: {% widthratio model.1 page.paginator.count 100 %}%"></span>
-            <span class="facet-type">{{ model.0 }}</span>
-            <span class="facet-count">{{ model.1 }}</span>
-        </li>
+      <li class="facet">
+        <span class="facet-chart" style="width: {% widthratio model.1 page.paginator.count 100 %}%"></span>
+        <span class="facet-type">{{ model.0 }}</span>
+        <span class="facet-count">{{ model.1 }}</span>
+      </li>
     {% endfor %}
     </ul>
 
     <ul class="results">
     {% for result in page.object_list %}
-        <li class="result">
-            {% if result.content_type == "music.album" %}{% include "search/includes/music/album.html" %}{% endif %}
-            {% if result.content_type == "music.single" %}{% include "search/includes/music/single.html" %}{% endif %}
-            {% if result.content_type == "people.idol" %}{% include "search/includes/people/idol.html" %}{% endif %}
-            {% if result.content_type == "people.group" %}{% include "search/includes/people/group.html" %}{% endif %}
-        </li>
-    {% empty %}
-        <li class="empty">
-            <h2>OTZ</h2>
-            <p>Sorry, we couldn't find anything for the term "{{ query }}".</p>
-        </li>
+      <li class="result">
+        {% if result.content_type == "music.album" %}{% include "search/includes/music/album.html" %}{% endif %}
+        {% if result.content_type == "music.single" %}{% include "search/includes/music/single.html" %}{% endif %}
+        {% if result.content_type == "people.idol" %}{% include "search/includes/people/idol.html" %}{% endif %}
+        {% if result.content_type == "people.group" %}{% include "search/includes/people/group.html" %}{% endif %}
+      </li>
     {% endfor %}
     </ul>
-</div>
+  </div>
+  {% endif %}
 {% endif %}
+</section>
 {% endblock content %}

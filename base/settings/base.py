@@ -39,6 +39,7 @@ class Base(Configuration):
         'components.events',
         'components.merchandise',
         'components.merchandise.goods',
+        'components.merchandise.media',
         'components.merchandise.music',
         'components.people',
     ]
@@ -50,6 +51,7 @@ class Base(Configuration):
         'typogrify',
     ]
     ADMINISTRATION = [
+        'grappelli.dashboard',
         'grappelli',
         'django.contrib.admin',
     ]
@@ -96,6 +98,7 @@ class Base(Configuration):
 
     # General Configuration.
     # ------------------------------------------------------------------
+    DATE_FORMAT = 'Y/m/d'
     LANGUAGE_CODE = 'en-us'
     SITE_ID = 1
     TIME_ZONE = 'UTC'
@@ -204,6 +207,7 @@ class Base(Configuration):
     # django-grappelli.
     # ------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
+    GRAPPELLI_INDEX_DASHBOARD = 'components.dashboard.CustomIndexDashboard'
 
     # django-haystack.
     # ------------------------------------------------------------------

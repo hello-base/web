@@ -10,9 +10,10 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from components.sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
-    SingleSitemap)
-from components.views import AutocompleteView, PlainTextView, SiteView
+from components.sitemaps import (AlbumSitemap, IdolSitemap,
+    GroupSitemap, SingleSitemap)
+from components.views import (AutocompleteView, ImageDetailView,
+    PlainTextView, SiteView, XMLView)
 
 
 # Administration system auto-discovery.
@@ -37,7 +38,12 @@ urlpatterns = patterns('',
     url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
     url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
 
+    # Imagery.
+    url(r'^image/(?P<slug>([a-zA-Z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif)))/$', name='image-detail', view=ImageDetailView.as_view()),
+
     # "Flatpages."
+    url(r'^404/$', name='404', view=TemplateView.as_view(template_name='404.html')),
+    url(r'^500/$', name='500', view=TemplateView.as_view(template_name='500.html')),
     url(r'^about/$', name='about', view=TemplateView.as_view(template_name='landings/about.html')),
     url(r'^privacy/$', name='privacy', view=TemplateView.as_view(template_name='landings/privacy.html')),
     url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
@@ -54,12 +60,14 @@ urlpatterns = patterns('',
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
     url(r'^', include('components.merchandise.goods.urls')),
+    url(r'^', include('components.merchandise.media.urls')),
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
 
     # Sitemaps, Favicons, Robots, and Humans.
-    url(r'^favicon\.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
+    url(r'^favicon.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
+    url(r'^opensearch.xml$', name='opensearch', view=XMLView.as_view(template_name='opensearch.xml')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
-    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

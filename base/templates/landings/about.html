@@ -1,5 +1,85 @@
 {% extends "layouts/site_base.html" %}
+{% load typogrify_tags %}
 
 {% block title %}About Us{% endblock %}
 {% block content %}
+{% filter typogrify %}
+<section class="flatpage about">
+  <header>
+    <div class="container">
+      <div class="tagline">
+        <h2>Discover everything about <a href="http://helloproject.com">Hello! Project</a>.</h2>
+        <h1>We are Hello! Base.</h1>
+        <p>Hello! Base combines the depth of Hello! Project with the best of the modern web, providing an immersive experience for fans both new and old while striving to advance the Hello! Project fandom.</p>
+      </div>
+    </div>
+  </header>
+  <div class="the-team">
+    <div class="container">
+      <div class="people founders">
+        <h2>"The Couple"</h2>
+        <ul class="team-list">
+          <li class="person">
+            <div class="person-photo"><img src="https://scontent-b.xx.fbcdn.net/hphotos-ash3/581579_10100496278740645_644159152_n.jpg"></div>
+            <div class="person-meta">
+              <span class="romanized-name">Bryan Veloso</span>
+              <span class="person-position">Co-founder</span>
+              <div class="person-biography">
+                {# <p>A 13-year veteran in professional "internet" shenanagins, Bryan was introduced to Hello! Project in 2005 by Jen. Then, everything changed. A former early employee of both <a href="https://facebook.com/">Facebook</a> and <a href="http://github.com/">GitHub</a>, Bryan is a self-proclaimed hybrid designer and developer who has an unhealthy addiction to video games and passion projects.</p> #}
+              </div>
+              <div class="person-twitter-handle"><a href="https://twitter.com/bryanveloso">@bryanveloso</a></div>
+              <div class="person-favorite-member">
+                {# <strong>Favorite Idol</strong> #}
+                {# <a href="{% url 'idol-detail' 'shimizu-saki' %}">Shimizu Saki</a> #}
+              </div>
+            </div>
+          </li>
+          <li class="person">
+            <div class="person-photo"><img src="https://si0.twimg.com/profile_images/1463360038/icey_camplus.jpg"></div>
+            <div class="person-meta">
+              <span class="romanized-name">Jen Veloso</span>
+              <span class="person-position">Co-founder</span>
+
+              <div class="person-twitter-handle"><a href="https://twitter.com/iceymoon">@iceymoon</a></div>
+              <div class="person-favorite-member">
+                {# <strong>Favorite Idol</strong> #}
+                {# <a href="{% url 'idol-detail' 'kamei-eri' %}">Kamei Eri</a> #}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="people editors">
+        <h2>The Editors</h2>
+        <ul class="team-list">
+          <li class="person">
+            <div class="person-photo"><img src="https://scontent-b.xx.fbcdn.net/hphotos-ash4/304534_4536437292756_1214546996_n.jpg"></div>
+            <div class="person-meta">
+              <span class="romanized-name">Hannah Martin</span>
+              <span class="person-position">Senior Editor</span>
+
+              <div class="person-twitter-handle"><a href="https://twitter.com/swimmingboys">@swimmingboys</a></div>
+            </div>
+          </li>
+          <li class="person">
+            <div class="person-photo"><img src="https://scontent-b.xx.fbcdn.net/hphotos-frc1/998575_10201037117064559_562490202_n.jpg"></div>
+            <div class="person-meta">
+              <span class="romanized-name">Sahra Nur</span>
+              <span class="person-position">Senior Editor</span>
+
+              <div class="person-twitter-handle"><a href="https://twitter.com/chouzetsu">@chouzetsu</a></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% comment %}
+  <div class="">
+  <p>We not only love the Hello! Project fandom, we love giving back to the Hello! Project fandom. The best example of this? <strong>Hello! Party,</strong> home to the largest gatherings of international fans outside of Japan.</p>
+  <iframe width="560" height="315" src="//www.youtube.com/embed/9Rp9qZ27G_U?rel=0" frameborder="0" allowfullscreen></iframe>
+  </div>
+  {% endcomment %}
+</section>
+{% endfilter %}
 {% endblock content %}

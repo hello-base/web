@@ -4,79 +4,108 @@
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block meta %}
+<meta property="og:title" content="{{ object.romanized_name }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
-<section class="profile group-profile">
-  <div class="profile-masthead"></div>
+<section class="profile group-profile" itemscope itemtype="http://schema.org/MusicGroup">
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
 
+  <div class="profile-masthead"></div>
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
         <div class="profile-photo"></div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
-          <span class="romanized-name">{{ object.romanized_name }}</span>
-          {% if object.former_names %}<div class="formerly-known-as">Formerly known as {{ object.former_names }}</div>{% endif %}
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+          {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
         </h1>
       </div>
-      <aside class="profile-vitals">
-        <ul class="vitals-list">
-          <li class="vital vital-age"><span class="ss-icon ss-clock"></span> {{ object.age }} <small>({{ object.age_in_days|intcomma }} days)</small> <span class="vital-label">Age</span></li>
-          <li class="vital vital-anniversary"><span class="ss-icon ss-calendar"></span> <time datetime="{{ object.started|date:"c" }}">{{ object.started }}</time> <span class="vital-label">Anniversary</span></li>
-          {% if object.ended %}<li class="vital vital-disband"><span class="ss-icon ss-ban"></span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time> <span class="vital-label">Disbanded</span></li>{% endif %}
-          <li class="vital vital-actives"><span class="ss-icon ss-users"></span> {{ memberships.active_count }} <span class="vital-label">Active Members</span></li>
-        </ul>
-      </aside>
-      <div class="latest-releases">
-        <div class="release">
-        {% with object.latest_single as release %}
-          <div class="pill-container"><span class="pill">Latest Single</span></div>
-          <div class="release-image"></div>
-          <div class="release-metadata">
-            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-            <span class="name">{{ release.name }}</span>
-            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
-          </div>
-        {% endwith %}
-        </div>
-        <div class="release">
-        {% with object.latest_album as release %}
-          <div class="pill-container"><span class="pill">Latest Album</span></div>
-          <div class="release-image"></div>
-          <div class="release-metadata">
-            <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-            <span class="name">{{ release.name }}</span>
-            <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> ({{ release.released|timesince }} ago) &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
-          </div>
-        {% endwith %}
-        </div>
+      {% if object.note or object.get_status_display == "Other" %}
+      <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
+        <h4><span class="ss-icon ss-notepad"></span> Note</h4>
+        {% if object.note %}{{ object.note_processed|typogrify }}{% endif %}
+        {% if object.get_status_display == "Other" %}<p>We apologize, but we are unsure of this group's status due to insufficient information.</p>{% endif %}
       </div>
+      {% endif %}
     </div>
   </header>
 
-  {% if object.note %}<div class="profile-note">{{ object.note_processed|typogrify }}</div>{% endif %}
-  {% if object.get_status_display == "Other" %}
-      <p>We apologize, but we are unsure of this group's status due to insufficient information.</p>
-  {% endif %}
+  <div class="profile-content">
+    <aside class="profile-vitals">
+      <div class="container">
+        <ul class="vitals-list">
+          <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.age }} ({{ object.age_in_days|intcomma }} days)</li>
+          <li class="vital vital-anniversary"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Anniversary</span> <time datetime="{{ object.started|date:"c" }}" itemprop="foundingDate">{{ object.started }}</time></li>
+          {% if object.ended %}<li class="vital vital-disband"><span class="vital-label"><span class="ss-icon ss-ban"></span> Disbanded</span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time></li>{% endif %}
+          <li class="vital vital-actives"><span class="vital-label"><span class="ss-icon ss-users"></span> Active Members</span> {{ memberships.active_count }}</li>
+        </ul>
+      </div>
+    </aside>
+    <div class="profile-participations">
+      <div class="container">
+        <ul class="participation-cards">
+          <li class="participation-card group-card">
+            <div class="card-statistic">
+              <h3 class="card-type"><span class="ss-icon ss-usergroup"></span> <span>Members</span></h3>
+              <span class="count">{{ object.memberships.count }}</span>
+            </div>
+            <div class="card-example">
+            {% with object.primary_membership as primary %}
+              <div class="example-heading"><span class="pill">Summary</span></div>
+              <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a>
+              <div class="example-subtext">
+                <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                  {% if primary.is_active %}
+                    Joined <b>{{ primary.started|date:"F j, Y" }}</b>
+                  {% else %}
+                    Member from <b>{{ primary.started|date:"F j, Y" }}</b>&ndash;<b>{{ primary.ended|date:"F j, Y" }}</b>
+                  {% endif %}
+                </time>
+                {% if primary.is_leader %}
+                <time datetime="{{ primary.leadership_started|date:"c" }}/{% if primary.leadership_ended %}{{ primary.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                  {% if not primary.leadership_ended %}
+                    and leader since <b>{{ primary.leadership_started|date:"F j, Y" }}</b>
+                  {% else %}
+                    and was leader from <b>{{ primary.leadership_started|date:"F j, Y"}}</b>&ndash;<b>{{ primary.leadership_ended|date:"F j, Y" }}</b>
+                  {% endif %}
+                </time>
+              {% endif %}
+              </div>
+            {% endwith %}
+            </div>
+          </li><!-- .group-participation -->
+          {% include "people/partials/single_card.html" %}
+          {% include "people/partials/album_card.html" %}
+        </ul><!-- .participation-list -->
+      </div><!-- .container -->
+    </div><!-- .participations -->
 
-  <div class="">
-  </div>
-
-</section>
-
-<div class="profile-subgroups">
-  {% for subgroup in object.subgroups.all %}
-    <span class="name">{{ subgroup.name }}</span>
-    <span class="romanized-name">{{ subgroup.romanized_name }}</span>
-  {% endfor %}
-</div>
+    {% if object.subgroups.all %}
+    <div class="profile-subgroups-container container">
+      <h2>Subgroups</h2>
+      <div class="profile-subgroups">
+        {% for subgroup in object.subgroups.all %}
+          <span class="name">{{ subgroup.name }}</span>
+          <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
+          <span class="ss-icon ss-calendar"></span>
+          <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+            {{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}
+          </time>
+          <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
 
 <section class="memberships">
     <div class="container">
         {% if memberships.active %}
         <div class="actives">
-            <div class="active-leader">
+            <div class="active-leader" itemprop="musicGroupMember">
             {% with memberships.leader as member %}
                 <span class="name">{{ member.idol.name }}</span>
                 <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
@@ -88,7 +117,7 @@
                 <div class="membership-section-title"><span class="pill">Current Members</span></div>
                 <ul class="membership-list active-members">
                 {% for member in memberships.active %}
-                    <li class="membership">
+                    <li class="membership" itemprop="musicGroupMember">
                         <div class="idol-image">
                             <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
                         </div>
@@ -117,8 +146,8 @@
                 <ul class="membership-list">
                     <li class="membership-header">
                         <div class="membership-graph">
-                            <span class="graph-started">{{ object.started|date:"Y/m/d" }}</span>
-                            <span class="graph-ended">{% if object.ended %}{{ object.ended|date:"Y/m/d" }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
+                            <span class="graph-started">{{ object.started|date }}</span>
+                            <span class="graph-ended">{% if object.ended %}{{ object.ended|date }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
                         </div>
                     </li>
                 {% for member in memberships.leaders %}
@@ -166,52 +195,38 @@
     </div>
 </section>
 
-<section class="releases">
-    <div class="container">
-        {% if singles %}
-        <div class="releases-singles">
-            <h2 class="section-title">Singles {{ singles|length }}</h2>
-            <ul class="release-list">
-            {% for release in singles %}
-                <li class="release">
-                    <div class="release-image">
-                        <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
-                    </div>
-                    <div class="release-meta">
-                        {{ release.number }}
-                        <span class="name">{{ release.name }}</span>
-                        <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                        <div class="release-date">
-                            <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        </div><!-- .releases-singles -->
-        {% endif %}
-        {% if albums %}
-        <div class="releases-albums">
-            <h2 class="section-title">Albums {{ albums|length }}</h2>
-            <ul class="release-list">
-            {% for release in albums %}
-                <li class="release">
-                    <div class="release-image">
-                        <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
-                    </div>
-                    <div class="release-meta">
-                        {{ release.number }}
-                        <span class="name">{{ release.name }}</span>
-                        <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
-                        <div class="release-date"><time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"Y/m/d" }}</time> &middot; {{ release.editions.count }} edition{{ release.editions.count|pluralize }}</div>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        </div><!-- .releases-albums -->
-        {% endif %}
-    </div><!-- .container -->
-</section><!-- .releases -->
-
-{# {% if debug %}{% print object %}{% endif %} #}
+<div class="profile-releases">
+  <div class="container">
+  {% if singles %}
+    <div class="releases-singles">
+      <h2 class="section-title">
+        <span class="title">
+          <span class="ss-icon ss-eighthnote"></span> Singles
+          <b class="count">{{ singles|length }}</b>
+        </span>
+      </h2>
+      <ul class="release-list">
+      {% for release in singles %}
+        {% include "people/partials/single_list_item.html" with release=release show_participants=False %}
+      {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% if albums %}
+    <div class="releases-albums">
+      <h2 class="section-title">
+        <span class="title">
+          <span class="ss-icon ss-music"></span> Albums
+          <b class="count">{{ albums|length }}</b>
+        </span>
+      </h2>
+      <ul class="release-list">
+      {% for release in albums %}
+        {% include "people/partials/album_list_item.html" with release=release show_participants=False %}
+      {% endfor %}
+      </ul><!-- .release-list -->
+    </div><!-- .releases-albums -->
+  {% endif %}
+  </div><!-- .container -->
+</div><!-- .releases -->
 {% endblock content %}

@@ -1,0 +1,57 @@
+{% extends "layouts/site_base.html" %}
+{% load humanize %}
+{% load static from staticfiles %}
+
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<meta property="og:title" content="{{ object.romanized_name }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block content %}
+<section class="profile venue-profile" itemscope itemtype="http://schema.org/MusicVenue">
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
+
+  <div class="profile-masthead"></div>
+  <header class="profile-header">
+    <div class="container">
+      <div class="profile-metadata">
+        {# <div class="profile-photo"></div> #}
+        <h1 class="profile-name">
+          <span class="name">{{ object.name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <a href="{{ object.url }}" itemprop="url"><span class="ss-icon ss-link"></span></a>
+  <img src="{{ MEDIA_URL }}{{ object.photo }}" itemprop="photo">
+
+  <p class="header">Details</p>
+  Performance count: {{ object.performances.count }}
+  Capacity: {{ object.capacity|intcomma }}
+  <p>Located at:<br />
+  {{ object.romanized_address }}<br />
+  ({{ object.address }})</p>
+
+  <h3 class="header">Events</h3>
+  <ul class="event-list">
+  {% for event in object.performances.all %}
+    <li class="event" itemprop="event" itemscope itemtype="http://schema.org/MusicEvent">
+      <time datetime="{{ event.day|date:'c' }}T{{ event.start_time|time:'H:i.u' }}" itemprop="startDate">
+        <span class="ss-icon ss-calendar"></span> {{ event.day|date }}
+        <span class="ss-icon ss-clock"></span> {{ event.start_time|time:"H:i" }}
+      </time>
+      <a href="{% url 'event-detail' event.event.slug %}" itemprop="name">
+        {{ event.event.romanized_name }}
+        {% if event.romanized_name %}{{ event.romanized_name }}{% endif %}
+      </a>
+      Acts: {{ event.event.participating_idols.all }} {{ event.event.participating_groups.all }}
+    </li>
+  {% endfor %}
+  </ul>
+
+</section>
+{% endblock content %}

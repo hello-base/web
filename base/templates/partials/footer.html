@@ -1,16 +1,27 @@
 <footer class="footer" role="contentinfo">
   <div class="container">
-    <p class="copyright"><strong>©2013 <a href="{% url "site-home" %}">Hello! Base</a></strong></p>
-    <nav class="links">
-      <ul>
-        <li><a href="{% url "about" %}">About</a></li>
-        <li><a href="{% url "privacy" %}">Privacy</a></li>
-        <li><a href="{% url "terms" %}">Terms</a></li>
+    <nav class="upper-footer">
+      <ul class="links">
+        <li class="link"><a href="{% url "about" %}"><span class="ss-icon ss-info"></span> About</a></li>
+        <li class="link"><a href="{% url "privacy" %}"><span class="ss-icon ss-lock"></span> Privacy</a></li>
+        <li class="link"><a href="{% url "terms" %}"><span class="ss-icon ss-books"></span> Terms</a></li>
       </ul>
+      <div class="social-links">
+        <span>Send us some &#x2764;</span>
+        <a href="https://twitter.com/hello_base" class="twitter-follow-button" data-show-count="true">Follow @hello_base</a>
+        <script src="//platform.twitter.com/widgets.js"></script>
+        <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fhellobase&amp;width=76&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=113685200489" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:76px; height:20px;" allowTransparency="true"></iframe>
+      </div>
     </nav>
-    <div class="byline">
+    <div class="lower-footer">
+      <div class="byline">
+        <a href="{% url "site-home" %}" class="logo-wordmark footer-logo-wordmark">
+            <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+        </a>
+        <p class="copyright">©2013 <a href="{% url "site-home" %}">Hello! Base</a>. All Rights Reserved.</p>
+      </div>
       <p class="description">This is part of a next-generation fansite brought to you by <a href="http://revyver.com" rel="external">Revyver</a>, with love.</p>
-      <p class="disclaimer"><a href="http://helloproject.com" rel="external">Hello! Project</a>, its idols, groups and assorted releases are trademark <a href="http://www.up-front-works.jp/" rel="external">Up-Front Works</a>.</p>
+      <p class="disclaimer"><a href="http://helloproject.com" rel="external">Hello! Project</a>, its idols, groups, and releases are trademark <a href="http://www.up-front-works.jp/" rel="external">Up-Front Works</a>.</p>
     </div>
   </div>
 </footer>

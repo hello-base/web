@@ -1,4 +1,5 @@
 @import "compass/css3/user-interface";
+@import "components/profiles";
 
 // Layout & Widths
 .music-profile {
@@ -8,43 +9,24 @@
   .release-name { @include span-columns(9, 12); }
   .release-metadata { @include span-columns(3 omega, 12); }
 
-  .edition-image { @include span-columns(2, 9); height: 146px; }
   .edition-contents { @include span-columns(7 omega, 9); }
   .edition-contents table { width: 100%; }
 }
 
 //
-.editions {
-  padding-right: 24px;
-  border-right: 1px solid $brand-paleGrey;
-}
+.editions { padding-right: 24px; }
 
+.profile.music-profile {
+  background-color: #FFF;
 
-
-.music-profile {
-  .editions { background-color: #FFF; }
+  .editions { }
+  .edition-list { }
 
   .romanized-name { }
   .name {
     display: block;
     color: $brand-lightGrey;
     font-size: 12px;
-  }
-}
-
-.release-name {
-  padding-bottom: 1em;
-
-  h1, p {
-    margin: 0;
-    font-weight: 200;
-  }
- .romanized-name {
-    font-size: 48px;
-    letter-spacing: -1px;
-  }
-  .name {
-    font-size: 18px;
   }
 }
 
@@ -59,31 +41,74 @@
   @include clearfix;
   margin-bottom: 36px;
 }
+.edition-contents {
+  @include position(relative);
+  background: #FFF;
+  border: 2px solid #DFE3E8;
+  border-radius: 4px;
+
+  &:after, &:before {
+    @include position(absolute, 0 100% 0 0);
+    content: '';
+    pointer-events: none;
+    width: 0; height: 0;
+
+    border: solid transparent;
+  }
+  &:after {
+    margin-top: -4px;
+    top: 20px;
+
+    border-color: rgba(#F9FAFC, 0);
+    border-right-color: #F9FAFC;
+    border-width: 8px;
+  }
+  &:before {
+    margin-top: -7px;
+    top: 20px;
+
+    border-color: rgba(#DFE3E8, 0);
+    border-right-color: #DFE3E8;
+    border-width: 11px;
+    transition: all 0.2s ease;
+  }
+}
+.edition-image {
+  @include span-columns(2, 9);
+  padding: 2px;
+
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #B6BEC7;
+
+  img { width: 136px; }
+  .empty-image { height: 136px; }
+}
 .edition-meta {
   @include clearfix;
+  background-color: #F9FAFC;
   color: $brand-medGrey;
 }
 .edition-name {
   margin: 0;
   height: 54px;
-  padding-bottom: 12px;
+  padding: 0.75rem 1rem;
   vertical-align: top;
 
+  border-top-left-radius: 2px;
   color: $brand-darkGrey;
   font-size: 18px;
-  font-weight: 600;
   line-height: $headings-line-height;
 
-  .romanized-name {
-    display: block;
-    padding-top: 3px;
-  }
+  .romanized-name { display: block; }
   .name { padding-top: 3px; }
 }
 .edition-subtext {
+  padding: 0.75rem 1rem;
   text-align: right;
   vertical-align: top;
   width: 184px;
+
+  border-top-right-radius: 2px;
 }
 .edition-released,
 .edition-number {
@@ -91,9 +116,13 @@
   display: block;
   font-size: 12px;
 }
+.edition-released {
+  color: $brand-medGrey;
+  .ss-icon { @include position(relative, 1px 0 0 0); }
+}
 
 .tracklist-heading {
-  padding: 12px 0;
+  padding: 1rem;
 
   border-top: 1px solid $brand-paleGrey;
   color: $brand-medGrey;
@@ -105,6 +134,7 @@
   .ss-icon {
     position: relative; top: 1px;
     margin-right: 2px;
+    color: #00ACE4;
   }
 }
 
@@ -113,11 +143,23 @@
 
   td { vertical-align: top; }
   .track-name { padding-bottom: 6px; }
-  &:last-child .track-name { padding-bottom: 12px; }
+  &:last-child .track-name { padding-bottom: 1rem; }
+}
+
+.track-participants {
+  @include position(relative);
+  padding: 2px 0 6px 18px;
+  font-size: 12px;
+
+  &:before {
+    @include position(absolute, 0 0 0 0px);
+    content: '\2514';
+  }
 }
 
 .track-number {
   font-family: $font-family-secondary;
+  padding-left: 1rem;
   width: 30px;
 
   .pill {
@@ -135,9 +177,9 @@
     text-align: center;
   }
 }
-
 .track-type {
   @include user-select(none);
+  padding-right: 1rem;
   text-align: right;
 
   .pill {
@@ -159,14 +201,21 @@
       color: $brand-medGrey;
     }
   }
+  .pill.aside, .pill.bside { box-shadow: none; }
   .pill.aside { background: $brand-primary-accent; }
   .pill.bside { background: $brand-secondary-accent; }
 }
 
 .participant {
+  @include clearfix;
+  margin-bottom: 0.25rem;
   font-size: 13px;
 
   .age {
+    @include span-columns(1, 8);
     font-weight: 600;
+  }
+  .romanized-name {
+    @include span-columns(5 omega, 8);
   }
 }

@@ -1,0 +1,97 @@
+{% extends "layouts/site_base.html" %}
+{% load typogrify_tags %}
+{% load people_tags %}
+
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<meta property="og:title" content="{{ object.romanized_name }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block content %}
+<section class="profile event-profile" itemscope itemtype="http://schema.org/MusicEvent">
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
+
+  <div class="profile-masthead"></div>
+  <header class="profile-header">
+    <div class="container">
+      <div class="profile-metadata">
+        {# <div class="profile-photo"></div> #}
+        <h1 class="profile-name">
+          <span class="name">{{ object.name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-content">
+    <aside class="profile-vitals">
+      <div class="container">
+        <ul class="vitals-list">
+          {% filter typogrify %}
+          <li class="vital vital-by">
+            <span class="vital-label"><span class="ss-icon ss-users"></span>{% if object.participants|length > 1 %} by{% endif %}</span>&nbsp;
+            <div class="vital-participants">
+            {% for participant in object.participants %}
+              <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup"><span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}</a>{% include "utilities/commaify.html" %}
+            {% endfor %}
+            </div>
+          </li>
+          {% endfilter %}
+        </ul>
+      </div>
+    </aside>
+  </div>
+  
+  <p>
+    This song is included on <em>{{ object.appears_on.count }} release{{ object.appears_on.count|pluralize }}</em>.
+        <ul class="release-list">
+          {% for release in object.appears_on.all %}
+            <li class="release">
+              <img src="{{ MEDIA_URL }}{{ release.edition.art }}"> <a href="{{ release.edition.parent.get_absolute_url }}">{{ release.edition.parent }}</a> {% if release.is_cover %}<span class="pill cover">Cover</span>{% endif %} {% if release.is_aside %}<span class="pill cover">A-side</span>{% endif %} {% if release.is_bside %}<span class="pill cover">B-side</span>{% endif %} {% if release.is_album_only %}<span class="pill cover">Album only</span>{% endif %}
+              <ul class="participant-list">
+                  {% for idol in object.idols.all %}
+                      <li class="participant">
+                        <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>
+                      </li>
+                  {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+          </ul>
+  </p>
+  
+  <p>
+      {% if object.composers %}Composition by: {% for person in object.composers.all %}
+      <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+      {% endfor %}<br />{% endif %}
+      {% if object.lyricists %}Lyrics by: {% for person in object.lyricists.all %}
+      <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+      {% endfor %}<br />{% endif %}
+      {% if object.composers %}Arranged by: {% for person in object.arrangers.all %}
+      <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+      {% endfor %}{% endif %}
+  </p>
+  
+  {% if object.romanized_lyrics %}
+  <p>
+    {{ object.romanized_lyrics }}
+  </p>
+  {% endif %}
+  
+  {% if object.lyrics %}
+    <p>
+      {{ object.lyrics }}
+    </p>
+  {% endif %}
+  
+  {% if object.translated_lyrics %}
+    <p>
+      {{ object.translated_lyrics }}
+    </p>
+  {% endif %}
+
+</section>
+{% endblock content %}

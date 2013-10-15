@@ -22,7 +22,9 @@ class SingleEditionInline(admin.StackedInline):
 
 class TrackOrderInline(admin.TabularInline):
     extra = 1
+    fieldsets = ((None, {'fields': ('track', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
     model = TrackOrder
+    sortable_field_name = 'position'
     verbose_name_plural = 'Track Order'
 
     raw_id_fields = ['track']
@@ -32,6 +34,7 @@ class TrackOrderInline(admin.TabularInline):
 class VideoTrackOrderInline(admin.TabularInline):
     extra = 1
     model = VideoTrackOrder
+    sortable_field_name = 'position'
     verbose_name_plural = 'Video Track Order'
 
     raw_id_fields = ['video']
@@ -44,7 +47,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
     list_select_related = True
     ordering = ('-modified',)
     prepopulated_fields = {'slug': ['romanized_name']}
-    readonly_fields = ['participating_groups', 'participating_idols', 'released']
+    readonly_fields = ['participating_groups', 'participating_idols', 'released', 'art']
     search_fields = ['romanized_name', 'name', 'idols__name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__name', 'groups__romanized_name']
 
     raw_id_fields = ('idols', 'groups',)
@@ -55,8 +58,9 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
-            'description': 'This is derived from this release\'s regular edition. Please change that date to change this one.',
-            'fields': ('released',)}),
+            'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
+            'fields': ('released', 'art')
+        }),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
@@ -83,11 +87,16 @@ class EditionAdmin(admin.ModelAdmin):
         ('Content', {'fields': ('romanized_name', 'released', 'catalog_number', 'price', 'art')})
     )
     inlines = [TrackOrderInline, VideoTrackOrderInline]
-    list_display = ['parent', 'kind', 'romanized_name', 'released', 'catalog_number']
-    list_display_links = ['parent', 'kind']
+    list_display = ['__unicode__', 'kind', 'romanized_name', 'name', 'released', 'catalog_number']
+    list_display_links = ['__unicode__', 'kind']
     list_filter = ['kind']
     list_select_related = True
-    search_fields = ['album__name', 'single__name', 'album__idols__name', 'album__groups__name', 'single__idols__name', 'single__groups__name', 'romanized_name']
+    ordering = ('-released',)
+    search_fields = [
+        'album__romanized_name', 'album__name',
+        'single__romanized_name', 'single__name',
+        'romanized_name', 'name',
+    ]
 
     raw_id_fields = ('album', 'single',)
     autocomplete_lookup_fields = {'fk': ['album', 'single']}
@@ -105,8 +114,8 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
         (None, {
-            'description': 'This is derived from this release\'s regular edition. Please change that date to change this one.',
-            'fields': ('released',)
+            'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
+            'fields': ('released', 'art'),
         }),
         ('Participants', {'fields': ('idols', 'groups')}),
         ('Participants (Rendered)', {
@@ -132,20 +141,27 @@ admin.site.register(Single, SingleAdmin)
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('romanized_name', 'name')}),
-        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants', {
+            'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
+            'fields': ('idols', 'groups')
+        }),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
         ('Alternates', {
-            'classes': ('collapse closed',),
+            'classes': ('grp-collapse grp-closed',),
             'fields': ('original_track', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
         }),
         ('Staff Involved', {
-            'classes': ('collapse closed',),
+            'classes': ('grp-collapse grp-closed',),
             'fields': ('arrangers', 'composers', 'lyricists')
-        })
+        }),
+        ('Lyrics', {
+            'classes': ('grp-collapse grp-closed',),
+            'fields': ('lyrics', 'romanized_lyrics', 'translated_lyrics')
+        }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
@@ -156,8 +172,11 @@ class TrackAdmin(admin.ModelAdmin):
     readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
 
-    raw_id_fields = ('idols', 'groups',)
-    autocomplete_lookup_fields = {'fk': ['original_track',], 'm2m': ['idols', 'groups']}
+    raw_id_fields = ('idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
+    autocomplete_lookup_fields = {
+        'fk': ['original_track',],
+        'm2m': ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
+    }
 admin.site.register(Track, TrackAdmin)
 
 

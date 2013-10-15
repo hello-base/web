@@ -1,9 +1,15 @@
+# "Hero" image fade-in.
+window.onload = ->
+  ($ '.hero-image img').animate({opacity: 1}, 300)
+
+# Search field highlighting.
 ($ document).ready ->
   ($ '#id_q').focus ->
-    ($ this).closest('.header-search').addClass 'focus'
+    ($ this).closest('.searchbar').addClass 'focus'
   ($ '#id_q').blur ->
-    ($ this).closest('.header-search').removeClass 'focus'
+    ($ this).closest('.searchbar').removeClass 'focus'
 
+# NProgress-related calls.
 ($ document).on 'page:fetch', ->
   NProgress.start()
 

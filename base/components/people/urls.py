@@ -10,7 +10,7 @@ from .views import (GroupBrowseView, GroupDetailView,
 
 
 urlpatterns = patterns('',
-    # MultiURL allows us to unite all of the music under a simpler URL.
+    # MultiURL allows us to unite all of the people under a simpler URL.
     multiurl(
         url(r'^(?P<slug>[-\w]+)/$', name='group-detail', view=GroupDetailView.as_view()),
         url(r'^(?P<slug>[-\w]+)/$', name='idol-detail', view=IdolDetailView.as_view()),

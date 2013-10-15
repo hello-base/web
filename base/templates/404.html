@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found (404){% endblock %}
+{% block page %}
+<h1>404</h1>
+<h2>Sorry, that page doesn't exist!</h2>
+<p>Did you lose your way? Get yourself back on track by searching below.</p>
+
+<form accept-charset="utf-8" action="{% url "search" %}" class="hero-search searchbar" method="get">
+  {% include "partials/searchbar.html" %}
+</form>
+{% endblock page %}

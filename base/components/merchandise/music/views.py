@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, ListView, TemplateView
 
+from components.accounts.views import QuicklinksMixin
 from .models import Album, Single, Track
 
 
@@ -8,7 +9,7 @@ class AlbumBrowseView(ListView):
     template_name = 'merchandise/music/album_browse.html'
 
 
-class AlbumDetailView(DetailView):
+class AlbumDetailView(QuicklinksMixin, DetailView):
     queryset = Album.objects.all()
     template_name = 'merchandise/music/album_detail.html'
 
@@ -28,7 +29,7 @@ class SingleBrowseView(ListView):
     template_name = 'merchandise/music/single_browse.html'
 
 
-class SingleDetailView(DetailView):
+class SingleDetailView(QuicklinksMixin, DetailView):
     model = Single
     template_name = 'merchandise/music/single_detail.html'
 
@@ -44,6 +45,6 @@ class TrackBrowseView(ListView):
     template_name = 'merchandise/music/track_browse.html'
 
 
-class TrackDetailView(DetailView):
+class TrackDetailView(QuicklinksMixin, DetailView):
     queryset = Track.objects.all()
     template_name = 'merchandise/music/track_detail.html'

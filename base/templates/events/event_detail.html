@@ -1,0 +1,92 @@
+{% extends "layouts/site_base.html" %}
+
+{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block meta %}
+<meta property="og:title" content="{{ object.romanized_name }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block content %}
+<section class="profile event-profile" itemscope itemtype="http://schema.org/MusicEvent">
+  <meta content="{{ object.get_absolute_url }}" itemprop="url">
+
+  <div class="profile-masthead"></div>
+  <header class="profile-header">
+    <div class="container">
+      <div class="profile-metadata">
+        <div class="profile-photo"><img src="{{ MEDIA_URL }}{{ object.logo }}"></div>
+        <h1 class="profile-name">
+          <span class="name">{{ object.name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-content">
+    <aside class="profile-vitals">
+      <div class="container">
+        <ul class="vitals-list">
+          <li class="vital vital-span">
+            <span class="vital-label"><span class="ss-icon ss-calendar"></span> Run</span>&nbsp;
+            <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date }}</time>&ndash;<time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date }}</time>
+          </li>
+          <li class="vital vital-nickname"><span class="vital-label"><span class="ss-icon ss-tag"></span> Nickname</span> {{ object.nickname }}</li>
+          <li class="vital vital-performances"><span class="vital-label"><span class="ss-icon ss-mic"></span> Performances</span> {{ object.schedule.count }}</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <img src="{{ MEDIA_URL }}{{ object.poster }}">
+  <img src="{{ MEDIA_URL }}{{ object.stage }}">
+
+  {{ object.participating_idols.all }}
+  {{ object.participating_groups.all }}
+
+  <p class="header">Details</p>
+  Nickname: {{ object.nickname }}<br />
+  Span:
+
+  {{ object.idols.all }}
+  {{ object.groups.all }}
+
+  <p>Links:<br />
+  <a href="{{ object.info_link }}" itemprop="url">{{ object.nickname }} Schedule</a>
+  {% if object.secondary_info_link %}
+  <br /><a href="{{ object.secondary_info_link }}" itemprop="url">
+  {% for performance in object.schedule.all %} {{ performance.romanized_name }} Schedule
+  {% endfor %}</a>{% endif %}</p>
+
+  <h3 class="header">Schedule</h3>
+  <table class="performance-list">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">Venue</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for performance in object.schedule.all %}
+      <tr itemprop="subEvent" itemscope itemtype="http://schema.org/subEvent">
+        <time datetime="{{ performance.day|date:'c' }}T{{ performance.start_time|time:'H:i.u' }}" itemprop="startDate">
+          <td><span class="ss-icon ss-calendar"></span> {{ performance.day|date }}</td>
+          <td><span class="ss-icon ss-clock"></span> {{ performance.start_time|time:"H:i" }}</td>
+        </time>
+        <td>
+          <a href="{% url 'venue-detail' performance.venue.slug %}">{{ performance.venue }}</a>
+          {% if performance.romanized_name %}{{ performance.romanized_name }}{% endif %}
+          {% if performance.name %}{{ performance.name }}{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr><td colspan="3">{{ object.schedule.all|length }} performances</td></tr>
+    </tfoot>
+  </table>
+
+</section>
+{% endblock content %}

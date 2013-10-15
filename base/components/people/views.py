@@ -6,13 +6,14 @@ from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
 from ohashi.shortcuts import get_object_or_none
 
 # from components.merchandise.music import constants as music
+from components.accounts.views import QuicklinksMixin
 from .models import Group, Idol, Membership, Staff
 # from .utils import attach_primary_groups
 
 
 class GroupBrowseView(ListView):
     queryset = Group.objects.order_by('slug')
-    template_name = 'people/groups/group_browse.html'
+    template_name = 'people/group_browse.html'
 
     def get_context_data(self, **kwargs):
         context = super(GroupBrowseView, self).get_context_data(**kwargs)
@@ -21,9 +22,9 @@ class GroupBrowseView(ListView):
         return context
 
 
-class GroupDetailView(DetailView):
+class GroupDetailView(QuicklinksMixin, DetailView):
     queryset = Group.objects.all()
-    template_name = 'people/groups/group_detail.html'
+    template_name = 'people/group_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(GroupDetailView, self).get_context_data(**kwargs)
@@ -37,21 +38,22 @@ class GroupDetailView(DetailView):
             'active_count': len([m for m in memberships if m.ended is None]),
             'inactive': [m for m in memberships if m.ended and m.is_leader == False],
             'leader': get_object_or_none(Membership.objects.select_related('idol'), group=self.object.pk, ended__isnull=True, is_leader=True),
-            'leaders': sorted([m for m in memberships if m.ended and m.is_leader], key=attrgetter('leadership_started')),
+            'leaders': sorted([m for m in memberships if m.ended and m.is_leader and m.leadership_started != None], key=attrgetter('leadership_started')),
         }
 
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        context['events'] = self.object.events.all()
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
         return context
 
 
 class GroupMembershipView(DetailView):
     queryset = Group.objects.all()
-    template_name = 'people/groups/group_membership.html'
+    template_name = 'people/group_membership.html'
 
 
 class IdolBrowseView(TemplateView):
-    template_name = 'people/idols/idol_browse.html'
+    template_name = 'people/idol_browse.html'
 
 #     def get_context_data(self, **kwargs):
 #         context = super(IdolBrowseView, self).get_context_data(**kwargs)
@@ -81,14 +83,15 @@ class IdolBrowseView(TemplateView):
 #         return context
 
 
-class IdolDetailView(PrefetchRelatedMixin, DetailView):
+class IdolDetailView(QuicklinksMixin, PrefetchRelatedMixin, DetailView):
     model = Idol
     prefetch_related = ['memberships__group']
-    template_name = 'people/idols/idol_detail.html'
+    template_name = 'people/idol_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(IdolDetailView, self).get_context_data(**kwargs)
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
+        context['events'] = self.object.events.all()
         context['memberships'] = self.object.memberships.select_related('group')[1:]
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
         return context
