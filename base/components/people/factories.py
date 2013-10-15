@@ -13,16 +13,20 @@ class PersonFactory(factory.django.DjangoModelFactory):
 class IdolFactory(PersonFactory):
     FACTORY_FOR = models.Idol
 
+    romanized_name = factory.Sequence(lambda i: 'idol#%s' % i)
+
 
 class StaffFactory(PersonFactory):
     FACTORY_FOR = models.Staff
+
+    romanized_name = factory.Sequence(lambda i: 'staff#%s' % i)
 
 
 class GroupFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Group
 
     romanized_name = factory.Sequence(lambda i: 'group#%s' % i)
-    started = datetime.datetime.now()
+    started = datetime.date.today() - datetime.timedelta(days=365)
 
 
 class MembershipFactory(factory.django.DjangoModelFactory):
@@ -30,3 +34,4 @@ class MembershipFactory(factory.django.DjangoModelFactory):
 
     idol = factory.SubFactory(IdolFactory)
     group = factory.SubFactory(GroupFactory)
+    started = datetime.date.today() - datetime.timedelta(days=365)

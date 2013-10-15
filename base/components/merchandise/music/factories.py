@@ -14,11 +14,11 @@ class AlbumFactory(BaseFactory):
     FACTORY_FOR = models.Album
 
     romanized_name = factory.Sequence(lambda i: 'album#%s' % i)
-    released = datetime.datetime.now()
+    released = datetime.date.today()
 
 
 class SingleFactory(BaseFactory):
     FACTORY_FOR = models.Single
 
     romanized_name = factory.Sequence(lambda i: 'single#%s' % i)
-    released = datetime.datetime.now()
+    released = datetime.date.today()
