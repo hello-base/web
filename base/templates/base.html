@@ -17,7 +17,7 @@
 <link rel="search" type="application/opensearchdescription+xml" title="Hello! Base Search" href="{% url 'opensearch' %}">
 <!-- Stylesheets -->
 <link rel="stylesheet" href="//cloud.typography.com/7547452/745842/css/fonts.css">
-<link rel="stylesheet" href="{% static 'stylesheets/production.min.css' %}" data-turbolinks-track>
+<link rel="stylesheet" href="{% if debug %}{% static 'stylesheets/application.css' %}{% else %}{% static 'stylesheets/production.min.css' %}{% endif %}" data-turbolinks-track>
 <!-- Javascripts -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="{% static 'javascripts/components.min.js' %}" data-turbolinks-track></script>
