@@ -179,6 +179,9 @@ class Edition(models.Model):
 
 
 class Track(ParticipationMixin):
+    album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks')
+    single = models.ForeignKey(Single, blank=True, null=True, related_name='tracks')
+
     # Metadata.
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
