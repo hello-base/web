@@ -158,7 +158,7 @@ class TrackAdmin(admin.ModelAdmin):
         }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
-    list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
+    list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate', 'participant_list']
     list_display_links = ['romanized_name', 'name']
     list_filter = ['is_alternate']
     list_select_related = True
@@ -171,6 +171,10 @@ class TrackAdmin(admin.ModelAdmin):
         'fk': ['original_track',],
         'm2m': ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     }
+
+    def participant_list(self, obj):
+        return ', '.join([p.romanized_name for p in obj.participants])
+    participant_list.short_description = 'Participant List'
 admin.site.register(Track, TrackAdmin)
 
 
