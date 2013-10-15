@@ -140,7 +140,7 @@ admin.site.register(Single, SingleAdmin)
 
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('romanized_name', 'name')}),
+        (None, {'fields': (('romanized_name', 'name'),)}),
         ('Participants', {
             'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
             'fields': ('idols', 'groups')
@@ -150,14 +150,8 @@ class TrackAdmin(admin.ModelAdmin):
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
-        ('Alternates', {
-            'classes': ('grp-collapse grp-closed',),
-            'fields': ('original_track', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
-        }),
-        ('Staff Involved', {
-            'classes': ('grp-collapse grp-closed',),
-            'fields': ('arrangers', 'composers', 'lyricists')
-        }),
+        ('Alternates', {'fields': ('original_track', 'is_cover', 'is_alternate', ('romanized_name_alternate', 'name_alternate'))}),
+        ('Staff Involved', {'fields': ('arrangers', 'composers', 'lyricists')}),
         ('Lyrics', {
             'classes': ('grp-collapse grp-closed',),
             'fields': ('lyrics', 'romanized_lyrics', 'translated_lyrics')
@@ -183,11 +177,11 @@ admin.site.register(Track, TrackAdmin)
 class VideoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('kind',)}),
-        (None, {'fields': ('romanized_name', 'name', 'released')}),
+        (None, {'fields': (('romanized_name', 'name'),)}),
         ('Relations', {'fields': ('album', 'single')}),
         ('Details', {
             'classes': ('collapse closed',),
-            'fields': ('still', 'video_url')
+            'fields': ('released', 'still', 'video_url')
         })
     )
     list_display = ['romanized_name', 'name', 'kind', 'released', 'video_url']
