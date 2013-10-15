@@ -5,6 +5,18 @@ from .base import Base as Settings
 
 
 class Testing(Settings):
+    # Installed Applications.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS = [
+        'components.accounts',
+        'components.events',
+        'components.merchandise',
+        'components.merchandise.goods',
+        'components.merchandise.media',
+        'components.merchandise.music',
+        'components.people',
+    ]
+
     # Database Configuration.
     # ------------------------------------------------------------------
     DATABASES = {
@@ -12,14 +24,4 @@ class Testing(Settings):
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'test-base',
         }
-    }
-
-    # django-haystack.
-    # ------------------------------------------------------------------
-    HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-            'URL': 'http://127.0.0.1:9200/',
-            'INDEX_NAME': 'haystack',
-        },
     }
