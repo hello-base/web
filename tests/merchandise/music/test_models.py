@@ -6,18 +6,16 @@ from components.merchandise.music.factories import (AlbumFactory,
 
 
 @pytest.mark.django_db
-class TestAlbums(object):
-    def test_album_factory(self):
-        album = AlbumFactory()
-        assert isinstance(album, Album)
-        assert 'album' in album.romanized_name
-        assert album.identifier == 'album'
+def test_album_factory():
+    factory = AlbumFactory()
+    assert isinstance(factory, Album)
+    assert 'album' in factory.romanized_name
+    assert factory.identifier == 'album'
 
 
 @pytest.mark.django_db
-class TestSingles(object):
-    def test_single_factory(self):
-        single = SingleFactory()
-        assert isinstance(single, Single)
-        assert 'single' in single.romanized_name
-        assert single.identifier == 'single'
+def test_single_factory():
+    factory = SingleFactory()
+    assert isinstance(factory, Single)
+    assert 'single' in factory.romanized_name
+    assert factory.identifier == 'single'
