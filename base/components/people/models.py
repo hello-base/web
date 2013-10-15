@@ -82,7 +82,6 @@ class Idol(Person):
     birthplace_longitude = models.FloatField(blank=True, null=True)
 
     # Options & Extra Information.
-    has_discussions = models.BooleanField('activate discussions for this idol.', default=False)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
@@ -150,7 +149,6 @@ class Group(TimeStampedModel):
     groups = models.ManyToManyField('self', blank=True, null=True, related_name='member_groups', symmetrical=False)
 
     # Options & Extra Information.
-    has_discussions = models.BooleanField('activate discussions for this group.', default=False)
     former_names = models.CharField(blank=True)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
