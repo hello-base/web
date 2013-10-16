@@ -51,7 +51,7 @@ class Base(Configuration):
         'typogrify',
     ]
     ADMINISTRATION = [
-        'grappelli.dashboard',
+        # 'grappelli.dashboard',
         'grappelli',
         'django.contrib.admin',
     ]
