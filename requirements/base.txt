@@ -4,6 +4,7 @@ analytics-python >= 0.4.2, < 1.0.0
 Django >= 1.5
 django-birthday == 0.1.1
 django-braces >=1.2.2, < 2.0.0
+django-celery >= 3.0.23, < 4.0.0
 django-configurations >= 0.5.1, < 1.0.0
 django-dotenv == 1.2
 django-ecstatic >= 0.1, < 1.0
