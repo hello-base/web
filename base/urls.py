@@ -49,6 +49,7 @@ urlpatterns = patterns('',
     url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
 
     # Administration Modules.
+    url(r'^audits/', include('components.audits.urls')),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
