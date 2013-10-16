@@ -159,6 +159,10 @@ class Production(Settings):
         }
     }
 
+    # django-celery.
+    # ------------------------------------------------------------------
+    BROKER_URL = CELERY_RESULT_BACKEND = redisify(default='redis://localhost')
+
     # django-haystack (ElasticSearch).
     # ------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
