@@ -6,7 +6,7 @@ from people.models import Group, Idol
 
 
 class AlbumSitemap(Sitemap):
-    changefreq = 'monthly'
+    changefreq = 'daily'
     priority = 0.6
 
     def items(self):
@@ -17,7 +17,7 @@ class AlbumSitemap(Sitemap):
 
 
 class GroupSitemap(Sitemap):
-    changefreq = 'monthly'
+    changefreq = 'daily'
 
     def items(self):
         return Group.objects.all()
@@ -32,7 +32,7 @@ class GroupSitemap(Sitemap):
 
 
 class IdolSitemap(Sitemap):
-    changefreq = 'monthly'
+    changefreq = 'daily'
 
     def items(self):
         return Idol.objects.all()
@@ -47,7 +47,7 @@ class IdolSitemap(Sitemap):
 
 
 class SingleSitemap(Sitemap):
-    changefreq = 'monthly'
+    changefreq = 'daily'
     priority = 0.6
 
     def items(self):
