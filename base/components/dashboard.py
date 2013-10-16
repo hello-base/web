@@ -19,16 +19,16 @@ class CustomIndexDashboard(Dashboard):
                     models=('components.events.*',),
                 ),
                 modules.ModelList(
+                    title='Music', column=1, collapsible=False,
+                    models=('components.merchandise.music.*',),
+                ),
+                modules.ModelList(
                     title='Media', column=1, collapsible=False,
                     models=('components.merchandise.media.*',),
                 ),
                 modules.ModelList(
                     title='Goods', column=1, collapsible=False,
                     models=('components.merchandise.goods.*',),
-                ),
-                modules.ModelList(
-                    title='Music', column=1, collapsible=False,
-                    models=('components.merchandise.music.*',),
                 ),
             ]
         ))
