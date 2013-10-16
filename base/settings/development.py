@@ -56,9 +56,11 @@ class Development(Settings):
 
     # django-haystack.
     # ------------------------------------------------------------------
+    ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'ENGINE': 'components.search_backends.KuromojiElastcisearchEngine',
+            # 'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
             'URL': 'http://127.0.0.1:9200/',
             'INDEX_NAME': 'haystack',
         },
