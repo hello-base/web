@@ -10,6 +10,7 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
+from components.audits.views import AuditListView
 from components.sitemaps import (AlbumSitemap, IdolSitemap,
     GroupSitemap, SingleSitemap)
 from components.views import (AutocompleteView, ImageDetailView,
@@ -49,7 +50,7 @@ urlpatterns = patterns('',
     url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
 
     # Administration Modules.
-    url(r'^audits/', include('components.audits.urls')),
+    url(r'^audits/', name='audit-list', view=AuditListView.as_view()),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
