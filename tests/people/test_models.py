@@ -13,11 +13,25 @@ def test_group_factory():
 
 
 @pytest.mark.django_db
+def test_group_get_absolute_url(client):
+    factory = GroupFactory()
+    response = client.get(factory.get_absolute_url())
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
 def test_idol_factory():
     factory = IdolFactory()
     assert isinstance(factory, Idol)
     assert 'family' in factory.romanized_family_name
     assert 'given' in factory.romanized_given_name
+
+
+@pytest.mark.django_db
+def test_idol_get_absolute_url(client):
+    factory = IdolFactory()
+    response = client.get(factory.get_absolute_url())
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db
