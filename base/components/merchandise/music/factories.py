@@ -28,7 +28,13 @@ class SingleFactory(BaseFactory):
     slug = factory.LazyAttribute(lambda f: slugify(f.romanized_name))
 
 
-class TrackFactory(BaseFactory):
+class EditionFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Edition
+
+    romanized_name = factory.Sequence(lambda i: 'edition#%s' % i)
+
+
+class TrackFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Track
     FACTORY_DJANGO_GET_OR_CREATE = ('romanized_name',)
 
