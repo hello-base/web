@@ -290,13 +290,18 @@ class ParticipationMixin(models.Model):
         help_text='The remaining idols that are not a member of the given groups.')
     participating_groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss_attributed_to')
 
+    # Track idols and groups. We shouldn't need to re-run the
+    # participants calculation if nothing has changed.
+    tracker = FieldTracker()
+
     class Meta:
         abstract = True
 
     def save(self, *args, **kwargs):
         super(ParticipationMixin, self).save(*args, **kwargs)
-        from .tasks import render_participants
-        render_participants.delay(self)
+        if self.tracker.has_changed('idols') or self.tracker.has_changed('groups'):
+            from .tasks import render_participants
+            render_participants.delay(self)
 
     @cached_property
     def supergroup(self):
