@@ -8,18 +8,6 @@ from ohashi.shortcuts import get_object_or_none
 # from components.merchandise.music import constants as music
 from components.accounts.views import QuicklinksMixin
 from .models import Group, Idol, Membership, Staff
-# from .utils import attach_primary_groups
-
-
-class GroupBrowseView(ListView):
-    queryset = Group.objects.order_by('slug')
-    template_name = 'people/group_browse.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(GroupBrowseView, self).get_context_data(**kwargs)
-        context['active_groups'] = Group.objects.active().order_by('classification', 'started')
-        context['inactive_groups'] = Group.objects.inactive().order_by('classification')
-        return context
 
 
 class GroupDetailView(QuicklinksMixin, DetailView):
@@ -47,42 +35,6 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         return context
 
 
-class GroupMembershipView(DetailView):
-    queryset = Group.objects.all()
-    template_name = 'people/group_membership.html'
-
-
-class IdolBrowseView(TemplateView):
-    template_name = 'people/idol_browse.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super(IdolBrowseView, self).get_context_data(**kwargs)
-
-#         hello_project = Idol.objects.hello_project()
-#         hello_project_roster = attach_primary_groups(hello_project.order_by('birthdate'))
-#         context['hello_project'] = {
-#             'roster': hello_project_roster,
-#             'roster_count': hello_project.count(),
-
-#             # Aggregations
-#             'average_age': hello_project.average_age(),
-#             'average_height': hello_project.average_height(),
-#             'popular_bloodtype': hello_project.popular_bloodtype(),
-
-#             # Superlatives
-#             'most_junior_member': hello_project.most_junior_member(),
-#             'most_senior_member': hello_project.most_senior_member(),
-#             'tallest_member': hello_project.tallest_member(),
-#             'shortest_member': hello_project.shortest_member(),
-#             'oldest_member': hello_project.oldest_member(),
-#             'youngest_member': hello_project.youngest_member(),
-#         }
-
-#         everybody_else = Idol.objects.everybody_else()
-#         context['everybody_else'] = attach_primary_groups(everybody_else)
-#         return context
-
-
 class IdolDetailView(QuicklinksMixin, PrefetchRelatedMixin, DetailView):
     model = Idol
     prefetch_related = ['memberships__group']
@@ -95,11 +47,6 @@ class IdolDetailView(QuicklinksMixin, PrefetchRelatedMixin, DetailView):
         context['memberships'] = self.object.memberships.select_related('group')[1:]
         context['singles'] = self.object.singles.prefetch_related('editions', 'participating_idols', 'participating_groups')
         return context
-
-
-class StaffBrowseView(ListView):
-    queryset = Staff.objects.all()
-    template_name = ''
 
 
 class StaffDetailView(DetailView):

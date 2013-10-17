@@ -4,8 +4,7 @@ from django.views.generic.base import RedirectView
 
 from multiurl import ContinueResolving, multiurl
 
-from .views import (AlbumDetailView, AlbumBrowseView, MusicBrowseView, SingleDetailView,
-    SingleBrowseView, TrackDetailView, TrackBrowseView)
+from .views import AlbumDetailView, SingleDetailView, TrackDetailView
 
 
 urlpatterns = patterns('',
