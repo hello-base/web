@@ -1,14 +1,19 @@
 from celery.decorators import task
 
 
-@task()
+@task
 def render_participants(instance):
     from components.people.models import Idol, Membership
 
     # Do we have existing participants? Clear them out so we can
     # calculate them again.
-    instance.participating_idols.clear()
     instance.participating_groups.clear()
+    GroupsThrough = instance.participating_groups.through
+    GroupsThrough.objects.all().delete()
+
+    instance.participating_idols.clear()
+    IdolsThrough = instance.participating_idols.through
+    IdolsThrough.objects.all().delete()
 
     # Access the through models for `participating_idols` and
     # `participating_groups` directly.
