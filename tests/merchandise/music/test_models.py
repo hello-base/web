@@ -59,15 +59,15 @@ class TestEditions:
         assert isinstance(factory, Edition)
         assert 'edition' in factory.romanized_name
 
-    def test_edition_parent(self):
-        single = SingleFactory()
-        edition = EditionFactory(single=single)
-        assert edition.parent == single
-
     def test_edition_get_absolute_url(self):
         single = SingleFactory()
         edition = EditionFactory(single=single)
         assert edition.get_absolute_url() == single.get_absolute_url()
+
+    def test_edition_parent(self):
+        single = SingleFactory()
+        edition = EditionFactory(single=single)
+        assert edition.parent == single
 
 
 class TestTracks:
