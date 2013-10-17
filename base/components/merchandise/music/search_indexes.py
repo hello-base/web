@@ -1,11 +1,12 @@
 import datetime
 
+from celery_haystack.indexes import CelerySearchIndex
 from haystack import indexes
 
 from .models import Album, Single
 
 
-class AlbumIndex(indexes.SearchIndex, indexes.Indexable):
+class AlbumIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.NgramField(document=True, use_template=True)
     model = indexes.CharField(model_attr="_meta__verbose_name_plural", faceted=True)
 
@@ -18,7 +19,7 @@ class AlbumIndex(indexes.SearchIndex, indexes.Indexable):
         return qs
 
 
-class SingleIndex(indexes.SearchIndex, indexes.Indexable):
+class SingleIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.NgramField(document=True, use_template=True)
     model = indexes.CharField(model_attr="_meta__verbose_name_plural", faceted=True)
 
