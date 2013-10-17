@@ -222,7 +222,7 @@ class Base(Configuration):
         'haystack',
         'celery_haystack',
     ]
-    HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
+    HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
     HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
     # South.
