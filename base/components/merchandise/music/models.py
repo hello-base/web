@@ -78,6 +78,26 @@ class Album(Base):
     def get_absolute_url(self):
         return reverse('album-detail', kwargs={'slug': self.slug})
 
+    @cached_property
+    def get_previous(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.albums.order_by('-released').exclude(number='')
+                return qs.filter(released__lt=self.released)[0]
+            except IndexError:
+                return None
+
+    @cached_property
+    def get_next(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.albums.order_by('released').exclude(number='')
+                return qs.filter(released__gt=self.released)[0]
+            except IndexError:
+                return None
+
 
 class Single(Base):
     is_indie = models.BooleanField('indie single?', default=False)
@@ -87,6 +107,26 @@ class Single(Base):
 
     def get_absolute_url(self):
         return reverse('single-detail', kwargs={'slug': self.slug})
+
+    @cached_property
+    def get_previous(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.singles.order_by('-released').exclude(number='')
+                return qs.filter(released__lt=self.released)[0]
+            except IndexError:
+                return None
+
+    @cached_property
+    def get_next(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.singles.order_by('released').exclude(number='')
+                return qs.filter(released__gt=self.released)[0]
+            except IndexError:
+                return None
 
 
 class Edition(models.Model):
