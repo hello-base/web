@@ -161,7 +161,11 @@ class Production(Settings):
 
     # django-celery.
     # ------------------------------------------------------------------
-    BROKER_URL = CELERY_RESULT_BACKEND = redisify(default='redis://localhost')
+    BROKER_CONNECTION_MAX_RETRIES = 0
+    BROKER_POOL_LIMIT = 3
+    BROKER_TRANSPORT = 'amqplib'
+    BROKER_URL = values.SecretValue(environ_prefix='', environ_name='CLOUDAMQP_URL')
+    CELERY_RESULT_BACKEND = 'amqp'
 
     # django-haystack (ElasticSearch).
     # ------------------------------------------------------------------
