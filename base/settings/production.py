@@ -159,6 +159,10 @@ class Production(Settings):
         }
     }
 
+    # django-celery.
+    # ------------------------------------------------------------------
+    BROKER_URL = CELERY_RESULT_BACKEND = redisify(default='redis://localhost')
+
     # django-haystack (ElasticSearch).
     # ------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
@@ -175,8 +179,8 @@ class Production(Settings):
 
     # django-imagekit.
     # ------------------------------------------------------------------
-    IMAGEKIT_CACHEFILE_DIR = 'cache'
     IMAGEKIT_CACHE_BACKEND = 'staticfiles'
+    IMAGEKIT_CACHEFILE_DIR = 'cache'
+    IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Async'
     IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
     IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'
-    # IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Async'

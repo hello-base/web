@@ -8,6 +8,7 @@ from sys import path
 from django.core.urlresolvers import reverse_lazy
 
 from configurations import Configuration, values
+from djcelery import setup_loader
 from postgresify import postgresify
 
 
@@ -194,7 +195,14 @@ class Base(Configuration):
         }
     }
 
-    # django-ecstatic / django-staticbuilder
+    # django-celery.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['djcelery',]
+    CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
+    CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
+    setup_loader()
+
+    # django-ecstatic / django-staticbuilder.
     # ------------------------------------------------------------------
     INSTALLED_APPS += [
         'ecstatic',
