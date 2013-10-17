@@ -8,12 +8,7 @@ def render_participants(instance):
     # Do we have existing participants? Clear them out so we can
     # calculate them again.
     instance.participating_groups.clear()
-    GroupsThrough = instance.participating_groups.through
-    GroupsThrough.objects.all().delete()
-
     instance.participating_idols.clear()
-    IdolsThrough = instance.participating_idols.through
-    IdolsThrough.objects.all().delete()
 
     # Access the through models for `participating_idols` and
     # `participating_groups` directly.
