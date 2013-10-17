@@ -161,11 +161,7 @@ class Production(Settings):
 
     # django-celery.
     # ------------------------------------------------------------------
-    BROKER_URL = (lambda password, db: 'redis://:%%s@%(LOCATION)s/%%d' \
-            % CACHES['default'] % (password, db))( \
-              CACHES['default']['OPTIONS']['PASSWORD'] or '',
-              CACHES['default']['OPTIONS']['DB'] or 0,
-            )
+    BROKER_URL = values.Value(environ_prefix='', environ_name='OPENREDIS_URL')
     CELERY_RESULT_BACKEND = BROKER_URL
 
     # django-haystack (ElasticSearch).
