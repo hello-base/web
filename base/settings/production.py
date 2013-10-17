@@ -161,11 +161,12 @@ class Production(Settings):
 
     # django-celery.
     # ------------------------------------------------------------------
-    BROKER_CONNECTION_MAX_RETRIES = 0
-    BROKER_POOL_LIMIT = 3
-    BROKER_TRANSPORT = 'amqplib'
-    BROKER_URL = values.Value(environ_prefix='', environ_name='CLOUDAMQP_URL')
-    CELERY_RESULT_BACKEND = 'amqp'
+    BROKER_URL = (lambda password, db: 'redis://:%%s@%(LOCATION)s/%%d' \
+            % CACHES['default'] % (password, db))( \
+              CACHES['default']['OPTIONS']['PASSWORD'] or '',
+              CACHES['default']['OPTIONS']['DB'] or 0,
+            )
+    CELERY_RESULT_BACKEND = BROKER_URL
 
     # django-haystack (ElasticSearch).
     # ------------------------------------------------------------------
