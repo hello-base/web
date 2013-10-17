@@ -36,7 +36,7 @@ class CustomIndexDashboard(Dashboard):
         # Management modules.
         self.children.append(modules.AppList(
             title='Management', column=2, collapsible=False,
-            models=('components.accounts.*', 'django.contrib.*',),
+            models=('components.accounts.*', 'django.contrib.*', 'djcelery.*'),
         ))
 
         # Recent actions.
