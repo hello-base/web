@@ -70,6 +70,7 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     inlines = [AlbumEditionInline]
     list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list', 'is_compilation']
     list_editable = ['number', 'released', 'is_compilation']
+    list_select_related = True
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
@@ -129,6 +130,7 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     inlines = [SingleEditionInline]
     list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list']
     list_editable = ['number', 'released']
+    list_select_related = True
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
@@ -156,13 +158,17 @@ class TrackAdmin(admin.ModelAdmin):
         }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
-    list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
-    list_display_links = ['romanized_name', 'name']
+    list_display = ['__unicode__', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
+    list_display_links = ['__unicode__', 'name']
     list_filter = ['is_cover', 'is_alternate']
     list_select_related = True
     ordering = ('-id',)
     readonly_fields = ['participating_groups', 'participating_idols']
-    search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
+    search_fields = [
+        'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name',
+        'groups__romanized_name', 'groups__name',
+        'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate'
+    ]
 
     raw_id_fields = ('idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
     autocomplete_lookup_fields = {

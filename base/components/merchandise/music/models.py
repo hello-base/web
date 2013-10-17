@@ -255,7 +255,7 @@ class Track(ParticipationMixin):
             return u'%s [%s]' % (self.romanized_name, self.romanized_name_alternate)
         if self.is_cover and not self.is_alternate:
             return u'%s [Cover]' % (self.romanized_name)
-        return u'%s' % (self.romanized_name)
+        return u'%s [Original]' % (self.romanized_name)
 
     def get_absolute_url(self):
         if self.original_track:
