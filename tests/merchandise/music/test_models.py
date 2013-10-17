@@ -36,17 +36,18 @@ def test_single_get_absolute_url(client):
 
 
 def test_single_get_previous_and_next():
-    single1 = SingleFactory(number='1', romanized_name='single1', released=datetime.date.today() - datetime.timedelta(days=14))
-    single2 = SingleFactory(number='2', romanized_name='single2', released=datetime.date.today() - datetime.timedelta(days=7))
+    single1 = SingleFactory(romanized_name='single1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
+    single2 = SingleFactory(romanized_name='single2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
+    single3 = SingleFactory(romanized_name='single2', released=datetime.date.today())
 
     group = GroupFactory()
     single1.groups.add(group)
     assert single1.groups.exists()
     single2.groups.add(group)
     assert single2.groups.exists()
+    single3.groups.add(group)
+    assert single2.groups.exists()
 
-    previous = single2.get_previous
-    assert previous == single1
-
-    next = single1.get_next
-    assert next == single2
+    assert single1.get_next == single2
+    assert single2.get_previous == single1
+    assert single2.get_next != single3
