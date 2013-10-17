@@ -1,9 +1,9 @@
 import datetime
 import pytest
 
-from components.merchandise.music.models import Album, Single
+from components.merchandise.music.models import Album, Single, Track
 from components.merchandise.music.factories import (AlbumFactory,
-    BaseFactory, SingleFactory)
+    BaseFactory, SingleFactory, TrackFactory)
 from components.people.factories import GroupFactory
 
 
@@ -50,3 +50,10 @@ class TestSingles:
         assert single1.get_next == single2
         assert single2.get_previous == single1
         assert single2.get_next != single3
+
+
+class TestTracks:
+    def test_track_factory(self):
+        factory = TrackFactory()
+        assert isinstance(factory, Track)
+        assert 'track' in factory.romanized_name

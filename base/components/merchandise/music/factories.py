@@ -26,3 +26,10 @@ class SingleFactory(BaseFactory):
     romanized_name = factory.Sequence(lambda i: 'single#%s' % i)
     released = datetime.date.today()
     slug = factory.LazyAttribute(lambda f: slugify(f.romanized_name))
+
+
+class TrackFactory(BaseFactory):
+    FACTORY_FOR = models.Track
+    FACTORY_DJANGO_GET_OR_CREATE = ('romanized_name',)
+
+    romanized_name = factory.Sequence(lambda i: 'track#%s' % i)
