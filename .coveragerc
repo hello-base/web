@@ -1,2 +1,6 @@
 [run]
 omit = ../*migrations*
+
+[report]
+exclude_lines =
+    def autocomplete_search_fields
