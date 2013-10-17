@@ -16,11 +16,23 @@ def test_album_factory():
     assert factory.identifier == 'album'
 
 
+def test_album_get_absolute_url(client):
+    factory = AlbumFactory()
+    response = client.get(factory.get_absolute_url())
+    assert response.status_code == 200
+
+
 def test_single_factory():
     factory = SingleFactory()
     assert isinstance(factory, Single)
     assert 'single' in factory.romanized_name
     assert factory.identifier == 'single'
+
+
+def test_single_get_absolute_url(client):
+    factory = SingleFactory()
+    response = client.get(factory.get_absolute_url())
+    assert response.status_code == 200
 
 
 def test_single_get_previous_and_next():
