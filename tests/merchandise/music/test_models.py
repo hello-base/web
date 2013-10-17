@@ -7,7 +7,8 @@ from components.merchandise.music.factories import (AlbumFactory,
 from components.people.factories import GroupFactory
 
 
-@pytest.mark.django_db
+pytestmark = pytest.mark.django_db
+
 def test_album_factory():
     factory = AlbumFactory()
     assert isinstance(factory, Album)
@@ -15,7 +16,6 @@ def test_album_factory():
     assert factory.identifier == 'album'
 
 
-@pytest.mark.django_db
 def test_single_factory():
     factory = SingleFactory()
     assert isinstance(factory, Single)
@@ -23,7 +23,6 @@ def test_single_factory():
     assert factory.identifier == 'single'
 
 
-@pytest.mark.django_db
 def test_single_get_previous_and_next():
     single1 = SingleFactory(number='1', romanized_name='single1', released=datetime.date.today() - datetime.timedelta(days=14))
     single2 = SingleFactory(number='2', romanized_name='single2', released=datetime.date.today() - datetime.timedelta(days=7))
