@@ -2,10 +2,8 @@ from operator import attrgetter
 
 from django.views.generic import ListView, DetailView, TemplateView
 
-from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
 from ohashi.shortcuts import get_object_or_none
 
-# from components.merchandise.music import constants as music
 from components.accounts.views import QuicklinksMixin
 from .models import Group, Idol, Membership, Staff
 
@@ -35,9 +33,8 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         return context
 
 
-class IdolDetailView(QuicklinksMixin, PrefetchRelatedMixin, DetailView):
+class IdolDetailView(QuicklinksMixin, DetailView):
     model = Idol
-    prefetch_related = ['memberships__group']
     template_name = 'people/idol_detail.html'
 
     def get_context_data(self, **kwargs):
