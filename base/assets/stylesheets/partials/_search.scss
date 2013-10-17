@@ -153,6 +153,11 @@
       @include position(absolute, 0 0 0 0px);
       content: '\2514';
     }
+    .page-count {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+    }
   }
 
   .facets {
