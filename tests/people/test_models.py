@@ -5,21 +5,20 @@ from components.people.factories import (GroupFactory, IdolFactory,
     MembershipFactory, StaffFactory)
 
 
-@pytest.mark.django_db
+pytestmark = pytest.mark.django_db
+
 def test_group_factory():
     factory = GroupFactory()
     assert isinstance(factory, Group)
     assert 'group' in factory.romanized_name
 
 
-@pytest.mark.django_db
 def test_group_get_absolute_url(client):
     factory = GroupFactory()
     response = client.get(factory.get_absolute_url())
     assert response.status_code == 200
 
 
-@pytest.mark.django_db
 def test_idol_factory():
     factory = IdolFactory()
     assert isinstance(factory, Idol)
@@ -27,14 +26,12 @@ def test_idol_factory():
     assert 'given' in factory.romanized_given_name
 
 
-@pytest.mark.django_db
 def test_idol_get_absolute_url(client):
     factory = IdolFactory()
     response = client.get(factory.get_absolute_url())
     assert response.status_code == 200
 
 
-@pytest.mark.django_db
 def test_staff_factory():
     factory = StaffFactory()
     assert isinstance(factory, Staff)
@@ -42,7 +39,6 @@ def test_staff_factory():
     assert 'given' in factory.romanized_given_name
 
 
-@pytest.mark.django_db
 def test_membership_factory():
     factory = MembershipFactory()
     assert isinstance(factory, Membership)
