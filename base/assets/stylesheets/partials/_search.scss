@@ -139,7 +139,21 @@
     }
   }
 
-  h1 { font-size: 18px; font-weight: 400; }
+  .search-results-header {
+    @include position(relative);
+    margin: -1rem 0 2rem 12px;
+    padding-left: 26px;
+
+    color: $brand-lightGrey;
+    font-family: $font-family-primary;
+    font-size: 18px;
+    font-weight: 400;
+
+    &:before {
+      @include position(absolute, 0 0 0 0px);
+      content: '\2514';
+    }
+  }
 
   .facets {
     @include span-columns(2, 12);
