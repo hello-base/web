@@ -87,16 +87,20 @@
 }
 
 .administration {
+  margin: -32px;
+  padding: 0.5rem 0;
+
   background-color: #FFF;
   box-shadow: inset 0 -1px 0 #F0F3F7;
-  padding: 0.5rem 0;
   font-size: 11px;
+  transition: height 250ms ease;
 
   a { color: #B6BEC7; }
   a.object { float: right; }
   a:hover { color: #00ACE4; }
   .ss-icon { @include position(relative, 2px 0 0 0); }
 }
+.administration.visible { margin: 0; }
 
 @import "sections/flatpages";
 @import "sections/music";

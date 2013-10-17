@@ -1,3 +1,7 @@
+# Toggle the administration system.
+($ document).keypress (e) ->
+  ($ '.administration').toggleClass 'visible' if (e.keyCode || e.which) == 96
+
 # "Hero" image fade-in.
 window.onload = ->
   ($ '.hero-image img').animate({opacity: 1}, 300)
