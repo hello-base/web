@@ -10,12 +10,6 @@ def render_participants(instance):
     instance.participating_groups.clear()
     instance.participating_idols.clear()
 
-    # Access the through models for `participating_idols` and
-    # `participating_groups` directly.
-    GroupsThrough = instance.participating_groups.through
-    IdolsThrough = instance.participating_idols.through
-
-    kwargs = {instance._meta.module_name: instance}
     groups = instance.groups.all()
     if groups.exists():
         # If a supergroup is one of the groups attributed, just
@@ -39,10 +33,10 @@ def render_participants(instance):
 
         # Add the calculated groups and idols to our new list of
         # participating groups and idols.
-        GroupsThrough.objects.bulk_create([GroupsThrough(group=group, **kwargs) for group in list(groups)])
-        IdolsThrough.objects.bulk_create([IdolsThrough(idol=idol, **kwargs) for idol in list(distinct_idols)])
+        instance.participating_groups.add(*list(groups))
+        instance.participating_idols.add(*list(distinct_idols))
         return
 
     # No groups? Just add all the idols.
-    IdolsThrough.objects.bulk_create([IdolsThrough(idol=idol, **kwargs) for idol in list(instance.idols.all())])
+    instance.participating_idols.add(*list(instance.idols.all()))
     return
