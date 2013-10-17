@@ -1,10 +1,9 @@
 import datetime
 import pytest
 
-from components.merchandise.music.models import (Album, Edition,
-    Single, Track)
-from components.merchandise.music.factories import (AlbumFactory,
-    BaseFactory, EditionFactory, SingleFactory, TrackFactory)
+from components.merchandise.music.models import Album, Edition, Single, Track
+from components.merchandise.music.factories import (AlbumFactory, BaseFactory, EditionFactory,
+    SingleFactory, TrackFactory)
 from components.people.factories import GroupFactory
 
 

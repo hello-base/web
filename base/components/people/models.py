@@ -11,8 +11,7 @@ from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
 from ohashi.db import models
 
-from .constants import (BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES,
-    SCOPE, STATUS)
+from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
 from .utils import calculate_age, calculate_average_age
 

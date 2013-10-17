@@ -1,7 +1,6 @@
 from django import forms
 
-from .models import (Show, TimeSlot, Episode, Synopsis, Magazine, Issue, 
-    IssueImage, CardSet, Card)
+from .models import Show, TimeSlot, Episode, Synopsis, Magazine, Issue, IssueImage, CardSet, Card
 
 
 class ShowForm(forms.ModelForm):

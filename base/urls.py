@@ -10,10 +10,8 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from components.sitemaps import (AlbumSitemap, IdolSitemap,
-    GroupSitemap, SingleSitemap)
-from components.views import (AutocompleteView, ImageDetailView,
-    PlainTextView, SiteView, XMLView)
+from components.sitemaps import AlbumSitemap, IdolSitemap, GroupSitemap, SingleSitemap
+from components.views import AutocompleteView, ImageDetailView, PlainTextView, SiteView, XMLView
 
 
 # Administration system auto-discovery.

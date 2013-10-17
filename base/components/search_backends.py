@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from haystack.backends.elasticsearch_backend import (
-    ElasticsearchSearchBackend, ElasticsearchSearchEngine)
+from haystack.backends.elasticsearch_backend import (ElasticsearchSearchBackend,
+    ElasticsearchSearchEngine)
 
 
 class KuromojiElasticsearchBackend(ElasticsearchSearchBackend):
