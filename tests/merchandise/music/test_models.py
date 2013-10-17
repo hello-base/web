@@ -1,9 +1,10 @@
 import datetime
 import pytest
 
-from components.merchandise.music.models import Album, Single, Track
+from components.merchandise.music.models import (Album, Edition,
+    Single, Track)
 from components.merchandise.music.factories import (AlbumFactory,
-    BaseFactory, SingleFactory, TrackFactory)
+    BaseFactory, EditionFactory, SingleFactory, TrackFactory)
 from components.people.factories import GroupFactory
 
 
@@ -52,8 +53,30 @@ class TestSingles:
         assert single2.get_next != single3
 
 
+class TestEditions:
+    def test_edition_factory(self):
+        factory = EditionFactory()
+        assert isinstance(factory, Edition)
+        assert 'edition' in factory.romanized_name
+
+    def test_edition_parent(self):
+        single = SingleFactory()
+        edition = EditionFactory(single=single)
+        assert edition.parent == single
+
+    def test_edition_get_absolute_url(self):
+        single = SingleFactory()
+        edition = EditionFactory(single=single)
+        assert edition.get_absolute_url() == single.get_absolute_url()
+
+
 class TestTracks:
     def test_track_factory(self):
         factory = TrackFactory()
         assert isinstance(factory, Track)
         assert 'track' in factory.romanized_name
+
+    def test_track_get_absolute_url(self, client):
+        factory = TrackFactory()
+        response = client.get(factory.get_absolute_url())
+        assert response.status_code == 200
