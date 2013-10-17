@@ -46,7 +46,6 @@ class Base(Configuration):
     ]
     PLUGINS = [
         'floppyforms',
-        'haystack',
         'imagekit',
         'south',
         'typogrify',
@@ -219,6 +218,10 @@ class Base(Configuration):
 
     # django-haystack.
     # ------------------------------------------------------------------
+    INSTALLED_APPS += [
+        'haystack',
+        'celery_haystack',
+    ]
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
 
     # South.
