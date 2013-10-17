@@ -19,6 +19,7 @@ class Production(Settings):
     # Middleware Configuration.
     # ------------------------------------------------------------------
     MIDDLEWARE_CLASSES = (
+        'django.middleware.cache.UpdateCacheMiddleware',
         'django.middleware.gzip.GZipMiddleware',
         'django.middleware.common.CommonMiddleware',
         'djangosecure.middleware.SecurityMiddleware',
@@ -27,6 +28,7 @@ class Production(Settings):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django.middleware.cache.FetchFromCacheMiddleware',
     )
 
     # Debug Settings.
@@ -40,6 +42,7 @@ class Production(Settings):
     # Caching Configuration.
     # ------------------------------------------------------------------
     CACHES = redisify(default='redis://localhost')
+    CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
     # Separate the staticfiles cache from the normal Redis cache.
     CACHES['staticfiles'] = {
