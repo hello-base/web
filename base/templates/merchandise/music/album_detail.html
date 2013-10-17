@@ -27,6 +27,15 @@
     </div>
   </header>
 
+  {% if object.get_previous or object.get_next %}
+  <nav class="profile-navigation">
+    <div class="container">
+      {% if object.get_previous %}<div class="navigation-item navigation-previous"><a href="{{ object.get_previous.get_absolute_url }}"><span class="ss-icon ss-navigateleft"></span> {{ object.get_previous }}</a></div>{% endif %}
+      {% if object.get_next %}<div class="navigation-item navigation-next"><a href="{{ object.get_next.get_absolute_url }}">{{ object.get_next }} <span class="ss-icon ss-navigateright"></span></a></div>{% endif %}
+    </div>
+  </nav>
+  {% endif %}
+
   <div class="profile-content">
     <aside class="profile-vitals">
       <div class="container">
