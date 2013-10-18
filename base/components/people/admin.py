@@ -55,12 +55,13 @@ class IdolAdmin(admin.ModelAdmin):
         ('Status', {'fields': (('status', 'scope'),)}),
         ('Basics', {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
-        ('Details & Options', {'fields': ('height', 'bloodtype', 'note')}),
+        ('Details & Options', {'fields': (('height', 'bloodtype'), 'photo', 'note')}),
     )
     inlines = [MembershipInline, HeadshotInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
     list_editable = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
+    readonly_fields = ['photo']
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
 
     def save_model(self, request, obj, form, change):
