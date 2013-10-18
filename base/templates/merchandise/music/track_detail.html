@@ -1,6 +1,7 @@
 {% extends "layouts/site_base.html" %}
-{% load typogrify_tags %}
+{% load markup %}
 {% load people_tags %}
+{% load typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
 {% block meta %}
@@ -44,7 +45,7 @@
       </div>
     </aside>
   </div>
-  
+
   <p>
     This song is included on <em>{{ object.appears_on.count }} release{{ object.appears_on.count|pluralize }}</em>.
         <ul class="release-list">
@@ -62,7 +63,7 @@
           {% endfor %}
           </ul>
   </p>
-  
+
   <p>
       {% if object.composers %}Composition by: {% for person in object.composers.all %}
       <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
@@ -74,22 +75,25 @@
       <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
       {% endfor %}{% endif %}
   </p>
-  
+
   {% if object.romanized_lyrics %}
+  <h2>Romanized Lyrics</h2>
   <p>
-    {{ object.romanized_lyrics }}
+    {{ object.romanized_lyrics|markdown }}
   </p>
   {% endif %}
-  
+
   {% if object.lyrics %}
+  <h2>Lyrics</h2>
     <p>
-      {{ object.lyrics }}
+      {{ object.lyrics|markdown }}
     </p>
   {% endif %}
-  
+
   {% if object.translated_lyrics %}
+  <h2>Translated Lyrics</h2>
     <p>
-      {{ object.translated_lyrics }}
+      {{ object.translated_lyrics|markdown }}
     </p>
   {% endif %}
 
