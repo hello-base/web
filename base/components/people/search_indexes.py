@@ -10,7 +10,6 @@ from .models import Group, Idol
 class IdolIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.NgramField(document=True, use_template=True)
     model = indexes.CharField(model_attr='_meta__verbose_name_plural', faceted=True)
-
     romanized_name = indexes.CharField(model_attr='romanized_name')
     name = indexes.CharField(model_attr='name')
 
@@ -26,7 +25,6 @@ class IdolIndex(CelerySearchIndex, indexes.Indexable):
 class GroupIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.NgramField(document=True, use_template=True)
     model = indexes.CharField(model_attr='_meta__verbose_name_plural', faceted=True)
-
     romanized_name = indexes.CharField(model_attr='romanized_name')
     name = indexes.CharField(model_attr='name')
 
