@@ -334,13 +334,13 @@ class Groupshot(models.Model):
         ordering = ('-taken',)
 
     def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.group.name, self.taken)
+        return u'Photo of %s (%s)' % (self.group.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):
         super(Groupshot, self).save(*args, **kwargs)
         if self.kind:
-            photo = self.objects.latest()
-            self.group.photo = photo
+            latest = self._default_manager.filter(group=self.group).latest()
+            self.group.photo = latest.photo
             self.group.save()
 
 
@@ -356,11 +356,11 @@ class Headshot(models.Model):
         ordering = ('-taken',)
 
     def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.idol.name, self.taken)
+        return u'Photo of %s (%s)' % (self.idol.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):
         super(Headshot, self).save(*args, **kwargs)
         if self.id:
-            photo = self.objects.latest()
-            self.idol.photo = photo
+            latest = self._default_manager.filter(idol=self.idol).latest()
+            self.idol.photo = latest.photo
             self.idol.save()
