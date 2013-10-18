@@ -73,19 +73,10 @@
     @include span-columns(2, 7);
     height: 82px;
   }
-
-  .membership-section-title {
-    // @include span-columns(2 omega, 12);
-  }
   .membership-list {
     @include clearfix;
     // @include span-columns(10, 12);
   }
-  .membership {
-    // @include span-columns(5, 10);
-    // @include nth-omega(2n);
-  }
-
   .membership,
   .membership-primary {
     padding-bottom: 1rem;
@@ -100,41 +91,7 @@
 .membership-secondary .membership-meta {
   @include position(relative);
   @include span-columns(5 omega, 7);
-
-  // background-color: #FFF;
-  // border-radius: 4px;
-  // border: 2px solid #DFE3E8;
-  // // box-shadow: 0 1px 0 #A0ABB6;
-  // transition: all 0.2s ease;
-
-  // &:after, &:before {
-  //   @include position(absolute, 0 100% 0 0);
-  //   content: '';
-  //   pointer-events: none;
-  //   width: 0; height: 0;
-
-  //   border: solid transparent;
-  // }
-  // &:after {
-  //   margin-top: -8px;
-  //   top: 20px;
-
-  //   border-color: rgba(#FFF, 0);
-  //   border-right-color: #FFF;
-  //   border-width: 8px;
-  // }
-  // &:before {
-  //   margin-top: -11px;
-  //   top: 20px;
-
-  //   border-color: rgba(#DFE3E8, 0);
-  //   border-right-color: #DFE3E8;
-  //   border-width: 11px;
-  //   transition: all 0.2s ease;
-  // }
-  // a { color: #454D57; }
 }
-
 
 .membership-header {
   padding: 0.75rem;
@@ -239,27 +196,100 @@
   }
 
   .memberships {
-    .actives {}
-    .inactives { border-top: 1px solid $brand-paleGrey; }
+    .actives { margin: 1rem 0; }
+    .inactives { margin: 1rem 0; }
   }
-  .membership-section-title { @include span-columns(2 omega, 12); }
+  // .membership-section-title { @include span-columns(2 omega, 12); }
   .membership .romanized-name {
-    font-family: $font-family-secondary;
+    margin-top: 1px;
     font-size: 14px;
+    font-weight: bold;
+  }
+  .membership {
+    &:nth-child(3n+1) { clear: both; }
+  }
+  .membership .name {
+    display: block;
+    color: $brand-lightGrey;
+    font-size: 11px;
+  }
+  .idol-meta {
+    @include position(relative);
+    @include span-columns(3 omega, 4);
+
+    background-color: #FFF;
+    border-radius: 4px;
+    border: 1px solid #DFE3E8;
+
+    &:after, &:before {
+      @include position(absolute, 0 100% 0 0);
+      content: '';
+      pointer-events: none;
+      width: 0; height: 0;
+
+      border: solid transparent;
+    }
+    &:after {
+      margin-top: -8px;
+      top: 20px;
+
+      border-color: rgba(#FFF, 0);
+      border-right-color: #FFF;
+      border-width: 8px;
+    }
+    &:before {
+      margin-top: -9px;
+      top: 20px;
+
+      border-color: rgba(#DFE3E8, 0);
+      border-right-color: #DFE3E8;
+      border-width: 9px;
+      transition: all 0.2s ease;
+    }
+    a { color: #454D57; }
+  }
+  .idol-header { padding: 0.75rem; }
+  .idol-subtext {
+    @include position(relative);
+    padding: 0.5rem 0.75rem;
+
+    background-color: #F9FAFC;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .idol-data {
+    color: $brand-lightGrey;
+    font-size: 11px;
+
+    b { color: $brand-medGrey; }
+  }
+  .idol-image {
+    @include span-columns(1, 4);
+    min-height: 65px;
+    padding: 2px;
+
+    border-radius: 2px;
+    box-shadow: inset 0 0 0 1px #CBD1D8;
+    color: #454D57;
+    text-align: right;
+
+    img { width: 100%; }
+    .empty-image { height: 60px; }
+    .ss-icon {
+      font-size: 24px;
+      width: 30px; height: 30px;
+    }
   }
 }
 
 .active-members {
   @include clearfix;
 
-  .membership-list { @include span-columns(10, 12); }
+  // .membership-list { @include span-columns(10, 12); }
   .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
-  }
-  .idol-image {
-    @include span-columns(1, 5);
-    height: 65px;
+    @include span-columns(4, 12);
+    @include nth-omega(3n);
+    margin-bottom: 1rem;
   }
 }
 
@@ -337,11 +367,11 @@
 .inactive-members {
   @include clearfix;
 
-  .membership-list { @include span-columns(10, 12); }
+  // .membership-list { @include span-columns(10, 12); }
   .membership {
-    @include span-columns(5, 10);
-    @include nth-omega(2n);
-    padding-bottom: 1rem;
+    @include span-columns(4, 12);
+    @include nth-omega(3n);
+    margin-bottom: 1rem;
   }
 }
 

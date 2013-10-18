@@ -20,11 +20,14 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         # former leaders.
         memberships = self.object.memberships.order_by('started').select_related('idol', 'group')
         context['memberships'] = {
-            'active': [m for m in memberships if m.ended is None and m.is_leader == False],
+            'active': [m for m in memberships if m.ended is None],
             'active_count': len([m for m in memberships if m.ended is None]),
-            'inactive': [m for m in memberships if m.ended and m.is_leader == False],
-            'leader': get_object_or_none(Membership.objects.select_related('idol'), group=self.object.pk, ended__isnull=True, is_leader=True),
-            'leaders': sorted([m for m in memberships if m.ended and m.is_leader and m.leadership_started != None], key=attrgetter('leadership_started')),
+            'inactive': [m for m in memberships if m.ended],
+
+            # 'active': [m for m in memberships if m.ended is None and m.is_leader == False],
+            # 'inactive': [m for m in memberships if m.ended and m.is_leader == False],
+            # 'leader': get_object_or_none(Membership.objects.select_related('idol'), group=self.object.pk, ended__isnull=True, is_leader=True),
+            # 'leaders': sorted([m for m in memberships if m.ended and m.is_leader and m.leadership_started != None], key=attrgetter('leadership_started')),
         }
 
         context['albums'] = self.object.albums.prefetch_related('editions', 'participating_idols', 'participating_groups')
