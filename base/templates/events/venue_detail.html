@@ -2,7 +2,7 @@
 {% load humanize %}
 {% load static from staticfiles %}
 
-{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Venues{% endblock %}
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
