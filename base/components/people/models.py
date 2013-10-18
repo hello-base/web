@@ -6,6 +6,8 @@ from django.dispatch import receiver
 from django.utils import timesince
 from django.utils.functional import cached_property
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel
@@ -88,6 +90,7 @@ class Idol(Person):
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    photo_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     class Meta:
@@ -156,6 +159,7 @@ class Group(TimeStampedModel):
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    photo_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
@@ -327,6 +331,7 @@ class Groupshot(models.Model):
 
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(upload_to='people/groups/')
+    photo_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
@@ -349,6 +354,7 @@ class Headshot(models.Model):
 
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(upload_to='people/idols/')
+    photo_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
