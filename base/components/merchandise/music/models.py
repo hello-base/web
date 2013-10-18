@@ -227,6 +227,7 @@ class Track(ParticipationMixin):
     # Metadata.
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
+    translated_name = models.CharField(blank=True)
 
     # Alternate Versions.
     original_track = models.ForeignKey('self', blank=True, null=True, related_name='parent',
@@ -240,6 +241,7 @@ class Track(ParticipationMixin):
     lyrics = models.TextField(blank=True)
     romanized_lyrics = models.TextField(blank=True)
     translated_lyrics = models.TextField(blank=True)
+    translation_notes = models.TextField(blank=True)
 
     # Staff.
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')

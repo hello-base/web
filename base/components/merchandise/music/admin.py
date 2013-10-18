@@ -153,7 +153,7 @@ class TrackAdmin(admin.ModelAdmin):
         ('Staff Involved', {'fields': ('arrangers', 'composers', 'lyricists')}),
         ('Lyrics', {
             'classes': ('grp-collapse grp-closed',),
-            'fields': ('lyrics', 'romanized_lyrics', 'translated_lyrics')
+            'fields': ('translated_name', 'lyrics', 'romanized_lyrics', 'translated_lyrics', 'translation_notes')
         }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
