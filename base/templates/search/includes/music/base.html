@@ -1,22 +1,23 @@
 {% load humanize %}
 {% with result.object as object %}
 <div class="result-item music {{ object.identifier }}">
-  <div class="item-icon"><span class="ss-icon ss-disc"></span></div>
+  {# <div class="item-icon"><span class="ss-icon ss-disc"></span></div> #}
+  <div class="item-image"><img src="{{ MEDIA_URL }}{{ object.art }}"></div>
   <div class="item-object">
     <a href="{{ object.get_absolute_url }}">
-      <span class="item-name">{{ object.name }}</span>
       <span class="item-romanized-name">{{ object }}</span>
+      <span class="item-name">{{ object.name }}</span>
     </a>
-    <div class="item-participants">
-      {% for participant in object.participants %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endfor %}
-    </div>
   </div>
   <div class="item-meta">
-    <div class="item-type">
+    <div class="item-participants">
+      by {% for participant in object.participants %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endfor %}
       <span class="identifier">
-        {% if object.number %}<span class="number">{{ object.number | ordinal }}</span>{% endif %}
-        {% if object.is_indie %}<span class="indie">Indie</span>{% endif %}
-        {{ object.identifier }}
+        {% if object.number %}
+        <span class="number">
+          ({{ object.number | ordinal }} {% if object.is_indie %}<span class="indie">indie</span>{% endif %} {{ object.identifier }})
+        </span>
+        {% endif %}
       </span>
     </div>
     <div class="item-released">{{ object.released | date:"F j, Y" }}</div>

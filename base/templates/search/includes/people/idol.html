@@ -3,18 +3,19 @@
   <div class="item-icon"><span class="ss-icon ss-mic"></span></div>
   <div class="item-object">
     <a href="{{ object.get_absolute_url }}">
-      <span class="item-name">{{ object.name }}{% if object.alias %} ({{ object.alias }}){% endif %}</span>
       <span class="item-romanized-name">{{ object.romanized_name }}{% if object.romanized_alias %} ({{ object.romanized_alias }}){% endif %}</span>
+      <span class="item-name">{{ object.name }}{% if object.alias %} ({{ object.alias }}){% endif %}</span>
     </a>
+  </div>
+  <div class="item-meta">
+    {% if object.primary_membership %}
     <div class="item-standing">
       {% with object.primary_membership as primary %}
       <a href="{{ primary.group.get_absolute_url }}">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}</a>{% endif %}
       {% endwith %}
     </div>
-  </div>
-  <div class="item-meta">
-    <div class="item-type">{{ object.age }} years old</div>
-    <div class="item-released">Born {{ object.birthdate | date:"F j, Y" }}</div>
+    {% endif %}
+    {% if object.birthdate %}<div class="item-type">{{ object.age }} years old</div>{% endif %}
   </div>
 </div>
 {% endwith %}
