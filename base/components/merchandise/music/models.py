@@ -177,9 +177,11 @@ class Edition(models.Model):
         if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital]:
             if self.released:
                 self.parent.released = self.released
-                self.parent.save()
             elif not self.released:
                 self.released = date.min
+            if self.art:
+                self.parent.art = self.art
+            self.parent.save()
         elif not self.released:
             self.released = self.parent.released
         return super(Edition, self).save(*args, **kwargs)
