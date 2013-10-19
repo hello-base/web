@@ -18,7 +18,6 @@
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
-        <div class="profile-photo"></div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
@@ -41,8 +40,9 @@
       <div class="container">
         <ul class="vitals-list">
           {% filter typogrify %}
-          <li class="vital">
+          <li class="vital vital-by">
             <span class="vital-label"><span class="ss-icon ss-users"></span>{% if not object.number %} by{% endif %}</span>&nbsp;
+            <div class="vital-participants">
             {% for participant in object.participants %}
               <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
                 <span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}
@@ -50,9 +50,10 @@
               {% include "utilities/commaify.html" %}
             {% endfor %}
             {% if object.number %}<span class="number"><b>{{ object.number|ordinal }} {{ object.identifier }}</b></span>{% endif %}
+            </div>
           </li>
-          <li class="vital"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
-          <li class="vital"><span class="vital-label"><span class="ss-icon ss-disc"></span> Editions</span> {{ editions|length }}</li>
+          <li class="vital vital-released"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
+          <li class="vital vital-editions"><span class="vital-label"><span class="ss-icon ss-disc"></span> Editions</span> {{ editions|length }}</li>
           {% endfilter %}
         </ul>
       </div>

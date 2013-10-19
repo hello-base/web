@@ -87,7 +87,7 @@
   .ss-tapemeasure, .ss-users { color: #00E8C9; }
 }
 .vital-by {
-  max-width: columns(6, $total_columns);
+  min-width: columns(6, $total_columns);
 }
 .vital-participants {
   display: inline-block;
