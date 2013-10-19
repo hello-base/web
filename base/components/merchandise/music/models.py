@@ -378,7 +378,8 @@ class VideoTrackOrder(models.Model):
 @receiver(post_save, sender=Track)
 def create_slug(sender, instance, created, **kwargs):
     if created:
-        # Calculate the slug.
-        instance.slug = uuid_encode(instance.uuid)
+        # Calculate the slug, but only if the track is
+        # an original track.
+        instance.slug = '' if instance.original_track else slugify(instance.romanized_name)
         instance.save()
     return
