@@ -145,9 +145,7 @@
       <ul class="participant-list">
       {% for idol in idols %}
         <li class="participant">
-          <span class="age">{{ idol.birthdate|age:object.released }}</span>
-          <a href="{{ idol.get_absolute_url }}"><span class="romanized-name">{{ idol }}</span></a>
-          {# <span class="name">{{ idol.name }}</span> #}
+          <a href="{{ idol.get_absolute_url }}">{{ idol }} ({{ idol.birthdate|age:object.released }})</a>
         </li>
       {% endfor %}
       </ul>
