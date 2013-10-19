@@ -17,7 +17,7 @@
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
-        <div class="profile-photo"></div>
+        <div class="profile-image object-image"><a href="{% url 'image-detail' object.photo|urlencode %}" target="_blank"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></a></div>
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
           <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>

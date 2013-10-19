@@ -17,10 +17,17 @@
   @include clearfix;
   padding-bottom: 1rem;
 }
-.profile-photo {
+.profile-image {
   @include span-columns(1, 12);
-  height: 64px;
-  background: #333;
+  min-height: 64px;
+  padding: 2px;
+
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #CBD1D8;
+  color: #454D57;
+  text-align: right;
+
+  img { width: 100%; }
 }
 .profile-name {
   @include span-columns(8, 12);
@@ -104,8 +111,8 @@
 }
 
 .event-profile {
-  .profile-photo { @include span-columns(2, 12); }
-  .profile-photo img { width: 145px; }
+  .profile-image { @include span-columns(2, 12); }
+  .profile-image img { width: 145px; }
 }
 
 
