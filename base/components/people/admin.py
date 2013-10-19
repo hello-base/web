@@ -36,6 +36,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
+    readonly_fields = ['photo', 'photo_thumbnail']
     search_fields = ['romanized_name', 'name']
 
     raw_id_fields = ('parent', 'groups',)
