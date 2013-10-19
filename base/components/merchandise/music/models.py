@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
-from model_utils.models import TimeStampedModel
+from model_utils.managers import PassThroughManager
 from ohashi.constants import OTHER
 from ohashi.db import models
 
@@ -18,7 +18,7 @@ from components.merchandise.models import Merchandise
 from components.merchandise.utils import uuid_encode
 from components.people.models import ParticipationMixin
 
-from .managers import EditionManager
+from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
 
 
 class Label(models.Model):
@@ -221,6 +221,9 @@ class Edition(models.Model):
 
 
 class Track(ParticipationMixin):
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(TrackQuerySet)()
+
     album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks')
     single = models.ForeignKey(Single, blank=True, null=True, related_name='tracks')
 
@@ -276,6 +279,9 @@ class Track(ParticipationMixin):
 
 
 class TrackOrder(models.Model):
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(TrackOrderQuerySet)()
+
     edition = models.ForeignKey(Edition, related_name='order')
     track = models.ForeignKey(Track, related_name='appears_on')
     position = models.PositiveSmallIntegerField()
