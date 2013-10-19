@@ -1,14 +1,16 @@
 {% if relationships.solo or relationships.with or relationships.for %}
-  {% if relationships.solo %}
+  {% if relationships.solo and not relationships.soloist %}
     <span class="pill status-solo">Solo Work</span>
   {% else %}
-  <div class="release-participants">
-    {% if relationships.for %}
-      for {% for relationship in relationships.for %}<a href="{{ relationship.get_absolute_url }}">{{ relationship }}</a>{% include "utilities/commaify.html" %}{% endfor %}
+    {% if not relationships.soloist %}
+    <div class="release-participants">
+      {% if relationships.for %}
+        for {% for relationship in relationships.for %}<a href="{{ relationship.get_absolute_url }}">{{ relationship }}</a>{% include "utilities/commaify.html" %}{% endfor %}
+      {% endif %}
+      {% if relationships.with %}
+        with {% for relationship in relationships.with %}<a href="{{ relationship.get_absolute_url }}">{{ relationship }}</a>{% include "utilities/commaify.html" %}{% endfor %}
+      {% endif %}
+    </div>
     {% endif %}
-    {% if relationships.with %}
-      with {% for relationship in relationships.with %}<a href="{{ relationship.get_absolute_url }}">{{ relationship }}</a>{% include "utilities/commaify.html" %}{% endfor %}
-    {% endif %}
-  </div>
   {% endif %}
 {% endif %}

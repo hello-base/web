@@ -8,7 +8,7 @@ from ..models import Base
 def contextual_participants(release, idol):
     groups = idol.groups.all()
     participants = release.participants
-    relationships = {'solo': False, 'for': [], 'with': []}
+    relationships = {'solo': False, 'soloist': False, 'for': [], 'with': []}
     if len(participants) == 1:
         for participant in participants:
             if participant != idol.primary_membership.group and participant != idol:
@@ -17,6 +17,12 @@ def contextual_participants(release, idol):
                 # We return an empty dictionary to tell the template
                 # tag that this is a solo work.
                 relationships['solo'] = True
+
+                # Hackity hack. We DO NOT want to show the "solo work"
+                # pill for memebers of the soloist group.
+                if 'Soloist' in str(idol.primary_membership):
+                    relationships['soloist'] = True
+
                 return {'relationships': relationships}
     else:
         for participant in participants:
