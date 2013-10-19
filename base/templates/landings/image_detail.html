@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
+{% block title %}Image Viewer{% endblock %}
 {% block page %}
 <section class="image-detail">
   <header class="image-header" role="banner">
     <a href="{% url "site-home" %}" class="logo-wordmark header-logo-wordmark">
         <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+        <span class="header-tagline">Image Viewer</span>
     </a>
   </header>
   <div class="image-viewer">
@@ -14,10 +16,9 @@
 
 <script>
 $(document).ready(function() {
-  $('.image-detail img').click(function() {
+  $('.image-viewer img').click(function() {
     $(this).toggleClass('zoomed');
-    // $('#viewer').toggleClass('zoomed');
-    // $('#secondary').toggleClass('zoomed');
+    $('.image-header').toggleClass('zoomed');
     return false;
   });
 });

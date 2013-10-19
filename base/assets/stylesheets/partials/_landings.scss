@@ -167,7 +167,12 @@ body[class^="path-image"] {
 
   border-top: 1px solid rgba(#FFF, 0.1);
 
+  &.zoomed { display: none; }
   a { color: #fff; }
+  .header-tagline {
+    display: block;
+    margin-left: 0;
+  }
 }
 .image-viewer img {
   display: block;
@@ -180,6 +185,7 @@ body[class^="path-image"] {
     cursor: -moz-zoom-in;
     cursor: zoom-in;
   }
+  &.zoomed { max-width: none; }
 }
 
 // Error pages.
