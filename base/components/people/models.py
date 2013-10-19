@@ -91,7 +91,7 @@ class Idol(Person):
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
-    optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     class Meta:
@@ -161,7 +161,7 @@ class Group(TimeStampedModel):
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
-    optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
@@ -334,7 +334,7 @@ class Groupshot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(blank=True, upload_to='people/groups/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
-    optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
@@ -358,7 +358,7 @@ class Headshot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(blank=True, upload_to='people/idols/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
-    optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
