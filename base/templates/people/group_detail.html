@@ -82,7 +82,7 @@
             {% for member in memberships.active %}
               <li class="membership" itemprop="musicGroupMember">
                 <div class="idol-image">
-                  {% if member.idol.photo %}<img src="{{ MEDIA_URL }}{{ member.idol.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                  {% if member.idol.photo %}<img src="{{ MEDIA_URL }}{{ member.idol.photo_thumbnail }}" width="60">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
                 </div>
                 <div class="idol-meta">
                   <div class="idol-header">
@@ -108,7 +108,7 @@
             {% for member in memberships.inactive %}
               <li class="membership">
                 <div class="idol-image">
-                  {% if member.idol.photo %}<img src="{{ MEDIA_URL }}{{ member.idol.photo }}">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                  {% if member.idol.photo %}<img src="{{ MEDIA_URL }}{{ member.idol.photo }}" width="60">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
                 </div>
                 <div class="idol-meta">
                   <div class="idol-header">
