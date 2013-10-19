@@ -282,32 +282,6 @@
     width: 30px; height: 30px;
   }
 }
-.idol-image a {
-  @include position(relative);
-  display: block;
-
-  &:before {
-    @include position(absolute, 0px 0px 0px 0px);
-    content: '';
-    background-color: transparent;
-    transition: background-color 250ms ease;
-  }
-  &:after {
-    @extend .ss-icon;
-    @include position(absolute, 0 6px 2px 0);
-    content: '\E002';
-    display: block;
-    width: auto; height: auto;
-    transition: color 250ms ease;
-
-    color: transparent;
-    font-size: 16px;
-  }
-}
-.idol-image a:hover {
-  &:before { background-color: rgba(#000, 0.5); }
-  &:after { color: #FFF; }
-}
 
 .active-members {
   @include clearfix;

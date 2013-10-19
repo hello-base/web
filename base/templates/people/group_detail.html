@@ -81,7 +81,7 @@
             <ul class="membership-list active-members">
             {% for member in memberships.active %}
               <li class="membership" itemprop="musicGroupMember">
-                <div class="idol-image">
+                <div class="idol-image object-image">
                   {% if member.idol.photo %}<a href="{% url 'image-detail' member.idol.photo|urlencode %}" target="_blank"><img src="{{ MEDIA_URL }}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
                 </div>
                 <div class="idol-meta">

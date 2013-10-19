@@ -66,8 +66,8 @@
       <ul class="edition-list">
       {% for edition in editions %}
         <li class="edition">
-          <div class="edition-image">
-            {% if edition.art %}<img src="{{ MEDIA_URL }}{{ edition.art_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+          <div class="edition-image object-image">
+            {% if edition.art %}<a href="{% url 'image-detail' edition.art|urlencode %}" target="_blank"><img src="{{ MEDIA_URL }}{{ edition.art_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
           </div><!-- .edition-image -->
           <div class="edition-contents">
             <table>
