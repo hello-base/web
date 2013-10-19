@@ -100,7 +100,7 @@
                       {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                     </span>
                     {% with position.track.participating_idols.all as participating_idols %}
-                    {% if participating_idols %}
+                    {% if participating_idols and not position.track.participating_groups %}
                     <div class="track-participants">
                     {% for idol in participating_idols %}
                       <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}
