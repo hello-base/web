@@ -122,26 +122,29 @@
     </div>
   </div>
 
-  {% if object.romanized_lyrics %}
-  <h2>Romanized Lyrics</h2>
-  <p>
-    {{ object.romanized_lyrics|markdown }}
-  </p>
-  {% endif %}
+  <div class="lyrics">
+    <div class="container">
+    {% if object.romanized_lyrics %}
+      <h2>Romanized Lyrics</h2>
+      <p>
+        {{ object.romanized_lyrics|markdown }}
+      </p>
+    {% endif %}
 
-  {% if object.lyrics %}
-  <h2>Lyrics</h2>
-    <p>
-      {{ object.lyrics|markdown }}
-    </p>
-  {% endif %}
+    {% if object.lyrics %}
+      <h2>Lyrics</h2>
+      <p>
+        {{ object.lyrics|markdown }}
+      </p>
+    {% endif %}
 
-  {% if object.translated_lyrics %}
-  <h2>Translated Lyrics</h2>
-    <p>
-      {{ object.translated_lyrics|markdown }}
-    </p>
-  {% endif %}
-
+    {% if object.translated_lyrics %}
+      <h2>Translated Lyrics</h2>
+      <p>
+        {{ object.translated_lyrics|markdown }}
+      </p>
+    {% endif %}
+    </div>
+  </div>
 </section>
 {% endblock content %}
