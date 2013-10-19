@@ -269,6 +269,21 @@ class Track(ParticipationMixin):
             return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
 
+    def appearances(self):
+        appearances = {}
+
+        # Append all of the releases that this track appears on,
+        # including looping through all of the tracks that this
+        # track is an original of (if applicable).
+        appearances['count'] = self.children.count() + 1
+        appearances['debut'] = self.parent
+        appearances['children'] = [(track.parent, track) for track in self.children.all()]
+        return appearances
+
+    @property
+    def parent(self):
+        return filter(None, [self.album, self.single])[0]
+
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
