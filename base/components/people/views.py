@@ -18,7 +18,7 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         # We need to split memberships into four groups. The active
         # leader, the active members, the former members and the
         # former leaders.
-        memberships = self.object.memberships.order_by('started').select_related('idol', 'group')
+        memberships = self.object.memberships.order_by('started', 'idol__birthdate').select_related('idol', 'group')
         context['memberships'] = {
             'active': [m for m in memberships if m.ended is None],
             'active_count': len([m for m in memberships if m.ended is None]),
