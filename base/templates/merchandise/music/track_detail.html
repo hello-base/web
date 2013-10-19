@@ -51,21 +51,21 @@
         {% if object.composers %}
           <li>Composition by:
           {% for person in object.composers.all %}
-            <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+            <a href="{% url 'search' %}?q={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
           {% endfor %}
           </li>
         {% endif %}
         {% if object.lyricists %}
           <li>Lyrics by:
           {% for person in object.lyricists.all %}
-            <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+            <a href="{% url 'search' %}?q={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
           {% endfor %}
           </li>
         {% endif %}
         {% if object.composers %}
           <li>Arranged by:
           {% for person in object.arrangers.all %}
-            <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+            <a href="{% url 'search' %}?q={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
           {% endfor %}
           </li>
         {% endif %}
