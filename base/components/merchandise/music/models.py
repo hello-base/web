@@ -400,6 +400,8 @@ class VideoTrackOrder(models.Model):
 
 @receiver(post_save, sender=Track)
 def create_slug(sender, instance, created, **kwargs):
+    from django.template.defaultfilters import slugify
+
     if created:
         # Calculate the slug, but only if the track is
         # an original track.
