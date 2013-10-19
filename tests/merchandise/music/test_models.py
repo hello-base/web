@@ -54,7 +54,8 @@ class TestSingles:
 
 class TestEditions:
     def test_edition_factory(self):
-        factory = EditionFactory()
+        single = SingleFactory()
+        factory = EditionFactory(single=single)
         assert isinstance(factory, Edition)
         assert 'edition' in factory.romanized_name
 
@@ -76,6 +77,7 @@ class TestTracks:
         assert 'track' in factory.romanized_name
 
     def test_track_get_absolute_url(self, client):
-        factory = TrackFactory()
+        single = SingleFactory()
+        factory = TrackFactory(single=single)
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
