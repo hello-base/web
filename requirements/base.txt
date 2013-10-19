@@ -6,11 +6,11 @@ Django >= 1.5
 django-birthday == 0.1.1
 django-braces >=1.2.2, < 2.0.0
 django-celery-with-redis >= 3.0, < 4.0
-django-configurations >= 0.5.1, < 1.0.0
+django-configurations >= 0.6, < 1.0
 django-dotenv == 1.2
 django-ecstatic >= 0.1, < 1.0
 django-floppyforms == 1.1
-django-grappelli >= 2.4.6, < 3.0.0
+django-grappelli >= 2.4.7, < 3.0.0
 django-haystack == 2.1.0
 django-heroku-postgresify == 0.3
 django-heroku-redisify == 0.2.1
@@ -24,7 +24,7 @@ ohashi >= 0.2.0
 Pillow >= 2.1.0, < 3.0.0
 psycopg2 == 2.5.1
 pyelasticsearch == 0.6
-requests == 1.2.3
-requests-oauthlib == 0.3.3
+requests == 2.0.0
+requests-oauthlib == 0.4.0
 South >= 0.8.2, < 1.0.0
 typogrify == 2.0.0
