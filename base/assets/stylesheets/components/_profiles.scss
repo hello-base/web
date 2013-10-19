@@ -110,8 +110,9 @@
 
 
 .profile-navigation {
-  box-shadow: inset 0 1px 0 #F9FAFC;
+  height: 33px;
   padding: 0.5rem 0;
+  box-shadow: inset 0 1px 0 #F9FAFC;
 
   > .container { @include position(relative); }
   .navigation-item {
