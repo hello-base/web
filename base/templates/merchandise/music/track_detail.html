@@ -44,37 +44,83 @@
         </ul>
       </div>
     </aside>
+
+    <div class="profile-participations">
+      <div class="container">
+        <ul>
+        {% if object.composers %}
+          <li>Composition by:
+          {% for person in object.composers.all %}
+            <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+          {% endfor %}
+          </li>
+        {% endif %}
+        {% if object.lyricists %}
+          <li>Lyrics by:
+          {% for person in object.lyricists.all %}
+            <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+          {% endfor %}
+          </li>
+        {% endif %}
+        {% if object.composers %}
+          <li>Arranged by:
+          {% for person in object.arrangers.all %}
+            <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
+          {% endfor %}
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <p>
-    This song is included on <em>{{ object.appears_on.count }} release{{ object.appears_on.count|pluralize }}</em>.
-        <ul class="release-list">
-          {% for release in object.appears_on.all %}
-            <li class="release">
-              <img src="{{ MEDIA_URL }}{{ release.edition.art }}"> <a href="{{ release.edition.parent.get_absolute_url }}">{{ release.edition.parent }}</a> {% if release.is_cover %}<span class="pill cover">Cover</span>{% endif %} {% if release.is_aside %}<span class="pill cover">A-side</span>{% endif %} {% if release.is_bside %}<span class="pill cover">B-side</span>{% endif %} {% if release.is_album_only %}<span class="pill cover">Album only</span>{% endif %}
-              <ul class="participant-list">
-                  {% for idol in object.idols.all %}
-                      <li class="participant">
-                        <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>
-                      </li>
-                  {% endfor %}
-              </ul>
-            </li>
-          {% endfor %}
-          </ul>
-  </p>
-
-  <p>
-      {% if object.composers %}Composition by: {% for person in object.composers.all %}
-      <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
-      {% endfor %}<br />{% endif %}
-      {% if object.lyricists %}Lyrics by: {% for person in object.lyricists.all %}
-      <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
-      {% endfor %}<br />{% endif %}
-      {% if object.composers %}Arranged by: {% for person in object.arrangers.all %}
-      <a href="{% url 'search' %}?={{ person.romanized_name }}">{{ person.romanized_name }}</a> ({{ person.name }}){% include "utilities/commaify.html" %}
-      {% endfor %}{% endif %}
-  </p>
+  <div class="profile-appearances">
+    <div class="container">
+      <p>This song appears on <em>{{ object.appearances.count }} release{{ object.appearances.count|pluralize }}</em>.</p>
+      <ul class="appearance-list">
+      {% with object.appearances.debut as release %}
+        <li class="appearance">
+          <div class="appearance-image">
+            <img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}">
+          </div>
+          <div class="appearance-meta">
+            <div class="appearance-header">
+              <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name }}</span></a>
+            </div>
+            {{ release.released }}
+            <ul>
+            {% for idol in object.idols.all %}
+              <li class="participant">
+                <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </li>
+      {% endwith %}
+      {% for release, track in object.appearances.children %}
+        <li class="appearance">
+          <div class="appearance-image">
+            <img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}">
+          </div>
+          <div class="appearance-meta">
+            <div class="appearance-header">
+              <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name }}</span></a> as <span class="romanized-name">{{ track.romanized_name }} {{ track.romanized_name_alternate }}</span>
+            </div>
+            {{ release.released }}
+            <ul>
+            {% for idol in track.idols.all %}
+              <li class="participant">
+                <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
 
   {% if object.romanized_lyrics %}
   <h2>Romanized Lyrics</h2>
