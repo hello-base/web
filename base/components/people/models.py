@@ -349,6 +349,7 @@ class Groupshot(models.Model):
         if self.kind:
             latest = self._default_manager.filter(group=self.group).latest()
             self.group.photo = latest.photo
+            self.group.photo_thumbnail = latest.photo_thumbnail
             self.group.save()
 
 
@@ -373,4 +374,5 @@ class Headshot(models.Model):
         if self.id:
             latest = self._default_manager.filter(idol=self.idol).latest()
             self.idol.photo = latest.photo
+            self.idol.photo_thumbnail = latest.photo_thumbnail
             self.idol.save()
