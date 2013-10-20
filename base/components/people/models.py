@@ -10,15 +10,16 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
-from model_utils.models import TimeStampedModel
 from ohashi.db import models
+
+from components.accounts.models import ContributorMixin
 
 from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
 from .utils import calculate_age, calculate_average_age
 
 
-class Person(TimeStampedModel):
+class Person(ContributorMixin):
     name = models.CharField(editable=False)
     romanized_name = models.CharField(editable=False)
     family_name = models.CharField(blank=True)
@@ -128,7 +129,7 @@ class Staff(Person):
         verbose_name_plural = 'staff'
 
 
-class Group(TimeStampedModel):
+class Group(ContributorMixin):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
     tracker = FieldTracker()
