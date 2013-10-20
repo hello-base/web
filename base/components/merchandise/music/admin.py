@@ -28,6 +28,12 @@ class TrackOrderInline(admin.TabularInline):
     raw_id_fields = ['track']
     autocomplete_lookup_fields = {'fk': ['track']}
 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(TrackOrderInline, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'track':
+            formfield.choices = formfield.choices
+        return formfield
+
 
 class VideoTrackOrderInline(admin.TabularInline):
     extra = 1
@@ -36,6 +42,12 @@ class VideoTrackOrderInline(admin.TabularInline):
 
     raw_id_fields = ['video']
     autocomplete_lookup_fields = {'fk': ['video']}
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(VideoTrackOrderInline, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'video':
+            formfield.choices = formfield.choices
+        return formfield
 
 
 class LabelAdmin(admin.ModelAdmin):

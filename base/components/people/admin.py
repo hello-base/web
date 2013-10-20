@@ -23,6 +23,12 @@ class MembershipInline(admin.TabularInline):
     extra = 1
     model = Membership
 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(MembershipInline, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'idol' or db_field.name == 'group':
+            formfield.choices = formfield.choices
+        return formfield
+
 
 class GroupAdmin(ContributorMixin):
     date_hierarchy = 'started'
