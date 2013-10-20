@@ -60,7 +60,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
 
 class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
-        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
+        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug', 'label')}),
         (None, {
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art')
@@ -74,9 +74,20 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         ('Alternates', {'fields': ('is_compilation',)})
     )
     inlines = [AlbumEditionInline]
-    list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list', 'is_compilation']
-    list_editable = ['number', 'released', 'is_compilation']
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    list_editable = ['released', 'label']
     list_select_related = True
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        request = kwargs['request']
+        formfield = super(AlbumAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'label':
+            label_choices_cache = getattr(request, 'label_choices_cache', None)
+            if label_choices_cache is not None:
+                formfield.choices = label_choices_cache
+            else:
+                request.label_choices_cache = formfield.choices
+        return formfield
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
@@ -86,7 +97,7 @@ admin.site.register(Album, AlbumAdmin)
 
 class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
-        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
+        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug', 'label')}),
         (None, {
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art'),
@@ -103,9 +114,20 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         })
     )
     inlines = [SingleEditionInline]
-    list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list']
-    list_editable = ['number', 'released']
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    list_editable = ['released', 'label']
     list_select_related = True
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        request = kwargs['request']
+        formfield = super(SingleAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'label':
+            label_choices_cache = getattr(request, 'label_choices_cache', None)
+            if label_choices_cache is not None:
+                formfield.choices = label_choices_cache
+            else:
+                request.label_choices_cache = formfield.choices
+        return formfield
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
