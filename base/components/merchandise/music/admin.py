@@ -140,6 +140,7 @@ admin.site.register(Single, SingleAdmin)
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': (('romanized_name', 'name'), 'slug',)}),
+        ('Relations', {'fields': ('album', 'single')}),
         ('Participants', {
             'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
             'fields': ('idols', 'groups')
@@ -169,9 +170,9 @@ class TrackAdmin(admin.ModelAdmin):
         'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate'
     ]
 
-    raw_id_fields = ('idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
+    raw_id_fields = ('album', 'single', 'idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
     autocomplete_lookup_fields = {
-        'fk': ['original_track',],
+        'fk': ['album', 'single', 'original_track',],
         'm2m': ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     }
 
