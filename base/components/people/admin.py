@@ -3,6 +3,8 @@ from django.contrib import admin
 from markdown import markdown
 from typogrify.templatetags.typogrify_tags import typogrify
 
+from components.accounts.admin import ContributorMixin
+
 from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
 
 
@@ -22,7 +24,7 @@ class MembershipInline(admin.TabularInline):
     model = Membership
 
 
-class GroupAdmin(admin.ModelAdmin):
+class GroupAdmin(ContributorMixin):
     date_hierarchy = 'started'
     fieldsets = (
         ('Status', {'fields': ('classification', ('status', 'scope'))}),
@@ -51,7 +53,7 @@ class GroupAdmin(admin.ModelAdmin):
 admin.site.register(Group, GroupAdmin)
 
 
-class IdolAdmin(admin.ModelAdmin):
+class IdolAdmin(ContributorMixin):
     fieldsets = (
         ('Status', {'fields': (('status', 'scope'),)}),
         ('Basics', {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
@@ -71,7 +73,7 @@ class IdolAdmin(admin.ModelAdmin):
 admin.site.register(Idol, IdolAdmin)
 
 
-class StaffAdmin(admin.ModelAdmin):
+class StaffAdmin(ContributorMixin):
     fieldsets = (
         (None, {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
     )
