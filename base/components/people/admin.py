@@ -19,15 +19,27 @@ class HeadshotInline(admin.TabularInline):
 
 
 class MembershipInline(admin.TabularInline):
-    allow_add = True
     extra = 1
     model = Membership
+
+    raw_id_fields = ['group']
+    autocomplete_lookup_fields = {'fk': ['group']}
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(MembershipInline, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'idol' or db_field.name == 'group':
             formfield.choices = formfield.choices
         return formfield
+
+
+class IdolMembershipInline(MembershipInline):
+    raw_id_fields = ['group']
+    autocomplete_lookup_fields = {'fk': ['group']}
+
+
+class GroupMembershipInline(MembershipInline):
+    raw_id_fields = ['idol']
+    autocomplete_lookup_fields = {'fk': ['idol']}
 
 
 class GroupAdmin(ContributorMixin):
@@ -40,7 +52,7 @@ class GroupAdmin(ContributorMixin):
         ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',), 'note')}),
     )
     filter_horizontal = ['groups']
-    inlines = [MembershipInline, GroupshotInline]
+    inlines = [GroupMembershipInline, GroupshotInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
@@ -66,7 +78,7 @@ class IdolAdmin(ContributorMixin):
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
         ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',), 'note')}),
     )
-    inlines = [MembershipInline, HeadshotInline]
+    inlines = [IdolMembershipInline, HeadshotInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
     list_editable = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
