@@ -205,3 +205,46 @@
   .pill.aside { background: $brand-primary-accent; }
   .pill.bside { background: $brand-secondary-accent; }
 }
+
+
+// .appearance
+.appearance-image {
+  padding-bottom: 1rem;
+  vertical-align: top;
+  width: columns(1, 10);
+
+  .release-image {
+    margin-right: 0;
+    width: auto;
+
+    img { width: 100%; }
+  }
+}
+.appearance-name {
+  padding: 2px 1rem 0;
+  vertical-align: bottom;
+}
+.appearance-data {
+  vertical-align: bottom;
+
+  .timesince { @extend .name; }
+}
+.appearance-alternate {
+  vertical-align: bottom;
+
+  .romanized-name { display: inline; }
+  .name { padding-left: 20px; }
+}
+.appearance-participants {
+  padding: 0 1rem;
+  vertical-align: top;
+  font-size: 11px;
+
+  .participants {
+    border-top: 1px solid $brand-paleGrey;
+    color: $brand-medGrey;
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+  .ss-icon { @include position(relative, 1px 0 0 0); }
+}
