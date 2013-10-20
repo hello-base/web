@@ -97,6 +97,10 @@ class Base(Configuration):
         }
     }
 
+    # Session Configuration.
+    # ------------------------------------------------------------------
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
     # General Configuration.
     # ------------------------------------------------------------------
     DATE_FORMAT = 'Y/m/d'
