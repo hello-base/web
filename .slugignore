@@ -1,0 +1,9 @@
+base/assets
+base/static
+tests
+
+config.rb
+conftest.py
+Procfile.dev
+setup.cfg
+tasks.py
