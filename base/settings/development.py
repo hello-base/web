@@ -62,6 +62,13 @@ class Development(Settings):
     # ------------------------------------------------------------------
     MIDDLEWARE_CLASSES += ('staticbuilder.middleware.BuildOnRequest',)
 
+    # django-extensions
+    # ------------------------------------------------------------------
+    GRAPH_MODELS = {
+        'all_applications': True,
+        'group_models': True,
+    }
+
     # django-haystack.
     # ------------------------------------------------------------------
     ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
