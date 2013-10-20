@@ -19,7 +19,7 @@
       <div class="profile-metadata">
         <div class="profile-image object-image">
           {% url 'image-detail' object.photo|urlencode as image_detail_url %}
-          <a href="{{ image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></a>
+          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
         </div>
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>

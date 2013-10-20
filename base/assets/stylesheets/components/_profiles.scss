@@ -28,6 +28,11 @@
   text-align: right;
 
   img { width: 100%; }
+  .empty-image { height: 60px; }
+  .ss-icon {
+    font-size: 24px;
+    width: 30px; height: 30px;
+  }
 }
 .profile-name {
   @include span-columns(8, 12);
