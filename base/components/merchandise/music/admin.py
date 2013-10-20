@@ -38,6 +38,13 @@ class VideoTrackOrderInline(admin.TabularInline):
     autocomplete_lookup_fields = {'fk': ['video']}
 
 
+class LabelAdmin(admin.ModelAdmin):
+    fieldsets = ((None, {'fields': ('name', 'slug')}),)
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ['name']}
+admin.site.register(Label, LabelAdmin)
+
+
 class MusicBaseAdmin(admin.ModelAdmin):
     date_hierarchy = 'released'
     filter_horizontal = ['idols', 'groups']
@@ -77,37 +84,6 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
 admin.site.register(Album, AlbumAdmin)
 
 
-class EditionAdmin(admin.ModelAdmin):
-    date_hierarchy = 'released'
-    fieldsets = (
-        (None, {'fields': ('kind',)}),
-        ('Relations', {'fields': ('album', 'single')}),
-        ('Content', {'fields': ('romanized_name', 'released', 'catalog_number', 'price', 'art')})
-    )
-    inlines = [TrackOrderInline, VideoTrackOrderInline]
-    list_display = ['__unicode__', 'kind', 'romanized_name', 'name', 'released', 'catalog_number']
-    list_display_links = ['__unicode__', 'kind']
-    list_filter = ['kind']
-    list_select_related = True
-    ordering = ('-released',)
-    search_fields = [
-        'album__romanized_name', 'album__name',
-        'single__romanized_name', 'single__name',
-        'romanized_name', 'name',
-    ]
-
-    raw_id_fields = ('album', 'single',)
-    autocomplete_lookup_fields = {'fk': ['album', 'single']}
-admin.site.register(Edition, EditionAdmin)
-
-
-class LabelAdmin(admin.ModelAdmin):
-    fieldsets = ((None, {'fields': ('name', 'slug')}),)
-    list_display = ['name', 'slug']
-    prepopulated_fields = {'slug': ['name']}
-admin.site.register(Label, LabelAdmin)
-
-
 class SingleAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
         (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
@@ -135,6 +111,30 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         return ', '.join([p.romanized_name for p in obj.participants])
     participant_list.short_description = 'Participant List'
 admin.site.register(Single, SingleAdmin)
+
+
+class EditionAdmin(admin.ModelAdmin):
+    date_hierarchy = 'released'
+    fieldsets = (
+        (None, {'fields': ('kind',)}),
+        ('Relations', {'fields': ('album', 'single')}),
+        ('Content', {'fields': ('romanized_name', 'released', 'catalog_number', 'price', 'art')})
+    )
+    inlines = [TrackOrderInline, VideoTrackOrderInline]
+    list_display = ['__unicode__', 'kind', 'romanized_name', 'name', 'released', 'catalog_number']
+    list_display_links = ['__unicode__', 'kind']
+    list_filter = ['kind']
+    list_select_related = True
+    ordering = ('-released',)
+    search_fields = [
+        'album__romanized_name', 'album__name',
+        'single__romanized_name', 'single__name',
+        'romanized_name', 'name',
+    ]
+
+    raw_id_fields = ('album', 'single',)
+    autocomplete_lookup_fields = {'fk': ['album', 'single']}
+admin.site.register(Edition, EditionAdmin)
 
 
 class TrackAdmin(admin.ModelAdmin):
