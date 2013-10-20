@@ -6,4 +6,3 @@ config.rb
 conftest.py
 Procfile.dev
 setup.cfg
-tasks.py
