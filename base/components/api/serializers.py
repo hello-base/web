@@ -23,7 +23,11 @@ class IdolSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    groups = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='api:group-detail')
+    members = serializers.HyperlinkedIdentityField(view_name='api:group-members')
     members_active = serializers.HyperlinkedIdentityField(view_name='api:group-members-active')
+    members_inactive = serializers.HyperlinkedIdentityField(view_name='api:group-members-inactive')
+    parent = serializers.HyperlinkedRelatedField(view_name='api:group-detail')
     photo = serializers.SerializerMethodField('photo_url')
     photo_thumbnail = serializers.SerializerMethodField('photo_thumbnail_url')
 
@@ -31,7 +35,7 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ('id', 'name', 'romanized_name', 'former_names', 'slug',
             'started', 'ended', 'photo', 'photo_thumbnail', 'parent', 'groups',
-            'members_active', 'note')
+            'members', 'members_active', 'members_inactive', 'note')
 
     def photo_url(self, obj):
         return obj.photo.url if obj.photo else ''

@@ -1,9 +1,14 @@
 from django.conf.urls import patterns, url, include
 
-from .views import GroupList, GroupDetail, IdolList, IdolDetail
+from .views import (GroupList, GroupDetail, GroupMembershipsList,
+    GroupActiveMembershipsList, GroupInactiveMembershipsList)
+from .views import IdolList, IdolDetail
 
 
 group_urls = patterns('',
+    url(r'^/(?P<slug>[-\w]+)/members$', name='group-members', view=GroupMembershipsList.as_view()),
+    url(r'^/(?P<slug>[-\w]+)/members/active$', name='group-members-active', view=GroupActiveMembershipsList.as_view()),
+    url(r'^/(?P<slug>[-\w]+)/members/inactive$', name='group-members-inactive', view=GroupInactiveMembershipsList.as_view()),
     url(r'^/(?P<slug>[-\w]+)$', name='group-detail', view=GroupDetail.as_view()),
     url(r'^$', name='group-list', view=GroupList.as_view()),
 )
