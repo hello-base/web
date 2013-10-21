@@ -107,7 +107,7 @@
           <tr>
             <td colspan="3" class="appearance-participants">
               <div class="participants">
-                <span class="ss-icon ss-usergroup"></span> {% for idol in object.participating_idols.all %}<a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}{% endfor %}
+                <span class="ss-icon ss-usergroup"></span> {% for idol in object.idols.all %}<a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}{% endfor %}
               </div>
             </td>
           </tr>
@@ -138,7 +138,7 @@
           <tr>
             <td colspan="3" class="appearance-participants">
               <div class="participants">
-                <span class="ss-icon ss-usergroup"></span> {% for idol in track.participating_idols.all %}<a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}{% endfor %}
+                <span class="ss-icon ss-usergroup"></span> {% for idol in track.idols.all %}<a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}{% endfor %}
               </div>
             </td>
           </tr>
