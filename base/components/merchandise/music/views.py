@@ -27,7 +27,7 @@ class SingleDetailView(QuicklinksMixin, DetailView):
 
 
 class TrackDetailView(QuicklinksMixin, DetailView):
-    queryset = Track.objects.originals().all()
+    queryset = Track.objects.originals()
     template_name = 'merchandise/music/track_detail.html'
 
     def get_context_data(self, **kwargs):
