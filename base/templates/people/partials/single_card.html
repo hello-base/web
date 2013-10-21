@@ -5,7 +5,8 @@
   </div>
   <div class="card-example">
     {% with object.latest_single as release %}
-    <div class="example-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
+    <div class="example-heading"><span class="pill">{% if object.primary_membership.is_active or object.is_active %}Latest{% else %}Last{% endif %}</span></div>
+    {% if release %}
     <a href="{{ release.get_absolute_url }}">{{ release }}</a>
     <div class="example-subtext">
       <div class="release-data release-date">
@@ -16,6 +17,16 @@
         <span class="ss-icon ss-disc"></span> <b>{{ release.editions.count }}</b> edition{{ release.editions.count|pluralize }}
       </div>
     </div>
+    {% else %}
+    <div class="example-subtext card-empty">
+      {{ object }}
+      {% if object.primary_membership.is_active or object.is_active %}
+        hasn't released a singles.
+      {% else %}
+        doesn't have any released singles.
+      {% endif %}
+    </div>
+    {% endif %}
     {% endwith %}
   </div>
 </li>
