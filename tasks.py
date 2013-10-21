@@ -102,7 +102,7 @@ def heroku_capture(verbose=False, **kwargs):
     hide = 'out' if not verbose else None
 
     out('Snapshotting the production database.')
-    invoke.run('heroku pgbackups:capture', hide=hide)
+    invoke.run('heroku pgbackups:capture --expire', hide=hide)
 
 
 @invoke.task(name='imagekit')
