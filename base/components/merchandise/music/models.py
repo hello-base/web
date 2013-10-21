@@ -1,5 +1,6 @@
 from datetime import date
 from itertools import chain
+from operator import attrgetter
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
@@ -272,7 +273,8 @@ class Track(ParticipationMixin):
     @cached_property
     def appearances(self):
         appearances = {}
-        children = self.children.all()
+        children = list(self.children.all())
+        children.sort(key=attrgetter('parent.released'))
 
         # Append all of the releases that this track appears on,
         # including looping through all of the tracks that this
