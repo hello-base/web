@@ -188,6 +188,8 @@
 // .group-profile
 // ---------------------------------------------------------------------
 .group-profile {
+  .profile-image { @include span-columns(2, 12); }
+
   .membership-list,
   .release-list {
     @include clearfix;
