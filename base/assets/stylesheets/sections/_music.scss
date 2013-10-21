@@ -215,9 +215,14 @@
 
   .release-image {
     margin-right: 0;
-    width: auto;
+    width: 100%;
 
     img { width: 100%; }
+    .empty-image { height: 71px; }
+    .ss-icon {
+      font-size: 24px;
+      width: 30px; height: 30px;
+    }
   }
 }
 .appearance-name {

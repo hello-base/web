@@ -88,7 +88,9 @@
           {% with object.appearances.debut as release %}
           <tr>
             <td class="appearance-image" rowspan="2">
-              <div class="release-image"><img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}"></div>
+              <div class="release-image">
+                {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+              </div>
             </td>
             <td class="appearance-name">
               <a href="{{ release.get_absolute_url }}">
@@ -113,7 +115,9 @@
           {% for release, track in object.appearances.children %}
           <tr>
             <td class="appearance-image" rowspan="2">
-              <div class="release-image"><img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}"></div>
+              <div class="release-image">
+                {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+              </div>
             </td>
             <td class="appearance-name">
               <a href="{{ release.get_absolute_url }}">
