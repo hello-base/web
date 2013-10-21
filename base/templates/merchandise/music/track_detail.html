@@ -148,21 +148,21 @@
   <div class="lyrics">
     <div class="container">
     {% if object.romanized_lyrics %}
-      <h2>Romanized Lyrics</h2>
+      <h1 class="section-title">Romanized Lyrics</h1>
       <p>
         {{ object.romanized_lyrics|markdown }}
       </p>
     {% endif %}
 
     {% if object.lyrics %}
-      <h2>Lyrics</h2>
+      <h1 class="section-title">Lyrics</h1>
       <p>
         {{ object.lyrics|markdown }}
       </p>
     {% endif %}
 
     {% if object.translated_lyrics %}
-      <h2>Translated Lyrics</h2>
+      <h1 class="section-title">Translated Lyrics</h1>
       <p>
         {{ object.translated_lyrics|markdown }}
       </p>
