@@ -230,6 +230,13 @@ class Base(Configuration):
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
     HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
+    # django-rest-framework.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['rest_framework',]
+    REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
+    }
+
     # South.
     # ------------------------------------------------------------------
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
