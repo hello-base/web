@@ -91,7 +91,8 @@
                 <tr class="track {% if position.is_instrumental %}instrumental{% endif %}" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                   <td class="track-name">
-                    <a href="{% url 'track-detail' position.track.slug %}">
+                    {% url 'track-detail' position.track.slug|urlencode as track_detail_url %}
+                    <a href="{{ track_detail_url }}">
                       <span class="romanized-name" itemprop="name">
                         {{ position.track.romanized_name|typogrify }}
                         {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
