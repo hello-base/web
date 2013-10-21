@@ -1,2 +1,8 @@
 {{ object.name }}
 {{ object.romanized_name }}
+
+{% for track in object.tracks.all %}
+  {% for person in track.arrangers.all %}{{ person }}{% endfor %}
+  {% for person in track.composers.all %}{{ person }}{% endfor %}
+  {% for person in track.lyricists.all %}{{ person }}{% endfor %}
+{% endfor %}
