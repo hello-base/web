@@ -49,17 +49,25 @@
 
 .idol-profile {
   .group-image {
-    box-shadow: inset 0 0 0 1px #B6BEC7;
+    padding: 2px;
+
+    border-radius: 2px;
+    box-shadow: inset 0 0 0 1px #CBD1D8;
+    color: #454D57;
+    text-align: right;
+
+    img { width: 100%; }
+    .empty-image { height: 172px; }
+    .ss-icon {
+      font-size: 24px;
+      width: 30px; height: 30px;
+    }
   }
 
   .membership {
     @include clearfix;
 
-    .ss-icon { @include position(relative, 1px 0 0 0); }
-  }
-
-  .membership-primary .group-image {
-    height: 172px;
+    .membership-meta .ss-icon { @include position(relative, 1px 0 0 0); }
   }
 
   .membership-primary {
@@ -71,7 +79,8 @@
   }
   .membership-list .group-image {
     @include span-columns(2, 7);
-    height: 82px;
+
+    .empty-image { height: 82px; }
   }
   .membership-list {
     @include clearfix;
@@ -94,7 +103,7 @@
 }
 
 .membership-header {
-  padding: 0.75rem;
+  padding: 0.75rem 0;
 }
 .membership-data {
   display: block;

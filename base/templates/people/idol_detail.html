@@ -93,6 +93,7 @@
           <div class="membership">
             <h2 class="section-title"><span class="ss-icon ss-star"></span> Primary Group</h2>
             <div class="group-image">
+              {% if membership.group.photo_thumbnail %}<img src="{{ MEDIA_URL }}{{ membership.group.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
             </div>
             <div class="membership-meta">
               <div class="membership-header">
@@ -128,6 +129,7 @@
           {% for membership in memberships %}
             <li class="membership">
               <div class="group-image">
+                {% if membership.group.photo_thumbnail %}<img src="{{ MEDIA_URL }}{{ membership.group.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
               </div>
               <div class="membership-meta">
                 <div class="membership-header">
