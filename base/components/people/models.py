@@ -55,6 +55,10 @@ class Person(ContributorMixin):
                 return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
         return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
+    @property
+    def identifier(self):
+        return self._meta.module_name
+
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
@@ -180,9 +184,9 @@ class Group(ContributorMixin):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
-    @staticmethod
-    def autocomplete_search_fields():
-        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+    @property
+    def identifier(self):
+        return self._meta.module_name
 
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
@@ -200,6 +204,10 @@ class Group(ContributorMixin):
 
     def latest_single(self):
         return self.singles.latest()
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
 
 class Membership(models.Model):
