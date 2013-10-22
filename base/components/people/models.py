@@ -80,6 +80,14 @@ class Idol(Person):
     bloodtype = models.CharField(blank=True, choices=BLOOD_TYPE, default='A', max_length=2)
     height = models.DecimalField(blank=True, decimal_places=1, max_digits=4, null=True)
 
+    # Dates.
+    started = models.DateField(db_index=True, null=True,
+        help_text='The date this idol joined Hello! Project/became an idol.')
+    graduated = models.DateField(blank=True, db_index=True, null=True,
+        help_text='The date this idol graduated from Hello! Project.')
+    retired = models.DateField(blank=True, db_index=True, null=True,
+        help_text='The date this idol retired.')
+
     # Birth Information.
     birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True)
