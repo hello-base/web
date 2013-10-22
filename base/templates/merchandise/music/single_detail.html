@@ -75,7 +75,7 @@
               <thead>
                 <tr class="edition-meta">
                   <td class="edition-name" colspan="2">
-                      <span class="romanized-name">{{ edition.romanized_name|typogrify }}</span>
+                      <span class="romanized-name">{{ edition.romanized_name }}</span>
                       <span class="name">{{ edition.name }}</span>
                   </td>
                   <td class="edition-subtext" colspan="1">
@@ -94,7 +94,7 @@
                     {% url 'track-detail' position.track.slug|urlencode as track_detail_url %}
                     <a href="{{ track_detail_url }}">
                       <span class="romanized-name" itemprop="name">
-                        {{ position.track.romanized_name|typogrify }}
+                        {{ position.track.romanized_name }}
                         {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
                         {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                       </span>
@@ -130,7 +130,7 @@
                 <tr class="track">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                   <td class="track-name">
-                    <span class="romanized-name">{{ position.video.romanized_name|typogrify }}</span>
+                    <span class="romanized-name">{{ position.video.romanized_name }}</span>
                     <span class="name">{{ position.video.name }}</span>
                   </td>
                   <td class="track-type">{% if position.video.rendered_kind_display %}<span class="pill">{{ position.video.rendered_kind_display }}</span>{% endif %}</td>

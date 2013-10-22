@@ -11,7 +11,7 @@
   <div class="release-meta">
     <div class="release-header">
       {% if release.is_indie %}<span class="pill indie">Indie</span>{% endif %}
-      <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+      <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name }}</span></a>
       <span class="name">{{ release.name }}</span>
       {% contextual_participants release=release context=object %}
     </div>
