@@ -12,7 +12,7 @@
       {% if release.is_compilation %}<span class="pill compilation">Compilation</span>{% endif %}
       <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
       <span class="name">{{ release.name }}</span>
-      {% if show_participants %}{% contextual_participants release=release idol=object %}{% endif %}
+      {% contextual_participants release=release context=object %}
     </div>
     <div class="release-subtext">
       <div class="release-data release-date">
