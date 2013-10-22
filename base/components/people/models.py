@@ -222,6 +222,7 @@ class Membership(models.Model):
     is_primary = models.BooleanField('Primary?', db_index=True, default=False)
     started = models.DateField(db_index=True)
     ended = models.DateField(blank=True, db_index=True, null=True)
+    generation = models.PositiveSmallIntegerField(blank=True, db_index=True, null=True)
 
     # Leadership Details.
     is_leader = models.BooleanField('Is/Was leader?')
