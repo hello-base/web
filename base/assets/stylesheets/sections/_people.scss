@@ -403,10 +403,6 @@
   }
   .release-editions { @include position(absolute, 0.5rem 0.75rem 0 0); }
 }
-.release-list {
-  display: flex;
-  flex-flow: row wrap;
-}
 
 .release {
   @include span-columns(6, 12);
