@@ -42,6 +42,7 @@ class Base(Configuration):
         'components.merchandise.media',
         'components.merchandise.music',
         'components.people',
+        'components.social.twitter',
     ]
     PLUGINS = [
         'floppyforms',
