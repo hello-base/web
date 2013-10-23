@@ -9,8 +9,8 @@ class Channel(models.Model):
     username = models.CharField()
 
     # Optional relationships.
-    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
+    idols = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
+    groups = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
 
     def __unicode__(self):
         return u'%s' % (self.username)
