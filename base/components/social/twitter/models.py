@@ -31,7 +31,7 @@ class Tweet(models.Model):
 
     tweet_id = models.BigIntegerField(blank=True, null=True)
     tweet_id_str = models.CharField(blank=True, max_length=200)
-    created_at = models.DateTimeField(blank=True)
+    created_at = models.DateTimeField(blank=True, null=True)
     text = models.TextField(blank=True)
     source = models.CharField(blank=True, max_length=200)
 
