@@ -208,7 +208,6 @@
 
 
 // .appearance
-.appearances table { width: 100%; }
 .appearance-image {
   padding-bottom: 1rem;
   vertical-align: top;
@@ -254,3 +253,5 @@
   }
   .ss-icon { @include position(relative, 1px 0 0 0); }
 }
+
+.appearances > table { width: 100%; }
