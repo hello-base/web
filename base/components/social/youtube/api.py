@@ -9,9 +9,7 @@ class Api:
         self.base_url = 'http://gdata.youtube.com/feeds/api'
 
     def fetch_video(self, video_id):
-        return Api.service.GetYouTubeVideoEntry(
-            '%s/users/default/uploads/%s' % self.base_url, video_id
-        )
+        return Api.service.GetYouTubeVideoEntry('%s/users/default/uploads/%s' % (self.base_url, video_id))
 
     def fetch_feed_by_username(self, username):
         uri = os.sep.join([self.base_url, 'users', username, 'uploads'])
