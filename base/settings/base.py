@@ -216,3 +216,10 @@ class Base(Configuration):
     # South.
     # ------------------------------------------------------------------
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
+
+    # components.socialize.
+    # ------------------------------------------------------------------
+    TWITTER_CONSUMER_KEY = values.Value('',  environ_prefix=None)
+    TWITTER_CONSUMER_SECRET = values.Value('',  environ_prefix=None)
+    TWITTER_OAUTH_TOKEN = values.Value('',  environ_prefix=None)
+    TWITTER_OAUTH_SECRET = values.Value('',  environ_prefix=None)
