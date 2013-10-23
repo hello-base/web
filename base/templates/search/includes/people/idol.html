@@ -11,7 +11,7 @@
     {% if object.primary_membership %}
     <div class="item-standing">
       {% with object.primary_membership as primary %}
-      <a href="{{ primary.group.get_absolute_url }}">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}</a>{% endif %}
+      <a href="{{ primary.group.get_absolute_url }}">{{ primary.standing }}{% if primary.group.romanized_name != "Soloist" %} of {{ primary.group }}{% endif %}</a>
       {% endwith %}
     </div>
     {% endif %}
