@@ -163,25 +163,38 @@
       {% endif %}
       </div><!-- .container -->
     </div><!-- .releases -->
-  </div>
 
-  {% comment %}
-  {% if object.subgroups.all %}
-  <div class="profile-subgroups-container container">
-    <h2>Subgroups</h2>
-    <div class="profile-subgroups">
-      {% for subgroup in object.subgroups.all %}
-        <span class="name">{{ subgroup.name }}</span>
-        <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
-        <span class="ss-icon ss-calendar"></span>
-        <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-          {{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}
-        </time>
-        <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
-      {% endfor %}
+    {% if object.subgroups.all %}
+    <div class="profile-subgroups-container">
+      <div class="container">
+        <h1 class="section-title">Subgroups</h1>
+        <div class="profile-subgroups">
+          {% for subgroup in object.subgroups.all %}
+          <div class="subgroup">
+            <div class="group-image">
+              {% if subgroup.photo_thumbnail %}<img src="{{ MEDIA_URL }}{{ subgroup.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+            </div>
+            <div class="group-meta">
+              <div class="group-header">
+                <span class="name">{{ subgroup.name }}</span>
+                <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
+              </div>
+              <div class="group-subtext">
+                <span class="group-data tenure">
+                  <span class="ss-icon ss-calendar"></span>
+                  <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    <b>{{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}</b>
+                  </time>
+                  <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
+    {% endif %}
   </div>
-  {% endif %}
-  {% endcomment %}
 </section>
 {% endblock content %}
