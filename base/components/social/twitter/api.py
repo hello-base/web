@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from twitter import Twitter, OAuth
 
 
