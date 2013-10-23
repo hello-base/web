@@ -37,17 +37,17 @@ class Tweet(models.Model):
 
     # Replies.
     in_reply_to_user_id = models.BigIntegerField(blank=True, null=True)
-    in_reply_to_user_id_str = models.CharField(blank=True)
+    in_reply_to_user_id_str = models.CharField(blank=True, max_length=200)
     in_reply_to_status_id = models.BigIntegerField(blank=True, null=True)
-    in_reply_to_status_id_str = models.CharField(blank=True)
+    in_reply_to_status_id_str = models.CharField(blank=True, max_length=200)
 
     # Retweets.
     retweeted = models.BooleanField(default=False)
     retweeter_profile_image_url = models.URLField(blank=True)
-    retweeter_screen_name = models.CharField(blank=True)
-    retweeter_name = models.CharField(blank=True)
+    retweeter_screen_name = models.CharField(blank=True, max_length=200)
+    retweeter_name = models.CharField(blank=True, max_length=200)
     retweeted_status_id = models.BigIntegerField(blank=True, null=True)
-    retweeted_status_id_str = models.CharField(blank=True)
+    retweeted_status_id_str = models.CharField(blank=True, max_length=200)
     retweeted_status_created_at = models.DateTimeField(blank=True, null=True)
     retweeted_status_text = models.TextField(blank=True)
     retweeted_status_source = models.CharField(blank=True, max_length=200)
