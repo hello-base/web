@@ -98,7 +98,13 @@
                 <span class="name">{{ release.name }}</span>
               </a>
             </td>
-            <td class="appearance-alternate"></td>
+            <td class="appearance-alternate">
+            {% if object.romanized_name_alternate %}
+              as
+              <span class="romanized-name">{{ object.romanized_name }} {{ object.romanized_name_alternate }}</span>
+              <span class="name">{{ object.name }} {{ object.name_alternate }}</span>
+            {% endif %}
+            </td>
             <td class="appearance-data">
               <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"F j, Y" }}</time>
               <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
