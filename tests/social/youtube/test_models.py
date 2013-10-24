@@ -15,5 +15,5 @@ class TestChannels:
 class TestVideo:
     def test_video_factory(self):
         channel = ChannelFactory()
-        factory = VideoFactory(channel=channel)
+        factory = VideoFactory(channel=channel, ytid='MhH_ucrPMZc')
         assert isinstance(factory, Video)

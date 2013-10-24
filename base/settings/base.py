@@ -225,3 +225,4 @@ class Base(Configuration):
     TWITTER_CONSUMER_SECRET = values.Value('',  environ_prefix=None)
     TWITTER_OAUTH_TOKEN = values.Value('',  environ_prefix=None)
     TWITTER_OAUTH_SECRET = values.Value('',  environ_prefix=None)
+    YOUTUBE_DEVELOPER_KEY = values.Value('',  environ_prefix=None)
