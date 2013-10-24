@@ -122,6 +122,7 @@ class Idol(Person):
             pass
         return super(Idol, self).save(*args, **kwargs)
 
+    @property
     def age(self):
         return calculate_age(self.birthdate)
 
@@ -182,11 +183,13 @@ class Group(ContributorMixin):
     def get_absolute_url(self):
         return reverse('group-detail', kwargs={'slug': self.slug})
 
+    @property
     def age(self):
         if self.ended:
             return calculate_age(self.started, target=self.ended)
         return calculate_age(self.started)
 
+    @property
     def age_in_days(self):
         if self.ended:
             return (self.ended - self.started).days
