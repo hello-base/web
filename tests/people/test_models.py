@@ -1,3 +1,4 @@
+import datetime
 import pytest
 
 from components.people.models import Group, Idol, Membership, Staff
@@ -11,17 +12,27 @@ class TestGroups:
         factory = GroupFactory()
         assert isinstance(factory, Group)
         assert 'group' in factory.romanized_name
+        assert factory.identifier == 'group'
 
     def test_group_get_absolute_url(self, client):
         factory = GroupFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
+    def test_group_age(self):
+        active = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366))
+        inactive = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366), ended=datetime.date.today())
+        assert active.age == 1
+        assert active.age_in_days == 366
+        assert inactive.age == 1
+        assert inactive.age_in_days == 366
+
 
 class TestIdols:
     def test_idol_factory(self):
         factory = IdolFactory()
         assert isinstance(factory, Idol)
+        assert factory.identifier == 'idol'
         assert 'family' in factory.romanized_family_name
         assert 'given' in factory.romanized_given_name
 
