@@ -2,11 +2,13 @@ from dateutil import parser
 
 from django.db import models
 
+from components.people.models import Group, Idol
+
 from .api import Api
 
 
 class Channel(models.Model):
-    username = models.CharField()
+    username = models.CharField(max_length=60)
 
     # Optional relationships.
     idols = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
