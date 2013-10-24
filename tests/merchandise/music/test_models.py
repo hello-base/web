@@ -64,10 +64,12 @@ class TestEditions:
         assert isinstance(factory, Edition)
         assert 'edition' in factory.romanized_name
 
-    def test_edition_get_absolute_url(self):
+    def test_edition_get_absolute_url(self, client):
         single = SingleFactory()
         edition = EditionFactory(single=single)
+        response = client.get(edition.get_absolute_url())
         assert edition.get_absolute_url() == single.get_absolute_url()
+        assert response.status_code == 200
 
     def test_edition_parent(self):
         single = SingleFactory()
