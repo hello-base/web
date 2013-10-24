@@ -102,7 +102,7 @@ def heroku_capture(verbose=False, **kwargs):
     hide = 'out' if not verbose else None
 
     out('Snapshotting the production database.')
-    invoke.run('heroku pgbackups:capture', hide=hide)
+    invoke.run('heroku pgbackups:capture --expire', hide=hide)
 
 
 @invoke.task(name='imagekit')
@@ -126,8 +126,8 @@ def heroku_pull(verbose=False, database='hello-base', **kwargs):
     hide = 'out' if not verbose else None
 
     # Fetch the latest database dump.
-    invoke.run('curl -o latest.dump `heroku pgbackups:url`')
-    out('Latest database dump (latest.dump) grabbed via curl.', hide=hide)
+    invoke.run('curl -o latest.dump `heroku pgbackups:url`', hide=hide)
+    out('Latest database dump (latest.dump) grabbed via curl.')
 
     # Restore it.
     invoke.run('pg_restore --verbose --clean --no-acl --no-owner -h localhost -d %s latest.dump' % database, hide=hide)

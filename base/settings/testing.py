@@ -14,6 +14,11 @@ class Testing(Settings):
         }
     }
 
+    # django-celery.
+    # ------------------------------------------------------------------
+    Settings.INSTALLED_APPS += ['kombu.transport.django', 'djcelery',]
+    BROKER_URL = 'django://'
+
     # django-haystack.
     # ------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {

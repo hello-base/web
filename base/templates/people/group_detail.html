@@ -2,7 +2,7 @@
 {% load humanize %}
 {% load typogrify_tags %}
 
-{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Groups{% endblock %}
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
@@ -17,7 +17,7 @@
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
-        <div class="profile-photo"></div>
+        <div class="profile-image"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
@@ -41,7 +41,7 @@
           <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.age }} ({{ object.age_in_days|intcomma }} days)</li>
           <li class="vital vital-anniversary"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Anniversary</span> <time datetime="{{ object.started|date:"c" }}" itemprop="foundingDate">{{ object.started }}</time></li>
           {% if object.ended %}<li class="vital vital-disband"><span class="vital-label"><span class="ss-icon ss-ban"></span> Disbanded</span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time></li>{% endif %}
-          <li class="vital vital-actives"><span class="vital-label"><span class="ss-icon ss-users"></span> Active Members</span> {{ memberships.active_count }}</li>
+          {% if memberships.active_count %}<li class="vital vital-actives"><span class="vital-label"><span class="ss-icon ss-users"></span> Active Members</span> {{ memberships.active_count }}</li>{% endif %}
         </ul>
       </div>
     </aside>
@@ -54,28 +54,16 @@
               <span class="count">{{ object.memberships.count }}</span>
             </div>
             <div class="card-example">
-            {% with object.primary_membership as primary %}
               <div class="example-heading"><span class="pill">Summary</span></div>
               <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a>
               <div class="example-subtext">
-                <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                  {% if primary.is_active %}
-                    Joined <b>{{ primary.started|date:"F j, Y" }}</b>
-                  {% else %}
-                    Member from <b>{{ primary.started|date:"F j, Y" }}</b>&ndash;<b>{{ primary.ended|date:"F j, Y" }}</b>
-                  {% endif %}
-                </time>
-                {% if primary.is_leader %}
-                <time datetime="{{ primary.leadership_started|date:"c" }}/{% if primary.leadership_ended %}{{ primary.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                  {% if not primary.leadership_ended %}
-                    and leader since <b>{{ primary.leadership_started|date:"F j, Y" }}</b>
-                  {% else %}
-                    and was leader from <b>{{ primary.leadership_started|date:"F j, Y"}}</b>&ndash;<b>{{ primary.leadership_ended|date:"F j, Y" }}</b>
-                  {% endif %}
-                </time>
+              {% if object.is_active %}
+                {{ object.romanized_name }} has <b>{{ memberships.active_count }} current</b> member{{ memberships.active_count|pluralize }}{% if memberships.inactive_count %} and <b>{{ memberships.inactive_count }} former</b> member{{ memberships.inactive_count|pluralize }}{% endif %}.
+                {% if memberships.leader %}<a href="{{ memberships.leader.idol.get_absolute_url }}">{{ memberships.leader.idol }}</a> has been leader since <b>{{ memberships.leader.leadership_started }}</b>{% endif %}.
+              {% else %}
+                {{ object.romanized_name }} is a <b>{{ object.get_classification_display|lower }} group</b> that had <b>{{ object.memberships.count }} members</b>{% if memberships.leader_count %} and <b>{{ memberships.leader_count }} leader{{ memberships.leader_count|pluralize }}</b>{% endif %}.
               {% endif %}
               </div>
-            {% endwith %}
             </div>
           </li><!-- .group-participation -->
           {% include "people/partials/single_card.html" %}
@@ -84,149 +72,129 @@
       </div><!-- .container -->
     </div><!-- .participations -->
 
-    {% if object.subgroups.all %}
-    <div class="profile-subgroups-container container">
-      <h2>Subgroups</h2>
-      <div class="profile-subgroups">
-        {% for subgroup in object.subgroups.all %}
-          <span class="name">{{ subgroup.name }}</span>
-          <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
-          <span class="ss-icon ss-calendar"></span>
-          <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-            {{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}
-          </time>
-          <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-
-<section class="memberships">
-    <div class="container">
+    <section class="memberships">
+      <div class="container">
         {% if memberships.active %}
         <div class="actives">
-            <div class="active-leader" itemprop="musicGroupMember">
-            {% with memberships.leader as member %}
-                <span class="name">{{ member.idol.name }}</span>
-                <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                <span class="tenure"><time datetime="{{ member.started|date:"c"}}/{% now "c" %}">Since {{ member.started|date:"F j, Y" }}</time></span>
-                <span class="tenure leadership-tenure"><time datetime="{{ member.leadership_started|date:"c"}}/{% now "c" %}">Since {{ member.leadership_started|date:"F j, Y" }}</time></span>
-            {% endwith %}
-            </div>
-            <div class="active-members">
-                <div class="membership-section-title"><span class="pill">Current Members</span></div>
-                <ul class="membership-list active-members">
-                {% for member in memberships.active %}
-                    <li class="membership" itemprop="musicGroupMember">
-                        <div class="idol-image">
-                            <div class="empty-image"><span class="ss-icon ss-disc"></span></div>
-                        </div>
-                        <span class="name">{{ member.idol.name }}</span>
-                        <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        <span class="tenure"><time datetime="{{ member.started|date:"c"}}/{% now "c" %}">Since {{ member.started }}</time></span>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
+          <div class="active-members">
+            <h2 class="section-title">Current Members</h2>
+            <ul class="membership-list active-members">
+            {% for member in memberships.active %}
+              <li class="membership" itemprop="musicGroupMember">
+                <div class="idol-image object-image">
+                  {% if member.idol.photo %}<a href="{% url 'image-detail' member.idol.photo|urlencode %}" target="_blank"><img src="{{ MEDIA_URL }}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                </div>
+                <div class="idol-meta">
+                  <div class="idol-header">
+                    <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                    <span class="name">{{ member.idol.name }}</span>
+                  </div>
+                  <div class="idol-subtext">
+                    <div class="idol-data"><span class="ss-icon ss-clock"></span> <time datetime="{{ member.started|date:"c"}}/{% now "c" %}">Since <b>{{ member.started }}</b></time></div>
+                    {% if member.is_leader %}<div class="idol-data"><span class="ss-icon ss-checkcalendar"></span> <time datetime="{{ member.leadership_started|date:"c"}}/{% now "c" %}">Leader since <b>{{ member.leadership_started }}</b></time></div>{% endif %}
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
         </div>
         {% endif %}
         {% if memberships.inactive %}
         <div class="inactives">
-            {% if memberships.leaders %}
-            {% if memberships.leaders|length == 1 %}
-            <div class="inactive-leader">
-            {% for member in memberships.leaders %}
-                <span class="name">{{ member.idol.name }}</span>
-                <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"F j, Y" }}&ndash;{{ member.ended|date:"F j, Y" }}</time></span>
+          <div class="inactive-members">
+            <h2 class="section-title">Former Members</h2>
+            <ul class="membership-list">
+            {% for member in memberships.inactive %}
+              <li class="membership">
+                <div class="idol-image">
+                  {% if member.idol.photo %}<img src="{{ MEDIA_URL }}{{ member.idol.photo }}" width="60">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                </div>
+                <div class="idol-meta">
+                  <div class="idol-header">
+                    <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
+                    <span class="name">{{ member.idol.name }}</span>
+                  </div>
+                  <div class="idol-subtext">
+                    <div class="idol-data"><span class="ss-icon ss-clock"></span> <time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}"><b>{{ member.started }}&ndash;{{ member.ended }}</b></time></div>
+                    {% if member.is_leader %}<div class="idol-data"><span class="ss-icon ss-checkcalendar"></span> <time datetime="{{ member.leadership_started|date:"c"}}/{{ member.leadership_ended|date:"c" }}">Leader from <b>{{ member.leadership_started }}&ndash;{{ member.leadership_ended }}</b></time></div>{% endif %}
+                  </div>
+                </div>
+              </li>
             {% endfor %}
-            </div>
-            {% else %}
-            <div class="inactive-leaders">
-                <ul class="membership-list">
-                    <li class="membership-header">
-                        <div class="membership-graph">
-                            <span class="graph-started">{{ object.started|date }}</span>
-                            <span class="graph-ended">{% if object.ended %}{{ object.ended|date }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
-                        </div>
-                    </li>
-                {% for member in memberships.leaders %}
-                    <li class="membership">
-                        <div class="membership-names">
-                        <span class="name">{{ member.idol.name }}</span>
-                        <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        </div>
-                        <div class="membership-graph">
-                            <div class="full-tenure bar" style="
-                                margin-left: {% widthratio member.days_before_starting object.age_in_days 554 %}px;
-                                width: {% widthratio member.tenure_in_days object.age_in_days 554 %}px;
-                            "></div>
-                            <div class="leadership-tenure bar" style="
-                                margin-left: {% widthratio member.days_before_becoming_leader object.age_in_days 554 %}px;
-                                width: {% widthratio member.leadership_tenure_in_days object.age_in_days 554 %}px;
-                            "></div>
-                            <span class="leadership-tenure-count" style="
-                                margin-left: {% widthratio member.days_before_ending object.age_in_days 554 %}px;
-                            ">{{ member.leadership_tenure_in_days|intcomma }}</span>
-                        </div>
-                        <div class="membership-stats">
-                            <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"F j, Y" }}&ndash;{{ member.ended|date:"F j, Y" }}</time></span>
-                        </div>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
-            {% endif %}
-            <div class="inactive-members">
-                <div class="membership-section-title"><span class="pill">Former Members</span></div>
-                <ul class="membership-list">
-                {% for member in memberships.inactive %}
-                    <li class="membership">
-                        <span class="name">{{ member.idol.name }}</span>
-                        <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-                        <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"F j, Y" }}&ndash;{{ member.ended|date:"F j, Y" }}</time></span>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
+            </ul>
+          </div>
         </div>
         {% endif %}
-    </div>
-</section>
+      </div>
+    </section>
 
-<div class="profile-releases">
-  <div class="container">
-  {% if singles %}
-    <div class="releases-singles">
-      <h2 class="section-title">
-        <span class="title">
-          <span class="ss-icon ss-eighthnote"></span> Singles
-          <b class="count">{{ singles|length }}</b>
-        </span>
-      </h2>
-      <ul class="release-list">
-      {% for release in singles %}
-        {% include "people/partials/single_list_item.html" with release=release show_participants=False %}
-      {% endfor %}
-      </ul>
+    <div class="profile-releases">
+      <div class="container">
+      {% if singles %}
+        <div class="releases-singles">
+          <h2 class="section-title">
+            <span class="title">
+              <span class="ss-icon ss-eighthnote"></span> Singles
+              <b class="count">{{ singles|length }}</b>
+            </span>
+          </h2>
+          <ul class="release-list">
+          {% for release in singles %}
+            {% include "people/partials/single_list_item.html" with release=release %}
+          {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% if albums %}
+        <div class="releases-albums">
+          <h2 class="section-title">
+            <span class="title">
+              <span class="ss-icon ss-music"></span> Albums
+              <b class="count">{{ albums|length }}</b>
+            </span>
+          </h2>
+          <ul class="release-list">
+          {% for release in albums %}
+            {% include "people/partials/album_list_item.html" with release=release %}
+          {% endfor %}
+          </ul><!-- .release-list -->
+        </div><!-- .releases-albums -->
+      {% endif %}
+      </div><!-- .container -->
+    </div><!-- .releases -->
+
+    {% if object.subgroups.all %}
+    <div class="profile-subgroups-container">
+      <div class="container">
+        <h1 class="section-title">Subgroups</h1>
+        <div class="profile-subgroups">
+          {% for subgroup in object.subgroups.all %}
+          <div class="subgroup">
+            <div class="group-image">
+              {% if subgroup.photo_thumbnail %}<img src="{{ MEDIA_URL }}{{ subgroup.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+            </div>
+            <div class="group-meta">
+              <div class="group-header">
+                <span class="name">{{ subgroup.name }}</span>
+                <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
+              </div>
+              <div class="group-subtext">
+                <span class="group-data tenure">
+                  <span class="ss-icon ss-calendar"></span>
+                  <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    <b>{{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}</b>
+                  </time>
+                  <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
     {% endif %}
-    {% if albums %}
-    <div class="releases-albums">
-      <h2 class="section-title">
-        <span class="title">
-          <span class="ss-icon ss-music"></span> Albums
-          <b class="count">{{ albums|length }}</b>
-        </span>
-      </h2>
-      <ul class="release-list">
-      {% for release in albums %}
-        {% include "people/partials/album_list_item.html" with release=release show_participants=False %}
-      {% endfor %}
-      </ul><!-- .release-list -->
-    </div><!-- .releases-albums -->
-  {% endif %}
-  </div><!-- .container -->
-</div><!-- .releases -->
+  </div>
+</section>
 {% endblock content %}

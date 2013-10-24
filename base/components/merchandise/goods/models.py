@@ -66,42 +66,50 @@ class Base(base.Merchandise):
 
 class Good(Base):
     CATEGORIES = Choices(
-        ('badge', 'Badge'),
-        ('bandana', 'Bandana'),  # other?
-        ('clearfile', 'Clear File'),
-        ('collectionphoto', 'Collection Photo'),
-        ('costume', 'Costume Good'),  # other? costume fabric piece
-        ('dvd', 'DVD'),  # DVD Magazine/DVD Memorial.. NO store-released DVD's.
-        ('gachagacha', 'GachaGacha Collection Item'),
-        ('hoodie', 'Hoodie'),
-        ('keyholder', 'Keyholder'),
-        ('microfiber', 'Microfiber Towel'),
-        ('muffler', 'Muffler Towel'),
-        ('tradingcardphoto', 'Trading Card-size Photo'),
-        ('lphoto', 'L-size Photo'),
-        ('lmetallic', 'L-size Metallic Photo'),
-        ('postcardphoto', 'Postcard-size Photo'),
-        ('2lphoto', '2L-size Photo'),
-        ('A5photo', 'A5-wide Photo'),
-        ('A4photo', 'A4-size Photo'),
-        ('photocard', 'Photo Card'),  # PR cards, 4 seasons cards, birthday cards, etc.
-        ('pinup', 'Pin-up Poster'),
-        ('a2poster', 'A2-size Poster'),
-        ('b1poster', 'B1-size Poster'),
-        ('b2poster', 'B2-size Poster'),
-        ('scrunchie', 'Scrunchie'),  # hair ornament?
-        ('strap', 'Strap/Charm'),
-        ('tourbag', 'Tour Bag'),
-        ('tradingcard', 'Trading Card'),
-        ('tshirt', 'T-shirt'),
-        ('uchiwa', 'Uchiwa'),
-        ('visualbook', 'Visual Book/Pamphlet'),
-        ('visualscreen', 'Visual Screen'),
-        ('wristband', 'Wristband'),
-        ('collectionitem', 'Other Collection Item'),
-        ('poster', 'Other Poster'),  # no fabric posters like tapestries
-        ('towel', 'Other Towel'),
-        ('other', 'Other'),
+        ('Photos', [
+            ('2lphoto', '2L-size Photo'),
+            ('A4photo', 'A4-size Photo'),
+            ('A5photo', 'A5-wide Photo'),
+            ('collectionphoto', 'Collection Photo'),
+            ('lmetallic', 'L-size Metallic Photo'),
+            ('lphoto', 'L-size Photo'),
+            ('photocard', 'Photo Card'),  # PR cards, 4 seasons cards, birthday cards, etc.
+            ('postcardphoto', 'Postcard-size Photo'),
+            ('tradingcardphoto', 'Trading Card-size Photo'),
+        ]),
+        ('Posters', [
+            ('pinup', 'Pin-up Poster'),
+            ('a2poster', 'A2-size Poster'),
+            ('b1poster', 'B1-size Poster'),
+            ('b2poster', 'B2-size Poster'),
+        ]),
+        ('Merchandise', [
+            ('badge', 'Badge'),
+            ('bandana', 'Bandana'),  # other?
+            ('clearfile', 'Clear File'),
+            ('costume', 'Costume Good'),  # other? costume fabric piece
+            ('dvd', 'DVD'),  # DVD Magazine/DVD Memorial.. NO store-released DVD's.
+            ('gachagacha', 'GachaGacha Collection Item'),
+            ('hoodie', 'Hoodie'),
+            ('keyholder', 'Keyholder'),
+            ('microfiber', 'Microfiber Towel'),
+            ('muffler', 'Muffler Towel'),
+            ('scrunchie', 'Scrunchie'),  # hair ornament?
+            ('strap', 'Strap/Charm'),
+            ('tourbag', 'Tour Bag'),
+            ('tradingcard', 'Trading Card'),
+            ('tshirt', 'T-shirt'),
+            ('uchiwa', 'Uchiwa'),
+            ('visualbook', 'Visual Book/Pamphlet'),
+            ('visualscreen', 'Visual Screen'),
+            ('wristband', 'Wristband'),
+        ]),
+        ('Other', [
+            ('collectionitem', 'Other Collection Item'),
+            ('poster', 'Other Poster'),  # no fabric posters like tapestries
+            ('towel', 'Other Towel'),
+            ('other', 'Other'),
+        ])
     )
     category = models.CharField(choices=CATEGORIES, max_length=16)
     parent = models.ForeignKey('Set', blank=True, null=True,

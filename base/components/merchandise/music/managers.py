@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models.query import QuerySet
 
 
 class EditionManager(models.Manager):
@@ -16,3 +17,13 @@ class EditionManager(models.Manager):
             return qs.filter(**kwargs)[0]
         except IndexError:
             return qs.none()
+
+
+class TrackQuerySet(QuerySet):
+    def originals(self):
+        return self.filter(original_track__isnull=True)
+
+
+class TrackOrderQuerySet(QuerySet):
+    def original_only(self):
+        return self.filter(is_instrumental=False)

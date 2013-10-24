@@ -1,5 +1,6 @@
 from datetime import date
 from itertools import chain
+from operator import attrgetter
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
@@ -10,7 +11,7 @@ from django.utils.functional import cached_property
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
-from model_utils.models import TimeStampedModel
+from model_utils.managers import PassThroughManager
 from ohashi.constants import OTHER
 from ohashi.db import models
 
@@ -18,7 +19,7 @@ from components.merchandise.models import Merchandise
 from components.merchandise.utils import uuid_encode
 from components.people.models import ParticipationMixin
 
-from .managers import EditionManager
+from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
 
 
 class Label(models.Model):
@@ -78,6 +79,26 @@ class Album(Base):
     def get_absolute_url(self):
         return reverse('album-detail', kwargs={'slug': self.slug})
 
+    @cached_property
+    def get_previous(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.albums.order_by('-released').exclude(number='')
+                return qs.filter(released__lt=self.released)[0]
+            except IndexError:
+                return None
+
+    @cached_property
+    def get_next(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.albums.order_by('released').exclude(number='')
+                return qs.filter(released__gt=self.released)[0]
+            except IndexError:
+                return None
+
 
 class Single(Base):
     is_indie = models.BooleanField('indie single?', default=False)
@@ -87,6 +108,26 @@ class Single(Base):
 
     def get_absolute_url(self):
         return reverse('single-detail', kwargs={'slug': self.slug})
+
+    @cached_property
+    def get_previous(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.singles.order_by('-released').exclude(number='')
+                return qs.filter(released__lt=self.released)[0]
+            except IndexError:
+                return None
+
+    @cached_property
+    def get_next(self):
+        if self.number:
+            try:
+                group = self.groups.get()
+                qs = group.singles.order_by('released').exclude(number='')
+                return qs.filter(released__gt=self.released)[0]
+            except IndexError:
+                return None
 
 
 class Edition(models.Model):
@@ -137,9 +178,11 @@ class Edition(models.Model):
         if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital]:
             if self.released:
                 self.parent.released = self.released
-                self.parent.save()
             elif not self.released:
                 self.released = date.min
+            if self.art:
+                self.parent.art = self.art
+            self.parent.save()
         elif not self.released:
             self.released = self.parent.released
         return super(Edition, self).save(*args, **kwargs)
@@ -179,12 +222,19 @@ class Edition(models.Model):
 
 
 class Track(ParticipationMixin):
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(TrackQuerySet)()
+
+    album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks')
+    single = models.ForeignKey(Single, blank=True, null=True, related_name='tracks')
+
     # Metadata.
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
+    translated_name = models.CharField(blank=True)
 
     # Alternate Versions.
-    original_track = models.ForeignKey('self', blank=True, null=True, related_name='parent',
+    original_track = models.ForeignKey('self', blank=True, null=True, related_name='children',
         help_text='If this track is a cover or alternate, choose the original track it\'s based off of.')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
@@ -195,6 +245,7 @@ class Track(ParticipationMixin):
     lyrics = models.TextField(blank=True)
     romanized_lyrics = models.TextField(blank=True)
     translated_lyrics = models.TextField(blank=True)
+    translation_notes = models.TextField(blank=True)
 
     # Staff.
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
@@ -212,12 +263,30 @@ class Track(ParticipationMixin):
             return u'%s [%s]' % (self.romanized_name, self.romanized_name_alternate)
         if self.is_cover and not self.is_alternate:
             return u'%s [Cover]' % (self.romanized_name)
-        return u'%s' % (self.romanized_name)
+        return u'%s [Original]' % (self.romanized_name)
 
     def get_absolute_url(self):
         if self.original_track:
             return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
+
+    @cached_property
+    def appearances(self):
+        appearances = {}
+        children = list(self.children.all())
+        children.sort(key=attrgetter('parent.released'))
+
+        # Append all of the releases that this track appears on,
+        # including looping through all of the tracks that this
+        # track is an original of (if applicable).
+        appearances['count'] = len(children) + 1
+        appearances['debut'] = self.parent
+        appearances['children'] = [(track.parent, track) for track in children]
+        return appearances
+
+    @property
+    def parent(self):
+        return filter(None, [self.album, self.single])[0]
 
     @cached_property
     def participants(self):
@@ -229,6 +298,9 @@ class Track(ParticipationMixin):
 
 
 class TrackOrder(models.Model):
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(TrackOrderQuerySet)()
+
     edition = models.ForeignKey(Edition, related_name='order')
     track = models.ForeignKey(Track, related_name='appears_on')
     position = models.PositiveSmallIntegerField()
@@ -294,10 +366,6 @@ class Video(models.Model):
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
 
-    @staticmethod
-    def autocomplete_search_fields():
-        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
-
     @property
     def parent(self):
         return filter(None, [self.album, self.single])[0]
@@ -312,6 +380,10 @@ class Video(models.Model):
             return 'Performance'
         else:
             return ''
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
 
 class VideoTrackOrder(models.Model):
@@ -330,8 +402,11 @@ class VideoTrackOrder(models.Model):
 
 @receiver(post_save, sender=Track)
 def create_slug(sender, instance, created, **kwargs):
+    from django.template.defaultfilters import slugify
+
     if created:
-        # Calculate the slug.
-        instance.slug = uuid_encode(instance.uuid)
+        # Calculate the slug, but only if the track is
+        # an original track.
+        instance.slug = '' if instance.original_track else slugify(instance.romanized_name)
         instance.save()
     return

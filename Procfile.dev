@@ -1,4 +1,6 @@
-coffee:  coffee -o base/static/javascripts/application -cw base/assets/javascripts
-compass: compass watch
-search:  elasticsearch -f -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml > /dev/null
-web:     python ./manage.py runserver
+coffee:    coffee -o base/static/javascripts/application -cw base/assets/javascripts
+compass:   compass watch
+scheduler: python manage.py celery worker -B -E --maxtasksperchild=1000
+search:    elasticsearch -f -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml > /dev/null
+web:       python ./manage.py runserver
+worker:    python manage.py celery worker -E --maxtasksperchild=1000

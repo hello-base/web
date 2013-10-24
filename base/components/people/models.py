@@ -6,18 +6,20 @@ from django.dispatch import receiver
 from django.utils import timesince
 from django.utils.functional import cached_property
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
-from model_utils.models import TimeStampedModel
 from ohashi.db import models
 
-from .constants import (BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES,
-    SCOPE, STATUS)
+from components.accounts.models import ContributorMixin
+
+from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
 from .utils import calculate_age, calculate_average_age
 
 
-class Person(TimeStampedModel):
+class Person(ContributorMixin):
     name = models.CharField(editable=False)
     romanized_name = models.CharField(editable=False)
     family_name = models.CharField(blank=True)
@@ -53,6 +55,10 @@ class Person(TimeStampedModel):
                 return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
         return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
+    @property
+    def identifier(self):
+        return self._meta.module_name
+
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
@@ -74,6 +80,14 @@ class Idol(Person):
     bloodtype = models.CharField(blank=True, choices=BLOOD_TYPE, default='A', max_length=2)
     height = models.DecimalField(blank=True, decimal_places=1, max_digits=4, null=True)
 
+    # Dates.
+    started = models.DateField(db_index=True, null=True,
+        help_text='The date this idol joined Hello! Project/became an idol.')
+    graduated = models.DateField(blank=True, db_index=True, null=True,
+        help_text='The date this idol graduated from Hello! Project.')
+    retired = models.DateField(blank=True, db_index=True, null=True,
+        help_text='The date this idol retired.')
+
     # Birth Information.
     birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True)
@@ -89,6 +103,8 @@ class Idol(Person):
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     class Meta:
@@ -125,7 +141,7 @@ class Staff(Person):
         verbose_name_plural = 'staff'
 
 
-class Group(TimeStampedModel):
+class Group(ContributorMixin):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
     tracker = FieldTracker()
@@ -157,6 +173,8 @@ class Group(TimeStampedModel):
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
@@ -174,9 +192,9 @@ class Group(TimeStampedModel):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
-    @staticmethod
-    def autocomplete_search_fields():
-        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+    @property
+    def identifier(self):
+        return self._meta.module_name
 
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
@@ -195,6 +213,10 @@ class Group(TimeStampedModel):
     def latest_single(self):
         return self.singles.latest()
 
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
 
 class Membership(models.Model):
     # Model Managers.
@@ -208,6 +230,7 @@ class Membership(models.Model):
     is_primary = models.BooleanField('Primary?', db_index=True, default=False)
     started = models.DateField(db_index=True)
     ended = models.DateField(blank=True, db_index=True, null=True)
+    generation = models.PositiveSmallIntegerField(blank=True, db_index=True, null=True)
 
     # Leadership Details.
     is_leader = models.BooleanField('Is/Was leader?')
@@ -293,51 +316,10 @@ class ParticipationMixin(models.Model):
     class Meta:
         abstract = True
 
-    @receiver(post_save)
-    def render_participants(sender, instance, created, **kwargs):
-        # Being a signal without a sender, we need to make sure models
-        # are actually subclasses of ParticipationMixin before we
-        # continue.
-        if not issubclass(instance.__class__, ParticipationMixin):
-            return
-
-        from components.people.models import Idol, Membership
-
-        # Do we have existing participants? Clear them out so we can
-        # calculate them again.
-        instance.participating_idols.clear()
-        instance.participating_groups.clear()
-
-        groups = instance.groups.all()
-        if groups.exists():
-            # If a supergroup is one of the groups attributed, just
-            # show the supergroup.
-            if instance.supergroup in groups:
-                return instance.participating_groups.add(instance.supergroup)
-
-            # Gather all of the individual idol's primary keys
-            # attributed to the single into a set().
-            idols = instance.idols.all()
-
-            # Specify an empty set() that will contain all of the
-            # members of the groups attributed to the single. Then,
-            # loop through all of the groups and update the set with
-            # all of the individual members' primary keys.
-            group_ids = groups.values_list('id', flat=True)
-            group_members = Membership.objects.filter(group__in=group_ids).values_list('idol', flat=True)
-
-            # Subtract group_members from idols.
-            distinct_idols = idols.exclude(pk__in=group_members)
-
-            # Add the calculated groups and idols to our new list of
-            # participating groups and idols.
-            instance.participating_groups.add(*list(groups))
-            instance.participating_idols.add(*list(distinct_idols))
-            return
-
-        # No groups? Just add all the idols.
-        instance.participating_idols.add(*list(instance.idols.all()))
-        return
+    def save(self, *args, **kwargs):
+        super(ParticipationMixin, self).save(*args, **kwargs)
+        from .tasks import render_participants
+        render_participants.delay(self)
 
     @cached_property
     def supergroup(self):
@@ -368,7 +350,9 @@ class Groupshot(models.Model):
     group = models.ForeignKey(Group, related_name='photos')
 
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
-    photo = models.ImageField(upload_to='people/groups/')
+    photo = models.ImageField(blank=True, upload_to='people/groups/')
+    photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
@@ -376,13 +360,14 @@ class Groupshot(models.Model):
         ordering = ('-taken',)
 
     def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.group.name, self.taken)
+        return u'Photo of %s (%s)' % (self.group.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):
         super(Groupshot, self).save(*args, **kwargs)
         if self.kind:
-            photo = self.objects.latest()
-            self.group.photo = photo
+            latest = self._default_manager.filter(group=self.group).latest()
+            self.group.photo = latest.photo
+            self.group.photo_thumbnail = latest.photo_thumbnail
             self.group.save()
 
 
@@ -390,7 +375,9 @@ class Headshot(models.Model):
     idol = models.ForeignKey(Idol, related_name='photos')
 
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
-    photo = models.ImageField(upload_to='people/idols/')
+    photo = models.ImageField(blank=True, upload_to='people/idols/')
+    photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
+    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
@@ -398,11 +385,12 @@ class Headshot(models.Model):
         ordering = ('-taken',)
 
     def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.idol.name, self.taken)
+        return u'Photo of %s (%s)' % (self.idol.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):
         super(Headshot, self).save(*args, **kwargs)
         if self.id:
-            photo = self.objects.latest()
-            self.idol.photo = photo
+            latest = self._default_manager.filter(idol=self.idol).latest()
+            self.idol.photo = latest.photo
+            self.idol.photo_thumbnail = latest.photo_thumbnail
             self.idol.save()

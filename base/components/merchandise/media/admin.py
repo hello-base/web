@@ -2,6 +2,7 @@
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
+
 from .models import Clip, Videodisc, VideodiscFormat
 
 

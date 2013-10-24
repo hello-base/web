@@ -10,10 +10,8 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from components.sitemaps import (AlbumSitemap, IdolSitemap,
-    GroupSitemap, SingleSitemap)
-from components.views import (AutocompleteView, ImageDetailView,
-    PlainTextView, SiteView, XMLView)
+from components.sitemaps import AlbumSitemap, IdolSitemap, GroupSitemap, SingleSitemap
+from components.views import AutocompleteView, ImageDetailView, PlainTextView, SiteView, XMLView
 
 
 # Administration system auto-discovery.
@@ -57,6 +55,7 @@ urlpatterns = patterns('',
 
     # Core Modules.
     url(r'^accounts/', include('components.accounts.urls')),
+    url(r'^api/', include('components.api.urls', namespace='api')),
     url(r'^', include('components.appearances.urls')),
     url(r'^', include('components.events.urls')),
     url(r'^', include('components.merchandise.goods.urls')),

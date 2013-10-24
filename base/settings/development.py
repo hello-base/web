@@ -30,6 +30,14 @@ class Development(Settings):
     OAUTH_TOKEN_URL = 'https://localhost:8443/token/'
     OAUTH_REDIRECT_URL = 'https://localhost:8444/accounts/authenticated/'
 
+    # django-celery.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['kombu.transport.django',]
+    BROKER_URL = 'django://'
+    CELERY_ALWAYS_EAGER = True  # http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
+    CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # http://docs.celeryproject.org/en/latest/configuration.html#celery-eager-propagates-exceptions
+    CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
     # django-debugtoolbar.
     # ------------------------------------------------------------------
     INSTALLED_APPS += ['debug_toolbar',]
@@ -54,11 +62,20 @@ class Development(Settings):
     # ------------------------------------------------------------------
     MIDDLEWARE_CLASSES += ('staticbuilder.middleware.BuildOnRequest',)
 
+    # django-extensions
+    # ------------------------------------------------------------------
+    GRAPH_MODELS = {
+        'all_applications': True,
+        'group_models': True,
+    }
+
     # django-haystack.
     # ------------------------------------------------------------------
+    ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'ENGINE': 'components.search_backends.KuromojiElastcisearchEngine',
+            # 'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
             'URL': 'http://127.0.0.1:9200/',
             'INDEX_NAME': 'haystack',
         },

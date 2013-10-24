@@ -19,10 +19,21 @@
   {% if not page.object_list %}
     <div class="empty">
       <h2>OTZ</h2>
-      <p>{% filter typogrify %}Sorry, we couldn't find anything for the term "{{ query }}".{% endfilter %}</p>
+      <p>
+      {% filter typogrify %}
+      {% if query|length < 3 %}
+        Ack, your search term needs to be <em>at least</em> three characters.
+      {% else %}
+        Sorry, we couldn't find anything for the term "{{ query }}".
+      {% endif %}
+      {% endfilter %}
+      </p>
     </div>
   {% else %}
-    <h1>We found <strong>{{ page.paginator.count }}</strong> results for "{{ query }}"</h1>
+    <h1 class="search-results-header">
+      We found <strong>{{ page.paginator.count }}</strong> results.
+      <span class="page-count">(Page {{ page.number }} of {{ page.paginator.num_pages }})</span>
+    </h1>
 
     <ul class="facets">
     {% for model in facets.fields.model %}
@@ -43,7 +54,15 @@
         {% if result.content_type == "people.group" %}{% include "search/includes/people/group.html" %}{% endif %}
       </li>
     {% endfor %}
+    {% if page.has_previous or page.has_next %}
+      <li class="search-pagination">
+        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+        |
+        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+      </li>
+    {% endif %}
     </ul>
+
   </div>
   {% endif %}
 {% endif %}

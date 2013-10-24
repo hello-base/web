@@ -3,11 +3,11 @@
 {% load typogrify_tags %}
 {% load people_tags %}
 
-{% block title %}{{ object.romanized_name }} ({{ object.name }}){% endblock %}
+{% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Albums{% endblock %}
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="">
+<meta property="og:image" content="{{ object.art }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
@@ -18,7 +18,6 @@
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
-        <div class="profile-photo"></div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
@@ -27,18 +26,30 @@
     </div>
   </header>
 
+  {% if object.get_previous or object.get_next %}
+  <nav class="profile-navigation">
+    <div class="container">
+      {% if object.get_previous %}<div class="navigation-item navigation-previous"><a href="{{ object.get_previous.get_absolute_url }}"><span class="ss-icon ss-navigateleft"></span> {{ object.get_previous }}</a></div>{% endif %}
+      {% if object.get_next %}<div class="navigation-item navigation-next"><a href="{{ object.get_next.get_absolute_url }}">{{ object.get_next }} <span class="ss-icon ss-navigateright"></span></a></div>{% endif %}
+    </div>
+  </nav>
+  {% endif %}
+
   <div class="profile-content">
     <aside class="profile-vitals">
       <div class="container">
         <ul class="vitals-list">
           {% filter typogrify %}
           <li class="vital vital-by">
-            <span class="vital-label"><span class="ss-icon ss-users"></span>{% if object.participants|length > 1 %} by{% endif %}</span>&nbsp;
+            <span class="vital-label"><span class="ss-icon ss-users"></span>{% if not object.number %} by{% endif %}</span>&nbsp;
             <div class="vital-participants">
             {% for participant in object.participants %}
-              <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup"><span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}</a>{% include "utilities/commaify.html" %}
+              <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
+                <span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}
+              </a>
+              {% include "utilities/commaify.html" %}
             {% endfor %}
-            {% if object.number %}<span class="number">{{ object.number|ordinal }} {{ object.identifier }}</span>{% endif %}
+            {% if object.number %}<span class="number"><b>{{ object.number|ordinal }} {{ object.identifier }}</b></span>{% endif %}
             </div>
           </li>
           <li class="vital vital-released"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
@@ -55,15 +66,16 @@
       <ul class="edition-list">
       {% for edition in editions %}
         <li class="edition">
-          <div class="edition-image">
-            {% if edition.art %}<img src="{{ MEDIA_URL }}{{ edition.art_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+          <div class="edition-image object-image">
+            {% url 'image-detail' edition.art|urlencode as image_detail_url %}
+            {% if edition.art %}<a href="{{ image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ edition.art_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
           </div><!-- .edition-image -->
           <div class="edition-contents">
             <table>
               <thead>
                 <tr class="edition-meta">
                   <td class="edition-name" colspan="2">
-                      <span class="romanized-name">{{ edition.romanized_name|typogrify }}</span>
+                      <span class="romanized-name">{{ edition.romanized_name }}</span>
                       <span class="name">{{ edition.name }}</span>
                   </td>
                   <td class="edition-subtext" colspan="1">
@@ -79,16 +91,28 @@
                 <tr class="track {% if position.is_instrumental %}instrumental{% endif %}" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                   <td class="track-name">
-                    <span class="romanized-name" itemprop="name">
-                      {{ position.track.romanized_name|typogrify }}
-                      {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
-                      {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
-                    </span>
+                    {% url 'track-detail' position.track.slug|urlencode as track_detail_url %}
+                    <a href="{{ track_detail_url }}">
+                      <span class="romanized-name" itemprop="name">
+                        {{ position.track.romanized_name }}
+                        {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
+                        {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
+                      </span>
+                    </a>
                     <span class="name">
                       {{ position.track.name }}
                       {% if position.track.is_alternate %}<span class="">{{ position.track.name_alternate }}</span>{% endif %}
                       {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                     </span>
+                    {% with position.track.participating_idols.all as participating_idols %}
+                    {% if participating_idols and object.participating_groups.exists %}
+                    <div class="track-participants">
+                    {% for idol in participating_idols %}
+                      <a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
                   </td>
                   <td class="track-type">
                     {% if position.track.is_cover %}<span class="pill cover">Cover</span>{% endif %}
@@ -107,7 +131,7 @@
                 <tr class="track">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                   <td class="track-name">
-                    <span class="romanized-name">{{ position.video.romanized_name|typogrify }}</span>
+                    <span class="romanized-name">{{ position.video.romanized_name }}</span>
                     <span class="name">{{ position.video.name }}</span>
                   </td>
                   <td class="track-type">{% if position.video.rendered_kind_display %}<span class="pill">{{ position.video.rendered_kind_display }}</span>{% endif %}</td>

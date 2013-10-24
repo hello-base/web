@@ -1,14 +1,21 @@
 from django import template
 register = template.Library()
 
-from ..models import Base
+from components.people.constants import CLASSIFICATIONS
 
 
 @register.inclusion_tag('people/partials/idol_contexted_participants.html')
-def contextual_participants(release, idol):
+def contextual_participants(release, context):
+    if context.identifier == 'idol':
+        return _render_idol_contextual_participants(release, context)
+    if context.identifier == 'group':
+        return _render_group_contextual_participants(release, context)
+
+
+def _render_idol_contextual_participants(release, idol):
     groups = idol.groups.all()
     participants = release.participants
-    relationships = {'solo': False, 'for': [], 'with': []}
+    relationships = {'solo': False, 'soloist': False, 'for': [], 'with': []}
     if len(participants) == 1:
         for participant in participants:
             if participant != idol.primary_membership.group and participant != idol:
@@ -17,6 +24,12 @@ def contextual_participants(release, idol):
                 # We return an empty dictionary to tell the template
                 # tag that this is a solo work.
                 relationships['solo'] = True
+
+                # Hackity hack. We DO NOT want to show the "solo work"
+                # pill for memebers of the soloist group.
+                if 'Soloist' in str(idol.primary_membership):
+                    relationships['soloist'] = True
+
                 return {'relationships': relationships}
     else:
         for participant in participants:
@@ -31,4 +44,20 @@ def contextual_participants(release, idol):
                     relationships['for'].remove(participant)
             elif participant != idol:
                 relationships['with'].append(participant)
+    return {'relationships': relationships}
+
+
+def _render_group_contextual_participants(release, group):
+    participants = release.participants
+    relationships = {'for': [], 'with': []}
+    for participant in participants:
+        if hasattr(participant, 'classification') \
+            and participant.classification == CLASSIFICATIONS.supergroup \
+            or participant.id == 25:
+            # We have a supergroup. That's all we need.
+            # Also, H!P All Stars is a supergroup in my view! D:
+            relationships['for'].append(participant)
+            return {'relationships': relationships}
+        elif participant != group:
+            relationships['with'].append(participant)
     return {'relationships': relationships}

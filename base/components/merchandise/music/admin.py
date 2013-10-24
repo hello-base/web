@@ -2,8 +2,7 @@ from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
 
-from .models import (Album, Edition, Label, Single, Track, TrackOrder,
-    Video, VideoTrackOrder)
+from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
 
 
 class AlbumEditionInline(admin.StackedInline):
@@ -24,21 +23,38 @@ class TrackOrderInline(admin.TabularInline):
     extra = 1
     fieldsets = ((None, {'fields': ('track', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
     model = TrackOrder
-    sortable_field_name = 'position'
     verbose_name_plural = 'Track Order'
 
     raw_id_fields = ['track']
     autocomplete_lookup_fields = {'fk': ['track']}
 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(TrackOrderInline, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'track':
+            formfield.choices = formfield.choices
+        return formfield
+
 
 class VideoTrackOrderInline(admin.TabularInline):
     extra = 1
     model = VideoTrackOrder
-    sortable_field_name = 'position'
     verbose_name_plural = 'Video Track Order'
 
     raw_id_fields = ['video']
     autocomplete_lookup_fields = {'fk': ['video']}
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(VideoTrackOrderInline, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'video':
+            formfield.choices = formfield.choices
+        return formfield
+
+
+class LabelAdmin(admin.ModelAdmin):
+    fieldsets = ((None, {'fields': ('name', 'slug')}),)
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ['name']}
+admin.site.register(Label, LabelAdmin)
 
 
 class MusicBaseAdmin(admin.ModelAdmin):
@@ -56,7 +72,7 @@ class MusicBaseAdmin(admin.ModelAdmin):
 
 class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
-        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
+        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug', 'label')}),
         (None, {
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art')
@@ -70,13 +86,65 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         ('Alternates', {'fields': ('is_compilation',)})
     )
     inlines = [AlbumEditionInline]
-    list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list', 'is_compilation']
-    list_editable = ['number', 'released', 'is_compilation']
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    list_editable = ['released', 'label']
+    list_select_related = True
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        request = kwargs['request']
+        formfield = super(AlbumAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'label':
+            label_choices_cache = getattr(request, 'label_choices_cache', None)
+            if label_choices_cache is not None:
+                formfield.choices = label_choices_cache
+            else:
+                request.label_choices_cache = formfield.choices
+        return formfield
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
     participant_list.short_description = 'Participant List'
 admin.site.register(Album, AlbumAdmin)
+
+
+class SingleAdmin(ContributorMixin, MusicBaseAdmin):
+    fieldsets = (
+        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug', 'label')}),
+        (None, {
+            'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
+            'fields': ('released', 'art'),
+        }),
+        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
+        ('Alternates', {
+            'classes': ('collapse closed',),
+            'fields': ('is_indie', ('has_8cm', 'has_lp', 'has_cassette'))
+        })
+    )
+    inlines = [SingleEditionInline]
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    list_editable = ['released', 'label']
+    list_select_related = True
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        request = kwargs['request']
+        formfield = super(SingleAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'label':
+            label_choices_cache = getattr(request, 'label_choices_cache', None)
+            if label_choices_cache is not None:
+                formfield.choices = label_choices_cache
+            else:
+                request.label_choices_cache = formfield.choices
+        return formfield
+
+    def participant_list(self, obj):
+        return ', '.join([p.romanized_name for p in obj.participants])
+    participant_list.short_description = 'Participant List'
+admin.site.register(Single, SingleAdmin)
 
 
 class EditionAdmin(admin.ModelAdmin):
@@ -103,44 +171,10 @@ class EditionAdmin(admin.ModelAdmin):
 admin.site.register(Edition, EditionAdmin)
 
 
-class LabelAdmin(admin.ModelAdmin):
-    fieldsets = ((None, {'fields': ('name', 'slug')}),)
-    list_display = ['name', 'slug']
-    prepopulated_fields = {'slug': ['name']}
-admin.site.register(Label, LabelAdmin)
-
-
-class SingleAdmin(ContributorMixin, MusicBaseAdmin):
-    fieldsets = (
-        (None, {'fields': ('number', ('romanized_name', 'name'), 'slug')}),
-        (None, {
-            'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
-            'fields': ('released', 'art'),
-        }),
-        ('Participants', {'fields': ('idols', 'groups')}),
-        ('Participants (Rendered)', {
-            'classes': ('grp-collapse grp-closed',),
-            'description': 'This is calculated by the values inputted in "Participants."',
-            'fields': ('participating_idols', 'participating_groups')
-        }),
-        ('Alternates', {
-            'classes': ('collapse closed',),
-            'fields': ('is_indie', ('has_8cm', 'has_lp', 'has_cassette'))
-        })
-    )
-    inlines = [SingleEditionInline]
-    list_display = ['romanized_name', 'name', 'number', 'released', 'participant_list']
-    list_editable = ['number', 'released']
-
-    def participant_list(self, obj):
-        return ', '.join([p.romanized_name for p in obj.participants])
-    participant_list.short_description = 'Participant List'
-admin.site.register(Single, SingleAdmin)
-
-
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('romanized_name', 'name')}),
+        (None, {'fields': (('romanized_name', 'name'), 'slug',)}),
+        ('Relations', {'fields': ('album', 'single')}),
         ('Participants', {
             'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
             'fields': ('idols', 'groups')
@@ -150,44 +184,46 @@ class TrackAdmin(admin.ModelAdmin):
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
-        ('Alternates', {
-            'classes': ('grp-collapse grp-closed',),
-            'fields': ('original_track', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate')
-        }),
-        ('Staff Involved', {
-            'classes': ('grp-collapse grp-closed',),
-            'fields': ('arrangers', 'composers', 'lyricists')
-        }),
+        ('Alternates', {'fields': ('original_track', 'is_cover', 'is_alternate', ('romanized_name_alternate', 'name_alternate'))}),
+        ('Staff Involved', {'fields': ('arrangers', 'composers', 'lyricists')}),
         ('Lyrics', {
             'classes': ('grp-collapse grp-closed',),
-            'fields': ('lyrics', 'romanized_lyrics', 'translated_lyrics')
+            'fields': ('translated_name', 'lyrics', 'romanized_lyrics', 'translated_lyrics', 'translation_notes')
         }),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
-    list_display = ['romanized_name', 'name', 'is_cover', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
-    list_display_links = ['romanized_name', 'name']
-    list_filter = ['is_alternate']
+    list_display = ['__unicode__', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
+    list_display_links = ['__unicode__', 'name']
+    list_filter = ['is_cover', 'is_alternate']
     list_select_related = True
     ordering = ('-id',)
-    readonly_fields = ['participating_groups', 'participating_idols']
-    search_fields = ['romanized_name', 'name', 'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name', 'groups__romanized_name', 'groups__name', 'is_alternate', 'romanized_name_alternate', 'name_alternate']
+    readonly_fields = ['participating_groups', 'participating_idols', 'slug']
+    search_fields = [
+        'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name',
+        'groups__romanized_name', 'groups__name',
+        'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate'
+    ]
 
-    raw_id_fields = ('idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
+    raw_id_fields = ('album', 'single', 'idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
     autocomplete_lookup_fields = {
-        'fk': ['original_track',],
+        'fk': ['album', 'single', 'original_track',],
         'm2m': ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     }
+
+    def participant_list(self, obj):
+        return ', '.join([p.romanized_name for p in obj.participants])
+    participant_list.short_description = 'Participant List'
 admin.site.register(Track, TrackAdmin)
 
 
 class VideoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('kind',)}),
-        (None, {'fields': ('romanized_name', 'name', 'released')}),
+        (None, {'fields': (('romanized_name', 'name'),)}),
         ('Relations', {'fields': ('album', 'single')}),
         ('Details', {
             'classes': ('collapse closed',),
-            'fields': ('still', 'video_url')
+            'fields': ('released', 'still', 'video_url')
         })
     )
     list_display = ['romanized_name', 'name', 'kind', 'released', 'video_url']

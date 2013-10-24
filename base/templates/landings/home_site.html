@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load typogrify_tags %}
 
-{% block title_override %}Discover everything about Hello! Project &middot; Welcome to Hello! Base{% endblock %}
+{% block title_override %}Discover everything about Hello! Project &middot; Welcome to Hello! Base, the Hello! Project Database{% endblock %}
 {% block body-class %}landing landing-home{% endblock %}
 {% block page %}
 <div class="hero">
@@ -35,12 +35,12 @@
   <li class="reasoning">
     <span class="reasoning-icon"><span class="ss-icon ss-books"></span></span>
     <h2>The <i>most complete</i> Hello! Project database.</h2>
-    <p>From <a href="{% url 'single-detail' 'morning-coffee' %}">Morning Coffee's 8cm</a> CD release to the performances of <a href="">Morning Musume's recent tour</a>, we aim to have the most complete database on Hello! Project, its idols, and groups.</p>
+    <p>From <a href="{% url 'single-detail' 'morning-coffee' %}">Morning Coffee's 8cm</a> CD release to <a href="{% url 'idol-detail' 'ishikawa-rika' %}">Ishikawa's 16 groups</a>, we aim to have the most complete database on Hello! Project, its idols, and groups.</p>
   </li>
   <li class="reasoning">
     <span class="reasoning-icon"><span class="ss-icon ss-analytics"></span></span>
     <h2><i>All the statistics</i> you could ever want.</h2>
-    <p>Ever wonder how many singles <a href="{% url 'idol-detail' 'ishikawa-rika' %}">Charmy</a> took part in? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader? Hello! Base strives to answer those questions and more.</p>
+    <p>Ever wonder how old <a href="{% url 'idol-detail' 'nakazawa-yuuko' %}">Yuuko</a> was in her <a href="{% url 'single-detail' 'dannasama' %}">final single</a>? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader? Hello! Base strives to answer those questions and more.</p>
   </li>
   <li class="reasoning">
     <span class="reasoning-icon"><span class="ss-icon ss-compass"></span></span>

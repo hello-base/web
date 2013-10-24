@@ -3,16 +3,17 @@
 {% load typogrify_tags %}
 
 <li class="release {% if release.number %}major{% else %}minor{% endif %}{% if release.is_indie %}indie{% endif %}-release">
-  <div class="release-image">
-    {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+  <div class="release-image object-image">
+    {% url 'image-detail' release.art|urlencode as image_detail_url %}
+    {% if release.art %}<a href="{{ image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
     {% if release.number %}<span class="release-number">{{ release.number|ordinal }}</span>{% endif %}
   </div>
   <div class="release-meta">
     <div class="release-header">
       {% if release.is_indie %}<span class="pill indie">Indie</span>{% endif %}
-      <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name|typogrify }}</span></a>
+      <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name }}</span></a>
       <span class="name">{{ release.name }}</span>
-      {% if show_participants %}{% contextual_participants release=release idol=object %}{% endif %}
+      {% contextual_participants release=release context=object %}
     </div>
     <div class="release-subtext">
       <div class="release-data release-date">

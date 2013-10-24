@@ -8,6 +8,7 @@ from sys import path
 from django.core.urlresolvers import reverse_lazy
 
 from configurations import Configuration, values
+from djcelery import setup_loader
 from postgresify import postgresify
 
 
@@ -28,6 +29,7 @@ class Base(Configuration):
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.humanize',
+        'django.contrib.markup',
         'django.contrib.messages',
         'django.contrib.sessions',
         'django.contrib.sitemaps',
@@ -47,13 +49,12 @@ class Base(Configuration):
     ]
     PLUGINS = [
         'floppyforms',
-        'haystack',
         'imagekit',
         'south',
         'typogrify',
     ]
     ADMINISTRATION = [
-        'grappelli.dashboard',
+        # 'grappelli.dashboard',
         'grappelli',
         'django.contrib.admin',
     ]
@@ -97,6 +98,10 @@ class Base(Configuration):
             'LOCATION': ''
         }
     }
+
+    # Session Configuration.
+    # ------------------------------------------------------------------
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
     # General Configuration.
     # ------------------------------------------------------------------
@@ -196,7 +201,14 @@ class Base(Configuration):
         }
     }
 
-    # django-ecstatic / django-staticbuilder
+    # django-celery.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['djcelery',]
+    CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
+    CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
+    setup_loader()
+
+    # django-ecstatic / django-staticbuilder.
     # ------------------------------------------------------------------
     INSTALLED_APPS += [
         'ecstatic',
@@ -209,11 +221,23 @@ class Base(Configuration):
     # django-grappelli.
     # ------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
-    GRAPPELLI_INDEX_DASHBOARD = 'components.dashboard.CustomIndexDashboard'
+    # GRAPPELLI_INDEX_DASHBOARD = 'components.dashboard.CustomIndexDashboard'
 
     # django-haystack.
     # ------------------------------------------------------------------
-    HAYSTACK_SEARCH_RESULTS_PER_PAGE = 50
+    INSTALLED_APPS += [
+        'haystack',
+        'celery_haystack',
+    ]
+    HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
+    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+
+    # django-rest-framework.
+    # ------------------------------------------------------------------
+    INSTALLED_APPS += ['rest_framework',]
+    REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
+    }
 
     # South.
     # ------------------------------------------------------------------

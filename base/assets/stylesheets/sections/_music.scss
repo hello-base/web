@@ -206,16 +206,52 @@
   .pill.bside { background: $brand-secondary-accent; }
 }
 
-.participant {
-  @include clearfix;
-  margin-bottom: 0.25rem;
-  font-size: 13px;
 
-  .age {
-    @include span-columns(1, 8);
-    font-weight: 600;
-  }
-  .romanized-name {
-    @include span-columns(5 omega, 8);
+// .appearance
+.appearance-image {
+  padding-bottom: 1rem;
+  vertical-align: top;
+  width: columns(1, 10);
+
+  .release-image {
+    margin-right: 0;
+    width: 100%;
+
+    img { width: 100%; }
+    .empty-image { height: 71px; }
+    .ss-icon {
+      font-size: 24px;
+      width: 30px; height: 30px;
+    }
   }
 }
+.appearance-name {
+  padding: 2px 1rem 0;
+  vertical-align: bottom;
+}
+.appearance-data {
+  vertical-align: bottom;
+
+  .timesince { @extend .name; }
+}
+.appearance-alternate {
+  vertical-align: bottom;
+
+  .romanized-name { display: inline; }
+  .name { padding-left: 20px; }
+}
+.appearance-participants {
+  padding: 0 1rem;
+  vertical-align: top;
+  font-size: 11px;
+
+  .participants {
+    border-top: 1px solid $brand-paleGrey;
+    color: $brand-medGrey;
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+  .ss-icon { @include position(relative, 1px 0 0 0); }
+}
+
+.appearances > table { width: 100%; }

@@ -4,11 +4,6 @@ from components.accounts.views import QuicklinksMixin
 from .models import Album, Single, Track
 
 
-class AlbumBrowseView(ListView):
-    queryset = Album.objects.all()
-    template_name = 'merchandise/music/album_browse.html'
-
-
 class AlbumDetailView(QuicklinksMixin, DetailView):
     queryset = Album.objects.all()
     template_name = 'merchandise/music/album_detail.html'
@@ -18,15 +13,6 @@ class AlbumDetailView(QuicklinksMixin, DetailView):
         context['editions'] = self.object.editions.prefetch_related('order', 'videos')
         context['idols'] = self.object.idols.order_by('birthdate')
         return context
-
-
-class MusicBrowseView(TemplateView):
-    template_name = 'merchandise/music/music_browse.html'
-
-
-class SingleBrowseView(ListView):
-    queryset = Single.objects.all()
-    template_name = 'merchandise/music/single_browse.html'
 
 
 class SingleDetailView(QuicklinksMixin, DetailView):
@@ -40,11 +26,11 @@ class SingleDetailView(QuicklinksMixin, DetailView):
         return context
 
 
-class TrackBrowseView(ListView):
-    queryset = Track.objects.all()
-    template_name = 'merchandise/music/track_browse.html'
-
-
 class TrackDetailView(QuicklinksMixin, DetailView):
-    queryset = Track.objects.all()
+    queryset = Track.objects.originals()
     template_name = 'merchandise/music/track_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackDetailView, self).get_context_data(**kwargs)
+        context['appearances'] = self.object.appears_on.original_only()
+        return context
