@@ -313,7 +313,6 @@ class TrackOrder(models.Model):
 
     class Meta:
         ordering = ('position',)
-        unique_together = ('edition', 'track', 'is_instrumental')
         verbose_name = 'track'
 
     def __unicode__(self):
