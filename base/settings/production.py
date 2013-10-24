@@ -10,14 +10,14 @@ from .base import Base as Settings
 
 class Production(Settings):
     # Installed Applications (featuring Production).
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
         'gunicorn',
         'raven.contrib.django',
     ]
 
     # Middleware Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     MIDDLEWARE_CLASSES = (
         'django.middleware.cache.UpdateCacheMiddleware',
         'django.middleware.gzip.GZipMiddleware',
@@ -32,15 +32,15 @@ class Production(Settings):
     )
 
     # Debug Settings.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     DEBUG = values.BooleanValue(False)
 
     # Secret Key Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
 
     # Caching Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     CACHES = redisify(default='redis://localhost')
     CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
@@ -54,7 +54,7 @@ class Production(Settings):
     }
 
     # django-secure.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     INSTALLED_APPS += ['djangosecure',]
     SECURE_HSTS_SECONDS = 60
     SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
@@ -67,11 +67,11 @@ class Production(Settings):
     SECURE_SSL_REDIRECT = values.BooleanValue(True)
 
     # Site Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     ALLOWED_HOSTS = ['.hello-base.com', '.hello-base.com.',]
 
     # Media Storage Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     INSTALLED_APPS += [
         's3_folder_storage',
         'storages',
@@ -101,7 +101,7 @@ class Production(Settings):
     STATIC_URL = '//%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
 
     # Template Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     TEMPLATE_LOADERS = (
         ('django.template.loaders.cached.Loader', (
             'django.template.loaders.filesystem.Loader',
@@ -110,14 +110,14 @@ class Production(Settings):
     )
 
     # Authentication Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     MEISHI_ENDPOINT = 'https://id.hello-base.com/api/'
     OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/oauth/authorize/'
     OAUTH_TOKEN_URL = 'https://id.hello-base.com/oauth/token/'
     OAUTH_REDIRECT_URL = 'https://hello-base.com/accounts/authenticated/'
 
     # Logging Configuration.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -164,12 +164,12 @@ class Production(Settings):
     }
 
     # django-celery.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     BROKER_URL = values.Value(environ_prefix='', environ_name='OPENREDIS_URL')
     CELERY_RESULT_BACKEND = BROKER_URL
 
     # django-haystack (ElasticSearch).
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
         'default': {
             'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
@@ -179,11 +179,11 @@ class Production(Settings):
     }
 
     # django-ecstatic / django-staticbuilder
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     ECSTATIC_MANIFEST_CACHE = 'staticfiles'
 
     # django-imagekit.
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     IMAGEKIT_CACHE_BACKEND = 'staticfiles'
     IMAGEKIT_CACHEFILE_DIR = 'cache'
     IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Async'
