@@ -20,4 +20,4 @@ class TestVideo:
         channel = ChannelFactory()
         factory = VideoFactory(channel=channel, ytid='MhH_ucrPMZc')
         assert isinstance(factory, Video)
-        assert u'モーニング娘。' in factory.title
+        assert 'モーニング娘。' in factory.title
