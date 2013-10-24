@@ -204,9 +204,6 @@ class Group(ContributorMixin):
             return True
         return False
 
-    def is_gaijin(self):
-        return self.given_name in self.GAIJINS
-
     def latest_album(self):
         return self.albums.latest()
 
