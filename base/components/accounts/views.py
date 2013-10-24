@@ -1,18 +1,16 @@
 from django import http
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model, login, logout
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views.generic import RedirectView, View
 
 from requests_oauthlib import OAuth2Session
 
+from .api import auth_session, auth_url, auth_token
+
 
 USER = get_user_model()
-CLIENT_ID = getattr(settings, 'HELLO_BASE_CLIENT_ID', '')
-CLIENT_SECRET = getattr(settings, 'HELLO_BASE_CLIENT_SECRET', '')
-AUTHORIZATION_URL = getattr(settings, 'OAUTH_AUTHORIZATION_URL', '')
-TOKEN_URL = getattr(settings, 'OAUTH_TOKEN_URL', '')
-REDIRECT_URL = getattr(settings, 'OAUTH_REDIRECT_URL', '')
 
 class PreAuthorizationView(RedirectView):
     def get(self, request, *args, **kwargs):
@@ -20,8 +18,8 @@ class PreAuthorizationView(RedirectView):
         # URL with a few key OAuth paramters built in. We throw in
         # `request.META['HTTP_REFERER']` as a way to redirect back to
         # the referring page when we're done.
-        base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL)
-        authorization_url, state = base.authorization_url(AUTHORIZATION_URL)
+        oauth = auth_session(request)
+        authorization_url, state = auth_url(oauth)
 
         # In order to persist "session values" from an AnonymousUser
         # to a logged in user, we need to use cookies.
@@ -33,17 +31,19 @@ class PreAuthorizationView(RedirectView):
 
 class PostAuthorizationView(View):
     def get(self, request, *args, **kwargs):
-        # We SHOULD be grabbing state from the session, maybe this'll
-        # work in production, but in development it's not. So... we're
-        # doing this. :(
-        base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL, state=request.COOKIES['oauth_state'])
-        token = base.fetch_token(TOKEN_URL, auth=(CLIENT_ID, CLIENT_SECRET), authorization_response=request.build_absolute_uri())
+        # Take the state from the cookie and try to get ourselves a token.
+        oauth = auth_session(request, state=request.COOKIES['oauth_state'])
+
+        try:
+            token = auth_token(oauth, request.build_absolute_uri())
+        except InvalidGrantError:  # Whoops, try again.
+            return http.HttpResponseRedirect(reverse('oauth-authorize'))
 
         # Hooray! Somebody sent us up the token.
         # Now let's fetch their user from the Hello! Base ID API.
-        hbi = OAuth2Session(CLIENT_ID, token=token)
-        profile = hbi.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/')).json()
-        print profile
+        r = oauth.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/'))
+        r.raise_for_status()
+        profile = r.json()
 
         # Now that we have the profile data, let's check for an
         # existing user. If we don't have one, create one.

@@ -1,29 +1,68 @@
-import datetime
+import time
 
 from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
+
+from requests_oauthlib import OAuth2Session
 
 
-CLIENT_ID = settings.HELLO_BASE_CLIENT_ID
-CLIENT_SECRET = settings.HELLO_BASE_CLIENT_SECRET
-AUTHORIZATION_URL = settings.OAUTH_AUTHORIZATION_URL
-ACCESS_TOKEN_URL = settings.ACCESS_TOKEN_URL
-REFRESH_TOKEN_URL = settings.REFRESH_TOKEN_URL
-REDIRECT_URL = settings.OAUTH_REDIRECT_URL
-MEISHI_ENDPOINT = settings.MEISHI_ENDPOINT
+config = {
+    'authorization_url': getattr(settings, 'OAUTH_AUTHORIZATION_URL', ''),
+    'client_id': getattr(settings, 'HELLO_BASE_CLIENT_ID', ''),
+    'client_secret': getattr(settings, 'HELLO_BASE_CLIENT_SECRET', ''),
+    'redirect_uri': reverse_lazy('oauth-callback'),
+    'token_url': getattr(settings, 'OAUTH_TOKEN_URL', ''),
+}
 
-class Meishi(object):
-    def refresh_token_if_necessary(self, user):
-        if datetime.datetime.now() > user.token_expiration:
-            # Fetch a new token.
-            base = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URL, state=request.GET['state'])
-            token = base.fetch_token(REFRESH_TOKEN_URL, auth=(CLIENT_ID, CLIENT_SECRET), token=user.refresh_token)
+def _clean_token(token):
+    return {
+        'access_token': token['access_token'],
+        'token_type': token['token_type'],
+        'refresh_token': token['refresh_token'],
+        'expires_at': int(time.time() + token['expires_in'])
+    }
+
+
+def _token_updater(old_token, request):
+    def wrapped(new_token):
+        token = _clean_token(new_token)
+
+        # Persist the new token... somehow.
+        old_token.update(token)
+        if request.user:
             user.access_token = token['access_token']
             user.refresh_token = token['refresh_token']
             user.token_expiration = token['expires_in']
             user.save()
-        return user
+    return wrapped
 
-    def get(self, path, user):
-        user = self.refresh_token_if_necessary(user)
-        session = OAuth2Session(self.client_id, token=user.access_token)
-        return session.get('%s%s' % (MEISHI_ENDPOINT, path)).json()
+
+def auth_session(request, token=None, state=None):
+    if token and 'expires_at' in token:
+        token['expires_in'] = int(token['expires_at'] - time.time())
+
+    return OAuth2Session(
+        config['client_id'],
+        redirect_uri=config['redirect_uri'],
+        auto_refresh_url=config['token_url'],
+        auto_refresh_kwargs={
+            'client_id': config['client_id'],
+            'client_secret': config['client_secret']
+        },
+        token_updater=_token_updater(token, request),
+        token=token,
+        state=state,
+    )
+
+
+def auth_url(oauth):
+    return oauth.authorization_url(config['authorization_url'])
+
+
+def auth_token(oauth, response_url):
+    token = oauth.fetch_token(
+        config['token_url'],
+        auth=(config['client_id'], config['client_secret']),
+        authorization_response=response_url
+    )
+    return _clean_token(token)
