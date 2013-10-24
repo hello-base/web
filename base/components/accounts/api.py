@@ -10,7 +10,6 @@ config = {
     'authorization_url': getattr(settings, 'OAUTH_AUTHORIZATION_URL', ''),
     'client_id': getattr(settings, 'HELLO_BASE_CLIENT_ID', ''),
     'client_secret': getattr(settings, 'HELLO_BASE_CLIENT_SECRET', ''),
-    'redirect_uri': reverse_lazy('oauth-callback'),
     'token_url': getattr(settings, 'OAUTH_TOKEN_URL', ''),
 }
 
@@ -43,7 +42,7 @@ def auth_session(request, token=None, state=None):
 
     return OAuth2Session(
         config['client_id'],
-        redirect_uri=config['redirect_uri'],
+        redirect_uri=request.get_full_path(reverse_lazy('oauth-callback')),
         auto_refresh_url=config['token_url'],
         auto_refresh_kwargs={
             'client_id': config['client_id'],
