@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 
 from components.social.youtube.models import Channel, Video
@@ -14,6 +15,9 @@ class TestChannels:
 
 class TestVideo:
     def test_video_factory(self):
+        # We're fetching "Wagamama Ki no Mama Ai no Joke."
+        # As such, this test depends on YouTube.
         channel = ChannelFactory()
         factory = VideoFactory(channel=channel, ytid='MhH_ucrPMZc')
         assert isinstance(factory, Video)
+        assert u'モーニング娘。' in factory.title
