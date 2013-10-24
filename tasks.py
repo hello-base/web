@@ -90,8 +90,8 @@ def development_test(coverage=False, **kwargs):
     pytest = 'py.test tests/'
 
     if coverage:
-        invoke.run('coverage run --source base -m %s' % pytest)
-        invoke.run('coverage report')
+        invoke.run('coverage run --source base -m %s' % pytest, pty=True)
+        invoke.run('coverage report', pty=True)
     else:
         invoke.run('%s' % pytest, pty=True)
 
