@@ -21,6 +21,11 @@ class TestAlbums:
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
+    def test_album_regular_edition(self):
+        album = AlbumFactory()
+        edition = EditionFactory(album=album, kind=Edition.EDITIONS.regular)
+        assert album.regular_edition == edition
+
 
 class TestSingles:
     def test_single_factory(self):
@@ -68,6 +73,18 @@ class TestEditions:
         single = SingleFactory()
         edition = EditionFactory(single=single)
         assert edition.parent == single
+
+    def test_get_regular_edition(self):
+        single = SingleFactory()
+        edition1 = EditionFactory(single=single, kind=Edition.EDITIONS.regular)
+        edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
+        assert edition2._get_regular_edition() == edition1
+
+    def test_render_release_date(self):
+        single = SingleFactory()
+        edition1 = EditionFactory(single=single, released=datetime.date.today(), kind=Edition.EDITIONS.regular)
+        edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
+        assert edition2._render_release_date() == edition1.released
 
 
 class TestTracks:
