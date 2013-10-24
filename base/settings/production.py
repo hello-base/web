@@ -12,7 +12,6 @@ class Production(Settings):
     # Installed Applications (featuring Production).
     # --------------------------------------------------------------------------
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        'gunicorn',
         'raven.contrib.django',
     ]
 
