@@ -54,7 +54,7 @@ class Base(Configuration):
         'typogrify',
     ]
     ADMINISTRATION = [
-        # 'grappelli.dashboard',
+        'grappelli.dashboard',
         'grappelli',
         'django.contrib.admin',
     ]
@@ -221,7 +221,7 @@ class Base(Configuration):
     # django-grappelli.
     # --------------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
-    # GRAPPELLI_INDEX_DASHBOARD = 'components.dashboard.CustomIndexDashboard'
+    GRAPPELLI_INDEX_DASHBOARD = 'components.dashboard.CustomIndexDashboard'
 
     # django-haystack.
     # --------------------------------------------------------------------------
