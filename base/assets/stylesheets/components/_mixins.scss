@@ -5,6 +5,12 @@
   height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching.
 }
 
+// A convenience mixin for enforcing intrinsic ratios.
+@mixin intrinisic($width, $ratio) {
+  width: $width; height: 0;
+  padding-bottom: percentage(#{$width/$ratio});
+}
+
 // A convenience function for setting `position:`.
 // NOTE: A unitless value is equal to it not existing in the rendered
 // property call.
@@ -27,9 +33,8 @@
   @if not(unitless($left)) { left: $left; }
 }
 
-
-// A convenience mixin for vertically and horizontally centering any
-// element with a parent container.
+// A convenience mixin for vertically and horizontally centering any element
+// with a parent container.
 @mixin absolute-center() {
   @include position(absolute, 0px 0px 0px 0px);
   display: block;
