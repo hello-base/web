@@ -12,19 +12,18 @@
 
 //
 .empty-image {
-  height: 100%;
   position: relative;
 
   box-shadow: inset 0 0 0 1px $brand-paleGrey;
-  // border-radius: 8px;
   text-align: center;
-}
-.empty-image .ss-icon {
-  @include absolute-center();
-  width: 42px; height: 42px;
 
-  color: $brand-paleGrey;
-  font-size: 36px;
+  &.ss-icon {
+    @include absolute-center();
+    width: 42px; height: 42px;
+
+    color: $brand-paleGrey;
+    font-size: 36px;
+  }
 }
 
 .section-title {
