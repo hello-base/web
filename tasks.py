@@ -9,7 +9,7 @@ def _out(name, message):
     print('[\033[1;37m{}\033[0m] {}'.format(name, message))
 
 
-@invoke.task(name='deploy', pre=['collect'])
+@invoke.task(name='deploy', pre=['test', 'collect'])
 def deploy(verbose=False, **kwargs):
     out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
@@ -85,15 +85,18 @@ def development_server(**kwargs):
 
 
 @invoke.task(name='test')
-def development_test(coverage=False, **kwargs):
+def development_test(verbose=True, coverage=False, **kwargs):
     out = functools.partial(_out, 'development.test')
+    hide = 'out' if not verbose else None
     pytest = 'py.test tests/'
 
     if coverage:
-        invoke.run('coverage run --source base -m %s' % pytest, pty=True)
-        invoke.run('coverage report', pty=True)
+        out('Running tests (with Coverage report).')
+        invoke.run('coverage run --source base -m %s' % pytest, pty=True, hide=hide)
+        invoke.run('coverage report', pty=True, hide=hide)
     else:
-        invoke.run('%s' % pytest, pty=True)
+        out('Running tests.')
+        invoke.run('%s' % pytest, pty=True, hide=hide)
 
 
 @invoke.task(name='capture')
