@@ -13,7 +13,6 @@
 //
 .empty-image {
   position: relative;
-
   box-shadow: inset 0 0 0 1px $brand-paleGrey;
   text-align: center;
 
@@ -91,13 +90,11 @@
   font-size: 11px;
   transition: height 250ms ease;
 
+  &.visible { margin: 0; }
   a { color: #B6BEC7; }
   a.object { float: right; }
   a:hover { color: #00ACE4; }
   .ss-icon { @include position(relative, 2px 0 0 0); }
 }
-.administration.visible { margin: 0; }
 
-@import "sections/flatpages";
-@import "sections/music";
-@import "sections/people";
+@import "sections/*";
