@@ -57,7 +57,7 @@
     text-align: right;
 
     img { width: 100%; }
-    .empty-image { height: 172px; }
+    .empty-image { @include intrinsic(100%, 16/9); }
     .ss-icon {
       font-size: 24px;
       width: 30px; height: 30px;
@@ -80,7 +80,7 @@
   .membership-list .group-image {
     @include span-columns(2, 7);
 
-    .empty-image { height: 82px; }
+    .empty-image { @include intrinsic(100%, 16/9); }
   }
   .membership-list {
     @include clearfix;
@@ -287,7 +287,7 @@
   text-align: right;
 
   img { width: 100%; }
-  .empty-image { height: 60px; }
+  .empty-image { @include intrinsic(100%, 1); }
   .ss-icon {
     font-size: 24px;
     width: 30px; height: 30px;
@@ -451,7 +451,7 @@
   text-align: right;
 
   img { width: 60px; }
-  .empty-image { height: 60px; }
+  .empty-image { @include intrinsic(100%, 1); }
   .ss-icon {
     font-size: 24px;
     width: 30px; height: 30px;

@@ -28,7 +28,7 @@
   text-align: right;
 
   img { width: 100%; }
-  .empty-image { height: 60px; }
+  .empty-image { @include intrinsic(100%, 1); }
   .ss-icon {
     font-size: 24px;
     width: 30px; height: 30px;
