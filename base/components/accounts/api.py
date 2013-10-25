@@ -1,7 +1,7 @@
 import time
 
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse
 
 from requests_oauthlib import OAuth2Session
 
@@ -42,7 +42,7 @@ def auth_session(request, token=None, state=None):
 
     return OAuth2Session(
         config['client_id'],
-        redirect_uri=request.build_absolute_uri(reverse_lazy('oauth-callback')),
+        redirect_uri=request.build_absolute_uri(reverse('oauth-callback')),
         auto_refresh_url=config['token_url'],
         auto_refresh_kwargs={
             'client_id': config['client_id'],
