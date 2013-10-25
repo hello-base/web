@@ -27,7 +27,7 @@ class Editor(AbstractBaseUser):
     # Model Managers.
     objects = EditorManager()
 
-    base_id = models.IntegerField(db_index=True, unique=True)
+    base_id = models.IntegerField('Hello! Base ID', db_index=True, unique=True)
     username = models.CharField(blank=True, db_index=True)
     name = models.CharField(blank=True)
     email = models.EmailField(db_index=True, unique=True)
