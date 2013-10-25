@@ -31,7 +31,7 @@ def _token_updater(old_token, request):
         if request.user:
             user.access_token = token['access_token']
             user.refresh_token = token['refresh_token']
-            user.token_expiration = token['expires_in']
+            user.token_expiration = token['expires_at']
             user.save()
     return wrapped
 

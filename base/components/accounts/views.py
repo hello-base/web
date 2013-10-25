@@ -63,7 +63,7 @@ class PostAuthorizationView(View):
         user.is_superuser = profile['is_superuser']
         user.access_token = token['access_token']
         user.refresh_token = token['refresh_token']
-        user.token_expiration = token['expires_in']
+        user.token_expiration = token['expires_at']
         user.active_since = timezone.now()
         user.save()
 
