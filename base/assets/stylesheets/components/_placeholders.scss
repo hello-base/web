@@ -1,0 +1,8 @@
+// A convenience placeholder for vertically and horizontally centering any
+// element with a parent container.
+%absolute-center {
+  @include position(absolute, 0px 0px 0px 0px);
+  display: block;
+  margin: auto;
+  overflow: hidden;
+}

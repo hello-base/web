@@ -32,12 +32,3 @@
   @if not(unitless($bottom)) { bottom: $bottom; }
   @if not(unitless($left)) { left: $left; }
 }
-
-// A convenience mixin for vertically and horizontally centering any element
-// with a parent container.
-@mixin absolute-center() {
-  @include position(absolute, 0px 0px 0px 0px);
-  display: block;
-  margin: auto;
-  overflow: hidden;
-}
