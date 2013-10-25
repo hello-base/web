@@ -173,18 +173,9 @@ class Edition(models.Model):
         return self.parent.get_absolute_url()
 
     def save(self, *args, **kwargs):
-        if not self.romanized_name:
-            self.romanized_name = self.get_kind_display()
-        if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital]:
-            if self.released:
-                self.parent.released = self.released
-            elif not self.released:
-                self.released = date.min
-            if self.art:
-                self.parent.art = self.art
+        if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital] and self.art:
+            self.parent.art = self.art
             self.parent.save()
-        elif not self.released:
-            self.released = self.parent.released
         return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):

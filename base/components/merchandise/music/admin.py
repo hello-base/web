@@ -69,6 +69,10 @@ class MusicBaseAdmin(admin.ModelAdmin):
     raw_id_fields = ('idols', 'groups',)
     autocomplete_lookup_fields = {'m2m': ['idols', 'groups']}
 
+    def save_related(self, request, form, formsets, change):
+        super(MusicBaseAdmin, self).save_related(request, form, formsets, change)
+        form.instance.save()
+
 
 class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
     fieldsets = (
