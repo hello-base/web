@@ -6,9 +6,9 @@
 }
 
 // A convenience mixin for enforcing intrinsic ratios.
-@mixin intrinisic($width, $ratio) {
+@mixin intrinsic($width, $ratio) {
   width: $width; height: 0;
-  padding-bottom: percentage(#{$width/$ratio});
+  padding-bottom: #{$width/$ratio};
 }
 
 // A convenience function for setting `position:`.
