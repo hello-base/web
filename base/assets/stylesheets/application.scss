@@ -97,4 +97,6 @@
   .ss-icon { @include position(relative, 2px 0 0 0); }
 }
 
-@import "sections/*";
+@import "sections/flatpages";
+@import "sections/music";
+@import "sections/people";
