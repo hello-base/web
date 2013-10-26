@@ -54,3 +54,12 @@ class IdolDetailView(QuicklinksMixin, DetailView):
 class StaffDetailView(DetailView):
     queryset = Staff.objects.all()
     template_name = ''
+
+
+class HelloProjectDetailView(TemplateView):
+    template_name = 'people/overrides/hello_project.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HelloProjectDetailView, self).get_context_data(**kwargs)
+        context['groups'] = Group.objects.hello_project()
+        return context

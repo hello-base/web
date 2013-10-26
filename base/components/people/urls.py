@@ -5,9 +5,12 @@ from django.views.generic.base import RedirectView
 from multiurl import ContinueResolving, multiurl
 
 from .views import GroupDetailView, IdolDetailView, StaffDetailView
+from .views import HelloProjectDetailView  # Overrides.
 
 
 urlpatterns = patterns('',
+    url(r'^hello-project/$', name='hello-project', view=HelloProjectDetailView.as_view()),
+
     # MultiURL allows us to unite all of the people under a simpler URL.
     multiurl(
         url(r'^(?P<slug>[-\w]+)/$', name='idol-detail', view=IdolDetailView.as_view()),
