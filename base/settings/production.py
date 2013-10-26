@@ -54,7 +54,7 @@ class Production(Settings):
 
     # django-secure.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['djangosecure',]
+    INSTALLED_APPS += ['djangosecure']
     SECURE_HSTS_SECONDS = 60
     SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
     SECURE_FRAME_DENY = values.BooleanValue(True)
@@ -67,7 +67,7 @@ class Production(Settings):
 
     # Site Configuration.
     # --------------------------------------------------------------------------
-    ALLOWED_HOSTS = ['.hello-base.com', '.hello-base.com.',]
+    ALLOWED_HOSTS = ['.hello-base.com', '.hello-base.com.']
 
     # Media Storage Configuration.
     # --------------------------------------------------------------------------

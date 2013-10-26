@@ -160,8 +160,8 @@ class Base(Configuration):
         'components.accounts.backends.HelloBaseIDBackend',
         'django.contrib.auth.backends.ModelBackend',
     )
-    HELLO_BASE_CLIENT_ID = values.Value('',  environ_prefix=None)
-    HELLO_BASE_CLIENT_SECRET = values.Value('',  environ_prefix=None)
+    HELLO_BASE_CLIENT_ID = values.Value('', environ_prefix=None)
+    HELLO_BASE_CLIENT_SECRET = values.Value('', environ_prefix=None)
     LOGIN_URL = reverse_lazy('oauth-authorize')
     # LOGOUT_URL = 'oauth-deauthorize'
 
@@ -203,7 +203,7 @@ class Base(Configuration):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['djcelery',]
+    INSTALLED_APPS += ['djcelery']
     CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
     CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
     setup_loader()
@@ -234,7 +234,7 @@ class Base(Configuration):
 
     # django-rest-framework.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['rest_framework',]
+    INSTALLED_APPS += ['rest_framework']
     REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
     }
@@ -245,8 +245,8 @@ class Base(Configuration):
 
     # components.socialize.
     # --------------------------------------------------------------------------
-    TWITTER_CONSUMER_KEY = values.Value('',  environ_prefix=None)
-    TWITTER_CONSUMER_SECRET = values.Value('',  environ_prefix=None)
-    TWITTER_OAUTH_TOKEN = values.Value('',  environ_prefix=None)
-    TWITTER_OAUTH_SECRET = values.Value('',  environ_prefix=None)
-    YOUTUBE_DEVELOPER_KEY = values.Value('',  environ_prefix=None)
+    TWITTER_CONSUMER_KEY = values.Value('', environ_prefix=None)
+    TWITTER_CONSUMER_SECRET = values.Value('', environ_prefix=None)
+    TWITTER_OAUTH_TOKEN = values.Value('', environ_prefix=None)
+    TWITTER_OAUTH_SECRET = values.Value('', environ_prefix=None)
+    YOUTUBE_DEVELOPER_KEY = values.Value('', environ_prefix=None)

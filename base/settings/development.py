@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
-
 from configurations import values
 
 from .base import Base as Settings
@@ -32,7 +29,7 @@ class Development(Settings):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['kombu.transport.django',]
+    INSTALLED_APPS += ['kombu.transport.django']
     BROKER_URL = 'django://'
     CELERY_ALWAYS_EAGER = True  # http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
     CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # http://docs.celeryproject.org/en/latest/configuration.html#celery-eager-propagates-exceptions
@@ -40,7 +37,7 @@ class Development(Settings):
 
     # django-debugtoolbar.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['debug_toolbar',]
+    INSTALLED_APPS += ['debug_toolbar']
     INTERNAL_IPS = ('127.0.0.1',)
     MIDDLEWARE_CLASSES = Settings.MIDDLEWARE_CLASSES + ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     DEBUG_TOOLBAR_CONFIG = {
@@ -50,7 +47,7 @@ class Development(Settings):
 
     # django-devserver.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['devserver',]
+    INSTALLED_APPS += ['devserver']
     DEVSERVER_MODULES = (
         'devserver.modules.sql.SQLSummaryModule',
         'devserver.modules.profile.ProfileSummaryModule',
