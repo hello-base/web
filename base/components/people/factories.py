@@ -19,7 +19,7 @@ class PersonFactory(factory.django.DjangoModelFactory):
 class IdolFactory(PersonFactory):
     FACTORY_FOR = models.Idol
 
-    birthdate = datetime.date.today() - datetime.timedelta(days=365*18)
+    birthdate = datetime.date.today() - datetime.timedelta(days=365 * 18)
 
 
 class StaffFactory(PersonFactory):
