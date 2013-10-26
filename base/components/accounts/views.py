@@ -1,16 +1,16 @@
 from django import http
 from django.conf import settings
-from django.contrib.auth import authenticate, get_user_model, login, logout
+from django.contrib.auth import authenticate, get_user_model, login
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views.generic import RedirectView, View
 
-from requests_oauthlib import OAuth2Session
+from oauthlib.oauth2.rfc6749.errors import InvalidGrantError
 
 from .api import auth_session, auth_url, auth_token
 
+User = get_user_model()
 
-USER = get_user_model()
 
 class PreAuthorizationView(RedirectView):
     def get(self, request, *args, **kwargs):
@@ -48,9 +48,9 @@ class PostAuthorizationView(View):
         # Now that we have the profile data, let's check for an
         # existing user. If we don't have one, create one.
         try:
-            user = USER.objects.get(base_id=profile['id'])
-        except USER.DoesNotExist:
-            user = USER.objects.create_user(
+            user = User.objects.get(base_id=profile['id'])
+        except User.DoesNotExist:
+            user = User.objects.create_user(
                 username=profile['username'],
                 email=profile['email'],
                 base_id=profile['id'],
