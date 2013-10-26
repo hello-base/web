@@ -51,9 +51,9 @@ def _render_group_contextual_participants(release, group):
     participants = release.participants
     relationships = {'for': [], 'with': []}
     for participant in participants:
-        if hasattr(participant, 'classification') \
-            and participant.classification == CLASSIFICATIONS.supergroup \
-            or participant.id == 25:
+        if (hasattr(participant, 'classification')
+            and participant.classification == CLASSIFICATIONS.supergroup
+            or participant.id == 25) and participant != group:
             # We have a supergroup. That's all we need.
             # Also, H!P All Stars is a supergroup in my view! D:
             relationships['for'].append(participant)
