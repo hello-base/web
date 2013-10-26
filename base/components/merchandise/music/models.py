@@ -1,8 +1,6 @@
-from datetime import date
 from itertools import chain
 from operator import attrgetter
 
-from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -12,11 +10,9 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
-from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.merchandise.models import Merchandise
-from components.merchandise.utils import uuid_encode
 from components.people.models import ParticipationMixin
 
 from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet

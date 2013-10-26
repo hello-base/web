@@ -210,7 +210,7 @@ class TrackAdmin(admin.ModelAdmin):
 
     raw_id_fields = ('album', 'single', 'idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
     autocomplete_lookup_fields = {
-        'fk': ['album', 'single', 'original_track',],
+        'fk': ['album', 'single', 'original_track'],
         'm2m': ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     }
 

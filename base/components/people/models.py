@@ -1,8 +1,6 @@
 from datetime import date
 
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils import timesince
 from django.utils.functional import cached_property
 
@@ -287,7 +285,7 @@ class Membership(models.Model):
         standing in the given group (e.g., member, former member, etc.).
 
         """
-        if self.group_id == 65: # Soloist
+        if self.group_id == 65:  # Soloist
             if self.ended:
                 return 'Former soloist'
             return 'Soloist'

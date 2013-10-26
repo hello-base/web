@@ -30,10 +30,10 @@ def fetch_tweets(**kwargs):
 
             # Do we have a retweet?
             if 'retweeted_status' in json:
-                retweeted = True
+                tweet.retweeted = True
 
                 # Process the retweeter.
-                retweet_user = retweet['user']
+                retweet_user = json['retweeted_status']['user']
                 tweet.retweeter_profile_image_url = retweet_user['profile_iamge_url']
                 tweet.retweeter_screen_name = retweet_user['screen_name']
                 tweet.retweeter_name = retweet_user['name']
@@ -59,7 +59,7 @@ def fetch_tweets(**kwargs):
             tweet.in_reply_to_user_id = json['in_reply_to_user_id']
             tweet.in_reply_to_user_id_str = json['in_reply_to_user_id_str']
             tweet.in_reply_to_status_id = json['in_reply_to_status_id']
-            tweet.in_reply_to_status_id_str= json['in_reply_to_status_str']
+            tweet.in_reply_to_status_id_str = json['in_reply_to_status_str']
 
             # Urlize and linkify hashtags and usernames.
             tweet.text = urlize(json['text'])
