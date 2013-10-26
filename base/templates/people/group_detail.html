@@ -64,7 +64,7 @@
                 {{ object.romanized_name }} has <b>{{ memberships.active_count }} current</b> member{{ memberships.active_count|pluralize }}{% if memberships.inactive_count %} and <b>{{ memberships.inactive_count }} former</b> member{{ memberships.inactive_count|pluralize }}{% endif %}.
                 {% if memberships.leader %}<a href="{{ memberships.leader.idol.get_absolute_url }}">{{ memberships.leader.idol }}</a> has been leader since <b>{{ memberships.leader.leadership_started }}</b>{% endif %}.
               {% else %}
-                {{ object.romanized_name }} is a <b>{{ object.get_classification_display|lower }} group</b> that had <b>{{ object.memberships.count }} members</b>{% if memberships.leader_count %} and <b>{{ memberships.leader_count }} leader{{ memberships.leader_count|pluralize }}</b>{% endif %}.
+                {{ object.romanized_name }} is a <b>{{ object.get_classification_display|lower }}</b> that had <b>{{ object.memberships.count }} members</b>{% if memberships.leader_count %} and <b>{{ memberships.leader_count }} leader{{ memberships.leader_count|pluralize }}</b>{% endif %}.
               {% endif %}
               </div>
             </div>
