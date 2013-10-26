@@ -173,10 +173,10 @@ class Edition(models.Model):
         return self.parent.get_absolute_url()
 
     def save(self, *args, **kwargs):
+        return super(Edition, self).save(*args, **kwargs)
         if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital] and self.art:
             self.parent.art = self.art
             self.parent.save()
-        return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
         return self._default_manager.regular_edition(edition=self)
