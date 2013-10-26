@@ -6,8 +6,8 @@ from components.merchandise.music.factories import (AlbumFactory, BaseFactory, E
     SingleFactory, TrackFactory)
 from components.people.factories import GroupFactory
 
-
 pytestmark = pytest.mark.django_db
+
 
 class TestAlbums:
     def test_album_factory(self):

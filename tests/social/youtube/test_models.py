@@ -4,8 +4,8 @@ import pytest
 from components.social.youtube.models import Channel, Video
 from components.social.youtube.factories import ChannelFactory, VideoFactory
 
-
 pytestmark = pytest.mark.django_db
+
 
 class TestChannels:
     def test_channel_factory(self):

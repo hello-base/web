@@ -4,8 +4,8 @@ import pytest
 from components.people.models import Group, Idol, Membership, Staff
 from components.people.factories import GroupFactory, IdolFactory, MembershipFactory, StaffFactory
 
-
 pytestmark = pytest.mark.django_db
+
 
 class TestGroups:
     def test_group_factory(self):
