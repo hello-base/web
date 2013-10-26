@@ -5,13 +5,13 @@ from django.core.urlresolvers import reverse
 
 from requests_oauthlib import OAuth2Session
 
-
 config = {
     'authorization_url': getattr(settings, 'OAUTH_AUTHORIZATION_URL', ''),
     'client_id': getattr(settings, 'HELLO_BASE_CLIENT_ID', ''),
     'client_secret': getattr(settings, 'HELLO_BASE_CLIENT_SECRET', ''),
     'token_url': getattr(settings, 'OAUTH_TOKEN_URL', ''),
 }
+
 
 def _clean_token(token):
     return {

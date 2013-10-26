@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-import os
 
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
