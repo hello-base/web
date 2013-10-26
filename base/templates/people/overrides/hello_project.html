@@ -1,5 +1,14 @@
 {% extends "layouts/site_base.html" %}
 
+{% block title %}Hello! Project{% endblock %}
+{% block meta %}
+<meta property="og:title" content="Hello! Project">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
 {% block content %}
-{% print groups %}
+<section class="profile profile-group profile-override">
+<h1>Hello! Project</h1>
+</section>
 {% endblock %}
