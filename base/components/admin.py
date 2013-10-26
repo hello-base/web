@@ -15,12 +15,3 @@ def _hello_base_id_login(self, request, **kwargs):
 
 # Overide the standard AdminSite login form.
 admin.sites.AdminSite.login = _hello_base_id_login
-
-# Unregister Celery's administration modules.
-from djcelery.models import TaskState, WorkerState, PeriodicTask, IntervalSchedule, CrontabSchedule
-
-admin.site.unregister(TaskState)
-admin.site.unregister(WorkerState)
-admin.site.unregister(IntervalSchedule)
-admin.site.unregister(CrontabSchedule)
-admin.site.unregister(PeriodicTask)
