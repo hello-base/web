@@ -29,6 +29,7 @@ PHOTO_SOURCES = Choices(
 SCOPE = Choices(
     (1, 'hp', 'Hello! Project'),
     (2, 'ufa', 'Up Front Agency'),
+    (3, 'satoyama', 'Satoyama Movement'),
     (OTHER, 'other', 'Other')
 )
 
