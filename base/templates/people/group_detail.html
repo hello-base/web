@@ -17,7 +17,10 @@
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
-        <div class="profile-image"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></div>
+        <div class="profile-image object-image">
+          {% url 'image-detail' object.photo|urlencode as image_detail_url %}
+          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+        </div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
