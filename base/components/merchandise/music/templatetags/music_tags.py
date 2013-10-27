@@ -2,7 +2,7 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag('people/partials/idol_contexted_participants.html')
+@register.inclusion_tag('people/partials/contexted_participants.html')
 def contextual_participants(release, context):
     participants = release.participants
     if context.identifier == 'idol':
