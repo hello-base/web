@@ -376,7 +376,7 @@ class Fact(models.Model):
     body = models.TextField()
 
     def __unicode__(self):
-        return u'%s: %s' % (self.parent.romanized_name, self.body[:30])
+        return u'%s: %s...' % (self.parent.romanized_name, self.body[:40])
 
     @property
     def parent(self):
