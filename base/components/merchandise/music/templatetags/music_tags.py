@@ -36,15 +36,10 @@ def parse_idols(participants, idol):
     groups = idol.groups.all()
     relationships = {'for': [], 'with': []}
     for participant in participants:
-        if participant in groups:
+        if participant in groups and (
+            participant != idol.primary_membership.group
+            or participant != idol):
             relationships['for'].append(participant)
-
-            # Bait and switch, Python style. We don't want to
-            # plug primary groups or idols themselves into the
-            # dictionary, so we have to go back on our word
-            # and remove them from it.
-            if participant == idol.primary_membership.group or participant == idol:
-                relationships['for'].remove(participant)
         elif participant != idol:
             relationships['with'].append(participant)
     return relationships
