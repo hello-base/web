@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 import datetime
 import pytest
 
 from components.people.models import Group, Idol, Membership, Staff
-from components.people.factories import GroupFactory, IdolFactory, MembershipFactory, StaffFactory
+from components.people.factories import (GroupFactory, IdolFactory,
+    MembershipFactory, StaffFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -40,6 +42,19 @@ class TestIdols:
         factory = IdolFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
+
+    def test_idol_name_with_alias(self):
+        factory = IdolFactory(alias='ジュンジュン', romanized_alias='JunJun')
+        assert factory.name == 'ジュンジュン'
+        assert factory.romanized_name == 'JunJun'
+
+    def test_idol_gaijin(self):
+        nihonjin = IdolFactory()
+        assert not nihonjin.is_gaijin()
+
+        gaijin = IdolFactory(family_name='Sandbo', given_name='Lehua')
+        assert gaijin.is_gaijin()
+        assert gaijin.romanized_name == 'Lehua Sandbo'
 
 
 class TestStaff:
