@@ -63,10 +63,7 @@ class GroupAdmin(ContributorMixin):
         ('Dates', {'fields': (('started', 'ended'),)}),
         ('Parents & Children', {'fields': ('parent', 'groups')}),
         ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',))}),
-        ('Internal Notes', {
-            'classes': ('grp-collapse grp-closed',),
-            'fields': ('note',)
-        }),
+        ('Internal Notes', {'fields': ('note',)}),
     )
     filter_horizontal = ['groups']
     inlines = [GroupMembershipInline, GroupshotInline, GroupFactInline]
@@ -95,10 +92,7 @@ class IdolAdmin(ContributorMixin):
         ('Dates', {'fields': (('started', 'graduated', 'retired'),)}),
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
         ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
-        ('Internal Notes', {
-            'classes': ('grp-collapse grp-closed',),
-            'fields': ('note',)
-        }),
+        ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
