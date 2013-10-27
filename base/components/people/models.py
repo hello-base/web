@@ -382,4 +382,4 @@ class Fact(models.Model):
 
     @property
     def parent(self):
-        return filter(None, [self.album, self.single])[0]
+        return filter(None, [self.idol, self.group])[0]
