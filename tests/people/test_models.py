@@ -73,6 +73,7 @@ class TestMemberships:
         assert isinstance(factory, Membership)
         assert isinstance(factory.group, Group)
         assert isinstance(factory.idol, Idol)
+        assert 'family' and 'group' in repr(factory)
 
     def test_is_active(self):
         active = MembershipFactory()
@@ -98,6 +99,10 @@ class TestMemberships:
 
         inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
         assert inactive.tenure_in_days() == 364
+
+    def test_days_before_becoming_leader(self):
+        factory = LeadershipFactory()
+        assert factory.days_before_becoming_leader() == 0
 
     def test_leadership_tenure(self):
         active_leader = LeadershipFactory()
@@ -139,6 +144,7 @@ class TestGroupshots:
         factory = GroupshotFactory()
         assert isinstance(factory, Groupshot)
         assert isinstance(factory.group, Group)
+        assert 'Photo of' and 'group' in repr(factory)
 
 
 class TestHeadshots:
@@ -146,9 +152,22 @@ class TestHeadshots:
         factory = HeadshotFactory()
         assert isinstance(factory, Headshot)
         assert isinstance(factory.idol, Idol)
+        assert 'Photo of' and 'family' in repr(factory)
 
 
 class TestFacts:
     def test_factory(self):
-        factory = FactFactory()
+        group = GroupFactory()
+        factory = FactFactory(group=group)
         assert isinstance(factory, Fact)
+        assert 'group' in repr(factory)
+
+    def test_factory_parent(self):
+        group = GroupFactory()
+        group_fact = FactFactory(group=group)
+        assert group_fact.parent == group
+
+        idol = IdolFactory()
+        idol_fact = FactFactory(idol=idol)
+        assert idol_fact.parent == idol
+

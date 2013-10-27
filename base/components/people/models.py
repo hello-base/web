@@ -340,11 +340,10 @@ class Groupshot(models.Model):
 
     def save(self, *args, **kwargs):
         super(Groupshot, self).save(*args, **kwargs)
-        if self.kind:
-            latest = self._default_manager.filter(group=self.group).latest()
-            self.group.photo = latest.photo
-            self.group.photo_thumbnail = latest.photo_thumbnail
-            self.group.save()
+        latest = self._default_manager.filter(group=self.group).latest()
+        self.group.photo = latest.photo
+        self.group.photo_thumbnail = latest.photo_thumbnail
+        self.group.save()
 
 
 class Headshot(models.Model):
@@ -365,11 +364,10 @@ class Headshot(models.Model):
 
     def save(self, *args, **kwargs):
         super(Headshot, self).save(*args, **kwargs)
-        if self.id:
-            latest = self._default_manager.filter(idol=self.idol).latest()
-            self.idol.photo = latest.photo
-            self.idol.photo_thumbnail = latest.photo_thumbnail
-            self.idol.save()
+        latest = self._default_manager.filter(idol=self.idol).latest()
+        self.idol.photo = latest.photo
+        self.idol.photo_thumbnail = latest.photo_thumbnail
+        self.idol.save()
 
 
 class Fact(models.Model):
