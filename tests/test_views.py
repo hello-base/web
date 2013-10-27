@@ -1,6 +1,9 @@
+import pytest
+
 from django.core.urlresolvers import reverse
 
 
+@pytest.mark.django_db
 def test_site_view(client):
     response = client.get(reverse('site-home'))
     assert response.status_code == 200
