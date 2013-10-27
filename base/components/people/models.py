@@ -243,9 +243,7 @@ class Membership(models.Model):
         unique_together = ('idol', 'group')
 
     def __unicode__(self):
-        if self.group.romanized_name == 'Soloist':
-            return '%s (Soloist)' % (self.idol)
-        return '%s (member of %s)' % (self.idol, self.group.romanized_name)
+        return '%s (%s)' % (self.idol, self.group.romanized_name)
 
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
