@@ -49,7 +49,7 @@ class Person(ContributorMixin):
         if self.romanized_alias:
             return u'%s' % (self.romanized_alias)
         elif hasattr(self, 'is_gaijin') and self.is_gaijin():
-            return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
+            return u'%s %s' % (self.romanized_given_name, self.romanized_family_name)
         return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
     @property
@@ -122,6 +122,10 @@ class Idol(Person):
     @property
     def age(self):
         return calculate_age(self.birthdate)
+
+    def is_gaijin(self):
+        if self.romanized_given_name in self.GAIJINS:
+            return True
 
     def latest_album(self):
         return self.albums.latest()
