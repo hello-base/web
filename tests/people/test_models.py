@@ -2,9 +2,11 @@
 import datetime
 import pytest
 
-from components.people.models import Group, Idol, Membership, Staff
-from components.people.factories import (GroupFactory, IdolFactory,
-    MembershipFactory, StaffFactory)
+from components.people.models import (Fact, Group, Groupshot, Headshot, Idol,
+    Membership, Staff)
+from components.people.factories import (FactFactory, GroupFactory,
+    GroupshotFactory, HeadshotFactory, IdolFactory, MembershipFactory,
+    StaffFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -71,3 +73,23 @@ class TestMemberships:
         assert isinstance(factory, Membership)
         assert isinstance(factory.group, Group)
         assert isinstance(factory.idol, Idol)
+
+
+class TestGroupshots:
+    def test_groupshot_factory(self):
+        factory = GroupshotFactory()
+        assert isinstance(factory, Groupshot)
+        assert isinstance(factory.group, Group)
+
+
+class TestHeadshots:
+    def test_headshot_factory(self):
+        factory = HeadshotFactory()
+        assert isinstance(factory, Headshot)
+        assert isinstance(factory.idol, Idol)
+
+
+class TestFacts:
+    def test_fact_factory(self):
+        factory = FactFactory()
+        assert isinstance(factory, Fact)
