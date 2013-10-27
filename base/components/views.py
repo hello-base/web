@@ -25,7 +25,7 @@ class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
 
 
 class SiteView(TemplateView):
-    template_name = 'landings/home_site.html'
+    template_name = 'landings/site_home.html'
 
 
 class ImageDetailView(TemplateView):
