@@ -287,9 +287,9 @@ class Membership(models.Model):
 
         """
         former = ''
-        if self.ended or self.leadership_ended:
+        if not self.is_active() or self.leadership_ended:
             former = 'former '
-        if self.group_id == 65:
+        if 'Soloist' in str(self.group):
             standing = 'soloist'
         elif self.is_leader:
             standing = 'leader'
