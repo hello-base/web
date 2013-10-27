@@ -48,9 +48,8 @@ class Person(ContributorMixin):
     def _render_romanized_name(self):
         if self.romanized_alias:
             return u'%s' % (self.romanized_alias)
-        elif hasattr(self, 'is_gaijin'):
-            if self.is_gaijin():
-                return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
+        elif hasattr(self, 'is_gaijin') and self.is_gaijin():
+            return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
         return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
     @property
