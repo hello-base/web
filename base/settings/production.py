@@ -96,8 +96,8 @@ class Production(Settings):
     STATIC_S3_PATH = 'static'
     CDN_DOMAIN = 'dxglax8otc2dg.cloudfront.net'
     # CDN_DOMAIN = 'hellobase-revyverinc.netdna-ssl.com'
-    MEDIA_URL = '//%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
-    STATIC_URL = '//%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
+    MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
+    STATIC_URL = 'https://%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
 
     # Template Configuration.
     # --------------------------------------------------------------------------
