@@ -44,15 +44,15 @@ class TestIdols:
         assert response.status_code == 200
 
     def test_idol_name_with_alias(self):
-        factory = IdolFactory(alias='ジュンジュン', romanized_alias='JunJun')
-        assert factory.name == 'ジュンジュン'
+        factory = IdolFactory(alias=u'ジュンジュン', romanized_alias='JunJun')
+        assert factory.name == u'ジュンジュン'
         assert factory.romanized_name == 'JunJun'
 
     def test_idol_gaijin(self):
         nihonjin = IdolFactory()
         assert not nihonjin.is_gaijin()
 
-        gaijin = IdolFactory(family_name='Sandbo', given_name='Lehua')
+        gaijin = IdolFactory(romanized_family_name='Sandbo', romanized_given_name='Lehua')
         assert gaijin.is_gaijin()
         assert gaijin.romanized_name == 'Lehua Sandbo'
 
