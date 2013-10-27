@@ -161,9 +161,7 @@ class Edition(models.Model):
         ordering = ('kind', 'romanized_name')
 
     def __unicode__(self):
-        if self.parent:
-            return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
-        return u'%s' % (self.name)
+        return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
 
     def get_absolute_url(self):
         return self.parent.get_absolute_url()
