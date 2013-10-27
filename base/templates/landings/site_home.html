@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load cache %}
+{% load humanize %}
 {% load static from staticfiles %}
 {% load typogrify_tags %}
 
@@ -31,23 +33,41 @@
 </div>
 
 {% filter typogrify %}
-<ul class="reasonings container">
-  <li class="reasoning">
-    <span class="reasoning-icon"><span class="ss-icon ss-books"></span></span>
-    <h2>The <i>most complete</i> Hello! Project database.</h2>
-    <p>From <a href="{% url 'single-detail' 'morning-coffee' %}">Morning Coffee's 8cm</a> CD release to <a href="{% url 'idol-detail' 'ishikawa-rika' %}">Ishikawa's 16 groups</a>, we aim to have the most complete database on Hello! Project, its idols, and groups.</p>
-  </li>
-  <li class="reasoning">
-    <span class="reasoning-icon"><span class="ss-icon ss-analytics"></span></span>
-    <h2><i>All the statistics</i> you could ever want.</h2>
-    <p>Ever wonder how old <a href="{% url 'idol-detail' 'nakazawa-yuuko' %}">Yuuko</a> was in her <a href="{% url 'single-detail' 'dannasama' %}">final single</a>? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader? Hello! Base strives to answer those questions and more.</p>
-  </li>
-  <li class="reasoning">
-    <span class="reasoning-icon"><span class="ss-icon ss-compass"></span></span>
-    <h2>A <i>comprehensive view</i> of Hello! Project.</h2>
-    <p>We take our data and find all sorts of correlations to give you an entirely new view of your favorite groups and idols.</p>
-  </li>
-</ul>
+<div class="reasonings">
+  <ul class="reasoning-list container">
+    <li class="reasoning">
+      <span class="reasoning-icon"><span class="ss-icon ss-books"></span></span>
+      <h2>The <i>most complete</i> Hello! Project database.</h2>
+      <p>From <a href="{% url 'single-detail' 'morning-coffee' %}">Morning Coffee's 8cm</a> CD release to <a href="{% url 'idol-detail' 'ishikawa-rika' %}">Ishikawa's 16 groups</a>, we aim to have the most complete database on Hello! Project, its idols, and groups.</p>
+    </li>
+    <li class="reasoning">
+      <span class="reasoning-icon"><span class="ss-icon ss-analytics"></span></span>
+      <h2><i>All the statistics</i> you could ever want.</h2>
+      <p>Ever wonder how old <a href="{% url 'idol-detail' 'nakazawa-yuuko' %}">Yuuko</a> was in her <a href="{% url 'single-detail' 'dannasama' %}">final single</a>? How about how many days <a href="{% url "idol-detail" "michishige-sayumi" %}">Sayu</a> has been leader? Hello! Base strives to answer those questions and more.</p>
+    </li>
+    <li class="reasoning">
+      <span class="reasoning-icon"><span class="ss-icon ss-compass"></span></span>
+      <h2>A <i>comprehensive view</i> of Hello! Project.</h2>
+      <p>We take our data and find all sorts of correlations to give you an entirely new view of your favorite groups and idols.</p>
+    </li>
+  </ul>
+</div>
+<div class="counts container">
+  <header class="count-header">
+    <h2><span class="heading"><span class="ss-icon ss-calculator"></span> By the <i>numbers</i>.</span></h2>
+    <p><strong>We have a lot of data.</strong> Here’s a quick overview of what’s in there.</p>
+  </header>
+  <ul class="count-list">
+    {% cache 3600 counts %}
+    <li class="count"><span>{{ counts.idols }}</span> <strong>idols</strong></li>
+    <li class="count"><span>{{ counts.groups }}</span> <strong>groups</strong></li>
+    <li class="count"><span>{{ counts.albums }}</span> <strong>albums</strong></li>
+    <li class="count"><span>{{ counts.singles }}</span> <strong>singles</strong></li>
+    <li class="count"><span>{{ counts.editions|intcomma }}</span> <strong>editions</strong></li>
+    <li class="count"><span>{{ counts.tracks|intcomma }}</span> <strong>music tracks</strong></li>
+    {% endcache %}
+  </ul>
+</div>
 {% endfilter %}
 
 {% include "partials/footer.html" %}

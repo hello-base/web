@@ -4,6 +4,9 @@ from braces.views import AjaxResponseMixin, JSONResponseMixin
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery, Exact, Clean
 
+from components.merchandise.music.models import Album, Edition, Single, Track
+from components.people.models import Group, Idol
+
 
 class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
     def get_ajax(self, request, *args, **kwargs):
@@ -26,6 +29,20 @@ class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
 
 class SiteView(TemplateView):
     template_name = 'landings/site_home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteView, self).get_context_data(**kwargs)
+        context.update({
+            'counts': {
+                'albums': Album.objects.count(),
+                'editions': Edition.objects.count(),
+                'groups': Group.objects.count(),
+                'idols': Idol.objects.count(),
+                'singles': Single.objects.count(),
+                'tracks': Track.objects.count(),
+            }
+        })
+        return context
 
 
 class ImageDetailView(TemplateView):
