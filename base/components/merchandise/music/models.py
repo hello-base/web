@@ -177,9 +177,6 @@ class Edition(models.Model):
     def _get_regular_edition(self):
         return self._default_manager.regular_edition(edition=self)
 
-    def _render_release_date(self):
-        return self._get_regular_edition().released
-
     def _render_tracklist(self):
         if self.kind != self.EDITIONS.regular and not self.order.exists():
             return self._get_regular_edition().order.select_related('track')

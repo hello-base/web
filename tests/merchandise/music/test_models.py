@@ -82,12 +82,6 @@ class TestEditions:
         edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
         assert edition2._get_regular_edition() == edition1
 
-    def test_render_release_date(self):
-        single = SingleFactory()
-        edition1 = EditionFactory(single=single, released=datetime.date.today(), kind=Edition.EDITIONS.regular)
-        edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
-        assert edition2._render_release_date() == edition1.released
-
 
 class TestTracks:
     def test_track_factory(self):
