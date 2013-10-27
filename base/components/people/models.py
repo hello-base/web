@@ -199,7 +199,6 @@ class Group(ContributorMixin):
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
             return True
-        return False
 
     def latest_album(self):
         return self.albums.latest()
