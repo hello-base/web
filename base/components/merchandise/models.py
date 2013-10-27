@@ -18,6 +18,3 @@ class Merchandise(ContributorMixin, ParticipationMixin):
 
     class Meta:
         abstract = True
-
-    def __unicode__(self):
-        return '%s' % self.romanized_name
