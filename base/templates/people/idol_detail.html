@@ -1,12 +1,11 @@
 {% extends "layouts/site_base.html" %}
-{% load music_tags %}
-{% load typogrify_tags %}
+{% load music_tags static typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Idols{% endblock %}
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="{{ MEDIA_URL }}{{ object.photo_thumbnail }}">
+<meta property="og:image" content="{% get_media_prefix %}{{ object.photo_thumbnail }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
@@ -19,7 +18,7 @@
       <div class="profile-metadata">
         <div class="profile-image object-image">
           {% url 'image-detail' object.photo|urlencode as image_detail_url %}
-          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
         </div>
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
@@ -94,7 +93,7 @@
             <h2 class="section-title"><span class="ss-icon ss-star"></span> Primary Group</h2>
             <div class="group-image object-image">
               {% url 'image-detail' membership.group.photo|urlencode as primary_membership_image_detail_url %}
-              {% if membership.group.photo_thumbnail %}<a href="{{ primary_membership_image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ membership.group.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+              {% if membership.group.photo_thumbnail %}<a href="{{ primary_membership_image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ membership.group.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
             </div>
             <div class="membership-meta">
               <div class="membership-header">
@@ -131,7 +130,7 @@
             <li class="membership">
               <div class="group-image object-image">
                 {% url 'image-detail' membership.group.photo|urlencode as secondary_membership_image_detail_url %}
-                {% if membership.group.photo_thumbnail %}<a href="{{ secondary_membership_image_detail_url }}" target="_blank"><img src="{{ MEDIA_URL }}{{ membership.group.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+                {% if membership.group.photo_thumbnail %}<a href="{{ secondary_membership_image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ membership.group.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
               </div>
               <div class="membership-meta">
                 <div class="membership-header">
