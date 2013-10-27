@@ -18,15 +18,15 @@ from .utils import calculate_age, calculate_average_age
 
 
 class Person(ContributorMixin):
-    name = models.CharField(editable=False)
-    romanized_name = models.CharField(editable=False)
-    family_name = models.CharField(blank=True)
-    given_name = models.CharField(blank=True)
-    romanized_family_name = models.CharField(blank=True)
-    romanized_given_name = models.CharField(blank=True)
-    alias = models.CharField(blank=True)
-    romanized_alias = models.CharField(blank=True)
-    nicknames = models.CharField(blank=True)
+    name = models.CharField(editable=False, max_length=60)
+    romanized_name = models.CharField(editable=False, max_length=60)
+    family_name = models.CharField(blank=True, max_length=30)
+    given_name = models.CharField(blank=True, max_length=30)
+    romanized_family_name = models.CharField(blank=True, max_length=30)
+    romanized_given_name = models.CharField(blank=True, max_length=30)
+    alias = models.CharField(blank=True, max_length=30)
+    romanized_alias = models.CharField(blank=True, max_length=30)
+    nicknames = models.CharField(blank=True, max_length=200)
     slug = models.SlugField()
 
     class Meta:
@@ -87,7 +87,7 @@ class Idol(Person):
 
     # Birth Information.
     birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
-    birthplace = models.CharField(blank=True)
+    birthplace = models.CharField(blank=True, max_length=200)
     birthplace_romanized = models.CharField(blank=True)
     birthplace_latitude = models.FloatField(blank=True, null=True)
     birthplace_longitude = models.FloatField(blank=True, null=True)
@@ -148,8 +148,8 @@ class Group(ContributorMixin):
     objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
     tracker = FieldTracker()
 
-    name = models.CharField()
-    romanized_name = models.CharField()
+    name = models.CharField(max_length=60)
+    romanized_name = models.CharField(max_length=60)
     slug = models.SlugField()
 
     # Status.
@@ -167,7 +167,7 @@ class Group(ContributorMixin):
     groups = models.ManyToManyField('self', blank=True, null=True, related_name='member_groups', symmetrical=False)
 
     # Options & Extra Information.
-    former_names = models.CharField(blank=True)
+    former_names = models.CharField(blank=True, max_length=200)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
