@@ -3,6 +3,7 @@ omit =
     ../*admin*
     ../*migrations*
     ../*search*
+    ../*sitemaps*
 
 [report]
 exclude_lines =
