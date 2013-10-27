@@ -285,19 +285,16 @@ class Membership(models.Model):
         standing in the given group (e.g., member, former member, etc.).
 
         """
-        if self.group_id == 65:  # Soloist
-            if self.ended:
-                return 'Former soloist'
-            return 'Soloist'
-
-        if self.is_leader:
-            if self.leadership_ended:
-                return 'Former leader'
-            return 'Current leader'
+        former = ''
+        if self.ended or self.leadership_ended:
+            former = 'former '
+        if self.group_id == 65:
+            standing = 'soloist'
+        elif self.is_leader:
+            standing = 'leader'
         else:
-            if self.ended:
-                return 'Former member'
-            return 'Member'
+            standing = 'member'
+        return ''.join((former, standing)).capitalize()
 
 
 class ParticipationMixin(models.Model):
