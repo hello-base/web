@@ -42,6 +42,11 @@ class MembershipFactory(factory.django.DjangoModelFactory):
     started = datetime.date.today() - datetime.timedelta(days=365)
 
 
+class LeadershipFactory(MembershipFactory):
+    is_leader = True
+    leadership_started = datetime.date.today() - datetime.timedelta(days=365)
+
+
 class GroupshotFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Groupshot
 

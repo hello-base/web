@@ -5,8 +5,8 @@ import pytest
 from components.people.models import (Fact, Group, Groupshot, Headshot, Idol,
     Membership, Staff)
 from components.people.factories import (FactFactory, GroupFactory,
-    GroupshotFactory, HeadshotFactory, IdolFactory, MembershipFactory,
-    StaffFactory)
+    GroupshotFactory, HeadshotFactory, IdolFactory, LeadershipFactory,
+    MembershipFactory, StaffFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -98,6 +98,40 @@ class TestMemberships:
 
         inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
         assert inactive.tenure_in_days() == 364
+
+    def test_leadership_tenure(self):
+        active_leader = LeadershipFactory()
+        assert active_leader.leadership_tenure() == '1 year'
+
+        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_leader.leadership_tenure() == '12 months'
+
+    def test_leadership_tenure_in_days(self):
+        active_leader = LeadershipFactory()
+        assert active_leader.leadership_tenure_in_days() == 365
+
+        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_leader.leadership_tenure_in_days() == 364
+
+    def test_standing(self):
+        active_member = MembershipFactory()
+        assert active_member.standing == 'Member'
+
+        impending_inactive_member = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        assert impending_inactive_member.standing == 'Member'
+
+        inactive_member = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_member.standing == 'Former member'
+
+        active_leader = LeadershipFactory()
+        assert active_leader.standing == 'Leader'
+
+        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_leader.standing == 'Former leader'
+
+        group = GroupFactory(romanized_name='Soloist')
+        soloist = MembershipFactory(group=group)
+        assert soloist.standing == 'Soloist'
 
 
 class TestGroupshots:
