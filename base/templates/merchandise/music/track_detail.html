@@ -7,7 +7,7 @@
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="">
+<meta property="og:image" content="{{ MEDIA_URL }}{{ object.appearances.debut.art_thumbnail }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
