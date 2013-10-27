@@ -74,6 +74,31 @@ class TestMemberships:
         assert isinstance(factory.group, Group)
         assert isinstance(factory.idol, Idol)
 
+    def test_membership_is_active(self):
+        active = MembershipFactory()
+        assert active.is_active()
+
+        impending_inactive = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        assert impending_inactive.is_active()
+
+        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert not inactive.is_active()
+
+    def test_membership_days_before_starting(self):
+        factory = MembershipFactory()
+        assert factory.days_before_starting() == 0
+
+    def test_membership_days_before_ending(self):
+        factory = MembershipFactory(ended=datetime.date.today())
+        assert factory.days_before_ending() == 365
+
+    def test_membership_tenure_in_days(self):
+        active = MembershipFactory()
+        assert active.tenure_in_days() == 365
+
+        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive.tenure_in_days() == 364
+
 
 class TestGroupshots:
     def test_groupshot_factory(self):
