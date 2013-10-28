@@ -657,12 +657,10 @@
 [class^="path-hello-project"] {
   .header-logo-wordmark { color: #FFF; }
 }
-.profile-override {
-  header {
-    margin-top: -61px;
-    padding: 8rem 0 6rem;
-    background-color: #0b1c2d;
-  }
+.profile-override { }
+.override-header {
+  margin-top: -61px;
+  padding: 8rem 0 6rem;
 }
 .override-logo {
   @include squish(3, 3);
@@ -682,8 +680,11 @@
     line-height: 1;
   }
 }
-.override-logo.hello-project {
-  background-color: #17385b;
+
+.hello-project .override-header {
+  background: #0b1c2d; }
+.hello-project .override-logo {
+  background: linear-gradient(#17385b, darken(#17385b, 5%));
   box-shadow: 0 0 2rem rgba(#000, 0.25), inset 0 0 0 1px rgba(#FFF, 0.05);
   text-shadow: 0 1px 0 rgba(#000, 0.25);
 
@@ -693,6 +694,7 @@
     letter-spacing: 0.2em;
   }
   p {
+    color: rgba(#FFF, 0.75);
     font-family: $font-family-hello-project-secondary;
     letter-spacing: 0.1em;
   }
