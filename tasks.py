@@ -42,7 +42,7 @@ def collect(verbose=False, **kwargs):
     out('Compiling stylesheets using production environment settings.')
     invoke.run('compass compile -e production --force', hide=hide)
     out('Using Autoprefix to auto-prefix.')
-    invoke.run('autoprefixer base/static/stylesheets/application.css', hide=hide)
+    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css', hide=hide)
 
     # Build and send it off.
     out('Using `buildstatic` to concatenate assets.')
