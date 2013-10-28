@@ -6,12 +6,11 @@ from django.db.models import get_model
 def calculate_age(birthdate, target=None):
     if not target:
         target = date.today()
-    if birthdate is not None:
-        birthday = birthdate.replace(year=target.year)
-        if birthday > target:
-            return target.year - birthdate.year - 1
-        else:
-            return target.year - birthdate.year
+    birthday = birthdate.replace(year=target.year)
+    if birthday > target:
+        return target.year - birthdate.year - 1
+    else:
+        return target.year - birthdate.year
 
 
 def calculate_average_age(birthdates):

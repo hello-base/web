@@ -1,5 +1,4 @@
 import os
-import sys
 
 from django import get_version
 from django.conf import settings

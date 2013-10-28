@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-from base64 import urlsafe_b64encode
 from datetime import date
 
 from django.core.urlresolvers import reverse
 
 from model_utils import Choices
-from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.people.models import ParticipationMixin

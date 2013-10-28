@@ -6,7 +6,7 @@ from . import models
 # of fields, so we're splitting them up into common sections:
 BASE_GOOD_FIELDS = [
     # Metadata.
-    'romanized_name', 'name', 'price',  'online_id', 'other_info',
+    'romanized_name', 'name', 'price', 'online_id', 'other_info',
     'available_from', 'available_until', 'link', 'image',
 
     # Relations.

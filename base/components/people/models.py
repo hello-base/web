@@ -1,8 +1,6 @@
 from datetime import date
 
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils import timesince
 from django.utils.functional import cached_property
 
@@ -20,15 +18,15 @@ from .utils import calculate_age, calculate_average_age
 
 
 class Person(ContributorMixin):
-    name = models.CharField(editable=False)
-    romanized_name = models.CharField(editable=False)
-    family_name = models.CharField(blank=True)
-    given_name = models.CharField(blank=True)
-    romanized_family_name = models.CharField(blank=True)
-    romanized_given_name = models.CharField(blank=True)
-    alias = models.CharField(blank=True)
-    romanized_alias = models.CharField(blank=True)
-    nicknames = models.CharField(blank=True)
+    name = models.CharField(editable=False, max_length=60)
+    romanized_name = models.CharField(editable=False, max_length=60)
+    family_name = models.CharField(blank=True, max_length=30)
+    given_name = models.CharField(blank=True, max_length=30)
+    romanized_family_name = models.CharField(blank=True, max_length=30)
+    romanized_given_name = models.CharField(blank=True, max_length=30)
+    alias = models.CharField(blank=True, max_length=30)
+    romanized_alias = models.CharField(blank=True, max_length=30)
+    nicknames = models.CharField(blank=True, max_length=200)
     slug = models.SlugField()
 
     class Meta:
@@ -50,9 +48,8 @@ class Person(ContributorMixin):
     def _render_romanized_name(self):
         if self.romanized_alias:
             return u'%s' % (self.romanized_alias)
-        elif hasattr(self, 'is_gaijin'):
-            if self.is_gaijin():
-                return u'%s %s' % (self.romanized_given_name, self.romanzied_family_name)
+        elif hasattr(self, 'is_gaijin') and self.is_gaijin():
+            return u'%s %s' % (self.romanized_given_name, self.romanized_family_name)
         return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
     @property
@@ -90,7 +87,7 @@ class Idol(Person):
 
     # Birth Information.
     birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
-    birthplace = models.CharField(blank=True)
+    birthplace = models.CharField(blank=True, max_length=200)
     birthplace_romanized = models.CharField(blank=True)
     birthplace_latitude = models.FloatField(blank=True, null=True)
     birthplace_longitude = models.FloatField(blank=True, null=True)
@@ -126,6 +123,10 @@ class Idol(Person):
     def age(self):
         return calculate_age(self.birthdate)
 
+    def is_gaijin(self):
+        if self.romanized_given_name in self.GAIJINS:
+            return True
+
     def latest_album(self):
         return self.albums.latest()
 
@@ -147,8 +148,8 @@ class Group(ContributorMixin):
     objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
     tracker = FieldTracker()
 
-    name = models.CharField()
-    romanized_name = models.CharField()
+    name = models.CharField(max_length=60)
+    romanized_name = models.CharField(max_length=60)
     slug = models.SlugField()
 
     # Status.
@@ -166,7 +167,7 @@ class Group(ContributorMixin):
     groups = models.ManyToManyField('self', blank=True, null=True, related_name='member_groups', symmetrical=False)
 
     # Options & Extra Information.
-    former_names = models.CharField(blank=True)
+    former_names = models.CharField(blank=True, max_length=200)
     note = models.TextField(blank=True)
     note_processed = models.TextField(blank=True, editable=False)
 
@@ -202,7 +203,6 @@ class Group(ContributorMixin):
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
             return True
-        return False
 
     def latest_album(self):
         return self.albums.latest()
@@ -243,14 +243,11 @@ class Membership(models.Model):
         unique_together = ('idol', 'group')
 
     def __unicode__(self):
-        if self.group.romanized_name == 'Soloist':
-            return '%s (Soloist)' % (self.idol)
-        return '%s (member of %s)' % (self.idol, self.group.romanized_name)
+        return '%s (%s)' % (self.idol, self.group.romanized_name)
 
     def is_active(self):
         if self.ended is None or self.ended >= date.today():
             return True
-        return False
 
     def days_before_starting(self):
         return (self.started - self.group.started).days
@@ -287,19 +284,16 @@ class Membership(models.Model):
         standing in the given group (e.g., member, former member, etc.).
 
         """
-        if self.group_id == 65: # Soloist
-            if self.ended:
-                return 'Former soloist'
-            return 'Soloist'
-
-        if self.is_leader:
-            if self.leadership_ended:
-                return 'Former leader'
-            return 'Current leader'
+        former = ''
+        if not self.is_active() or self.leadership_ended:
+            former = 'former '
+        if 'Soloist' in str(self.group):
+            standing = 'soloist'
+        elif self.is_leader:
+            standing = 'leader'
         else:
-            if self.ended:
-                return 'Former member'
-            return 'Member'
+            standing = 'member'
+        return ''.join((former, standing)).capitalize()
 
 
 class ParticipationMixin(models.Model):
@@ -346,11 +340,10 @@ class Groupshot(models.Model):
 
     def save(self, *args, **kwargs):
         super(Groupshot, self).save(*args, **kwargs)
-        if self.kind:
-            latest = self._default_manager.filter(group=self.group).latest()
-            self.group.photo = latest.photo
-            self.group.photo_thumbnail = latest.photo_thumbnail
-            self.group.save()
+        latest = self._default_manager.filter(group=self.group).latest()
+        self.group.photo = latest.photo
+        self.group.photo_thumbnail = latest.photo_thumbnail
+        self.group.save()
 
 
 class Headshot(models.Model):
@@ -371,8 +364,20 @@ class Headshot(models.Model):
 
     def save(self, *args, **kwargs):
         super(Headshot, self).save(*args, **kwargs)
-        if self.id:
-            latest = self._default_manager.filter(idol=self.idol).latest()
-            self.idol.photo = latest.photo
-            self.idol.photo_thumbnail = latest.photo_thumbnail
-            self.idol.save()
+        latest = self._default_manager.filter(idol=self.idol).latest()
+        self.idol.photo = latest.photo
+        self.idol.photo_thumbnail = latest.photo_thumbnail
+        self.idol.save()
+
+
+class Fact(models.Model):
+    idol = models.ForeignKey(Idol, blank=True, null=True, related_name='facts')
+    group = models.ForeignKey(Group, blank=True, null=True, related_name='facts')
+    body = models.TextField()
+
+    def __unicode__(self):
+        return u'%s: %s...' % (self.parent.romanized_name, self.body[:40])
+
+    @property
+    def parent(self):
+        return filter(None, [self.idol, self.group])[0]

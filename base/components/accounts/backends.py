@@ -1,15 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 
-from oauthlib.oauth2.rfc6749.endpoints import resource
+User = get_user_model()
 
-
-USER = get_user_model()
 
 class HelloBaseIDBackend(ModelBackend):
     def authenticate(self, username=None):
         try:
-            user = USER.objects.filter(username=username)[0]
+            user = User.objects.filter(username=username)[0]
         except IndexError:
             return None
         else:
@@ -17,6 +15,6 @@ class HelloBaseIDBackend(ModelBackend):
 
     def get_user(self, user_id):
         try:
-            return USER.objects.get(pk=user_id)
-        except USER.DoesNotExist:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
             return None

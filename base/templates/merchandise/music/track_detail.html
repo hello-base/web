@@ -1,13 +1,11 @@
 {% extends "layouts/site_base.html" %}
-{% load markup %}
-{% load people_tags %}
-{% load typogrify_tags %}
+{% load markup people_tags typogrify_tags static %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Tracks{% endblock %}
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="">
+<meta property="og:image" content="{% get_media_prefix %}{{ object.appearances.debut.art_thumbnail }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
@@ -89,7 +87,7 @@
           <tr>
             <td class="appearance-image" rowspan="2">
               <div class="release-image">
-                {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+                {% if release.art %}<img src="{% get_media_prefix %}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
               </div>
             </td>
             <td class="appearance-name">
@@ -122,7 +120,7 @@
           <tr>
             <td class="appearance-image" rowspan="2">
               <div class="release-image">
-                {% if release.art %}<img src="{{ MEDIA_URL }}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+                {% if release.art %}<img src="{% get_media_prefix %}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
               </div>
             </td>
             <td class="appearance-name">

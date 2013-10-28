@@ -1,4 +1,3 @@
-import datetime
 import factory
 
 from . import models

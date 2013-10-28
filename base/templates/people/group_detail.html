@@ -1,12 +1,11 @@
 {% extends "layouts/site_base.html" %}
-{% load humanize %}
-{% load typogrify_tags %}
+{% load humanize static typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Groups{% endblock %}
 {% block meta %}
 <meta property="og:title" content="{{ object.romanized_name }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="">
+<meta property="og:image" content="{% get_media_prefix %}{{ object.photo_thumbnail }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
@@ -17,7 +16,10 @@
   <header class="profile-header">
     <div class="container">
       <div class="profile-metadata">
-        <div class="profile-image"><img src="{{ MEDIA_URL }}{{ object.photo_thumbnail }}"></div>
+        <div class="profile-image object-image">
+          {% url 'image-detail' object.photo|urlencode as image_detail_url %}
+          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+        </div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
@@ -59,9 +61,9 @@
               <div class="example-subtext">
               {% if object.is_active %}
                 {{ object.romanized_name }} has <b>{{ memberships.active_count }} current</b> member{{ memberships.active_count|pluralize }}{% if memberships.inactive_count %} and <b>{{ memberships.inactive_count }} former</b> member{{ memberships.inactive_count|pluralize }}{% endif %}.
-                {% if memberships.leader %}<a href="{{ memberships.leader.idol.get_absolute_url }}">{{ memberships.leader.idol }}</a> has been leader since <b>{{ memberships.leader.leadership_started }}</b>{% endif %}.
+                {% if memberships.leader %}<a href="{{ memberships.leader.idol.get_absolute_url }}">{{ memberships.leader.idol }}</a> has been leader since <b>{{ memberships.leader.leadership_started }}</b>.{% endif %}
               {% else %}
-                {{ object.romanized_name }} is a <b>{{ object.get_classification_display|lower }} group</b> that had <b>{{ object.memberships.count }} members</b>{% if memberships.leader_count %} and <b>{{ memberships.leader_count }} leader{{ memberships.leader_count|pluralize }}</b>{% endif %}.
+                {{ object.romanized_name }} is a <b>{{ object.get_classification_display|lower }}</b> that had <b>{{ object.memberships.count }} members</b>{% if memberships.leader_count %} and <b>{{ memberships.leader_count }} leader{{ memberships.leader_count|pluralize }}</b>{% endif %}.
               {% endif %}
               </div>
             </div>
@@ -82,7 +84,7 @@
             {% for member in memberships.active %}
               <li class="membership" itemprop="musicGroupMember">
                 <div class="idol-image object-image">
-                  {% if member.idol.photo %}<a href="{% url 'image-detail' member.idol.photo|urlencode %}" target="_blank"><img src="{{ MEDIA_URL }}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                  {% if member.idol.photo %}<a href="{% url 'image-detail' member.idol.photo|urlencode %}" target="_blank"><img src="{% get_media_prefix %}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
                 </div>
                 <div class="idol-meta">
                   <div class="idol-header">
@@ -108,7 +110,7 @@
             {% for member in memberships.inactive %}
               <li class="membership">
                 <div class="idol-image">
-                  {% if member.idol.photo %}<img src="{{ MEDIA_URL }}{{ member.idol.photo }}" width="60">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                  {% if member.idol.photo %}<img src="{% get_media_prefix %}{{ member.idol.photo }}" width="60">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
                 </div>
                 <div class="idol-meta">
                   <div class="idol-header">
@@ -128,6 +130,38 @@
         {% endif %}
       </div>
     </section>
+
+    {% if object.groups.all %}
+    <div class="profile-subgroups-container">
+      <div class="container">
+        <h1 class="section-title">Groups</h1>
+        <div class="profile-subgroups">
+          {% for subgroup in object.groups.all %}
+          <div class="subgroup">
+            <div class="group-image">
+              {% if subgroup.photo_thumbnail %}<img src="{% get_media_prefix %}{{ subgroup.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+            </div>
+            <div class="group-meta">
+              <div class="group-header">
+                <span class="name">{{ subgroup.name }}</span>
+                <a href="{{ subgroup.get_absolute_url }}"><span class="romanized-name">{{ subgroup.romanized_name }}</span></a>
+              </div>
+              <div class="group-subtext">
+                <span class="group-data tenure">
+                  <span class="ss-icon ss-calendar"></span>
+                  <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
+                    <b>{{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}</b>
+                  </time>
+                  <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
     <div class="profile-releases">
       <div class="container">
@@ -172,7 +206,7 @@
           {% for subgroup in object.subgroups.all %}
           <div class="subgroup">
             <div class="group-image">
-              {% if subgroup.photo_thumbnail %}<img src="{{ MEDIA_URL }}{{ subgroup.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+              {% if subgroup.photo_thumbnail %}<img src="{% get_media_prefix %}{{ subgroup.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
             </div>
             <div class="group-meta">
               <div class="group-header">

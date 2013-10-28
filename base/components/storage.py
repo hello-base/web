@@ -1,6 +1,5 @@
 import urlparse
 
-from django.core.files.base import ContentFile
 from django.conf import settings
 
 from ecstatic.storage import CachedStaticFilesMixin, StaticManifestMixin

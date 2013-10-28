@@ -3,7 +3,7 @@ from datetime import date
 from django.db.models import Count, Max, Min, Q
 from django.db.models.query import QuerySet
 
-from .constants import HELLO_PROJECT_GROUPS, SCOPE, STATUS
+from .constants import CLASSIFICATIONS, SCOPE, STATUS
 from .utils import calculate_average_age
 
 
@@ -19,7 +19,9 @@ class IdolQuerySet(QuerySet):
         return self.inactive().filter(memberships__ended__isnull=False).annotate(ended=Max('memberships__ended')).order_by('-ended')
 
     def hello_project(self):
-        return self.active().filter(scope=SCOPE.hp)
+        from .models import Group
+        groups = Group.objects.hello_project().values_list('id', flat=True)
+        return self.filter(primary_membership__group_id__in=groups, primary_membership__ended__isnull=True)
 
     def ufa(self):
         return self.active().filter(scope=SCOPE.ufa)
@@ -76,7 +78,11 @@ class GroupQuerySet(QuerySet):
 
     # Convenience Groupings
     def hello_project(self):
-        return self.filter(id__in=HELLO_PROJECT_GROUPS)
+        # Hello Pro Kenshuusei is the only "group" classified as
+        # Hello! Project that is not a major group.
+        kenshuusei = self.filter(pk=52)
+        actives = self.filter(classification=CLASSIFICATIONS.major, scope=SCOPE.hp, status=STATUS.active)
+        return (kenshuusei | actives).order_by('started')
 
 
 class MembershipQuerySet(QuerySet):

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-
 from .base import Base as Settings
 
 
@@ -16,7 +14,7 @@ class Testing(Settings):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    Settings.INSTALLED_APPS += ['kombu.transport.django', 'djcelery',]
+    Settings.INSTALLED_APPS += ['kombu.transport.django', 'djcelery']
     BROKER_URL = 'django://'
 
     # django-haystack.

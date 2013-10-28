@@ -103,20 +103,8 @@
 // Set of classes that style the value propositions living below the
 // homepage's masthead.
 .reasonings {
-  @include reset-list-style;
-  margin-top: 0; margin-bottom: 0;
-  padding-top: 48px; padding-bottom: 48px;
-}
-.reasoning {
-  @include span-columns(4, $total-columns);
-  @include nth-omega(3n);
-  position: relative;
-  font-size: 13px;
+  padding-top: 48px; padding-bottom: 24px;
 
-  a {
-    font-weight: 600;
-    &:link, &:visited { color: $headings-font-color; }
-  }
   h2 {
     padding-right: 48px;
 
@@ -131,7 +119,6 @@
       font-weight: 600;
     }
   }
-
   .reasoning-icon {
     text-align: center;
 
@@ -145,9 +132,80 @@
       color: #FFF;
       font-size: 24px;
     }
+  }
+}
+.reasoning-list {
+  @include reset-list-style;
+  margin-top: 0; margin-bottom: 0;
+}
+.reasoning {
+  @include span-columns(4, $total-columns);
+  @include nth-omega(3n);
+  position: relative;
+  font-size: 13px;
+
+  a {
+    font-weight: 600;
+    &:link, &:visited { color: $headings-font-color; }
+  }
+
+  .reasoning-icon {
     .ss-books { background: linear-gradient(#CC82EE, #B563E5); }
     .ss-analytics { background: linear-gradient(#F5EA5B, #F0DD40); }
     .ss-compass { background: linear-gradient(#FF68A0, #FF4B81); }
+  }
+}
+
+// .counts
+.counts { padding-bottom: 48px; }
+.count-header {
+  text-align: center;
+
+  &:before {
+    @include position(relative, 36px 0 0 0);
+    content: '';
+    display: block;
+    border-top: 1px solid $brand-paleGrey;
+  }
+  h2 {
+    font-family: $font-family-primary;
+    font-size: 1.777em;
+    font-weight: 400;
+    letter-spacing: -1px;
+
+    i {
+      color: #272E37;
+      font-weight: 600;
+    }
+    .heading {
+      @include position(relative);
+      padding: 0 1rem;
+      z-index: 5;
+      background-color: #FFF;
+    }
+  }
+  p { margin: 0.5rem 0 1.5rem; }
+  .ss-icon {
+    @include position(relative, 3px 0 0 0);
+    padding-right: 4px;
+  }
+}
+.count-list {
+  @include reset-list-style;
+  @include reset-box-model;
+  display: flex;
+  justify-content: space-between;
+
+  .count {
+    text-align: center;
+
+    span { font-size: 24px; }
+    strong {
+      display: block;
+      color: $brand-lightGrey;
+      font-family: $font-family-secondary;
+      font-size: 11px;
+    }
   }
 }
 

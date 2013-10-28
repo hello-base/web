@@ -1,8 +1,10 @@
 [run]
 omit =
     ../*admin*
+    ../*dashboard*
     ../*migrations*
     ../*search*
+    ../*sitemaps*
 
 [report]
 exclude_lines =

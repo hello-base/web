@@ -5,5 +5,5 @@ from ..utils import calculate_age
 
 
 @register.filter
-def age(value, target):
+def age(value, target=None):
     return calculate_age(value, target=target)

@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 
-from merchandise.music.models import Album, Single
+from merchandise.music.models import Album, Single, Track
 from people.constants import STATUS
 from people.models import Group, Idol
 
@@ -55,3 +55,11 @@ class SingleSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.modified
+
+
+class TrackSitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.5
+
+    def items(self):
+        return Track.objects.all()

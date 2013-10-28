@@ -3,10 +3,11 @@ import pytest
 from django.core.urlresolvers import reverse
 
 
+@pytest.mark.django_db
 def test_site_view(client):
     response = client.get(reverse('site-home'))
     assert response.status_code == 200
-    assert 'landings/home_site.html' in [template.name for template in response.templates]
+    assert 'landings/site_home.html' in [template.name for template in response.templates]
 
 
 def test_plain_text_view(client):

@@ -1,8 +1,6 @@
-from datetime import date
 from itertools import chain
 from operator import attrgetter
 
-from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -12,11 +10,9 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
-from ohashi.constants import OTHER
 from ohashi.db import models
 
 from components.merchandise.models import Merchandise
-from components.merchandise.utils import uuid_encode
 from components.people.models import ParticipationMixin
 
 from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
@@ -165,24 +161,19 @@ class Edition(models.Model):
         ordering = ('kind', 'romanized_name')
 
     def __unicode__(self):
-        if self.parent:
-            return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
-        return u'%s' % (self.name)
+        return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
 
     def get_absolute_url(self):
         return self.parent.get_absolute_url()
 
     def save(self, *args, **kwargs):
+        return super(Edition, self).save(*args, **kwargs)
         if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital] and self.art:
             self.parent.art = self.art
             self.parent.save()
-        return super(Edition, self).save(*args, **kwargs)
 
     def _get_regular_edition(self):
         return self._default_manager.regular_edition(edition=self)
-
-    def _render_release_date(self):
-        return self._get_regular_edition().released
 
     def _render_tracklist(self):
         if self.kind != self.EDITIONS.regular and not self.order.exists():

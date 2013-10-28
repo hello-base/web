@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Image Viewer{% endblock %}
 {% block page %}
@@ -10,7 +11,7 @@
     </a>
   </header>
   <div class="image-viewer">
-    <img src="{{ MEDIA_URL }}{{ slug }}">
+    <img src="{% get_media_prefix %}{{ slug }}">
   </div>
 </section>
 

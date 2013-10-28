@@ -5,7 +5,7 @@ from typogrify.templatetags.typogrify_tags import typogrify
 
 from components.accounts.admin import ContributorMixin
 
-from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
+from .models import Fact, Group, Groupshot, Headshot, Idol, Membership, Staff
 
 
 class GroupshotInline(admin.TabularInline):
@@ -16,6 +16,19 @@ class GroupshotInline(admin.TabularInline):
 class HeadshotInline(admin.TabularInline):
     extra = 1
     model = Headshot
+
+
+class FactInline(admin.StackedInline):
+    extra = 1
+    model = Fact
+
+
+class GroupFactInline(FactInline):
+    exclude = ['idol']
+
+
+class IdolFactInline(FactInline):
+    exclude = ['group']
 
 
 class MembershipInline(admin.TabularInline):
@@ -32,14 +45,14 @@ class MembershipInline(admin.TabularInline):
         return formfield
 
 
-class IdolMembershipInline(MembershipInline):
-    raw_id_fields = ['group']
-    autocomplete_lookup_fields = {'fk': ['group']}
-
-
 class GroupMembershipInline(MembershipInline):
     raw_id_fields = ['idol']
     autocomplete_lookup_fields = {'fk': ['idol']}
+
+
+class IdolMembershipInline(MembershipInline):
+    raw_id_fields = ['group']
+    autocomplete_lookup_fields = {'fk': ['group']}
 
 
 class GroupAdmin(ContributorMixin):
@@ -49,10 +62,11 @@ class GroupAdmin(ContributorMixin):
         ('Basics', {'fields': (('romanized_name', 'name'), 'slug')}),
         ('Dates', {'fields': (('started', 'ended'),)}),
         ('Parents & Children', {'fields': ('parent', 'groups')}),
-        ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',), 'note')}),
+        ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',))}),
+        ('Internal Notes', {'fields': ('note',)}),
     )
     filter_horizontal = ['groups']
-    inlines = [GroupMembershipInline, GroupshotInline]
+    inlines = [GroupMembershipInline, GroupshotInline, GroupFactInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
@@ -77,9 +91,10 @@ class IdolAdmin(ContributorMixin):
         ('Basics', {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
         ('Dates', {'fields': (('started', 'graduated', 'retired'),)}),
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
-        ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',), 'note')}),
+        ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
+        ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [IdolMembershipInline, HeadshotInline]
+    inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
     list_editable = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}

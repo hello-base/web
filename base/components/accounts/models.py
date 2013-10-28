@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.core import validators
-from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 from django.utils import timezone
 
 from model_utils.models import TimeStampedModel
@@ -48,7 +47,7 @@ class Editor(AbstractBaseUser):
     REQUIRED_FIELS = ['email']
 
     def __unicode__(self):
-        return u'%s' % self.username
+        return u'%s' % (self.username)
 
     def has_perm(self, perm, obj=None):
         # Active superusers have all permissions.

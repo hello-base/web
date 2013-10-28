@@ -2,12 +2,12 @@ import datetime
 import pytest
 
 from components.merchandise.music.models import Album, Edition, Single, Track
-from components.merchandise.music.factories import (AlbumFactory, BaseFactory, EditionFactory,
-    SingleFactory, TrackFactory)
+from components.merchandise.music.factories import (AlbumFactory,
+    EditionFactory, SingleFactory, TrackFactory)
 from components.people.factories import GroupFactory
 
-
 pytestmark = pytest.mark.django_db
+
 
 class TestAlbums:
     def test_album_factory(self):
@@ -81,12 +81,6 @@ class TestEditions:
         edition1 = EditionFactory(single=single, kind=Edition.EDITIONS.regular)
         edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
         assert edition2._get_regular_edition() == edition1
-
-    def test_render_release_date(self):
-        single = SingleFactory()
-        edition1 = EditionFactory(single=single, released=datetime.date.today(), kind=Edition.EDITIONS.regular)
-        edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
-        assert edition2._render_release_date() == edition1.released
 
 
 class TestTracks:

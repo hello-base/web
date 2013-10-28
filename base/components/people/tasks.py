@@ -3,7 +3,7 @@ from celery.decorators import task
 
 @task
 def render_participants(instance):
-    from components.people.models import Idol, Membership
+    from components.people.models import Membership
 
     # Do we have existing participants? Clear them out so we can
     # calculate them again.

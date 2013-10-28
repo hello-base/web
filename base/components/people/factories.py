@@ -19,7 +19,7 @@ class PersonFactory(factory.django.DjangoModelFactory):
 class IdolFactory(PersonFactory):
     FACTORY_FOR = models.Idol
 
-    birthdate = datetime.date.today() - datetime.timedelta(days=365*18)
+    birthdate = datetime.date.today() - datetime.timedelta(days=365 * 18)
 
 
 class StaffFactory(PersonFactory):
@@ -31,7 +31,6 @@ class GroupFactory(factory.django.DjangoModelFactory):
 
     romanized_name = factory.Sequence(lambda i: 'group#%s' % i)
     slug = factory.LazyAttribute(lambda s: slugify(s.romanized_name))
-
     started = datetime.date.today() - datetime.timedelta(days=365)
 
 
@@ -41,3 +40,26 @@ class MembershipFactory(factory.django.DjangoModelFactory):
     idol = factory.SubFactory(IdolFactory)
     group = factory.SubFactory(GroupFactory)
     started = datetime.date.today() - datetime.timedelta(days=365)
+
+
+class LeadershipFactory(MembershipFactory):
+    is_leader = True
+    leadership_started = datetime.date.today() - datetime.timedelta(days=365)
+
+
+class GroupshotFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Groupshot
+
+    group = factory.SubFactory(GroupFactory)
+    taken = datetime.date.today()
+
+
+class HeadshotFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Headshot
+
+    idol = factory.SubFactory(IdolFactory)
+    taken = datetime.date.today()
+
+
+class FactFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Fact

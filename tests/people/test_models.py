@@ -1,25 +1,29 @@
+# -*- coding: utf-8 -*-
 import datetime
 import pytest
 
-from components.people.models import Group, Idol, Membership, Staff
-from components.people.factories import GroupFactory, IdolFactory, MembershipFactory, StaffFactory
-
+from components.people.models import (Fact, Group, Groupshot, Headshot, Idol,
+    Membership, Staff)
+from components.people.factories import (FactFactory, GroupFactory,
+    GroupshotFactory, HeadshotFactory, IdolFactory, LeadershipFactory,
+    MembershipFactory, StaffFactory)
 
 pytestmark = pytest.mark.django_db
 
+
 class TestGroups:
-    def test_group_factory(self):
+    def test_factory(self):
         factory = GroupFactory()
         assert isinstance(factory, Group)
         assert 'group' in factory.romanized_name
         assert factory.identifier == 'group'
 
-    def test_group_get_absolute_url(self, client):
+    def test_get_absolute_url(self, client):
         factory = GroupFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
-    def test_group_age(self):
+    def test_age(self):
         active = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366))
         inactive = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366), ended=datetime.date.today())
         assert active.age == 1
@@ -29,21 +33,34 @@ class TestGroups:
 
 
 class TestIdols:
-    def test_idol_factory(self):
+    def test_factory(self):
         factory = IdolFactory()
         assert isinstance(factory, Idol)
         assert factory.identifier == 'idol'
         assert 'family' in factory.romanized_family_name
         assert 'given' in factory.romanized_given_name
 
-    def test_idol_get_absolute_url(self, client):
+    def test_get_absolute_url(self, client):
         factory = IdolFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
+    def test_name_with_alias(self):
+        factory = IdolFactory(alias=u'ジュンジュン', romanized_alias='JunJun')
+        assert factory.name == u'ジュンジュン'
+        assert factory.romanized_name == 'JunJun'
+
+    def test_gaijin(self):
+        nihonjin = IdolFactory()
+        assert not nihonjin.is_gaijin()
+
+        gaijin = IdolFactory(romanized_family_name='Sandbo', romanized_given_name='Lehua')
+        assert gaijin.is_gaijin()
+        assert gaijin.romanized_name == 'Lehua Sandbo'
+
 
 class TestStaff:
-    def test_staff_factory(self):
+    def test_factory(self):
         factory = StaffFactory()
         assert isinstance(factory, Staff)
         assert 'family' in factory.romanized_family_name
@@ -51,8 +68,106 @@ class TestStaff:
 
 
 class TestMemberships:
-    def test_membership_factory(self):
+    def test_factory(self):
         factory = MembershipFactory()
         assert isinstance(factory, Membership)
         assert isinstance(factory.group, Group)
         assert isinstance(factory.idol, Idol)
+        assert 'family' and 'group' in repr(factory)
+
+    def test_is_active(self):
+        active = MembershipFactory()
+        assert active.is_active()
+
+        impending_inactive = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        assert impending_inactive.is_active()
+
+        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert not inactive.is_active()
+
+    def test_days_before_starting(self):
+        factory = MembershipFactory()
+        assert factory.days_before_starting() == 0
+
+    def test_days_before_ending(self):
+        factory = MembershipFactory(ended=datetime.date.today())
+        assert factory.days_before_ending() == 365
+
+    def test_tenure_in_days(self):
+        active = MembershipFactory()
+        assert active.tenure_in_days() == 365
+
+        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive.tenure_in_days() == 364
+
+    def test_days_before_becoming_leader(self):
+        factory = LeadershipFactory()
+        assert factory.days_before_becoming_leader() == 0
+
+    def test_leadership_tenure(self):
+        active_leader = LeadershipFactory()
+        assert active_leader.leadership_tenure() == '1 year'
+
+        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_leader.leadership_tenure() == '12 months'
+
+    def test_leadership_tenure_in_days(self):
+        active_leader = LeadershipFactory()
+        assert active_leader.leadership_tenure_in_days() == 365
+
+        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_leader.leadership_tenure_in_days() == 364
+
+    def test_standing(self):
+        active_member = MembershipFactory()
+        assert active_member.standing == 'Member'
+
+        impending_inactive_member = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        assert impending_inactive_member.standing == 'Member'
+
+        inactive_member = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_member.standing == 'Former member'
+
+        active_leader = LeadershipFactory()
+        assert active_leader.standing == 'Leader'
+
+        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        assert inactive_leader.standing == 'Former leader'
+
+        group = GroupFactory(romanized_name='Soloist')
+        soloist = MembershipFactory(group=group)
+        assert soloist.standing == 'Soloist'
+
+
+class TestGroupshots:
+    def test_factory(self):
+        factory = GroupshotFactory()
+        assert isinstance(factory, Groupshot)
+        assert isinstance(factory.group, Group)
+        assert 'Photo of' and 'group' in repr(factory)
+
+
+class TestHeadshots:
+    def test_factory(self):
+        factory = HeadshotFactory()
+        assert isinstance(factory, Headshot)
+        assert isinstance(factory.idol, Idol)
+        assert 'Photo of' and 'family' in repr(factory)
+
+
+class TestFacts:
+    def test_factory(self):
+        group = GroupFactory()
+        factory = FactFactory(group=group)
+        assert isinstance(factory, Fact)
+        assert 'group' in repr(factory)
+
+    def test_factory_parent(self):
+        group = GroupFactory()
+        group_fact = FactFactory(group=group)
+        assert group_fact.parent == group
+
+        idol = IdolFactory()
+        idol_fact = FactFactory(idol=idol)
+        assert idol_fact.parent == idol
+
