@@ -1,3 +1,4 @@
+from collections import defaultdict
 from operator import attrgetter
 
 from django.views.generic import ListView, DetailView, TemplateView
@@ -57,15 +58,20 @@ class StaffDetailView(DetailView):
 
 
 class HelloProjectDetailView(TemplateView):
+    idols = Idol.objects.hello_project().select_related('primary_membership__group')
+    groups = Group.objects.hello_project()
     template_name = 'people/overrides/hello_project.html'
 
-    def get_context_data(self, **kwargs):
-        idols = Idol.objects.hello_project()
+    def process_groups(self):
+        d = defaultdict(list)
+        for group in self.groups:
+            d[group] = [idol for idol in self.idols if idol.primary_membership.group == group]
+        return dict(d)
 
+    def get_context_data(self, **kwargs):
         context = super(HelloProjectDetailView, self).get_context_data(**kwargs)
-        context['groups'] = Group.objects.hello_project()
-        context['idols'] = idols.prefetch_related('primary_membership__group')
+        context['groups'] = self.process_groups()
         context['statistics'] = {
-            'average_age': idols.average_age()
+            'average_age': self.idols.average_age()
         }
         return context
