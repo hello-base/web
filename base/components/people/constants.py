@@ -8,11 +8,14 @@ BLOOD_TYPE = Choices('A', 'B', 'O', 'AB')
 CLASSIFICATIONS = Choices(
     (1, 'major', 'Major Unit'),
     (2, 'minor', 'Minor Unit'),
-    (3, 'shuffle', 'Shuffle Unit'),
     (4, 'temporary', 'Temporary Unit'),
     (5, 'subunit', 'Sub-Unit'),
-    (6, 'revival', 'Revival Unit'),
     (7, 'supergroup', 'Supergroup'),
+    ('Special Units', [
+        (3, 'shuffle', 'Shuffle Unit'),
+        (6, 'revival', 'Revival Unit'),
+        (8, 'satoyama', 'Satoyama Unit'),
+    ]),
     (OTHER, 'other', 'Other')
 )
 
@@ -29,7 +32,6 @@ PHOTO_SOURCES = Choices(
 SCOPE = Choices(
     (1, 'hp', 'Hello! Project'),
     (2, 'ufa', 'Up Front Agency'),
-    (3, 'satoyama', 'Satoyama Movement'),
     (OTHER, 'other', 'Other')
 )
 
