@@ -19,10 +19,6 @@ CLASSIFICATIONS = Choices(
     (OTHER, 'other', 'Other')
 )
 
-# This is a hard-coded constant because of the Hello Pro Kenshuusei, the only
-# "group" classified as Hello! Project that is not a major group.
-HELLO_PROJECT_GROUPS = [1, 2, 3, 52, 54]
-
 PHOTO_SOURCES = Choices(
     (1, 'promotional', 'Promotional Photo'),
     (2, 'blog', 'Blog Photo'),
