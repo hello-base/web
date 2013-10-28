@@ -18,28 +18,32 @@
     </div>
   </header>
 
+  {% comment %}
   <div class="container">
     {{ statistics }}
   </div>
+  {% endcomment %}
 
   <div class="container">
 
-  <ul>
-  {% for group in groups %}
-  <li>
-    {{ group }}
-  </li>
-  {% endfor %}
-  </ul>
-
-  <ul>
-  {% for idol in idols %}
-  <li>
-    {{ idol }}
-    {{ idol.primary_membership.standing }} of {{ idol.primary_membership.group }}
-  </li>
-  {% endfor %}
-  </ul>
+    <ul class="group-list">
+    {% for group, members in groups.items %}
+      <li class="group-item">
+        <div class="group">
+          <span class="romanized-name">{{ group }}</span>
+          <span class="name">{{ group.name }}</span>
+        </div>
+        <ul class="member-list">
+        {% for member in members %}
+          <li class="member-item">
+            <span class="romanized-name">{{ member }}</span>
+            <span class="name">{{ member.name }}</span>
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+    </ul>
 
   </div>
 </section>

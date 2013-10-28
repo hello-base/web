@@ -681,8 +681,7 @@
   }
 }
 
-.hello-project .override-header {
-  background: #0b1c2d; }
+.hello-project .override-header { background: #0b1c2d; }
 .hello-project .override-logo {
   background: linear-gradient(#17385b, darken(#17385b, 5%));
   box-shadow: 0 0 2rem rgba(#000, 0.25), inset 0 0 0 1px rgba(#FFF, 0.05);
@@ -698,4 +697,20 @@
     font-family: $font-family-hello-project-secondary;
     letter-spacing: 0.1em;
   }
+}
+
+.group-item {
+  @include clearfix;
+  margin-bottom: 2rem;
+}
+.group {
+  @include span-columns(3, 12);
+}
+.member-list {
+  @include span-columns(9 omega, 12);
+}
+.member-item {
+  @include span-columns(3, 9);
+  @include nth-omega(3n);
+  margin-bottom: 1rem;
 }
