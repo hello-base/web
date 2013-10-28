@@ -702,9 +702,10 @@
 .group-item {
   @include clearfix;
   margin-bottom: 2rem;
-}
-.group {
-  @include span-columns(3, 12);
+
+  .group {
+    @include span-columns(3, 12);
+  }
 }
 .member-list {
   @include span-columns(9 omega, 12);
