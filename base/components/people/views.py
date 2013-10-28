@@ -60,10 +60,12 @@ class HelloProjectDetailView(TemplateView):
     template_name = 'people/overrides/hello_project.html'
 
     def get_context_data(self, **kwargs):
-        context = super(HelloProjectDetailView, self).get_context_data(**kwargs)
-        context['statistics'] = {
+        idols = Idol.objects.hello_project()
 
-        }
-        context['idols'] = Idol.objects.hello_project()
+        context = super(HelloProjectDetailView, self).get_context_data(**kwargs)
         context['groups'] = Group.objects.hello_project()
+        context['idols'] = idols.prefetch_related('primary_membership__group')
+        context['statistics'] = {
+            'average_age': idols.average_age()
+        }
         return context
