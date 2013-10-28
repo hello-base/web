@@ -61,5 +61,9 @@ class HelloProjectDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HelloProjectDetailView, self).get_context_data(**kwargs)
+        context['statistics'] = {
+
+        }
+        context['idols'] = Idol.objects.hello_project()
         context['groups'] = Group.objects.hello_project()
         return context

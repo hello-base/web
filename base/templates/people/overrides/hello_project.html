@@ -17,5 +17,12 @@
       </div>
     </div>
   </header>
+
+  {% for group in groups %}
+    {{ group }}
+  {% endfor %}
+  {% for idol in idols %}
+    {{ idol }}
+  {% endfor %}
 </section>
 {% endblock %}
