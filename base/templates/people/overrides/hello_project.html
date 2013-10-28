@@ -8,21 +8,39 @@
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
 {% block content %}
-<section class="profile profile-group profile-override">
-  <header>
+<section class="profile profile-group profile-override hello-project">
+  <header class="override-header">
     <div class="container">
-      <div class="override-logo hello-project">
+      <div class="override-logo">
         <h1>Hello! Project</h1>
         <p>SINCE1998</p>
       </div>
     </div>
   </header>
 
+  <div class="container">
+    {{ statistics }}
+  </div>
+
+  <div class="container">
+
+  <ul>
   {% for group in groups %}
+  <li>
     {{ group }}
+  </li>
   {% endfor %}
+  </ul>
+
+  <ul>
   {% for idol in idols %}
+  <li>
     {{ idol }}
+    {{ idol.primary_membership.standing }} of {{ idol.primary_membership.group }}
+  </li>
   {% endfor %}
+  </ul>
+
+  </div>
 </section>
 {% endblock %}
