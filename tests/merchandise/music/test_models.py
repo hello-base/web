@@ -27,6 +27,8 @@ class TestAlbums:
         assert album.regular_edition == edition
 
     def test_album_regular_edition_failure(self):
+        # Test that calling `regular_edition` will not fail loudly if the
+        # proper edition is not found.
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.limited)
         assert not album.regular_edition
