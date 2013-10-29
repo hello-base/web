@@ -26,6 +26,11 @@ class TestAlbums:
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.regular)
         assert album.regular_edition == edition
 
+    def test_album_regular_edition_failure(self):
+        album = AlbumFactory()
+        edition = EditionFactory(album=album, kind=Edition.EDITIONS.limited)
+        assert not album.regular_edition
+
 
 class TestSingles:
     def test_single_factory(self):
