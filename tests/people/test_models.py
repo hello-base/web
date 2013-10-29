@@ -170,4 +170,3 @@ class TestFacts:
         idol = IdolFactory()
         idol_fact = FactFactory(idol=idol)
         assert idol_fact.parent == idol
-
