@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import datetime
 import pytest
 
 from components.events.models import Event, Performance, Venue
