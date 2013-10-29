@@ -51,7 +51,7 @@ class TestIdols:
         assert factory.romanized_name == 'JunJun'
 
     def test_gaijin(self):
-        nihonjin = IdolFactory()
+        nihonjin = IdolFactory(family_name=u'譜久村', given_name=u'聖')
         assert not nihonjin.is_gaijin()
 
         gaijin = IdolFactory(romanized_family_name='Sandbo', romanized_given_name='Lehua')
