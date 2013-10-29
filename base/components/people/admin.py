@@ -65,7 +65,6 @@ class GroupAdmin(ContributorMixin):
         ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    filter_horizontal = ['groups']
     inlines = [GroupMembershipInline, GroupshotInline, GroupFactInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
