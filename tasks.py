@@ -132,6 +132,7 @@ def heroku_pull(verbose=False, database='hello-base', **kwargs):
 
     # Restore it.
     invoke.run('pg_restore --verbose --clean --no-acl --no-owner -h localhost -d %s latest.dump' % database, hide=hide)
+    invoke.run('rm latest.dump', hide=hide)
     out('Restored latest production dump to local database.')
 
 
