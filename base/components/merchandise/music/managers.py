@@ -4,8 +4,7 @@ from django.db.models.query import QuerySet
 
 
 class EditionManager(models.Manager):
-    def regular_edition(self, release=None, edition=None):
-        kwargs = {'kind': self.model.EDITIONS.regular}
+    def find_edition(self, release, edition, **kwargs):
         if release:
             kwargs[release.identifier] = release
         if edition:
@@ -17,6 +16,14 @@ class EditionManager(models.Manager):
             return qs.filter(**kwargs)[0]
         except IndexError:
             return qs.none()
+
+    def digital_edition(self, release=None, edition=None):
+        kwargs = {'kind': self.model.EDITIONS.digital}
+        return self.find_edition(release, edition, **kwargs)
+
+    def regular_edition(self, release=None, edition=None):
+        kwargs = {'kind': self.model.EDITIONS.regular}
+        return self.find_edition(release, edition, **kwargs)
 
 
 class TrackQuerySet(QuerySet):

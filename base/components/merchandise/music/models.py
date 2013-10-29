@@ -47,9 +47,10 @@ class Base(Merchandise):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
-        if self.editions.exists() and self.regular_edition:
-            self.art = self.regular_edition.art
-            self.released = self.regular_edition.released
+        if self.editions.exists() and (self.regular_edition or self.digital_edition):
+            (edition,) = filter(None, [self.regular_edition, self.digital_edition])
+            self.art = self.edition.art
+            self.released = self.edition.released
         super(Base, self).save(*args, **kwargs)
 
     @staticmethod
@@ -63,6 +64,10 @@ class Base(Merchandise):
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
+
+    @cached_property
+    def digital_edition(self):
+        return self.editions.digital_edition(release=self)
 
     @cached_property
     def regular_edition(self):
