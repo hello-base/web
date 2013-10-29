@@ -68,6 +68,7 @@ class GroupAdmin(ContributorMixin):
     inlines = [GroupMembershipInline, GroupshotInline, GroupFactInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
+    list_filter = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
     readonly_fields = ['photo', 'photo_thumbnail']
     search_fields = ['romanized_name', 'name']
@@ -96,6 +97,7 @@ class IdolAdmin(ContributorMixin):
     inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope', 'started', 'graduated', 'retired']
     list_editable = ['status', 'scope']
+    list_filter = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
     readonly_fields = ['photo', 'photo_thumbnail']
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
