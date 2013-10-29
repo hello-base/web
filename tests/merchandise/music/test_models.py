@@ -10,30 +10,30 @@ pytestmark = pytest.mark.django_db
 
 
 class TestAlbums:
-    def test_album_factory(self):
+    def test_factory(self):
         factory = AlbumFactory()
         assert isinstance(factory, Album)
         assert 'album' in factory.romanized_name
         assert factory.identifier == 'album'
 
-    def test_album_get_absolute_url(self, client):
+    def test_get_absolute_url(self, client):
         factory = AlbumFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
-    def test_album_regular_edition(self):
+    def test_regular_edition(self):
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.regular)
         assert album.regular_edition == edition
 
-    def test_album_regular_edition_failure(self):
+    def test_regular_edition_failure(self):
         # Test that calling `regular_edition` will not fail loudly if the
         # proper edition is not found.
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.limited)
         assert not album.regular_edition
 
-    def test_album_get_previous_and_next(self):
+    def test_get_previous_and_next(self):
         album1 = AlbumFactory(romanized_name='album#1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
         album2 = AlbumFactory(romanized_name='album#2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
         album3 = AlbumFactory(romanized_name='album#3', released=datetime.date.today())
@@ -52,18 +52,18 @@ class TestAlbums:
 
 
 class TestSingles:
-    def test_single_factory(self):
+    def test_factory(self):
         factory = SingleFactory()
         assert isinstance(factory, Single)
         assert 'single' in factory.romanized_name
         assert factory.identifier == 'single'
 
-    def test_single_get_absolute_url(self, client):
+    def test_get_absolute_url(self, client):
         factory = SingleFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
-    def test_single_get_previous_and_next(self):
+    def test_get_previous_and_next(self):
         single1 = SingleFactory(romanized_name='single#1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
         single2 = SingleFactory(romanized_name='single#2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
         single3 = SingleFactory(romanized_name='single#3', released=datetime.date.today())
@@ -82,20 +82,20 @@ class TestSingles:
 
 
 class TestEditions:
-    def test_edition_factory(self):
+    def test_factory(self):
         single = SingleFactory()
         factory = EditionFactory(single=single)
         assert isinstance(factory, Edition)
         assert 'edition' in factory.romanized_name
 
-    def test_edition_get_absolute_url(self, client):
+    def test_get_absolute_url(self, client):
         single = SingleFactory()
         edition = EditionFactory(single=single)
         response = client.get(edition.get_absolute_url())
         assert edition.get_absolute_url() == single.get_absolute_url()
         assert response.status_code == 200
 
-    def test_edition_parent(self):
+    def test_parent(self):
         single = SingleFactory()
         edition = EditionFactory(single=single)
         assert edition.parent == single
@@ -108,12 +108,12 @@ class TestEditions:
 
 
 class TestTracks:
-    def test_track_factory(self):
+    def test_factory(self):
         factory = TrackFactory()
         assert isinstance(factory, Track)
         assert 'track' in factory.romanized_name
 
-    def test_track_get_absolute_url(self, client):
+    def test_get_absolute_url(self, client):
         single = SingleFactory()
         factory = TrackFactory(single=single)
         response = client.get(factory.get_absolute_url())
