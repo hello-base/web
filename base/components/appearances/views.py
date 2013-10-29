@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 
 from .forms import ShowForm, EpisodeForm, MagazineForm, IssueForm
