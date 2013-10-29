@@ -13,4 +13,3 @@ class EditorFactory(factory.DjangoModelFactory):
     name = 'Tsunku'
     email = factory.LazyAttribute(lambda a: '{0}@example.com'.format(a.name).lower())
     started = datetime.datetime.now()
-
