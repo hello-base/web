@@ -199,7 +199,7 @@ class Group(ContributorMixin):
         for membership in self.memberships.select_related('idol'):
             generations[membership.generation].append(membership)
         generations.default_factory = None
-        return generations
+        return generations if all(generations) else None
 
     @property
     def identifier(self):

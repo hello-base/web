@@ -46,6 +46,12 @@ class TestGroups:
             assert isinstance(k, int)
             assert len(v) == 1
 
+    def test_generations_failure(self):
+        group = GroupFactory()
+        idols = [IdolFactory() for i in xrange(3)]
+        memberships = [MembershipFactory(group=group, idol=idols[i]) for i in xrange(3)]
+        assert not group.generations()
+
 
 class TestIdols:
     def test_factory(self):
