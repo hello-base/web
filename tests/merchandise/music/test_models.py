@@ -49,7 +49,7 @@ class TestSingles:
     def test_single_get_previous_and_next(self):
         single1 = SingleFactory(romanized_name='single1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
         single2 = SingleFactory(romanized_name='single2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
-        single3 = SingleFactory(romanized_name='single2', released=datetime.date.today())
+        single3 = SingleFactory(romanized_name='single3', released=datetime.date.today())
 
         group = GroupFactory()
         single1.groups.add(group)
