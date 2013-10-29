@@ -49,6 +49,8 @@ class TestAlbums:
         assert album1.get_next == album2
         assert album2.get_previous == album1
         assert album2.get_next != album3
+        assert not album1.get_previous
+        assert not album3.get_next
 
 
 class TestSingles:
@@ -79,6 +81,8 @@ class TestSingles:
         assert single1.get_next == single2
         assert single2.get_previous == single1
         assert single2.get_next != single3
+        assert not single1.get_previous
+        assert not single3.get_next
 
 
 class TestEditions:
