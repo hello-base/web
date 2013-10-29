@@ -31,6 +31,21 @@ class TestGroups:
         assert inactive.age == 1
         assert inactive.age_in_days == 366
 
+    def test_generations(self):
+        group = GroupFactory()
+        idols = [IdolFactory() for i in xrange(3)]
+        memberships = [
+            MembershipFactory(
+                group=group, idol=idols[i], generation=i + 1
+            ) for i in xrange(3)
+        ]
+
+        generations = group.generations()
+        assert len(generations) == 3
+        for k, v in generations.iteritems():
+            assert isinstance(k, int)
+            assert len(v) == 1
+
 
 class TestIdols:
     def test_factory(self):

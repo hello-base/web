@@ -1,3 +1,4 @@
+from collections import defaultdict
 from datetime import date
 
 from django.core.urlresolvers import reverse
@@ -192,6 +193,13 @@ class Group(ContributorMixin):
         if self.ended:
             return (self.ended - self.started).days
         return (date.today() - self.started).days
+
+    def generations(self):
+        generations = defaultdict(list)
+        for membership in self.memberships.select_related('idol'):
+            generations[membership.generation].append(membership)
+        generations.default_factory = None
+        return generations
 
     @property
     def identifier(self):
