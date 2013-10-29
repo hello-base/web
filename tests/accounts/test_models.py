@@ -11,6 +11,3 @@ class TestEditors:
         factory = EditorFactory()
         assert isinstance(factory, Editor)
         assert 'dancer' in factory.username
-
-    def test_creation(self):
-        factory = EditorFactory()

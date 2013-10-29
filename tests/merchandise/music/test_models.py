@@ -31,6 +31,7 @@ class TestAlbums:
         # proper edition is not found.
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.limited)
+        assert edition in album.editions.all()
         assert not album.regular_edition
 
     def test_get_previous_and_next(self):
