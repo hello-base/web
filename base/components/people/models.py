@@ -62,8 +62,6 @@ class Person(ContributorMixin):
 
 
 class Idol(Person):
-    GAIJINS = ['April', 'Chelsea', 'Danielle', 'Lehua', 'Mika Taressa']
-
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
     birthdays = models.BirthdayManager()
@@ -124,8 +122,7 @@ class Idol(Person):
         return calculate_age(self.birthdate)
 
     def is_gaijin(self):
-        if self.romanized_given_name in self.GAIJINS:
-            return True
+        return not bool(self.given_name and self.family_name)
 
     def latest_album(self):
         return self.albums.latest()
