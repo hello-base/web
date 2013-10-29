@@ -198,8 +198,7 @@ class Group(ContributorMixin):
         return self._meta.module_name
 
     def is_active(self):
-        if self.ended is None or self.ended >= date.today():
-            return True
+        return bool(self.ended is None or self.ended >= date.today())
 
     def latest_album(self):
         return self.albums.latest()
@@ -243,8 +242,7 @@ class Membership(models.Model):
         return '%s (%s)' % (self.idol, self.group.romanized_name)
 
     def is_active(self):
-        if self.ended is None or self.ended >= date.today():
-            return True
+        return bool(self.ended is None or self.ended >= date.today())
 
     def days_before_starting(self):
         return (self.started - self.group.started).days
