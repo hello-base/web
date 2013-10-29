@@ -33,6 +33,23 @@ class TestAlbums:
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.limited)
         assert not album.regular_edition
 
+    def test_album_get_previous_and_next(self):
+        album1 = AlbumFactory(romanized_name='album#1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
+        album2 = AlbumFactory(romanized_name='album#2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
+        album3 = AlbumFactory(romanized_name='album#3', released=datetime.date.today())
+
+        group = GroupFactory()
+        album1.groups.add(group)
+        assert album1.groups.exists()
+        album2.groups.add(group)
+        assert album2.groups.exists()
+        album3.groups.add(group)
+        assert album2.groups.exists()
+
+        assert album1.get_next == album2
+        assert album2.get_previous == album1
+        assert album2.get_next != album3
+
 
 class TestSingles:
     def test_single_factory(self):
@@ -47,9 +64,9 @@ class TestSingles:
         assert response.status_code == 200
 
     def test_single_get_previous_and_next(self):
-        single1 = SingleFactory(romanized_name='single1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
-        single2 = SingleFactory(romanized_name='single2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
-        single3 = SingleFactory(romanized_name='single3', released=datetime.date.today())
+        single1 = SingleFactory(romanized_name='single#1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
+        single2 = SingleFactory(romanized_name='single#2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
+        single3 = SingleFactory(romanized_name='single#3', released=datetime.date.today())
 
         group = GroupFactory()
         single1.groups.add(group)
