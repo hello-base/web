@@ -24,7 +24,8 @@ sitemaps = {
     'albums': AlbumSitemap,
     'groups': GroupSitemap,
     'idols': IdolSitemap,
-    'singles': SingleSitemap
+    'singles': SingleSitemap,
+    'tracks': TrackSitemap
 }
 
 # The switch to faceted search requires a custom SearchQuerySet.
