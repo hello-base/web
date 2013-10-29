@@ -1,16 +1,11 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from model_utils import FieldTracker
-
 from components.accounts.models import ContributorMixin
 from components.people.models import ParticipationMixin
 
 
 class Event(ContributorMixin, ParticipationMixin):
-    # Model Managers.
-    tracker = FieldTracker()
-
     # Details.
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
