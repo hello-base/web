@@ -88,7 +88,7 @@ admin.site.register(Group, GroupAdmin)
 class IdolAdmin(ContributorMixin):
     fieldsets = (
         ('Status', {'fields': (('status', 'scope'),)}),
-        ('Basics', {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
+        ('Basics', {'fields': (('romanized_name', 'name'), ('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
         ('Dates', {'fields': (('started', 'graduated', 'retired'),)}),
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
         ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
@@ -99,7 +99,7 @@ class IdolAdmin(ContributorMixin):
     list_editable = ['status', 'scope']
     list_filter = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
-    readonly_fields = ['photo', 'photo_thumbnail']
+    readonly_fields = ['romanized_name', 'name', 'photo', 'photo_thumbnail']
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
 
     def save_model(self, request, obj, form, change):
