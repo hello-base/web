@@ -94,7 +94,7 @@ class IdolAdmin(ContributorMixin):
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
-    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
+    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope', 'started', 'graduated', 'retired']
     list_editable = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
     readonly_fields = ['photo', 'photo_thumbnail']
