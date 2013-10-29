@@ -54,10 +54,10 @@ class IdolQuerySet(QuerySet):
         return self.exclude(height__isnull=True).order_by('-height')[0]
 
     def most_senior_member(self):
-        return self.annotate(started=Min('memberships__started')).order_by('started', 'birthdate')[0]
+        return self.annotate(startdate=Min('memberships__started')).order_by('startdate', 'birthdate')[0]
 
     def most_junior_member(self):
-        return self.annotate(count=Count('memberships')).filter(count=1).annotate(started=Max('memberships__started')).order_by('-started', '-birthdate')[0]
+        return self.annotate(count=Count('memberships')).filter(count=1).annotate(startdate=Max('memberships__started')).order_by('-startdate', '-birthdate')[0]
 
 
 class GroupQuerySet(QuerySet):
