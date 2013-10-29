@@ -39,3 +39,10 @@ class TrackFactory(factory.django.DjangoModelFactory):
     FACTORY_DJANGO_GET_OR_CREATE = ('romanized_name',)
 
     romanized_name = factory.Sequence(lambda i: 'track#%s' % i)
+
+
+class VideoFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Video
+    FACTORY_DJANGO_GET_OR_CREATE = ('romanized_name',)
+
+    romanized_name = factory.Sequence(lambda i: 'video#%s' % i)
