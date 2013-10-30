@@ -1,6 +1,7 @@
 from itertools import chain
 from operator import attrgetter
 
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -256,6 +257,16 @@ class Track(ParticipationMixin):
         if self.original_track:
             return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
+
+    def clean(self, *args, **kwargs):
+        # If a track has a parent (original_track), it cannot have a slug.
+        if self.original_track is not None and self.slug:
+            raise ValidationError('Alternate tracks cannot have slugs.')
+        super(Track, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Track, self).save(*args, **kwargs)
 
     @cached_property
     def appearances(self):
