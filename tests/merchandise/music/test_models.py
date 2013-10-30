@@ -3,9 +3,10 @@ import pytest
 
 from django.core.exceptions import ValidationError
 
-from components.merchandise.music.models import Album, Edition, Single, Track
+from components.merchandise.music.models import (Album, Edition, Single, Track,
+    Video)
 from components.merchandise.music.factories import (AlbumFactory,
-    EditionFactory, SingleFactory, TrackFactory)
+    EditionFactory, SingleFactory, TrackFactory, VideoFactory)
 from components.people.factories import GroupFactory
 
 editions = Edition.EDITIONS
@@ -154,3 +155,10 @@ class TestTracks:
         with pytest.raises(ValidationError):
             original_track = TrackFactory(slug='track')
             track = TrackFactory(original_track=original_track, slug='track')
+
+
+class TestVideos:
+    def test_factory(self):
+        factory = VideoFactory()
+        assert isinstance(factory, Video)
+        assert 'video' in factory.romanized_name
