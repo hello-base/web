@@ -23,6 +23,11 @@ class TestAlbums:
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
+    def test_digital_edition(self):
+        album = AlbumFactory()
+        edition = EditionFactory(album=album, kind=Edition.EDITIONS.digital)
+        assert album.digital_edition == edition
+
     def test_regular_edition(self):
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=Edition.EDITIONS.regular)
