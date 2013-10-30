@@ -166,13 +166,13 @@ class TestVideos:
 
     def test_rendered_kind_display(self):
         music = VideoFactory(kind=video_type.pv_regular)
-        assert music.rendered_kind_display = 'Music Video'
+        assert music.rendered_kind_display == 'Music Video'
 
         making = VideoFactory(kind=video_type.making_general)
-        assert making.rendered_kind_display = 'Making of'
+        assert making.rendered_kind_display == 'Making of'
 
         performance = VideoFactory(kind=video_type.bonus_performance)
-        assert performance.rendered_kind_display = 'Performance'
+        assert performance.rendered_kind_display == 'Performance'
 
         other = VideoFactory(kind=video_type.other)
-        assert other.rendered_kind_display = ''
+        assert other.rendered_kind_display == ''
