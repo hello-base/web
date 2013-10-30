@@ -9,7 +9,8 @@ from components.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory, VideoFactory)
 from components.people.factories import GroupFactory
 
-editions = Edition.EDITIONS
+edition_type = Edition.EDITIONS
+video_type = Video.VIDEO_TYPES
 pytestmark = pytest.mark.django_db
 
 
@@ -24,7 +25,7 @@ class TestAlbums:
         factory = AlbumFactory()
         regular_edition = EditionFactory(
             album=factory,
-            kind=editions.regular,
+            kind=edition_type.regular,
             art='/path/to/art-regular.png',
             released=datetime.date.today()
         )
@@ -40,19 +41,19 @@ class TestAlbums:
 
     def test_digital_edition(self):
         album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=editions.digital)
+        edition = EditionFactory(album=album, kind=edition_type.digital)
         assert album.digital_edition == edition
 
     def test_regular_edition(self):
         album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=editions.regular)
+        edition = EditionFactory(album=album, kind=edition_type.regular)
         assert album.regular_edition == edition
 
     def test_regular_edition_failure(self):
         # Test that calling `regular_edition` will not fail loudly if the
         # proper edition is not found.
         album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=editions.limited)
+        edition = EditionFactory(album=album, kind=edition_type.limited)
         assert edition in album.editions.all()
         assert not album.regular_edition
 
@@ -129,8 +130,8 @@ class TestEditions:
 
     def test_get_regular_edition(self):
         single = SingleFactory()
-        edition1 = EditionFactory(single=single, kind=editions.regular)
-        edition2 = EditionFactory(single=single, kind=editions.limited)
+        edition1 = EditionFactory(single=single, kind=edition_type.regular)
+        edition2 = EditionFactory(single=single, kind=edition_type.limited)
         assert edition2._get_regular_edition() == edition1
 
 
@@ -162,3 +163,16 @@ class TestVideos:
         factory = VideoFactory()
         assert isinstance(factory, Video)
         assert 'video' in factory.romanized_name
+
+    def test_rendered_kind_display(self):
+        music = VideoFactory(kind=video_type.pv_regular)
+        assert music.rendered_kind_display = 'Music Video'
+
+        making = VideoFactory(kind=video_type.making_general)
+        assert making.rendered_kind_display = 'Making of'
+
+        performance = VideoFactory(kind=video_type.bonus_performance)
+        assert performance.rendered_kind_display = 'Performance'
+
+        other = VideoFactory(kind=video_type.other)
+        assert other.rendered_kind_display = ''
