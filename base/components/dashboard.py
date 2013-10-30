@@ -21,10 +21,10 @@ class CustomIndexDashboard(Dashboard):
             models=(
                 'components.merchandise.music.models.Album',
                 'components.merchandise.music.models.Single',
-                'components.merchandise.music.models.Editions',
-                'components.merchandise.music.models.Labels',
-                'components.merchandise.music.models.Tracks',
-                'components.merchandise.music.models.Videos',
+                'components.merchandise.music.models.Edition',
+                'components.merchandise.music.models.Label',
+                'components.merchandise.music.models.Track',
+                'components.merchandise.music.models.Video',
             ),
         ))
 
