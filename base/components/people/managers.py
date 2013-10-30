@@ -34,25 +34,6 @@ class IdolQuerySet(QuerySet):
         average_height = round(sum(heights) / len(heights))
         return average_height
 
-    # Superlatives
-    def oldest_member(self):
-        return self.order_by('birthdate')[0]
-
-    def youngest_member(self):
-        return self.order_by('-birthdate')[0]
-
-    def shortest_member(self):
-        return self.exclude(height__isnull=True).order_by('height')[0]
-
-    def tallest_member(self):
-        return self.exclude(height__isnull=True).order_by('-height')[0]
-
-    def most_senior_member(self):
-        return self.annotate(startdate=Min('memberships__started')).order_by('startdate', 'birthdate')[0]
-
-    def most_junior_member(self):
-        return self.annotate(count=Count('memberships')).filter(count=1).annotate(startdate=Max('memberships__started')).order_by('-startdate', '-birthdate')[0]
-
 
 class GroupQuerySet(QuerySet):
     def active(self):
