@@ -15,9 +15,6 @@ class IdolQuerySet(QuerySet):
         return self.exclude(status=STATUS.active)
 
     # Convenience Groupings
-    def everybody_else(self):
-        return self.inactive().filter(memberships__ended__isnull=False).annotate(ended=Max('memberships__ended')).order_by('-ended')
-
     def hello_project(self):
         from .models import Group
         groups = Group.objects.hello_project().values_list('id', flat=True)
@@ -36,9 +33,6 @@ class IdolQuerySet(QuerySet):
         heights = self.filter(height__isnull=False).values_list('height', flat=True)
         average_height = round(sum(heights) / len(heights))
         return average_height
-
-    def popular_bloodtype(self):
-        return self.values('bloodtype').annotate(Count('bloodtype')).order_by('-bloodtype__count')[0]
 
     # Superlatives
     def oldest_member(self):
