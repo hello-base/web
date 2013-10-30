@@ -42,14 +42,8 @@ class GroupQuerySet(QuerySet):
     def inactive(self):
         return self.filtered().filter(ended__lte=date.today())
 
-    def filtered(self):
-        return self.exclude(name='Soloist')
-
     def unfiltered(self):
         return self.all()
-
-    def soloists(self):
-        return self.get(name='Soloist')
 
     # Convenience Groupings
     def hello_project(self):
