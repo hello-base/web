@@ -103,7 +103,3 @@ class MembershipQuerySet(QuerySet):
 
     def leaders(self):
         return self.filter(is_leader=True).order_by('leadership_started').prefetch_related('idol')
-
-    # Convenience Methods
-    def get_primary_groups(self, idols):
-        return {m.idol_id: (m.group, m.is_leader) for m in self.filter(is_primary=True, idol__in=idols).select_related('group')}
