@@ -16,17 +16,6 @@ class CustomIndexDashboard(Dashboard):
             title='Merchandise', column=1, collapsible=False,
             models=('components.merchandise.*',),
         ))
-        self.children.append(modules.AppList(
-            title='Music', column=1, collapsible=False,
-            models=(
-                'components.merchandise.music.models.Album',
-                'components.merchandise.music.models.Single',
-                'components.merchandise.music.models.Editions',
-                'components.merchandise.music.models.Labels',
-                'components.merchandise.music.models.Tracks',
-                'components.merchandise.music.models.Videos',
-            ),
-        ))
 
         # Recent actions.
         self.children.append(modules.RecentActions(
