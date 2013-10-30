@@ -1,6 +1,8 @@
 import datetime
 import pytest
 
+from django.core.exceptions import ValidationError
+
 from components.merchandise.music.models import Album, Edition, Single, Track
 from components.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory)
@@ -128,3 +130,8 @@ class TestTracks:
         factory = TrackFactory(single=single)
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
+
+    def test_original_track_slug_exception(self):
+        with pytest.raises(ValidationError):
+            original_track = TrackFactory(slug='track')
+            track = TrackFactory(original_track=original_track, slug='track')
