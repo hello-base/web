@@ -91,8 +91,9 @@ def development_test(verbose=True, coverage=False, **kwargs):
 
     if coverage:
         out('Running tests (with Coverage report).')
-        invoke.run('coverage run --source base -m %s' % pytest, pty=True, hide=hide)
-        invoke.run('coverage report -m', pty=True, hide=hide)
+        invoke.run('coverage run --branch --source base -m %s' % pytest, pty=True, hide=hide)
+        invoke.run('coverage html', pty=True, hide=hide)
+        invoke.run('open htmlcov/index.html')
     else:
         out('Running tests.')
         invoke.run('%s' % pytest, pty=True, hide=hide)
