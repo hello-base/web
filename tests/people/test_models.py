@@ -8,6 +8,8 @@ from components.people.factories import (FactFactory, GroupFactory,
     GroupshotFactory, HeadshotFactory, IdolFactory, LeadershipFactory,
     MembershipFactory, StaffFactory)
 
+today = datetime.date.today()
+delta = datetime.timedelta(days=1)
 pytestmark = pytest.mark.django_db
 
 
@@ -24,8 +26,8 @@ class TestGroups:
         assert response.status_code == 200
 
     def test_age(self):
-        active = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366))
-        inactive = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366), ended=datetime.date.today())
+        active = GroupFactory(started=today - datetime.timedelta(days=366))
+        inactive = GroupFactory(started=today - datetime.timedelta(days=366), ended=today)
         assert active.age == 1
         assert active.age_in_days == 366
         assert inactive.age == 1
@@ -100,10 +102,10 @@ class TestMemberships:
         active = MembershipFactory()
         assert active.is_active()
 
-        impending_inactive = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        impending_inactive = MembershipFactory(ended=today + delta)
         assert impending_inactive.is_active()
 
-        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive = MembershipFactory(ended=today - delta)
         assert not inactive.is_active()
 
     def test_days_before_starting(self):
@@ -111,14 +113,14 @@ class TestMemberships:
         assert factory.days_before_starting() == 0
 
     def test_days_before_ending(self):
-        factory = MembershipFactory(ended=datetime.date.today())
+        factory = MembershipFactory(ended=today)
         assert factory.days_before_ending() == 365
 
     def test_tenure_in_days(self):
         active = MembershipFactory()
         assert active.tenure_in_days() == 365
 
-        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive = MembershipFactory(ended=today - delta)
         assert inactive.tenure_in_days() == 364
 
     def test_days_before_becoming_leader(self):
@@ -129,30 +131,30 @@ class TestMemberships:
         active_leader = LeadershipFactory()
         assert active_leader.leadership_tenure() == '1 year'
 
-        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_leader = LeadershipFactory(leadership_ended=today - delta)
         assert inactive_leader.leadership_tenure() == '12 months'
 
     def test_leadership_tenure_in_days(self):
         active_leader = LeadershipFactory()
         assert active_leader.leadership_tenure_in_days() == 365
 
-        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_leader = LeadershipFactory(leadership_ended=today - delta)
         assert inactive_leader.leadership_tenure_in_days() == 364
 
     def test_standing(self):
         active_member = MembershipFactory()
         assert active_member.standing == 'Member'
 
-        impending_inactive_member = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        impending_inactive_member = MembershipFactory(ended=today + delta)
         assert impending_inactive_member.standing == 'Member'
 
-        inactive_member = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_member = MembershipFactory(ended=today - delta)
         assert inactive_member.standing == 'Former member'
 
         active_leader = LeadershipFactory()
         assert active_leader.standing == 'Leader'
 
-        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_leader = LeadershipFactory(leadership_ended=today - delta)
         assert inactive_leader.standing == 'Former leader'
 
         group = GroupFactory(romanized_name='Soloist')
