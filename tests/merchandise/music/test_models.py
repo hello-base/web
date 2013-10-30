@@ -127,8 +127,13 @@ class TestTracks:
 
     def test_get_absolute_url(self, client):
         single = SingleFactory()
-        factory = TrackFactory(single=single)
-        response = client.get(factory.get_absolute_url())
+        original_track = TrackFactory(single=single)
+        response = client.get(original_track.get_absolute_url())
+        assert response.status_code == 200
+
+        child_track = TrackFactory(single=single, original_track=original_track)
+        response = client.get(child_track.get_absolute_url())
+        assert child_track.get_absolute_url() == original_track.get_absolute_url()
         assert response.status_code == 200
 
     def test_original_track_slug_exception(self):
