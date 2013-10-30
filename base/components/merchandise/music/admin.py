@@ -205,7 +205,7 @@ class TrackAdmin(admin.ModelAdmin):
     search_fields = [
         'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name',
         'groups__romanized_name', 'groups__name',
-        'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate'
+        'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate', 'slug'
     ]
 
     raw_id_fields = ('album', 'single', 'idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
