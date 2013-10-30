@@ -8,6 +8,7 @@ from components.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory)
 from components.people.factories import GroupFactory
 
+editions = Edition.EDITIONS
 pytestmark = pytest.mark.django_db
 
 
@@ -18,6 +19,19 @@ class TestAlbums:
         assert 'album' in factory.romanized_name
         assert factory.identifier == 'album'
 
+    def test_save_with_regular_edition_data(self):
+        factory = AlbumFactory()
+        regular_edition = EditionFactory(
+            album=factory,
+            kind=editions.regular,
+            art='/path/to/art-regular.png',
+            released=datetime.date.today()
+        )
+
+        factory.save()
+        assert factory.art == regular_edition.art
+        assert factory.released == regular_edition.released
+
     def test_get_absolute_url(self, client):
         factory = AlbumFactory()
         response = client.get(factory.get_absolute_url())
@@ -25,19 +39,19 @@ class TestAlbums:
 
     def test_digital_edition(self):
         album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=Edition.EDITIONS.digital)
+        edition = EditionFactory(album=album, kind=editions.digital)
         assert album.digital_edition == edition
 
     def test_regular_edition(self):
         album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=Edition.EDITIONS.regular)
+        edition = EditionFactory(album=album, kind=editions.regular)
         assert album.regular_edition == edition
 
     def test_regular_edition_failure(self):
         # Test that calling `regular_edition` will not fail loudly if the
         # proper edition is not found.
         album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=Edition.EDITIONS.limited)
+        edition = EditionFactory(album=album, kind=editions.limited)
         assert edition in album.editions.all()
         assert not album.regular_edition
 
@@ -114,8 +128,8 @@ class TestEditions:
 
     def test_get_regular_edition(self):
         single = SingleFactory()
-        edition1 = EditionFactory(single=single, kind=Edition.EDITIONS.regular)
-        edition2 = EditionFactory(single=single, kind=Edition.EDITIONS.limited)
+        edition1 = EditionFactory(single=single, kind=editions.regular)
+        edition2 = EditionFactory(single=single, kind=editions.limited)
         assert edition2._get_regular_edition() == edition1
 
 
