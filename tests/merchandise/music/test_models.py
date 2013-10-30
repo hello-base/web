@@ -95,11 +95,6 @@ class TestEditions:
         assert isinstance(factory, Edition)
         assert 'edition' in factory.romanized_name
 
-    def test_string_representation(self):
-        single = SingleFactory()
-        edition = EditionFactory(single=single)
-        assert 'single', 'edition' in str(edition)
-
     def test_get_absolute_url(self, client):
         single = SingleFactory()
         edition = EditionFactory(single=single)

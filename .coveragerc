@@ -8,4 +8,5 @@ omit =
 
 [report]
 exclude_lines =
+    def __unicode__
     def autocomplete_search_fields
