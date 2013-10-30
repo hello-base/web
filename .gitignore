@@ -44,3 +44,4 @@ base/build
 base/javascripts
 base/media
 base/static
+htmlcov
