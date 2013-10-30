@@ -113,8 +113,11 @@ class TestMemberships:
         assert factory.days_before_starting() == 0
 
     def test_days_before_ending(self):
-        factory = MembershipFactory(ended=today)
-        assert factory.days_before_ending() == 365
+        active = MembershipFactory()
+        assert not active.days_before_ending()
+
+        inactive = MembershipFactory(ended=today)
+        assert inactive.days_before_ending() == 365
 
     def test_tenure_in_days(self):
         active = MembershipFactory()
@@ -124,10 +127,16 @@ class TestMemberships:
         assert inactive.tenure_in_days() == 364
 
     def test_days_before_becoming_leader(self):
-        factory = LeadershipFactory()
-        assert factory.days_before_becoming_leader() == 0
+        member = MembershipFactory()
+        assert not member.days_before_becoming_leader()
+
+        leader = LeadershipFactory()
+        assert leader.days_before_becoming_leader() == 0
 
     def test_leadership_tenure(self):
+        member = MembershipFactory()
+        assert not member.leadership_tenure()
+
         active_leader = LeadershipFactory()
         assert active_leader.leadership_tenure() == '1 year'
 
@@ -135,6 +144,9 @@ class TestMemberships:
         assert inactive_leader.leadership_tenure() == '12 months'
 
     def test_leadership_tenure_in_days(self):
+        member = MembershipFactory()
+        assert not member.leadership_tenure_in_days()
+
         active_leader = LeadershipFactory()
         assert active_leader.leadership_tenure_in_days() == 365
 
