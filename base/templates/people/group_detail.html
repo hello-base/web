@@ -40,7 +40,7 @@
     <aside class="profile-vitals">
       <div class="container">
         <ul class="vitals-list">
-          <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.started|timesince }} ({{ object.age_in_days|intcomma }} days)</li>
+          <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.started|timesince:object.ended }} ({{ object.age_in_days|intcomma }} days)</li>
           <li class="vital vital-anniversary"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Anniversary</span> <time datetime="{{ object.started|date:"c" }}" itemprop="foundingDate">{{ object.started }}</time></li>
           {% if object.ended %}<li class="vital vital-disband"><span class="vital-label"><span class="ss-icon ss-ban"></span> Disbanded</span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time></li>{% endif %}
           {% if memberships.active_count %}<li class="vital vital-actives"><span class="vital-label"><span class="ss-icon ss-users"></span> Active Members</span> {{ memberships.active_count }}</li>{% endif %}
