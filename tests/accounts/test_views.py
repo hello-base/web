@@ -3,7 +3,6 @@ import pytest
 
 from django.core.urlresolvers import reverse
 
-from components.accounts.factories import EditorFactory
 from components.accounts.views import (PreAuthorizationView,
     PostAuthorizationView)
 from tests.utils import add_session_to_request, setup_view

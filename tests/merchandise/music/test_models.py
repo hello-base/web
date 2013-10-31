@@ -30,8 +30,8 @@ class TestAlbums:
             released=datetime.date.today()
         )
         digital_edition = EditionFactory(album=factory, kind=edition_type.digital)
-
-        factory.save()
+        assert factory.regular_edition == regular_edition
+        assert factory.digital_edition == digital_edition
         assert factory.art == regular_edition.art
         assert factory.released == regular_edition.released
 
@@ -155,8 +155,7 @@ class TestTracks:
 
     def test_original_track_slug_exception(self):
         with pytest.raises(ValidationError):
-            original_track = TrackFactory(slug='track')
-            track = TrackFactory(original_track=original_track, slug='track')
+            TrackFactory(original_track=TrackFactory(slug='track'), slug='track')
 
 
 class TestVideos:

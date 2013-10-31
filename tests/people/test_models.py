@@ -36,7 +36,7 @@ class TestGroups:
     def test_generations(self):
         group = GroupFactory()
         idols = [IdolFactory() for i in xrange(3)]
-        memberships = [
+        [
             MembershipFactory(
                 group=group, idol=idols[i], generation=i + 1
             ) for i in xrange(3)
@@ -51,7 +51,7 @@ class TestGroups:
     def test_generations_failure(self):
         group = GroupFactory()
         idols = [IdolFactory() for i in xrange(3)]
-        memberships = [MembershipFactory(group=group, idol=idols[i]) for i in xrange(3)]
+        [MembershipFactory(group=group, idol=idols[i]) for i in xrange(3)]
         assert not group.generations()
 
 

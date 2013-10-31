@@ -1,5 +1,4 @@
 import pytest
-import time
 
 from components.accounts import api
 from components.accounts.factories import EditorFactory
