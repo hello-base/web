@@ -27,9 +27,9 @@ class Video(models.Model):
     published = models.DateTimeField(blank=True, null=True)
     duration = models.IntegerField(blank=True, null=True)
 
-    ytid = models.CharField(blank=True, max_length=200, unique=True)
-    flash_url = models.URLField(blank=True)
-    watch_url = models.URLField(blank=True)
+    ytid = models.CharField('YouTube ID', blank=True, max_length=200, unique=True)
+    flash_url = models.URLField('flash URL', blank=True)
+    watch_url = models.URLField('watch URL', blank=True)
 
     def __unicode__(self):
         return u'%s' % (self.title)
@@ -67,7 +67,7 @@ class Video(models.Model):
 
 class Thumbnail(models.Model):
     video = models.ForeignKey(Video, null=True, related_name='thumbnails')
-    url = models.URLField()
+    url = models.URLField('URL')
 
     def __unicode__(self):
         return u'%s (for %s)' % (self.url, self.video.title)
