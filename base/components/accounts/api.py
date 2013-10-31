@@ -67,18 +67,3 @@ def auth_token(oauth, response_url):
         authorization_response=response_url
     )
     return _clean_token(token)
-
-
-def get_authorization_url(request):
-    # Redirect the user to Hello! Base ID using the appropriate URL with a few
-    #  key OAuth paramters built in. We throw in `request.META['HTTP_REFERER']`
-    # as a way to redirect back to the referring page when we're done.
-    oauth = auth_session(request)
-    authorization_url, state = auth_url(oauth)
-
-    # In order to persist "session values" from an AnonymousUser to a
-    # logged in user, we need to use cookies.
-    redirect = http.HttpResponseRedirect(authorization_url)
-    redirect.set_cookie('oauth_referrer', request.META.get('HTTP_REFERER', ''))
-    redirect.set_cookie('oauth_state', state)
-    return redirect
