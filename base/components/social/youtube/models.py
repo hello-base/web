@@ -11,8 +11,8 @@ class Channel(models.Model):
     username = models.CharField(max_length=60)
 
     # Optional relationships.
-    idols = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
-    groups = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
+    idol = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
+    group = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
 
     def __unicode__(self):
         return u'%s' % (self.username)
