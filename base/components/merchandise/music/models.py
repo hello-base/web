@@ -182,9 +182,10 @@ class Edition(models.Model):
         return self._default_manager.regular_edition(edition=self)
 
     def _render_tracklist(self):
+        order = self.order
         if self.kind != self.EDITIONS.regular and not self.order.exists():
-            return self._get_regular_edition().order.select_related('track')
-        return self.order.select_related('track').prefetch_related('track__participating_idols')
+            order = self._get_regular_edition().order
+        return order.select_related('track').prefetch_related('track__participating_idols')
 
     def _render_videolist(self):
         return self.video_order.select_related('video')

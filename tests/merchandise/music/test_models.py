@@ -4,9 +4,10 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from components.merchandise.music.models import (Album, Edition, Single, Track,
-    Video)
+    TrackOrder, Video)
 from components.merchandise.music.factories import (AlbumFactory,
-    EditionFactory, SingleFactory, TrackFactory, VideoFactory)
+    EditionFactory, SingleFactory, TrackFactory, TrackOrderFactory,
+    VideoFactory)
 from components.people.factories import GroupFactory
 from components.people.tasks import render_participants
 
@@ -161,6 +162,13 @@ class TestEditions:
 
         edition = EditionFactory(single=single)
         assert len(edition.participants()) == 3
+
+    def test_render_tracklist_for_empty_editions(self):
+        single = SingleFactory()
+        regular = EditionFactory(single=single, kind=edition_type.regular)
+        limited = EditionFactory(single=single, kind=edition_type.limited)
+        [TrackOrderFactory(position=i + 1, edition=regular) for i in xrange(3)]
+        assert list(limited.tracklist) == list(regular.tracklist)
 
     def test_eventv_tracklist(self):
         edition = EditionFactory(kind=edition_type.eventv)
