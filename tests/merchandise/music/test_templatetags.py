@@ -19,15 +19,15 @@ def release():
 
 def test_soloist(release):
     # When a soloist is the subject object, it should not render a result.
-    idol = IdolFactory()
+    subject = IdolFactory()
     group = GroupFactory(romanized_name='Soloist')
-    membership = MembershipFactory(idol=idol, group=group)
-    idol.primary_membership = membership
-    release.participants = [soloist]
+    membership = MembershipFactory(idol=subject, group=group)
+    subject.primary_membership = membership
+    release.participants = [subject]
     out = Template(
         '{% load music_tags %}'
         '{% contextual_participants release=release context=object %}'
-    ).render(Context({'release': release, 'object': soloist}))
+    ).render(Context({'release': release, 'object': subject}))
     assert out.rstrip('\n') == ''
 
 
@@ -62,10 +62,9 @@ def test_idols_and_secondary_groups(release):
     # primary group, "for" should be rendered along with the group.
     subject = IdolFactory()
     primary_group = GroupFactory()
-    primary_membership = MembershipFactory(idol=subject, group=primary_group)
-    subject.primary_membership = primary_membership
+    subject.primary_membership = MembershipFactory(idol=subject, group=primary_group)
     secondary_group = GroupFactory()
-    secondary_membership = MembershipFactory(idol=subject, group=secondary_group)
+    MembershipFactory(idol=subject, group=secondary_group)
     release.participants = [subject, secondary_group]
     out = Template(
         '{% load music_tags %}'
