@@ -13,40 +13,42 @@ User = get_user_model()
 
 
 class PreAuthorizationView(RedirectView):
-    def get(self, request, *args, **kwargs):
-        # Redirect the user to Hello! Base ID using the appropriate
-        # URL with a few key OAuth paramters built in. We throw in
-        # `request.META['HTTP_REFERER']` as a way to redirect back to
-        # the referring page when we're done.
+    def get_authorization_url(self, request):
+        # Redirect the user to Hello! Base ID using the appropriate URL with a few
+        #  key OAuth paramters built in. We throw in `request.META['HTTP_REFERER']`
+        # as a way to redirect back to the referring page when we're done.
         oauth = auth_session(request)
         authorization_url, state = auth_url(oauth)
 
-        # In order to persist "session values" from an AnonymousUser
-        # to a logged in user, we need to use cookies.
+        # In order to persist "session values" from an AnonymousUser to a
+        # logged in user, we need to use cookies.
         redirect = http.HttpResponseRedirect(authorization_url)
         redirect.set_cookie('oauth_referrer', request.META.get('HTTP_REFERER', ''))
         redirect.set_cookie('oauth_state', state)
         return redirect
 
+    def get(self, request, *args, **kwargs):
+        return self.get_authorization_url(request)
+
 
 class PostAuthorizationView(View):
-    def get(self, request, *args, **kwargs):
-        # Take the state from the cookie and try to get ourselves a token.
-        oauth = auth_session(request, state=request.COOKIES['oauth_state'])
-
+    def get_token(self, session, redirect_uri):
         try:
-            token = auth_token(oauth, request.build_absolute_uri())
+            token = auth_token(session, redirect_uri)
         except InvalidGrantError:  # Whoops, try again.
             return http.HttpResponseRedirect(reverse('oauth-authorize'))
+        return token
 
+    def get_profile(self, session):
         # Hooray! Somebody sent us up the token.
         # Now let's fetch their user from the Hello! Base ID API.
-        r = oauth.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/'))
+        r = session.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/'))
         r.raise_for_status()
-        profile = r.json()
+        return r.json()
 
-        # Now that we have the profile data, let's check for an
-        # existing user. If we don't have one, create one.
+    def process_user(self, profile, token):
+        # We have the profile data, let's check for an existing user.
+        # If we don't have one, create one.
         try:
             user = User.objects.get(base_id=profile['id'])
         except User.DoesNotExist:
@@ -66,9 +68,17 @@ class PostAuthorizationView(View):
         user.token_expiration = token['expires_at']
         user.active_since = timezone.now()
         user.save()
+        return user
+
+    def get(self, request, *args, **kwargs):
+        # Take the state from the cookie and try to get ourselves a token.
+        oauth = auth_session(request, state=request.COOKIES['oauth_state'])
+        token = self.get_token(oauth, kwargs.get('redirect_uri', request.build_absolute_uri()))
+        profile = self.get_profile(oauth)
 
         # Now let's try to log in.
-        user = authenticate(username=profile['username'])
+        user = self.process_user(profile, token)
+        user = authenticate(username=user.username)
         login(request, user)
 
         # If login has succeeded (which it probably has), then redirect
@@ -78,11 +88,10 @@ class PostAuthorizationView(View):
             redirect = http.HttpResponseRedirect(request.COOKIES['oauth_referrer'])
             redirect.delete_cookie('oauth_state')
             redirect.delete_cookie('oauth_referrer')
-            return redirect
         else:
             redirect = http.HttpResponseRedirect('/')
             redirect.delete_cookie('oauth_state')
-            return redirect
+        return redirect
 
 
 class QuicklinksMixin(object):
