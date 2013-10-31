@@ -32,6 +32,8 @@ class TestAlbums:
         digital_edition = EditionFactory(album=factory, kind=edition_type.digital)
         assert factory.regular_edition == regular_edition
         assert factory.digital_edition == digital_edition
+
+        factory.save()
         assert factory.art == regular_edition.art
         assert factory.released == regular_edition.released
 
