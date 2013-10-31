@@ -207,6 +207,11 @@ class TestVideos:
         assert isinstance(factory, Video)
         assert 'video' in factory.romanized_name
 
+    def test_parent(self):
+        single = SingleFactory()
+        factory = VideoFactory(single=single)
+        assert factory.parent == single
+
     def test_rendered_kind_display(self):
         music = VideoFactory(kind=video_type.pv_regular)
         assert music.rendered_kind_display == 'Music Video'
