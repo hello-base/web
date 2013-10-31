@@ -29,7 +29,7 @@ def _token_updater(old_token, request):
 
         # Persist the new token... somehow.
         old_token.update(token)
-        if request.user:
+        if hasattr(request, 'user'):
             user = request.user
             user.access_token = token['access_token']
             user.refresh_token = token['refresh_token']
