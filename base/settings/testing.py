@@ -36,3 +36,10 @@ class Testing(Settings):
     CDN_DOMAIN = 'cdn.example.net'
     MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
     STATIC_URL = 'https://%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
+
+    # Authentication Configuration.
+    # --------------------------------------------------------------------------
+    HELLO_BASE_CLIENT_ID = 'client-id'
+    HELLO_BASE_CLIENT_SECRET = 'client-secret'
+    OAUTH_AUTHORIZATION_URL = 'https://testserver/oauth/authorize/'
+    OAUTH_TOKEN_URL = 'https://testserver/oauth/token/'
