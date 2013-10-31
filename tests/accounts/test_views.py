@@ -30,7 +30,7 @@ def mock_profile(oauth):
     }
 
 
-def test_preauthorization_view(rf):
+def test_pre_authorization_view(rf):
     request = rf.get(reverse('oauth-authorize'))
     response = PreAuthorizationView.as_view()(request)
     assert response.cookies['oauth_state']
@@ -39,7 +39,24 @@ def test_preauthorization_view(rf):
 
 
 @pytest.mark.django_db
-def test_postauthorization_view(rf, monkeypatch):
+def test_post_authorization_view(rf, monkeypatch):
+    view = PostAuthorizationView()
+    monkeypatch.setattr(view, 'get_token', mock_token)
+    monkeypatch.setattr(view, 'get_profile', mock_profile)
+
+    # Prepare the RequestFactory, give it a session and throw it a cookie.
+    request = rf.get(reverse('oauth-callback'))
+    request = add_session_to_request(request)
+    request.COOKIES['oauth_state'] = 'state'
+    request.COOKIES['oauth_referrer'] = '/profile/'
+
+    view = setup_view(view, request)
+    response = view.dispatch(view.request, *view.args, **view.kwargs)
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_post_authorization_view_with_no_redirect(rf, monkeypatch):
     view = PostAuthorizationView()
     monkeypatch.setattr(view, 'get_token', mock_token)
     monkeypatch.setattr(view, 'get_profile', mock_profile)
