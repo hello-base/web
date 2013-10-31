@@ -11,3 +11,7 @@ class TestEditors:
         factory = EditorFactory()
         assert isinstance(factory, Editor)
         assert 'dancer' in factory.username
+
+    def test_failing_creation(self):
+        with pytest.raises(ValueError):
+            Editor.objects.create_user(username='')
