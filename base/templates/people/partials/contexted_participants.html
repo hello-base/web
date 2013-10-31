@@ -1,3 +1,4 @@
+{% spaceless %}
 {% if relationships.solo or relationships.with or relationships.for %}
   {% if relationships.solo and not relationships.soloist %}
     <span class="pill status-solo">Solo Work</span>
@@ -14,3 +15,4 @@
     {% endif %}
   {% endif %}
 {% endif %}
+{% endspaceless %}
