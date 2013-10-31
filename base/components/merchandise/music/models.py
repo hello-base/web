@@ -173,7 +173,7 @@ class Edition(models.Model):
         return self.parent.get_absolute_url()
 
     def save(self, *args, **kwargs):
-        return super(Edition, self).save(*args, **kwargs)
+        super(Edition, self).save(*args, **kwargs)
         if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital] and self.art:
             self.parent.art = self.art
             self.parent.save()
@@ -190,7 +190,7 @@ class Edition(models.Model):
         return self.video_order.select_related('video')
 
     def participants(self):
-        return self.parent.participants()
+        return self.parent.participants
 
     @property
     def parent(self):
