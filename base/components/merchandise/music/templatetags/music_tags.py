@@ -17,18 +17,11 @@ def contextual_participants(release, context):
 
 
 def parse_idol(participant, idol):
-    relationships = {'for': []}
-    if participant != idol and participant != idol.primary_membership.group:
-        relationships['for'].append(participant)
-    if participant == idol:
-        # We return an empty dictionary to tell the template
-        # tag that this is a solo work.
-        relationships['solo'] = True
-
+    relationships = {'solo': True}
+    if 'Soloist' in str(idol.primary_membership):
         # Hackity hack. We DO NOT want to show the "solo work"
         # pill for memebers of the soloist group.
-        if 'Soloist' in str(idol.primary_membership):
-            relationships['soloist'] = True
+        relationships['soloist'] = True
     return relationships
 
 
