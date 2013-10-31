@@ -8,6 +8,7 @@ from components.merchandise.music.models import (Album, Edition, Single, Track,
 from components.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory, VideoFactory)
 from components.people.factories import GroupFactory
+from components.people.tasks import render_participants
 
 edition_type = Edition.EDITIONS
 video_type = Video.VIDEO_TYPES
@@ -29,13 +30,23 @@ class TestAlbums:
             art='/path/to/art-regular.png',
             released=datetime.date.today()
         )
-        digital_edition = EditionFactory(album=factory, kind=edition_type.digital)
-        assert factory.regular_edition == regular_edition
-        assert factory.digital_edition == digital_edition
-
         factory.save()
+        assert factory.regular_edition == regular_edition
         assert factory.art == regular_edition.art
         assert factory.released == regular_edition.released
+
+    def test_save_with_digital_edition_data(self):
+        factory = AlbumFactory()
+        digital_edition = EditionFactory(
+            album=factory,
+            kind=edition_type.digital,
+            art='/path/to/art-digital.png',
+            released=datetime.date.today()
+        )
+        factory.save()
+        assert factory.digital_edition == digital_edition
+        assert factory.art == digital_edition.art
+        assert factory.released == digital_edition.released
 
     def test_get_absolute_url(self, client):
         factory = AlbumFactory()
@@ -119,6 +130,11 @@ class TestEditions:
         assert isinstance(factory, Edition)
         assert 'edition' in factory.romanized_name
 
+    def test_save(self):
+        single = SingleFactory()
+        edition = EditionFactory(single=single, kind=edition_type.regular, art='/path/to/art-regular.png')
+        assert single.art == edition.art
+
     def test_get_absolute_url(self, client):
         single = SingleFactory()
         edition = EditionFactory(single=single)
@@ -136,6 +152,23 @@ class TestEditions:
         edition1 = EditionFactory(single=single, kind=edition_type.regular)
         edition2 = EditionFactory(single=single, kind=edition_type.limited)
         assert edition2._get_regular_edition() == edition1
+
+    def test_participants(self):
+        single = SingleFactory()
+        groups = [GroupFactory() for i in xrange(3)]
+        single.groups.add(*groups)
+        render_participants(single)
+
+        edition = EditionFactory(single=single)
+        assert len(edition.participants()) == 3
+
+    def test_eventv_tracklist(self):
+        edition = EditionFactory(kind=edition_type.eventv)
+        assert not edition.tracklist
+
+    def test_singlev_tracklist(self):
+        edition = EditionFactory(kind=edition_type.singlev)
+        assert not edition.tracklist
 
 
 class TestTracks:
