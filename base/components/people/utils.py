@@ -1,7 +1,5 @@
 from datetime import date, timedelta
 
-from django.db.models import get_model
-
 
 def calculate_age(birthdate, target=None):
     if not target:
