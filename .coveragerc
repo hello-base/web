@@ -2,6 +2,7 @@
 omit =
     ../*admin*
     ../*dashboard*
+    ../*forms*
     ../*migrations*
     ../*search*
     ../*sitemaps*
