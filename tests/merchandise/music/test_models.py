@@ -29,6 +29,7 @@ class TestAlbums:
             art='/path/to/art-regular.png',
             released=datetime.date.today()
         )
+        digital_edition = EditionFactory(album=factory, kind=edition_type.digital)
 
         factory.save()
         assert factory.art == regular_edition.art

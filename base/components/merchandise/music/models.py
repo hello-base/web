@@ -49,7 +49,7 @@ class Base(Merchandise):
 
     def save(self, *args, **kwargs):
         if self.editions.exists() and (self.regular_edition or self.digital_edition):
-            (edition,) = filter(None, [self.regular_edition, self.digital_edition])
+            edition = filter(None, [self.regular_edition, self.digital_edition])[0]
             self.art = edition.art
             self.released = edition.released
         super(Base, self).save(*args, **kwargs)
