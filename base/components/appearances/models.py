@@ -139,24 +139,16 @@ class Card(models.Model):
 
     @property
     def group_name(self):
-        if self.other_group_name:
-            return self.other_group_name
-        return self.group.name
+        return filter(None, [self.other_group_name, self.group.name])[0]
 
     @property
     def group_romanized_name(self):
-        if self.other_group_romanized_name:
-            return self.other_group_romanized_name
-        return self.group.romanized_name
+        return filter(None, [self.other_group_romanized_name, self.group.romanized_name])[0]
 
     @property
     def model_name(self):
-        if self.other_model_name:
-            return self.other_model_name
-        return self.hp_model.name
+        return filter(None, [self.other_model_name, self.hp_model.name])[0]
 
     @property
     def model_romanized_name(self):
-        if self.hp_model.romanized_name:
-            return self.other_model_romanized_name
-        return self.hp_model.romanized_name
+        return filter(None, [self.other_model_romanized_name, self.hp_model.romanized_name])[0]
