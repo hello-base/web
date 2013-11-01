@@ -9,3 +9,5 @@ class TwitterUserFactory(factory.django.DjangoModelFactory):
 
 class TweetFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Tweet
+
+    user = factory.SubFactory(TwitterUserFactory)
