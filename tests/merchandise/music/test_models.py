@@ -4,7 +4,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from components.merchandise.music.models import (Album, Edition, Single, Track,
-    TrackOrder, Video)
+    Video)
 from components.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory, TrackOrderFactory,
     VideoFactory)
