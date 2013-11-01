@@ -4,7 +4,7 @@ from celery.decorators import task
 @task
 def fetch_all_videos(instance):
     # Connect to the API and grab the feed.
-    videos = instance.fetch_all_videos()
+    videos = instance.entries()
     for video in videos:
         # YouTube IDs will stay at 11 characters for the distant
         # future, so this should be a safe way to grab the ID.

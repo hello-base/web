@@ -22,7 +22,7 @@ class Channel(models.Model):
         from .tasks import fetch_all_videos
         fetch_all_videos.delay(self)
 
-    def fetch_all_videos(self):
+    def entries(self):
         api = Api()
         return api.fetch_all_videos_by_username(self.username)
 
