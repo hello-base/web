@@ -1,5 +1,3 @@
-from dateutil import parser
-
 from django.db import models
 
 from components.people.models import Group, Idol
