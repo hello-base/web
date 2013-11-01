@@ -19,7 +19,7 @@ def test_fetch_all_videos():
 
 def test_fetch_latest_videos():
     channel = ChannelFactory(username='revyver')
-    fetch_latest_videos(channel)
+    fetch_latest_videos()
     assert channel.videos.count() > 0
     for video in channel.videos.all():
         assert isinstance(video, Video)
