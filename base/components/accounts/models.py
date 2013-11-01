@@ -49,6 +49,12 @@ class Editor(AbstractBaseUser):
     def __unicode__(self):
         return u'%s' % (self.username)
 
+    def get_full_name(self):
+        return self.name
+
+    def get_short_name(self):
+        return self.name
+
     def has_perm(self, perm, obj=None):
         # Active superusers have all permissions.
         if self.is_active and self.is_superuser:
