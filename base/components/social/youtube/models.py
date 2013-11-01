@@ -18,18 +18,9 @@ class Channel(models.Model):
         return u'%s' % (self.username)
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            # Connect to the API and grab the feed.
-            videos = self.fetch_all_videos()
-
-            for video in videos:
-                # YouTube IDs will stay at 11 characters for the distant
-                # future, so this should be a safe way to grab the ID.
-                ytid = video.id.text[-11:]
-                obj, created = Video.objects.get_or_create(ytid=ytid)
-
-        # Save the instance.
         super(Channel, self).save(*args, **kwargs)
+        from .tasks import fetch_all_videos
+        fetch_all_videos.delay(self)
 
     def fetch_all_videos(self):
         api = Api()
