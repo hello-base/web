@@ -57,6 +57,20 @@ def test_idols(release):
     assert len(BeautifulSoup(out).find_all('a')) == 3
 
 
+def test_idols_and_single_groups(release):
+    # When an idol is the subject object and there is a single participating
+    # group, it should not render a result.
+    subject = IdolFactory()
+    primary_group = GroupFactory()
+    subject.primary_membership = MembershipFactory(idol=subject, group=primary_group)
+    release.participants = [primary_group]
+    out = Template(
+        '{% load music_tags %}'
+        '{% contextual_participants release=release context=object %}'
+    ).render(Context({'release': release, 'object': subject}))
+    assert out.rstrip('\n') == ''
+
+
 def test_idols_and_secondary_groups(release):
     # When an idol is the subject object and a participating group is not their
     # primary group, "for" should be rendered along with the group.
