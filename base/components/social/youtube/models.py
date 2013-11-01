@@ -47,27 +47,9 @@ class Video(models.Model):
         return self.watch_url
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            # Connect to API and get the details.
-            entry = self.entry()
-
-            # Set the details.
-            self.title = entry.media.title.text
-            self.description = entry.media.description.text
-            self.published = parser.parse(entry.published.text)
-            self.duration = entry.media.duration.seconds
-            self.flash_url = entry.GetSwfUrl()
-            self.watch_url = entry.media.player.url
-
-            # Save the instance.
-            super(Video, self).save(*args, **kwargs)
-
-            # Save the thumbnails.
-            for thumbnail in entry.media.thumbnail:
-                t = Thumbnail()
-                t.url = thumbnail.url
-                t.video = self
-                t.save()
+        super(Video, self).save(*args, **kwargs)
+        from .tasks import fetch_video
+        fetch_video.delay(self)
 
     def entry(self):
         api = Api()
