@@ -14,12 +14,18 @@ class TestChannels:
         factory = ChannelFactory()
         assert isinstance(factory, Channel)
 
-    def test_fetch_all_videos(self, monkeypatch):
+    def test_fetch_all_videos(self):
         channel = ChannelFactory(username='revyver')
         entries = channel.entries()
         assert len(entries) > 0
         for entry in entries:
             assert isinstance(entry, gdata.youtube.YouTubeVideoEntry)
+
+    def test_fetch_latest_videos(self):
+        channel = ChannelFactory(username='revyver')
+        entries = channel.latest_entries()
+        assert isinstance(entries, gdata.youtube.YouTubeVideoFeed)
+        assert len(entries.entry) == 10
 
 
 class TestVideos:

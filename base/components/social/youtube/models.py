@@ -26,6 +26,10 @@ class Channel(models.Model):
         api = Api()
         return api.fetch_all_videos_by_username(self.username)
 
+    def latest_entries(self):
+        api = Api()
+        return api.fetch_latest_videos_by_username(self.username)
+
 
 class Video(models.Model):
     ytid = models.CharField('YouTube ID', max_length=200, primary_key=True, unique=True)
