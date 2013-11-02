@@ -72,7 +72,7 @@ class Video(models.Model):
             t.save()
 
     def duration_display(self):
-        return str(datetime.timedelta(seconds=self.duration))
+        return str(datetime.timedelta(seconds=int(self.duration)))
 
     def entry(self):
         api = Api()

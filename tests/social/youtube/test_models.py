@@ -42,6 +42,10 @@ class TestVideos:
         factory = VideoFactory(ytid='MhH_ucrPMZc', watch_url=url)
         assert factory.get_absolute_url() == url
 
+    def test_duration_display(self):
+        factory = VideoFactory(ytid='MhH_ucrPMZc')
+        assert factory.duration_display() == '0:04:20'
+
     def test_fetch_video(self):
         video = VideoFactory(ytid='MhH_ucrPMZc')
         entry = video.entry()
