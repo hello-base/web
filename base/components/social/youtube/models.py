@@ -71,6 +71,9 @@ class Video(models.Model):
             t = Thumbnail.objects.get_or_create(video=self, url=thumbnail.url)
             t.save()
 
+    def duration_display(self):
+        return str(datetime.timedelta(seconds=self.duration))
+
     def entry(self):
         api = Api()
         return api.fetch_video(self.ytid)
