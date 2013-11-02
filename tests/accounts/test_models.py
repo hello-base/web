@@ -15,3 +15,11 @@ class TestEditors:
     def test_failing_creation(self):
         with pytest.raises(ValueError):
             Editor.objects.create_user(username='')
+
+    def test_get_full_name(self):
+        factory = EditorFactory(username='bryan', name='Bryan')
+        assert factory.get_full_name() == 'Bryan'
+
+    def test_get_short_name(self):
+        factory = EditorFactory(username='bryan', name='Bryan')
+        assert factory.get_short_name() == 'Bryan'
