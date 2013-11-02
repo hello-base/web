@@ -1,7 +1,7 @@
 from celery.decorators import task
 
 
-@task
+@task(ignore_result=True)
 def render_participants(instance):
     from components.people.models import Membership
 
