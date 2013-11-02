@@ -33,6 +33,13 @@ class TestGroups:
         assert inactive.age == 1
         assert inactive.age_in_days == 366
 
+    def test_supergroup_subgroups(self):
+        supergroup = GroupFactory()
+        for i in xrange(3):
+            supergroup.groups.add(GroupFactory(started=today - datetime.timedelta(i)))
+        assert supergroup.groups.count() > 0
+        assert supergroup.groups.all()[0] == supergroup.groups.order_by('started')[0]
+
     def test_generations(self):
         group = GroupFactory()
         idols = [IdolFactory() for i in xrange(3)]
