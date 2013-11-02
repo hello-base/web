@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from collections import defaultdict
 from datetime import date
 
@@ -175,6 +176,9 @@ class Group(ContributorMixin):
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+
+    class Meta:
+        ordering = ('started',)
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
