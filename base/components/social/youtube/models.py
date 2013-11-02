@@ -68,7 +68,7 @@ class Video(models.Model):
 
         # Save the thumbnails.
         for thumbnail in entry.media.thumbnail:
-            t = Thumbnail.objects.get_or_create(video=self, url=thumbnail.url)
+            t, created = Thumbnail.objects.get_or_create(video=self, url=thumbnail.url)
             t.save()
 
     def duration_display(self):
