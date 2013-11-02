@@ -117,7 +117,7 @@ class Idol(Person):
             self.primary_membership = self.memberships.get(is_primary=True)
         except Membership.DoesNotExist:
             pass
-        return super(Idol, self).save(*args, **kwargs)
+        super(Idol, self).save(*args, **kwargs)
 
     @property
     def age(self):
