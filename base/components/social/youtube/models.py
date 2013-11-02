@@ -40,7 +40,7 @@ class Video(models.Model):
 
     # Metadata.
     title = models.CharField(blank=True, max_length=200)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     published = models.DateTimeField(blank=True, null=True)
     duration = models.IntegerField(blank=True, null=True)
 
