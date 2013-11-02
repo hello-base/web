@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from dateutil import parser
+import datetime
+import dateutil
 
 from django.db import models
 from django.utils.encoding import smart_unicode
@@ -22,7 +23,7 @@ class Channel(models.Model):
     def save(self, *args, **kwargs):
         super(Channel, self).save(*args, **kwargs)
         from .tasks import fetch_all_videos
-        fetch_all_videos.delay(self)
+        fetch_all_videos.delay(self.pk)
 
     def entries(self):
         api = Api()
@@ -59,7 +60,7 @@ class Video(models.Model):
         # Set the details.
         self.title = smart_unicode(entry.media.title.text)
         self.description = entry.media.description.text
-        self.published = parser.parse(entry.published.text)
+        self.published = dateutil.parser.parse(entry.published.text)
         self.duration = entry.media.duration.seconds
         self.flash_url = entry.GetSwfUrl()
         self.watch_url = entry.media.player.url
