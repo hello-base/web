@@ -4,9 +4,9 @@ from .models import Channel, Video
 
 
 @task
-def fetch_all_videos(pk):
+def fetch_all_videos(username):
     # Connect to the API and grab the feed.
-    channel = Channel.objects.get(pk=pk)
+    channel = Channel.objects.get(username=username)
     entries = channel.entries()
     for video in entries:
         # YouTube IDs will stay at 11 characters for the distant

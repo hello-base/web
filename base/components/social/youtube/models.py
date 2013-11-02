@@ -23,7 +23,7 @@ class Channel(models.Model):
     def save(self, *args, **kwargs):
         super(Channel, self).save(*args, **kwargs)
         from .tasks import fetch_all_videos
-        fetch_all_videos.delay(self.pk)
+        fetch_all_videos.delay(self.username)
 
     def entries(self):
         api = Api()
