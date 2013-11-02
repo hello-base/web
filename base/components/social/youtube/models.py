@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from dateutil import parser
 
 from django.db import models
+from django.utils.encoding import smart_unicode
 
 from components.people.models import Group, Idol
 
@@ -55,7 +57,7 @@ class Video(models.Model):
         entry = self.entry()
 
         # Set the details.
-        self.title = entry.media.title.text
+        self.title = smart_unicode(entry.media.title.text)
         self.description = entry.media.description.text
         self.published = parser.parse(entry.published.text)
         self.duration = entry.media.duration.seconds
