@@ -30,12 +30,16 @@ class TestChannels:
 
 class TestVideos:
     def test_factory(self):
-        factory = VideoFactory()
+        factory = VideoFactory(ytid='MhH_ucrPMZc')
         assert isinstance(factory, Video)
+        assert 'Morning Musume' in factory.title
+        assert factory.thumbnails.count() > 0
+        for thumbnail in factory.thumbnails.all():
+            assert isinstance(thumbnail, Thumbnail)
 
     def test_get_absolute_url(self):
-        url = 'https://www.youtube.com/watch?v=kZYpUZ1IUlk'
-        factory = VideoFactory(watch_url=url)
+        url = 'https://www.youtube.com/watch?v=MhH_ucrPMZc&feature=youtube_gdata_player'
+        factory = VideoFactory(ytid='MhH_ucrPMZc', watch_url=url)
         assert factory.get_absolute_url() == url
 
     def test_fetch_video(self):
@@ -47,10 +51,12 @@ class TestVideos:
 
 class TestThumbnails:
     def test_factory(self):
-        factory = ThumbnailFactory()
+        video = VideoFactory(ytid='kZYpUZ1IUlk')
+        factory = ThumbnailFactory(video=video)
         assert isinstance(factory, Thumbnail)
 
     def test_get_absolute_url(self):
         url = 'https://i1.ytimg.com/vi/kZYpUZ1IUlk/0.jpg'
-        factory = ThumbnailFactory(url=url)
+        video = VideoFactory(ytid='kZYpUZ1IUlk')
+        factory = ThumbnailFactory(video=video, url=url)
         assert factory.get_absolute_url() == url
