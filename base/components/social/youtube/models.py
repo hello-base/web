@@ -67,9 +67,7 @@ class Video(models.Model):
 
         # Save the thumbnails.
         for thumbnail in entry.media.thumbnail:
-            t = Thumbnail()
-            t.url = thumbnail.url
-            t.video = self
+            t = Thumbnail.objects.get_or_create(video=self, url=thumbnail.url)
             t.save()
 
     def entry(self):
