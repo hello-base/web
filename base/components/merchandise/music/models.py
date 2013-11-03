@@ -20,11 +20,13 @@ from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
 
 
 class Label(models.Model):
+    romanized_name = models.CharField()
     name = models.CharField()
+    logo = models.ImageField(blank=True, null=True, upload_to='merchandise/music/labels/')
     slug = models.SlugField()
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%s' % (self.name)
 
 
 class Base(Merchandise):
