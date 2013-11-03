@@ -1,7 +1,6 @@
 from django.views.generic import TemplateView, View
 
 from braces.views import AjaxResponseMixin, JSONResponseMixin
-from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 
 from components.merchandise.music.models import Album, Edition, Single, Track
@@ -11,7 +10,7 @@ from components.people.models import Group, Idol
 class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
     def get_ajax(self, request, *args, **kwargs):
         query = request.GET.get('q', '')
-        sqs = SearchQuerySet().autocomplete(text=AutoQuery(query)).load_all()[:5]
+        sqs = SearchQuerySet().autocomplete(text=query).load_all()[:5]
         suggestions = []
         [suggestions.extend({
             'text': result.text,
