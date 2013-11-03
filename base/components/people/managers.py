@@ -67,8 +67,5 @@ class MembershipQuerySet(QuerySet):
     def inactive_leaders(self):
         return self.leaders().filter(leadership_ended__lte=date.today())
 
-    def leader(self):
-        return self.leaders().get(Q(leadership_ended__isnull=True) | Q(leadership_ended__gte=date.today()))
-
     def leaders(self):
         return self.filter(is_leader=True).order_by('leadership_started').prefetch_related('idol')

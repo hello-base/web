@@ -5,7 +5,7 @@ import pytest
 from components.people.constants import CLASSIFICATIONS, SCOPE, STATUS
 from components.people.factories import (GroupFactory, IdolFactory,
     MembershipFactory)
-from components.people.models import Group, Idol
+from components.people.models import Group, Idol, Membership
 
 pytestmark = pytest.mark.django_db
 
