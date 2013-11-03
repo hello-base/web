@@ -15,6 +15,7 @@ CLASSIFICATIONS = Choices(
         (3, 'shuffle', 'Shuffle Unit'),
         (6, 'revival', 'Revival Unit'),
         (8, 'satoyama', 'Satoyama Unit'),
+        (9, 'satoumi', 'Satoumi Unit'),
     ]),
     (OTHER, 'other', 'Other')
 )
