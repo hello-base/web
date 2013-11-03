@@ -36,13 +36,13 @@ class TestIdols:
         [idols.append(IdolFactory(status=STATUS.former)) for i in xrange(2)]
         return idols
 
-    def test_active_manager(self, status):
+    def test_active(self, status):
         assert len(Idol.objects.active()) == 3
 
-    def test_inactive_manager(self, status):
+    def test_inactive(self, status):
         assert len(Idol.objects.inactive()) == 2
 
-    def test_hello_project_manager(self, hello_project):
+    def test_hello_project(self, hello_project):
         for group in hello_project:
             idol = IdolFactory()
             membership = MembershipFactory(idol=idol, group=group, started=datetime.date.today())
@@ -50,13 +50,13 @@ class TestIdols:
             idol.save()
         assert len(Idol.objects.hello_project()) == 6
 
-    def test_average_age_manager(self):
+    def test_average_age(self):
         idols = [IdolFactory(birthdate=datetime.date.today() - datetime.timedelta(days=365)) for i in xrange(10)]
         for idol in idols:
             assert idol.age == 1
         assert Idol.objects.average_age() == 1
 
-    def test_average_height_manager(self):
+    def test_average_height(self):
         idols = [IdolFactory(height=150) for i in xrange(10)]
         assert Idol.objects.average_height() == 150
 
@@ -71,11 +71,11 @@ class TestGroups:
         ]
         return groups
 
-    def test_active_manager(self, status):
+    def test_active(self, status):
         assert len(Group.objects.active()) == 2
 
-    def test_inactive_manager(self, status):
+    def test_inactive(self, status):
         assert len(Group.objects.inactive()) == 1
 
-    def test_hello_project_manager(self, hello_project):
+    def test_hello_project(self, hello_project):
         assert len(Group.objects.hello_project()) == len(hello_project)
