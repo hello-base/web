@@ -52,7 +52,7 @@ class GroupQuerySet(QuerySet):
     def hello_project(self):
         # Hello Pro Kenshuusei is the only "group" classified as
         # Hello! Project that is not a major group.
-        kenshuusei = self.filter(pk=52)
+        kenshuusei = self.filter(romanized_name='Hello Pro Kenshuusei')
         actives = self.filter(classification=CLASSIFICATIONS.major, scope=SCOPE.hp, status=STATUS.active)
         return (kenshuusei | actives).order_by('started')
 
