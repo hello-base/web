@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 
-from .views import (EventDetailView, EventListView, EventCreateView, EventUpdateView,
-    EventGoodsDetailView, VenueListView, VenueDetailView, VenueCreateView, VenueUpdateView)
+from .views import (EventDetailView, EventListView, EventCreateView,
+    EventUpdateView, VenueListView, VenueDetailView, VenueCreateView,
+    VenueUpdateView)
 
 
 urlpatterns = patterns('',

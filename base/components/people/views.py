@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import DetailView
 
 from ohashi.shortcuts import get_object_or_none
 

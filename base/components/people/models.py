@@ -16,7 +16,7 @@ from components.accounts.models import ContributorMixin
 
 from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
-from .utils import calculate_age, calculate_average_age
+from .utils import calculate_age
 
 
 class Person(ContributorMixin):

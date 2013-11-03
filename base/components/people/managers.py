@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.db.models import Count, Max, Min, Q
+from django.db.models import Q
 from django.db.models.query import QuerySet
 
 from .constants import CLASSIFICATIONS, SCOPE, STATUS

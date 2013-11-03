@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
 
-from .views import (ShowListView, ShowDetailView, ShowCreateView, ShowUpdateView,
-    EpisodeDetailView, EpisodeCreateView, EpisodeUpdateView, MagazineListView, MagazineDetailView,
-    MagazineCreateView, MagazineUpdateView, IssueDetailView, IssueCreateView, IssueUpdateView)
+from .views import (ShowListView, ShowDetailView, ShowCreateView,
+    ShowUpdateView, EpisodeDetailView, MagazineListView, MagazineDetailView,
+    IssueDetailView)
 
 
 urlpatterns = patterns('',

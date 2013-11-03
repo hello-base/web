@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from components.social.youtube.factories import ChannelFactory, VideoFactory
-from components.social.youtube.models import Thumbnail, Video
+from components.social.youtube.factories import ChannelFactory
+from components.social.youtube.models import Video
 from components.social.youtube.tasks import (fetch_all_videos,
     fetch_latest_videos)
 

@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView
 
 from components.accounts.views import QuicklinksMixin
 from .models import Album, Single, Track

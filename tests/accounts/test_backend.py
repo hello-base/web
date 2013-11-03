@@ -2,7 +2,6 @@ import pytest
 
 from django.contrib.auth import get_user_model, get_user
 from django.http import HttpRequest
-from django.core import mail
 
 from components.accounts.factories import EditorFactory
 
