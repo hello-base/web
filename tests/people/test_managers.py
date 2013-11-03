@@ -50,6 +50,16 @@ class TestIdols:
             idol.save()
         assert len(Idol.objects.hello_project()) == 6
 
+    def test_average_age_manager(self):
+        idols = [IdolFactory(birthdate=datetime.date.today() - datetime.timedelta(days=365)) for i in xrange(10)]
+        for idol in idols:
+            assert idol.age == 1
+        assert Idol.objects.average_age() == 1
+
+    def test_average_height_manager(self):
+        idols = [IdolFactory(height=150) for i in xrange(10)]
+        assert Idol.objects.average_height() == 150
+
 
 class TestGroups:
     @pytest.fixture
