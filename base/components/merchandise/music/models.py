@@ -26,7 +26,7 @@ class Label(models.Model):
     slug = models.SlugField()
 
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u'%s' % (self.romanized_name)
 
 
 class Base(Merchandise):
