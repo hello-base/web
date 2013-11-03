@@ -52,7 +52,8 @@ class VideoTrackOrderInline(admin.TabularInline):
 
 class LabelAdmin(admin.ModelAdmin):
     fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'slug', 'logo')}),)
-    list_display = ['name', 'romanized_name', 'slug']
+    list_display = ['romanized_name', 'name', 'slug']
+    list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
 admin.site.register(Label, LabelAdmin)
 
