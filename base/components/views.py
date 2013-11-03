@@ -22,7 +22,6 @@ class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
                 'romanized_name': result.object.romanized_name,
                 'url': result.object.get_absolute_url(),
             })
-        # suggestions = [result.pk for result in sqs]
         json = {'query': query, 'results': suggestions}
         return self.render_json_response(json)
 
