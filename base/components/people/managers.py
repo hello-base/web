@@ -20,9 +20,6 @@ class IdolQuerySet(QuerySet):
         groups = Group.objects.hello_project().values_list('id', flat=True)
         return self.filter(primary_membership__group_id__in=groups, primary_membership__ended__isnull=True)
 
-    def ufa(self):
-        return self.active().filter(scope=SCOPE.ufa)
-
     # Aggregations
     def average_age(self):
         birthdates = self.filter(birthdate__isnull=False).values_list('birthdate', flat=True)
