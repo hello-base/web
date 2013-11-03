@@ -57,7 +57,7 @@ class TestIdols:
         assert Idol.objects.average_age() == 1
 
     def test_average_height(self):
-        idols = [IdolFactory(height=150) for i in xrange(10)]
+        [IdolFactory(height=150) for i in xrange(10)]
         assert Idol.objects.average_height() == 150
 
 
@@ -79,3 +79,22 @@ class TestGroups:
 
     def test_hello_project(self, hello_project):
         assert len(Group.objects.hello_project()) == len(hello_project)
+
+
+class TestMemberships:
+    def test_active(self):
+        group = GroupFactory()
+        [MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=30)) for i in xrange(5)]
+        [MembershipFactory(group=group) for i in xrange(5)]
+        assert len(Membership.objects.active()) == 10
+        assert len(Membership.objects.active(for_group=group)) == 5
+
+    def test_inactive(self):
+        [MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=30)) for i in xrange(5)]
+        [MembershipFactory(ended=datetime.date.today()) for i in xrange(5)]
+        assert len(Membership.objects.inactive()) == 10
+
+    def test_inactive_leaders(self):
+        [MembershipFactory(is_leader=True, leadership_ended=datetime.date.today() - datetime.timedelta(days=30)) for i in xrange(5)]
+        [MembershipFactory(is_leader=True, leadership_ended=datetime.date.today()) for i in xrange(5)]
+        assert len(Membership.objects.inactive_leaders()) == 10
