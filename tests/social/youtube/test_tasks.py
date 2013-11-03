@@ -10,7 +10,7 @@ pytestmark = pytest.mark.django_db
 
 
 def test_fetch_all_videos():
-    channel = ChannelFactory(username='revyver')
+    channel = ChannelFactory(username='iceymoon')
     fetch_all_videos(channel)
     assert channel.videos.count() > 0
     for video in channel.videos.all():
@@ -18,7 +18,7 @@ def test_fetch_all_videos():
 
 
 def test_fetch_latest_videos():
-    channel = ChannelFactory(username='revyver')
+    channel = ChannelFactory(username='iceymoon')
     fetch_latest_videos()
     assert channel.videos.count() > 0
     for video in channel.videos.all():
