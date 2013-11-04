@@ -111,12 +111,6 @@ class Idol(Person):
         return reverse('idol-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        # Denormalize the idol's primary membership. Make sure that
-        # primary membership exists first.
-        try:
-            self.primary_membership = self.memberships.get(is_primary=True)
-        except Membership.DoesNotExist:
-            pass
         super(Idol, self).save(*args, **kwargs)
 
     @property
@@ -252,6 +246,13 @@ class Membership(models.Model):
 
     def __unicode__(self):
         return '%s (%s)' % (self.idol, self.group.romanized_name)
+
+    def save(self, *args, **kwargs):
+        # Denormalize the idol's primary membership.
+        super(Membership, self).save(*args, **kwargs)
+        if self.is_primary:
+            self.idol.primary_membership = self
+            self.idol.save()
 
     def is_active(self):
         return bool(self.ended is None or self.ended >= date.today())

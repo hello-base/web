@@ -105,6 +105,16 @@ class TestMemberships:
         assert isinstance(factory.idol, Idol)
         assert 'family' and 'group' in repr(factory)
 
+    def test_primary_membership_switching(self):
+        idol = IdolFactory()
+        membership1 = MembershipFactory(idol=idol, is_primary=True)
+        assert idol.primary_membership == membership1
+
+        membership1.is_primary = False
+        membership1.save()
+        membership2 = MembershipFactory(idol=idol, is_primary=True)
+        assert idol.primary_membership == membership2
+
     def test_is_active(self):
         active = MembershipFactory()
         assert active.is_active()
