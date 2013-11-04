@@ -3,9 +3,20 @@ from rest_framework import serializers
 from components.people.models import Group, Idol, Membership
 
 
+class MembershipSerializer(serializers.ModelSerializer):
+    # This reeks of ickyness, since this is supposed to serve as a base class.
+    group = serializers.HyperlinkedRelatedField(read_only=True, view_name='api:group-detail')
+
+    class Meta:
+        model = Membership
+        fields = ('id', 'group', 'is_primary', 'started', 'ended', 'generation',
+            'is_leader', 'leadership_started', 'leadership_ended')
+
+
 class IdolSerializer(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField('photo_url')
     photo_thumbnail = serializers.SerializerMethodField('photo_thumbnail_url')
+    primary_membership = MembershipSerializer()
     status = serializers.CharField(source='get_status_display')
     scope = serializers.CharField(source='get_scope_display')
 
@@ -48,11 +59,6 @@ class GroupSerializer(serializers.ModelSerializer):
 
     def photo_thumbnail_url(self, obj):
         return obj.photo_thumbnail.url if obj.photo_thumbnail else ''
-
-
-class MembershipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Membership
 
 
 class IdolMembershipSerializer(MembershipSerializer):
