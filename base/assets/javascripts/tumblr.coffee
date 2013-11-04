@@ -24,10 +24,10 @@ Tumblr.RecentPosts = (el, postsCount) ->
       url: post["url-with-slug"]
 
   render: ->
-    # loadingEl = $('<div class="recent-posts container">').text('Loading...').appendTo($(el))
+    loadingEl = $('<div class="recent-posts container">').text('Loading...').appendTo($(el))
     $.getJSON apiUrl, (data) ->
-      # loadingEl.remove()
-      $('<div class="recent-posts container">').appendTo($(el)).hide().append(renderPosts(data.posts).join('\n')).slideDown 'slow'
+      loadingEl.remove()
+      $('<div class="recent-posts container">').appendTo($(el)).hide().append(renderPosts(data.posts).join('\n')).fadeIn 'slow'
 
     this
 
