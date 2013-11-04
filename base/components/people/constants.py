@@ -31,7 +31,8 @@ SCOPE = Choices(
     ('Up-Front', [
         (2, 'ufp', 'Up-Front Promotion'),
         (3, 'ufc', 'Up-Front Create'),
-        (4, 'jproom', 'J.P ROOM'),
+        (4, 'jp', 'Just Production'),
+        (5, 'jproom', 'J.P ROOM'),
     ]),
     (OTHER, 'other', 'Other')
 )
