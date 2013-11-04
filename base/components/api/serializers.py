@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from components.people.models import Group, Idol
+from components.people.models import Group, Idol, Membership
 
 
 class IdolSerializer(serializers.ModelSerializer):
@@ -42,3 +42,18 @@ class GroupSerializer(serializers.ModelSerializer):
 
     def photo_thumbnail_url(self, obj):
         return obj.photo_thumbnail.url if obj.photo_thumbnail else ''
+
+
+class MembershipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Membership
+
+
+class IdolMembershipSerializer(MembershipSerializer):
+    class Meta:
+        model = Membership
+
+
+class GroupMembershipSerializer(MembershipSerializer):
+    class Meta:
+        model = Membership
