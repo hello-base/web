@@ -32,12 +32,16 @@ class GroupSerializer(serializers.ModelSerializer):
     parent = serializers.HyperlinkedRelatedField(view_name='api:group-detail')
     photo = serializers.SerializerMethodField('photo_url')
     photo_thumbnail = serializers.SerializerMethodField('photo_thumbnail_url')
+    classification = serializers.CharField(source='get_classification_display')
+    status = serializers.CharField(source='get_status_display')
+    scope = serializers.CharField(source='get_scope_display')
 
     class Meta:
         model = Group
         fields = ('id', 'name', 'romanized_name', 'former_names', 'slug',
             'started', 'ended', 'photo', 'photo_thumbnail', 'parent', 'groups',
-            'members', 'members_active', 'members_inactive', 'note')
+            'members', 'members_active', 'members_inactive', 'classification',
+            'status', 'scope', 'note')
 
     def photo_url(self, obj):
         return obj.photo.url if obj.photo else ''
