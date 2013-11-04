@@ -24,18 +24,18 @@ class GroupMembershipsList(GroupMixin, generics.ListAPIView):
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        memberships = Membership.objects.filter(group__slug=slug)
+        memberships = Membership.objects.order_by('started').filter(group__slug=slug)
         return memberships
 
 
 class GroupActiveMembershipsList(GroupMembershipsList):
     def get_queryset(self):
-        return super(GroupActiveMembershipsList, self).get_queryset().filter(memberships__ended__isnull=True)
+        return super(GroupActiveMembershipsList, self).get_queryset().filter(ended__isnull=True)
 
 
 class GroupInactiveMembershipsList(GroupMembershipsList):
     def get_queryset(self):
-        return super(GroupInactiveMembershipsList, self).get_queryset().filter(memberships__ended__isnull=False)
+        return super(GroupInactiveMembershipsList, self).get_queryset().filter(ended__isnull=False)
 
 
 class IdolList(generics.ListAPIView):
