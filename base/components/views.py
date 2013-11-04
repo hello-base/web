@@ -12,7 +12,7 @@ class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):
         query = request.GET.get('q', '')
         sqs = SearchQuerySet().autocomplete(text=query).load_all()[:5]
         suggestions = []
-        [suggestions.extend({
+        [suggestions.append({
             'text': result.text,
             'pk': result.pk,
             'model': result.model_name,
