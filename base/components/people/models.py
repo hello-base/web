@@ -241,7 +241,7 @@ class Membership(models.Model):
     generation = models.PositiveSmallIntegerField(blank=True, db_index=True, null=True)
 
     # Leadership Details.
-    is_leader = models.BooleanField('Is/Was leader?')
+    is_leader = models.BooleanField('Leader?')
     leadership_started = models.DateField(blank=True, null=True)
     leadership_ended = models.DateField(blank=True, null=True)
 
