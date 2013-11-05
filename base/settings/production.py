@@ -56,7 +56,7 @@ class Production(Settings):
     # django-secure.
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['djangosecure']
-    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
     SECURE_FRAME_DENY = values.BooleanValue(True)
     SECURE_CONTENT_TYPE_NOSNIFF = values.BooleanValue(True)
