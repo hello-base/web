@@ -56,7 +56,7 @@ class Production(Settings):
     # django-secure.
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['djangosecure']
-    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_SECONDS = 60
     SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(False)
     SECURE_FRAME_DENY = values.BooleanValue(True)
     SECURE_CONTENT_TYPE_NOSNIFF = values.BooleanValue(True)
@@ -64,7 +64,7 @@ class Production(Settings):
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_COOKIE_SECURE = values.BooleanValue(True)
     SESSION_COOKIE_HTTPONLY = values.BooleanValue(True)
-    SECURE_SSL_REDIRECT = values.BooleanValue(True)
+    SECURE_SSL_REDIRECT = values.BooleanValue(False)
     SECURE_REDIRECT_EXEMPT = [r'https?://(blog\.hello-base\.com\/?)']
 
     # Site Configuration.
