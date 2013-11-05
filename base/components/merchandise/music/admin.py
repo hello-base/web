@@ -202,6 +202,7 @@ class TrackAdmin(admin.ModelAdmin):
     list_filter = ['is_cover', 'is_alternate']
     list_select_related = True
     ordering = ('-id',)
+    prepopulated_fields = {'slug': ['romanized_name']}
     readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = [
         'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name',
