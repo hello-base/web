@@ -88,6 +88,21 @@ def test_idols_and_secondary_groups(release):
     assert len(BeautifulSoup(out).find_all('a')) == 1
 
 
+def test_supergroup_with_idol_context(release):
+    subject = IdolFactory()
+    subject.primary_membership = MembershipFactory(idol=subject)
+    subject.save()
+    supergroup = GroupFactory(classification=CLASSIFICATIONS.supergroup)
+    MembershipFactory(idol=subject, group=supergroup)
+    release.participants = [supergroup]
+    out = Template(
+        '{% load music_tags %}'
+        '{% contextual_participants release=release context=object %}'
+    ).render(Context({'release': release, 'object': subject}))
+    assert 'for' in out
+    assert len(BeautifulSoup(out).find_all('a')) == 1
+
+
 def test_group(release):
     subject = GroupFactory()
     release.participants = [subject]
@@ -111,7 +126,7 @@ def test_groups(release):
     assert len(BeautifulSoup(out).find_all('a')) == 6
 
 
-def test_supergroup(release):
+def test_supergroup_with_group_context(release):
     subject = GroupFactory()
     supergroup = GroupFactory(classification=CLASSIFICATIONS.supergroup)
     release.participants = [subject, supergroup]

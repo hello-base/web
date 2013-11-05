@@ -26,6 +26,8 @@ def parse_idol(participant, idol):
             # Hackity hack. We DO NOT want to show the "solo work"
             # pill for memebers of the soloist group.
             relationships['soloist'] = True
+    elif participant != idol.primary_membership.group:
+        relationships['for'] = [participant]
     return relationships
 
 
@@ -33,9 +35,7 @@ def parse_idols(participants, idol):
     groups = idol.groups.all()
     relationships = {'for': [], 'with': []}
     for participant in participants:
-        if participant in groups and (
-            participant != idol.primary_membership.group
-            or participant != idol):
+        if participant in groups and participant != idol.primary_membership.group:
             relationships['for'].append(participant)
         elif participant != idol:
             relationships['with'].append(participant)
