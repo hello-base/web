@@ -64,7 +64,7 @@ class Production(Settings):
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_COOKIE_SECURE = values.BooleanValue(True)
     SESSION_COOKIE_HTTPONLY = values.BooleanValue(True)
-    SECURE_SSL_REDIRECT = values.BooleanValue(False)
+    SECURE_SSL_REDIRECT = values.BooleanValue(True)
     SECURE_REDIRECT_EXEMPT = [r'https?://(blog\.hello-base\.com\/?)']
 
     # Site Configuration.
