@@ -81,9 +81,9 @@ class Production(Settings):
     STATICFILES_STORAGE = 'components.storage.S3ManifestStorage'
 
     # Amazon Web Services
-    AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='', environ_name='AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = values.SecretValue(environ_prefix='', environ_name='AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = values.SecretValue(environ_prefix='', environ_name='AWS_STORAGE_BUCKET_NAME')
+    AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='')
+    AWS_SECRET_ACCESS_KEY = values.SecretValue(environ_prefix='')
+    AWS_STORAGE_BUCKET_NAME = values.SecretValue(environ_prefix='')
     AWS_AUTO_CREATE_BUCKET = True
     AWS_PRELOAD_METADATA = True
     AWS_QUERYSTRING_AUTH = False
