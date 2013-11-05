@@ -57,7 +57,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['djangosecure']
     SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(False)
     SECURE_FRAME_DENY = values.BooleanValue(True)
     SECURE_CONTENT_TYPE_NOSNIFF = values.BooleanValue(True)
     SECURE_BROWSER_XSS_FILTER = values.BooleanValue(True)
