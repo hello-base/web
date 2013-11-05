@@ -119,7 +119,9 @@ def heroku_imagekit(verbose=False, **kwargs):
 
 @invoke.task(name='migrate', pre=['heroku.capture'])
 def heroku_migrate(app='', **kwargs):
+    invoke.run('heroku labs:disable preboot')
     invoke.run('heroku run python manage.py migrate %s' % app)
+    invoke.run('heroku labs:enable preboot')
 
 
 @invoke.task(name='pull', pre=['heroku.capture'])
