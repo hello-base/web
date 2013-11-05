@@ -65,6 +65,7 @@ class Production(Settings):
     SESSION_COOKIE_SECURE = values.BooleanValue(True)
     SESSION_COOKIE_HTTPONLY = values.BooleanValue(True)
     SECURE_SSL_REDIRECT = values.BooleanValue(True)
+    SECURE_REDIRECT_EXEMPT = [r'https?://(blog\.hello-base\.com\/?)']
 
     # Site Configuration.
     # --------------------------------------------------------------------------
