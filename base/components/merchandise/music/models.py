@@ -264,7 +264,8 @@ class Track(ParticipationMixin):
     def clean(self, *args, **kwargs):
         # If a track has a parent (original_track), it cannot have a slug.
         if self.original_track is not None and self.slug:
-            raise ValidationError('Alternate tracks cannot have slugs.')
+            message = u'Alternate tracks cannot have slugs.'
+            raise ValidationError(message)
         super(Track, self).clean(*args, **kwargs)
 
     def save(self, *args, **kwargs):
