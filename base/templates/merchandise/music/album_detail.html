@@ -123,7 +123,7 @@
               {% endif %}
               {% if edition.video_order.exists %}
               <tbody class="tracklist video-list">
-                <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-video"></span> Videos</th></tr>
+                <tr><th class="tracklist-heading" colspan="3"><span class="ss-icon ss-video"></span> DVD Tracklist</th></tr>
                 {% for position in edition.video_order.all %}
                 <tr class="track">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
