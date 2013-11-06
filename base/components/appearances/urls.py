@@ -1,8 +1,7 @@
 from django.conf.urls import patterns, url
 
-from .views import (ShowListView, ShowDetailView, ShowCreateView,
-    ShowUpdateView, EpisodeDetailView, MagazineListView, MagazineDetailView,
-    IssueDetailView)
+from .views import (ShowListView, ShowDetailView, EpisodeDetailView,
+    MagazineListView, MagazineDetailView, IssueDetailView)
 
 
 urlpatterns = patterns('',
@@ -16,13 +15,4 @@ urlpatterns = patterns('',
     url(r'^magazine/$', name='magazine-list', view=MagazineListView.as_view()),
 
     url(r'^magazine/issue/(?P<volume_number>[\d\+]+)/$', name='issue-detail', view=IssueDetailView.as_view()),
-
-    url(r'^show/create/$', name='show-create', view=ShowCreateView.as_view()),
-    url(r'^show/update/(?P<pk>\d+)/$', name='show-update', view=ShowUpdateView.as_view()),
-    url(r'^show/episode/create/$', name='episode-create', view=ShowCreateView.as_view()),
-    url(r'^show/episode/update/(?P<pk>\d+)/$', name='episode-update', view=ShowUpdateView.as_view()),
-    url(r'^magazine/create/$', name='magazine-create', view=ShowCreateView.as_view()),
-    url(r'^magazine/update/(?P<pk>\d+)/$', name='magazine-update', view=ShowUpdateView.as_view()),
-    url(r'^magazine/issue/create/$', name='issue-create', view=ShowCreateView.as_view()),
-    url(r'^magazine/issue/update/(?P<pk>\d+)/$', name='issue-update', view=ShowUpdateView.as_view()),
 )
