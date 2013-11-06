@@ -226,11 +226,7 @@ class VideoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('kind',)}),
         (None, {'fields': (('romanized_name', 'name'),)}),
-        ('Relations', {'fields': ('album', 'single')}),
-        ('Details', {
-            'classes': ('collapse closed',),
-            'fields': ('released', 'still', 'video_url')
-        })
+        ('Relations', {'fields': ('album', 'single')})
     )
     list_display = ['romanized_name', 'name', 'kind', 'released', 'video_url']
     list_editable = ['kind']
