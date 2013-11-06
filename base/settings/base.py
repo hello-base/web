@@ -10,6 +10,8 @@ from configurations import Configuration, values
 from djcelery import setup_loader
 from postgresify import postgresify
 
+gettext = lambda s: s
+
 
 class Base(Configuration):
     # Path Configuration.
@@ -108,9 +110,16 @@ class Base(Configuration):
     LANGUAGE_CODE = 'en-us'
     SITE_ID = 1
     TIME_ZONE = 'UTC'
+    USE_TZ = True
+
+    # Internationalization Configuration.
+    # --------------------------------------------------------------------------
+    LANGUAGES = (
+        ('en', gettext('English')),
+        ('jp', gettext('Japanese')),
+    )
     USE_I18N = True
     USE_L10N = True
-    USE_TZ = True
 
     # Template Configuration.
     # --------------------------------------------------------------------------
