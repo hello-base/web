@@ -10,7 +10,7 @@ def _out(name, message):
 
 
 @invoke.task(name='deploy', pre=['test', 'collect'])
-def deploy(verbose=False, migrate=False **kwargs):
+def deploy(verbose=False, migrate=False, **kwargs):
     out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
 
