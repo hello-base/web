@@ -62,7 +62,7 @@ class Base(Merchandise):
 
     @property
     def identifier(self):
-        return self._meta.module_name
+        return self._meta.model_name
 
     @cached_property
     def participants(self):

@@ -56,7 +56,7 @@ class Person(ContributorMixin):
 
     @property
     def identifier(self):
-        return self._meta.module_name
+        return self._meta.model_name
 
     @staticmethod
     def autocomplete_search_fields():
@@ -201,7 +201,7 @@ class Group(ContributorMixin):
 
     @property
     def identifier(self):
-        return self._meta.module_name
+        return self._meta.model_name
 
     def is_active(self):
         return bool(self.ended is None or self.ended >= date.today())
