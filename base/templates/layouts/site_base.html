@@ -32,6 +32,20 @@
       {# <a href="{% url "signin" %}">Sign in</a> #}
     {% endif %}
     </div>
+
+    <div class="languages">
+      <ul>
+      {% for lang in LANGUAGES %}
+        <li>
+          <form action="{% url 'set_language' %}" method="post" name="setLang{{ lang.1 }}">
+            <input type="hidden" name="language" value="{{ lang.0 }}">
+            <input type="hidden" name="next" value="{{ next }}">
+            <button>{% blocktrans %}{{ lang.1 }}{% endblocktrans %}</button>
+          </form>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
   </div>
 </header>
 <main class="content" role="main">
