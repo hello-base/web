@@ -10,7 +10,7 @@ def _out(name, message):
 
 
 @invoke.task(name='deploy', pre=['test', 'collect'])
-def deploy(verbose=False, **kwargs):
+def deploy(verbose=False, migrate=False **kwargs):
     out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
 
@@ -24,8 +24,18 @@ def deploy(verbose=False, **kwargs):
         invoke.run('git commit -m "Static manifest has updated; committing updated manifest.json."', hide=hide)
 
     # Ready? Let's go.
+    if migrate:
+        out('The migrations flag has been triggered, disable preboot.')
+        invoke.run('heroku labs:disable preboot')
+
     out('Deploying project to Heroku.')
     invoke.run('git push heroku master')
+
+    if migrate:
+        out('Deploy to Heroku complete. Migrating...')
+        invoke.run('heroku run python manage.py migrate')
+        out('Re-enabling preboot.')
+        invoke.run('heroku labs:enable preboot')
 
     # Done!
     out('All done~!')
@@ -119,9 +129,7 @@ def heroku_imagekit(verbose=False, **kwargs):
 
 @invoke.task(name='migrate', pre=['heroku.capture'])
 def heroku_migrate(app='', **kwargs):
-    invoke.run('heroku labs:disable preboot')
     invoke.run('heroku run python manage.py migrate %s' % app)
-    invoke.run('heroku labs:enable preboot')
 
 
 @invoke.task(name='pull', pre=['heroku.capture'])
