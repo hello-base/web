@@ -10,7 +10,7 @@ class EditionManager(models.Manager):
         if edition:
             kwargs[edition.parent.identifier] = edition.parent
 
-        qs = super(EditionManager, self).get_query_set().order_by('released', 'romanized_name')
+        qs = super(EditionManager, self).get_queryset().order_by('released', 'romanized_name')
 
         try:
             return qs.filter(**kwargs)[0]
