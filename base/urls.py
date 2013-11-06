@@ -66,6 +66,9 @@ urlpatterns = patterns('',
     url(r'^', include('components.merchandise.music.urls')),
     url(r'^', include('components.people.urls')),
 
+    # Internationalization.
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+
     # Sitemaps, Favicons, Robots, and Humans.
     url(r'^favicon.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
