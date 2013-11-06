@@ -4,6 +4,7 @@ import sys
 
 from celery.schedules import crontab
 from configurations import values
+from postgresify import postgresify
 from redisify import redisify
 
 from .base import Base as Settings
