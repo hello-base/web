@@ -76,6 +76,8 @@ class Idol(Person):
     # Details.
     bloodtype = models.CharField(blank=True, choices=BLOOD_TYPE, default='A', max_length=2)
     height = models.DecimalField(blank=True, decimal_places=1, max_digits=4, null=True)
+    color = models.CharField(blank=True, default='', max_length=7,
+        help_text='An idol\'s color. Use a hex value (i.e. #000000).')
 
     # Dates.
     started = models.DateField(db_index=True, null=True,

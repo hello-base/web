@@ -91,7 +91,7 @@ class IdolAdmin(ContributorMixin):
         ('Basics', {'fields': (('romanized_name', 'name'), ('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
         ('Dates', {'fields': (('started', 'graduated', 'retired'),)}),
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
-        ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
+        ('Details & Options', {'fields': ('color', ('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
