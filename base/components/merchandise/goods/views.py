@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 
 from .models import Shop
