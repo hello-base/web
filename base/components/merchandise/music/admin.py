@@ -21,7 +21,7 @@ class SingleEditionInline(admin.StackedInline):
 
 class TrackOrderInline(admin.TabularInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('track', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
+    fieldsets = ((None, {'fields': ('track', 'disc', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
     model = TrackOrder
     verbose_name_plural = 'Track Order'
 

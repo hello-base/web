@@ -305,7 +305,8 @@ class TrackOrder(models.Model):
 
     edition = models.ForeignKey(Edition, related_name='order')
     track = models.ForeignKey(Track, related_name='appears_on')
-    position = models.PositiveSmallIntegerField()
+    disc = models.PositiveSmallIntegerField(default=1)
+    position = models.PositiveSmallIntegerField(default=1)
 
     # A-Side / B-Side / Options
     is_aside = models.BooleanField('a-side?', default=False)
