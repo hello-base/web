@@ -10,7 +10,7 @@ from configurations import Configuration, values
 from djcelery import setup_loader
 from postgresify import postgresify
 
-gettext = lambda s: s
+ugettext = lambda s: s
 
 
 class Base(Configuration):
@@ -116,8 +116,8 @@ class Base(Configuration):
     # Internationalization Configuration.
     # --------------------------------------------------------------------------
     LANGUAGES = (
-        ('en', gettext('English')),
-        ('jp', gettext('Japanese')),
+        ('en', ugettext('English')),
+        ('jp', ugettext('Japanese')),
     )
     USE_I18N = True
     USE_L10N = True
