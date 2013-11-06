@@ -155,10 +155,12 @@ class TestMemberships:
         assert not member.leadership_tenure()
 
         active_leader = LeadershipFactory()
-        assert active_leader.leadership_tenure() == '1 year'
+        quirk = active_leader.leadership_tenure().replace(u'\xa0', ' ')
+        assert quirk == u'1 year'
 
         inactive_leader = LeadershipFactory(leadership_ended=today - delta)
-        assert inactive_leader.leadership_tenure() == '12 months'
+        quirk = inactive_leader.leadership_tenure().replace(u'\xa0', ' ')
+        assert quirk == u'12 months'
 
     def test_leadership_tenure_in_days(self):
         member = MembershipFactory()
