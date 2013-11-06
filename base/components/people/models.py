@@ -21,13 +21,15 @@ from .utils import calculate_age
 
 class Person(ContributorMixin):
     name = models.CharField(editable=False, max_length=60)
-    romanized_name = models.CharField(editable=False, max_length=60)
     family_name = models.CharField(blank=True, max_length=30)
     given_name = models.CharField(blank=True, max_length=30)
+    alias = models.CharField(blank=True, max_length=60)
+
+    romanized_name = models.CharField(editable=False, max_length=60)
     romanized_family_name = models.CharField(blank=True, max_length=30)
     romanized_given_name = models.CharField(blank=True, max_length=30)
-    alias = models.CharField(blank=True, max_length=30)
-    romanized_alias = models.CharField(blank=True, max_length=30)
+    romanized_alias = models.CharField(blank=True, max_length=60)
+
     nicknames = models.CharField(blank=True, max_length=200)
     slug = models.SlugField()
 

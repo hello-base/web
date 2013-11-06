@@ -25,7 +25,7 @@ class Migration(SchemaMigration):
         db.alter_column(u'people_idol', 'nicknames', self.gf('ohashi.db.models.fields.CharField')(max_length=200))
 
         # Changing field 'Idol.romanized_alias'
-        db.alter_column(u'people_idol', 'romanized_alias', self.gf('ohashi.db.models.fields.CharField')(max_length=30))
+        db.alter_column(u'people_idol', 'romanized_alias', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
 
         # Changing field 'Idol.romanized_name'
         db.alter_column(u'people_idol', 'romanized_name', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
@@ -46,7 +46,7 @@ class Migration(SchemaMigration):
         db.alter_column(u'people_idol', 'romanized_given_name', self.gf('ohashi.db.models.fields.CharField')(max_length=30))
 
         # Changing field 'Idol.alias'
-        db.alter_column(u'people_idol', 'alias', self.gf('ohashi.db.models.fields.CharField')(max_length=30))
+        db.alter_column(u'people_idol', 'alias', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
 
         # Changing field 'Staff.name'
         db.alter_column(u'people_staff', 'name', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
@@ -61,10 +61,10 @@ class Migration(SchemaMigration):
         db.alter_column(u'people_staff', 'family_name', self.gf('ohashi.db.models.fields.CharField')(max_length=30))
 
         # Changing field 'Staff.romanized_alias'
-        db.alter_column(u'people_staff', 'romanized_alias', self.gf('ohashi.db.models.fields.CharField')(max_length=30))
+        db.alter_column(u'people_staff', 'romanized_alias', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
 
         # Changing field 'Staff.alias'
-        db.alter_column(u'people_staff', 'alias', self.gf('ohashi.db.models.fields.CharField')(max_length=30))
+        db.alter_column(u'people_staff', 'alias', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
 
         # Changing field 'Staff.romanized_name'
         db.alter_column(u'people_staff', 'romanized_name', self.gf('ohashi.db.models.fields.CharField')(max_length=60))
