@@ -39,6 +39,11 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
 
+    # Database Configuration.
+    # --------------------------------------------------------------------------
+    DATABASES = postgresify()
+    DATABASES['default']['CONN_MAX_AGE'] = 600
+
     # Caching Configuration.
     # --------------------------------------------------------------------------
     CACHES = redisify(default='redis://localhost')
