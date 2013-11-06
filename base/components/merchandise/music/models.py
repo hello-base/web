@@ -354,9 +354,9 @@ class Video(models.Model):
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
     kind = models.PositiveSmallIntegerField(choices=VIDEO_TYPES, default=VIDEO_TYPES.pv_regular)
-    released = models.DateField(blank=True, null=True)
 
-    # Contents
+    # Saved (but unused) Fields.
+    released = models.DateField(blank=True, null=True)
     still = models.ImageField(blank=True, null=True, upload_to='merchandise/music/videos/')
     video_url = models.URLField('video URL', blank=True)
 
