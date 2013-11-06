@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from markdown import markdown
+from markdown2 import markdown
 from typogrify.templatetags.typogrify_tags import typogrify
 
 from components.accounts.admin import ContributorMixin
@@ -80,7 +80,7 @@ class GroupAdmin(ContributorMixin):
     }
 
     def save_model(self, request, obj, form, change):
-        obj.note_processed = typogrify(markdown(obj.note, ('footnotes',)))
+        obj.note_processed = typogrify(markdown(obj.note, extras=['footnotes']))
         obj.save()
 admin.site.register(Group, GroupAdmin)
 
@@ -104,7 +104,7 @@ class IdolAdmin(ContributorMixin):
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
 
     def save_model(self, request, obj, form, change):
-        obj.note_processed = typogrify(markdown(obj.note, ('footnotes',)))
+        obj.note_processed = typogrify(markdown(obj.note, extras=['footnotes']))
         obj.save()
 admin.site.register(Idol, IdolAdmin)
 

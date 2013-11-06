@@ -28,7 +28,6 @@ class Base(Configuration):
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.humanize',
-        'django.contrib.markup',
         'django.contrib.messages',
         'django.contrib.sessions',
         'django.contrib.sitemaps',
@@ -49,6 +48,7 @@ class Base(Configuration):
     PLUGINS = [
         'floppyforms',
         'imagekit',
+        'markdown_deux',
         'south',
         'typogrify',
     ]
