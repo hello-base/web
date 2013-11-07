@@ -12,6 +12,5 @@ def pytest_configure():
     import dotenv
     dotenv.read_dotenv()
 
-    if not settings.configured:
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'base.settings'
-        os.environ['DJANGO_CONFIGURATION'] = 'Testing'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'base.settings'
+    os.environ['DJANGO_CONFIGURATION'] = 'Testing'
