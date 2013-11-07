@@ -8,7 +8,7 @@ class Testing(Settings):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'test-base',
+            'NAME': 'test',
         }
     }
 
