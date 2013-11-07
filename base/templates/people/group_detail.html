@@ -151,7 +151,7 @@
                 <span class="group-data tenure">
                   <span class="ss-icon ss-calendar"></span>
                   <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                    <b>{{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}</b>
+                    <b>{{ subgroup.started|date:"SHORT_DATE_FORMAT" }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date:"SHORT_DATE_FORMAT" }}{% else %}Present{% endif %}</b>
                   </time>
                   <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
                 </span>
@@ -218,7 +218,7 @@
                 <span class="group-data tenure">
                   <span class="ss-icon ss-calendar"></span>
                   <time datetime="{{ subgroup.started|date:"c" }}/{% if subgroup.ended %}{{ subgroup.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                    <b>{{ subgroup.started|date }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date }}{% else %}Present{% endif %}</b>
+                    <b>{{ subgroup.started|date:"SHORT_DATE_FORMAT" }}&ndash;{% if subgroup.ended %}{{ subgroup.ended|date:"SHORT_DATE_FORMAT" }}{% else %}Present{% endif %}</b>
                   </time>
                   <span class="tenure in-days">({{ subgroup.age_in_days }} days)</span>
                 </span>

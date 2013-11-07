@@ -15,7 +15,7 @@
     </div>
     <div class="release-subtext">
       <div class="release-data release-date">
-        <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date }}</b></time>
+        <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ release.released|date:"SHORT_DATE_FORMAT" }}</b></time>
         <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
       </div>
       <div class="release-data release-editions">

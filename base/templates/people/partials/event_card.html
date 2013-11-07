@@ -8,7 +8,7 @@
     <div class="example-heading"><span class="pill">{% if object.primary_membership.is_active %}Latest{% else %}Last{% endif %}</span></div>
     <a href="{{ event.get_absolute_url }}">{{ event }}</a>
     <div class="example-subtext">
-      <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ event.start_date|date }}</b></time>
+      <time datetime="{{ release.released|date:"c" }}"><span class="ss-icon ss-calendar"></span> <b>{{ event.start_date|date:"SHORT_DATE_FORMAT" }}</b></time>
     </div>
     {% endwith %}
   </div>

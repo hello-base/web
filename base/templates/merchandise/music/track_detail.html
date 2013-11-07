@@ -104,7 +104,7 @@
             {% endif %}
             </td>
             <td class="appearance-data">
-              <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"F j, Y" }}</time>
+              <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"DATE_FORMAT" }}</time>
               <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
             </td>
           </tr>
@@ -135,7 +135,7 @@
               <span class="name">{{ track.name }} {{ track.name_alternate }}</span>
             </td>
             <td class="appearance-data">
-              <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"F j, Y" }}</time>
+              <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"DATE_FORMAT" }}</time>
               <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
             </td>
           </tr>

@@ -40,7 +40,7 @@
   {% for event in object.performances.all %}
     <li class="event" itemprop="event" itemscope itemtype="http://schema.org/MusicEvent">
       <time datetime="{{ event.day|date:'c' }}T{{ event.start_time|time:'H:i.u' }}" itemprop="startDate">
-        <span class="ss-icon ss-calendar"></span> {{ event.day|date }}
+        <span class="ss-icon ss-calendar"></span> {{ event.day|date:"SHORT_DATE_FORMAT" }}
         <span class="ss-icon ss-clock"></span> {{ event.start_time|time:"H:i" }}
       </time>
       <a href="{% url 'event-detail' event.event.slug %}" itemprop="name">

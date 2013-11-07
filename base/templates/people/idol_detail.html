@@ -23,7 +23,7 @@
         </div>
         <h1 class="profile-name">
           {% if LANGUAGE_CODE == 'ja' %}
-            <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+            {# <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span> #}
             <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
           {% else %}
             <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
@@ -46,7 +46,7 @@
               {% if object.age >= 20 %}<span class="ss-icon ss-cocktail"></span>{% endif %}
               Age
             </span>&nbsp;{% firstof object.age "Unknown" %}</li>
-          <li class="vital vital-birthday"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Birthday</span> <time datetime="{{ object.birthdate|date:"c" }}" itemprop="birthDate">{% firstof object.birthdate|date:"F j, Y" "Unknown" %}</time></li>
+          <li class="vital vital-birthday"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Birthday</span> <time datetime="{{ object.birthdate|date:"c" }}" itemprop="birthDate">{% firstof object.birthdate|date:"DATE_FORMAT" "Unknown" %}</time></li>
           <li class="vital vital-bloodtype"><span class="vital-label"><span class="ss-icon ss-anatomicalheart"></span> Bloodtype</span> {% firstof object.bloodtype "Unknown" %}</li>
           <li class="vital vital-height"><span class="vital-label"><span class="ss-icon ss-tapemeasure"></span> Height</span> {% firstof object.height "Unknown" %}{% if object.height %}cm{% endif %}</li>
         </ul>
@@ -67,17 +67,17 @@
               <div class="example-subtext">
                 <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
                   {% if primary.is_active %}
-                    Joined <b>{{ primary.started|date:"F j, Y" }}</b>
+                    Joined <b>{{ primary.started|date:"DATE_FORMAT" }}</b>
                   {% else %}
-                    Member from <b>{{ primary.started|date:"F j, Y" }}</b>&ndash;<b>{{ primary.ended|date:"F j, Y" }}</b>
+                    Member from <b>{{ primary.started|date:"DATE_FORMAT" }}</b>&ndash;<b>{{ primary.ended|date:"DATE_FORMAT" }}</b>
                   {% endif %}
                 </time>
                 {% if primary.is_leader %}
                 <time datetime="{{ primary.leadership_started|date:"c" }}/{% if primary.leadership_ended %}{{ primary.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
                   {% if not primary.leadership_ended %}
-                    and leader since <b>{{ primary.leadership_started|date:"F j, Y" }}</b>
+                    and leader since <b>{{ primary.leadership_started|date:"DATE_FORMAT" }}</b>
                   {% else %}
-                    and was leader from <b>{{ primary.leadership_started|date:"F j, Y"}}</b>&ndash;<b>{{ primary.leadership_ended|date:"F j, Y" }}</b>
+                    and was leader from <b>{{ primary.leadership_started|date:"DATE_FORMAT"}}</b>&ndash;<b>{{ primary.leadership_ended|date:"DATE_FORMAT" }}</b>
                   {% endif %}
                 </time>
               {% endif %}
@@ -110,7 +110,7 @@
                 <span class="membership-data tenure">
                   <span class="ss-icon ss-calendar"></span>
                   <time datetime="{{ membership.started|date:"c" }}/{% if membership.ended %}{{ membership.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                    <b>{{ membership.started|date }}&ndash;{% if membership.ended %}{{ membership.ended|date }}{% else %}Present{% endif %}</b>
+                    <b>{{ membership.started|date:"SHORT_DATE_FORMAT" }}&ndash;{% if membership.ended %}{{ membership.ended|date:"SHORT_DATE_FORMAT" }}{% else %}Present{% endif %}</b>
                   </time>
                   <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span>
                 </span>
@@ -118,7 +118,7 @@
                 <span class="membership-data tenure leadership-tenure">
                   <span class="ss-icon ss-checkcalendar"></span>
                   <time datetime="{{ membership.leadership_started|date:"c" }}/{% if membership.leadership_ended %}{{ membership.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                    Leader from <b>{{ membership.leadership_started|date }}&ndash;{% if membership.leadership_ended %}{{ membership.leadership_ended|date }}{% else %}Present{% endif %}</b>
+                    Leader from <b>{{ membership.leadership_started|date:"SHORT_DATE_FORMAT" }}&ndash;{% if membership.leadership_ended %}{{ membership.leadership_ended|date:"SHORT_DATE_FORMAT" }}{% else %}Present{% endif %}</b>
                   </time>
                   <span class="tenure in-days">({{ membership.leadership_tenure_in_days }} days)</span>
                 </span>
@@ -147,7 +147,7 @@
                   <span class="membership-data tenure">
                     <span class="ss-icon ss-calendar"></span>
                     <time datetime="{{ membership.started|date:"c" }}/{% if membership.ended %}{{ membership.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                      <b>{{ membership.started|date }}&ndash;{% if membership.ended %}{{ membership.ended|date }}{% else %}Present{% endif %}</b>
+                      <b>{{ membership.started|date:"SHORT_DATE_FORMAT" }}&ndash;{% if membership.ended %}{{ membership.ended|date:"SHORT_DATE_FORMAT" }}{% else %}Present{% endif %}</b>
                     </time>
                     <span class="tenure in-days">({{ membership.tenure_in_days }} days)</span>
                   </span>
@@ -155,7 +155,7 @@
                   <span class="membership-data tenure leadership-tenure">
                     <span class="ss-icon ss-checkcalendar"></span>
                     <time datetime="{{ membership.leadership_started|date:"c" }}/{% if membership.leadership_ended %}{{ membership.leadership_ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
-                      Leader from <b>{{ membership.leadership_started|date }}&ndash;{% if membership.leadership_ended %}{{ membership.leadership_ended|date }}{% else %}Present{% endif %}</b>
+                      Leader from <b>{{ membership.leadership_started|date:"SHORT_DATE_FORMAT" }}&ndash;{% if membership.leadership_ended %}{{ membership.leadership_ended|date:"SHORT_DATE_FORMAT" }}{% else %}Present{% endif %}</b>
                     </time>
                     <span class="tenure in-days">({{ membership.leadership_tenure_in_days }} days)</span>
                   </span>

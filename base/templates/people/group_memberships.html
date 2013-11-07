@@ -6,8 +6,8 @@
       {% with memberships.leader as member %}
         <span class="name">{{ member.idol.name }}</span>
         <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-        <span class="tenure"><time datetime="{{ member.started|date:"c"}}/{% now "c" %}">Since {{ member.started|date:"F j, Y" }}</time></span>
-        <span class="tenure leadership-tenure"><time datetime="{{ member.leadership_started|date:"c"}}/{% now "c" %}">Since {{ member.leadership_started|date:"F j, Y" }}</time></span>
+        <span class="tenure"><time datetime="{{ member.started|date:"c"}}/{% now "c" %}">Since {{ member.started|date:"DATE_FORMAT" }}</time></span>
+        <span class="tenure leadership-tenure"><time datetime="{{ member.leadership_started|date:"c"}}/{% now "c" %}">Since {{ member.leadership_started|date:"DATE_FORMAT" }}</time></span>
       {% endwith %}
       </div>
       <div class="active-members">
@@ -35,7 +35,7 @@
       {% for member in memberships.leaders %}
         <span class="name">{{ member.idol.name }}</span>
         <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-        <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"F j, Y" }}&ndash;{{ member.ended|date:"F j, Y" }}</time></span>
+        <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"DATE_FORMAT" }}&ndash;{{ member.ended|date:"DATE_FORMAT" }}</time></span>
       {% endfor %}
       </div>
       {% else %}
@@ -43,8 +43,8 @@
         <ul class="membership-list">
           <li class="membership-header">
             <div class="membership-graph">
-              <span class="graph-started">{{ object.started|date }}</span>
-              <span class="graph-ended">{% if object.ended %}{{ object.ended|date }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
+              <span class="graph-started">{{ object.started|date:"SHORT_DATE_FORMAT" }}</span>
+              <span class="graph-ended">{% if object.ended %}{{ object.ended|date:"SHORT_DATE_FORMAT" }}{% else %}{% now "Y/m/d" %}{% endif %}</span>
             </div>
           </li>
         {% for member in memberships.leaders %}
@@ -67,7 +67,7 @@
               ">{{ member.leadership_tenure_in_days|intcomma }}</span>
             </div>
             <div class="membership-stats">
-              <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"F j, Y" }}&ndash;{{ member.ended|date:"F j, Y" }}</time></span>
+              <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"DATE_FORMAT" }}&ndash;{{ member.ended|date:"DATE_FORMAT" }}</time></span>
             </div>
           </li>
         {% endfor %}
@@ -82,7 +82,7 @@
           <li class="membership">
             <span class="name">{{ member.idol.name }}</span>
             <a href="{{ member.idol.get_absolute_url }}"><span class="romanized-name">{{ member.idol.romanized_name }}</span></a>
-            <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"F j, Y" }}&ndash;{{ member.ended|date:"F j, Y" }}</time></span>
+            <span class="tenure"><time datetime="{{ member.started|date:"c" }}/{{ member.ended|date:"c" }}">{{ member.started|date:"DATE_FORMAT" }}&ndash;{{ member.ended|date:"DATE_FORMAT" }}</time></span>
           </li>
         {% endfor %}
         </ul>

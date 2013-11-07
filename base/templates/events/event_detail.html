@@ -31,7 +31,7 @@
         <ul class="vitals-list">
           <li class="vital vital-span">
             <span class="vital-label"><span class="ss-icon ss-calendar"></span> Run</span>&nbsp;
-            <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date }}</time>&ndash;<time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date }}</time>
+            <time datetime="{{ object.start_date|date:"c" }}" itemprop="startDate">{{ object.start_date|date:"SHORT_DATE_FORMAT" }}</time>&ndash;<time datetime="{{ object.end_date|date:"c" }}" itemprop="endDate">{{ object.end_date|date:"SHORT_DATE_FORMAT" }}</time>
           </li>
           <li class="vital vital-nickname"><span class="vital-label"><span class="ss-icon ss-tag"></span> Nickname</span> {{ object.nickname }}</li>
           <li class="vital vital-performances"><span class="vital-label"><span class="ss-icon ss-mic"></span> Performances</span> {{ object.schedule.count }}</li>
@@ -73,7 +73,7 @@
     {% for performance in object.schedule.all %}
       <tr itemprop="subEvent" itemscope itemtype="http://schema.org/subEvent">
         <time datetime="{{ performance.day|date:'c' }}T{{ performance.start_time|time:'H:i.u' }}" itemprop="startDate">
-          <td><span class="ss-icon ss-calendar"></span> {{ performance.day|date }}</td>
+          <td><span class="ss-icon ss-calendar"></span> {{ performance.day|date:"SHORT_DATE_FORMAT" }}</td>
           <td><span class="ss-icon ss-clock"></span> {{ performance.start_time|time:"H:i" }}</td>
         </time>
         <td>
