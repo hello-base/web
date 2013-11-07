@@ -1,5 +1,5 @@
 # Package Requirements for Testing
--r base.txt
+-r production.txt
 
 beautifulsoup4 >= 4.3.2, < 5.0.0
 coverage >= 3.6, < 4.0
