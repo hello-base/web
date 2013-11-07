@@ -53,12 +53,12 @@
   margin-top: 0; margin-bottom: 0;
   padding: 3px 0;
 
-  [lang="en"] & {
+  :lang(en) & {
     .name { @extend %secondary-name; }
     .romanized-name { @extend %primary-name; }
 
   }
-  [lang="ja"] & {
+  :lang(ja) & {
     .name { @extend %primary-name; }
     .romanized-name { @extend %secondary-name; }
   }
