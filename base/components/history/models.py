@@ -20,7 +20,18 @@ class History(TimeStampedModel):
     delta = models.IntegerField(default=0)
 
     class Meta:
+        get_latest_by = 'datetime'
         verbose_name_plural = 'histories'
 
     def __unicode__(self):
         return u'%s' % (self.tag)
+
+    def save(self, *args, **kwargs):
+        try:
+            filters = {'resolution': self.resolution, 'tag': self.tag}
+            previous = self._default_manager.filter(**filters).latest()
+        except self._meta.model.DoesNotExist:
+            pass
+        else:
+            self.delta = self.sum - previous.sum
+        super(History, self).save(*args, **kwargs)

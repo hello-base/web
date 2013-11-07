@@ -11,3 +11,8 @@ class TestHistories:
     def test_factory(self):
         factory = HistoryFactory()
         assert isinstance(factory, History)
+
+    def test_deltas(self):
+        history1 = HistoryFactory(sum=10)
+        history2 = HistoryFactory(sum=20)
+        assert history2.delta == 10
