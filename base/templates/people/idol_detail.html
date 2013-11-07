@@ -1,5 +1,6 @@
 {% extends "layouts/site_base.html" %}
-{% load music_tags static typogrify_tags %}
+{% load i18n music_tags static typogrify_tags %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Idols{% endblock %}
 {% block meta %}
@@ -21,8 +22,13 @@
           {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
         </div>
         <h1 class="profile-name">
-          <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
-          <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+          {% if LANGUAGE_CODE == 'ja' %}
+            <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+            <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
+          {% else %}
+            <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
+            <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+          {% endif %}
           {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>

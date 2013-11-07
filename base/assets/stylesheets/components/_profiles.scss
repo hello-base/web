@@ -7,6 +7,20 @@
   }
 }
 
+%secondary-name {
+  font-size: 1.333rem;
+  font-weight: 300;
+}
+%primary-name {
+  color: #454D57;
+  font-family: $font-family-primary;
+  font-size: 2.369rem;
+  font-weight: 600;
+  letter-spacing: -1px;
+
+  b { color: $headings-font-color; }
+}
+
 // .profile-header (*)
 // Classes tasked with styling the header section of a profile page.
 .profile-header {
@@ -39,18 +53,14 @@
   margin-top: 0; margin-bottom: 0;
   padding: 3px 0;
 
-  .name {
-    font-size: 1.333rem;
-    font-weight: 300;
-  }
-  .romanized-name {
-    color: #454D57;
-    font-family: $font-family-primary;
-    font-size: 2.369rem;
-    font-weight: 600;
-    letter-spacing: -1px;
+  body.lang-en & {
+    .name { @extend %secondary-name; }
+    .romanized-name { @extend %primary-name; }
 
-    b { color: $headings-font-color; }
+  }
+  body.lang-ja & {
+    .name { @extend %primary-name; }
+    .romanized-name { @extend %secondary-name; }
   }
 }
 
