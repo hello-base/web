@@ -10,6 +10,7 @@ class History(TimeStampedModel):
     resolution = models.CharField(choices=RESOLUTIONS, default=RESOLUTIONS.day, max_length=6)
 
     tag = models.SlugField()
+    datetime = models.DateTimeField()
     source_type = models.ForeignKey(ContentType)
     source_id = models.PositiveIntegerField(blank=True, null=True)
 
