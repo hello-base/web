@@ -34,8 +34,14 @@ class TestGroups:
         assert inactive.age_in_days == 366
 
     def test_targeted_is_active(self):
-        targeted = MembershipFactory(ended=today - delta)
-        assert targeted.is_active(target=today)
+        targeted_active = MembershipFactory()
+        assert targeted_active.is_active(target=today)
+
+        targeted_inactive = MembershipFactory(ended=today - delta)
+        assert not targeted_inactive.is_active(target=today)
+
+        targeted_upcoming = MembershipFactory(started=today + delta)
+        assert not targeted_upcoming.is_active(target=today)
 
     def test_supergroup_subgroups(self):
         supergroup = GroupFactory()
@@ -130,8 +136,14 @@ class TestMemberships:
         assert not inactive.is_active()
 
     def test_targeted_is_active(self):
-        targeted = MembershipFactory(ended=today - delta)
-        assert targeted.is_active(target=today)
+        targeted_active = MembershipFactory()
+        assert targeted_active.is_active(target=today)
+
+        targeted_inactive = MembershipFactory(ended=today - delta)
+        assert not targeted_inactive.is_active(target=today)
+
+        targeted_upcoming = MembershipFactory(started=today + delta)
+        assert not targeted_upcoming.is_active(target=today)
 
     def test_days_before_starting(self):
         factory = MembershipFactory()
