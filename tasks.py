@@ -25,6 +25,8 @@ def deploy(verbose=False, migrate=False, **kwargs):
 
     # Ready? Let's go.
     if migrate:
+        out('Snapshotting the production database.')
+        invoke.run('heroku pgbackups:capture --expire', hide=hide)
         out('The migrations flag has been triggered, disable preboot.')
         invoke.run('heroku labs:disable preboot')
 
