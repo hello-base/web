@@ -1,4 +1,5 @@
 {% load static from staticfiles %}
+{% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="{{ LANGUAGE_CODE|slice:"2" }}">
@@ -35,7 +36,7 @@
 </script>
 {% endif %}
 </head>
-<body id="hello-base" class="path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
+<body id="hello-base" class="lang-{{ LANGUAGE_CODE }} path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
 {% block body %}
 <div class="page">
 {% block page %}{% endblock page %}
