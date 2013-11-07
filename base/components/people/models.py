@@ -98,7 +98,6 @@ class Idol(Person):
 
     # Options & Extra Information.
     note = models.TextField(blank=True)
-    note_processed = models.TextField(blank=True, editable=False)
 
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
@@ -166,7 +165,6 @@ class Group(ContributorMixin):
     # Options & Extra Information.
     former_names = models.CharField(blank=True, max_length=200)
     note = models.TextField(blank=True)
-    note_processed = models.TextField(blank=True, editable=False)
 
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
