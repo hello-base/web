@@ -117,7 +117,7 @@ class Base(Configuration):
     # --------------------------------------------------------------------------
     LANGUAGES = (
         ('en', ugettext('English')),
-        ('jp', ugettext('Japanese')),
+        ('ja', ugettext('Japanese')),
     )
     USE_I18N = True
     USE_L10N = True
