@@ -37,7 +37,7 @@
 </script>
 {% endif %}
 </head>
-<body id="hello-base" class="lang-{{ LANGUAGE_CODE }} path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
+<body id="hello-base" class="path-{% firstof request.path|slugify "root" %} {% block body-class %}{% endblock %}" data-path="{{ request.path }}">
 {% block body %}
 <div class="page">
 {% block page %}{% endblock page %}
