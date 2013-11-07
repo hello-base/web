@@ -315,7 +315,7 @@ class TrackOrder(models.Model):
     is_instrumental = models.BooleanField('instrumental?', default=False)
 
     class Meta:
-        ordering = ('position',)
+        ordering = ('disc', 'position')
         verbose_name = 'track'
 
     def __unicode__(self):

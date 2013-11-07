@@ -1,8 +1,5 @@
 from django.contrib import admin
 
-from markdown2 import markdown
-from typogrify.templatetags.typogrify_tags import typogrify
-
 from components.accounts.admin import ContributorMixin
 
 from .models import Fact, Group, Groupshot, Headshot, Idol, Membership, Staff
@@ -78,10 +75,6 @@ class GroupAdmin(ContributorMixin):
         'fk': ['parent'],
         'm2m': ['groups'],
     }
-
-    def save_model(self, request, obj, form, change):
-        obj.note_processed = typogrify(markdown(obj.note, extras=['footnotes']))
-        obj.save()
 admin.site.register(Group, GroupAdmin)
 
 
@@ -102,10 +95,6 @@ class IdolAdmin(ContributorMixin):
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
     readonly_fields = ['romanized_name', 'name', 'photo', 'photo_thumbnail']
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
-
-    def save_model(self, request, obj, form, change):
-        obj.note_processed = typogrify(markdown(obj.note, extras=['footnotes']))
-        obj.save()
 admin.site.register(Idol, IdolAdmin)
 
 

@@ -25,8 +25,10 @@ def deploy(verbose=False, migrate=False, **kwargs):
 
     # Ready? Let's go.
     if migrate:
+        out('Snapshotting the production database.')
+        invoke.run('heroku pgbackups:capture --expire', hide=hide)
         out('The migrations flag has been triggered, disable preboot.')
-        invoke.run('heroku labs:disable preboot')
+        invoke.run('heroku labs:disable preboot', hide=hide)
 
     out('Deploying project to Heroku.')
     invoke.run('git push heroku master')
@@ -35,7 +37,7 @@ def deploy(verbose=False, migrate=False, **kwargs):
         out('Deploy to Heroku complete. Migrating...')
         invoke.run('heroku run python manage.py migrate')
         out('Re-enabling preboot.')
-        invoke.run('heroku labs:enable preboot')
+        invoke.run('heroku labs:enable preboot', hide=hide)
 
     # Done!
     out('All done~!')

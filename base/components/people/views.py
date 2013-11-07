@@ -19,6 +19,7 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         # leader, the active members, the former members and the
         # former leaders.
         memberships = self.object.memberships.order_by('started', 'idol__birthdate').select_related('idol', 'group')
+        context['fact'] = self.object.facts.order_by('?').first()
         context['memberships'] = {
             'active': [m for m in memberships if m.ended is None],
             'active_count': len([m for m in memberships if m.ended is None]),
