@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load admin_urls %}
+{% load admin_urls i18n %}
 
 {% block page %}
 {% if request.user.is_staff %}
@@ -35,12 +35,15 @@
 
     <div class="languages">
       <ul>
-      {% for lang in LANGUAGES %}
+      {% get_language_info_list for LANGUAGES as languages %}
+      {% for language in languages %}
         <li>
-          <form action="{% url 'set_language' %}" method="post" name="setLang{{ lang.1 }}">
-            <input type="hidden" name="language" value="{{ lang.0 }}">
-            <input type="hidden" name="next" value="{{ next }}">
-            <button>{% blocktrans %}{{ lang.1 }}{% endblocktrans %}</button>
+          <form action="{% url 'set_language' %}" method="post" name="setLang{{ language.name_local }}">
+            {% csrf_token %}
+            <input type="hidden" name="language" value="{{ language.code }}">
+            <input type="hidden" name="next" value="{{ redirect_to }}">
+            {# <button>{% blocktrans %}{{ lang.1 }}{% endblocktrans %}</button> #}
+            <button type="submit">{{ language.name_local }}</button>
           </form>
         </li>
       {% endfor %}
