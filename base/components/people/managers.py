@@ -33,14 +33,16 @@ class IdolQuerySet(QuerySet):
 
 
 class GroupQuerySet(QuerySet):
-    def active(self):
+    def active(self, target=None):
+        if target:
+            return self.filtered().filter(Q(ended__isnull=True) | Q(ended__gte=target), started__lt=target)
         return self.filtered().filter(Q(ended__isnull=True) | Q(ended__gte=date.today()))
 
     def inactive(self):
         return self.filtered().filter(ended__lte=date.today())
 
     def filtered(self):
-        return self.exclude(name='Soloist')
+        return self.exclude(romanized_name='Soloist')
 
     def unfiltered(self):
         return self.all()

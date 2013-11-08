@@ -74,6 +74,9 @@ class TestGroups:
     def test_active(self, status):
         assert len(Group.objects.active()) == 2
 
+    def test_targeted_active(self, status):
+        assert len(Group.objects.active(target=datetime.date.today())) == 2
+
     def test_inactive(self, status):
         assert len(Group.objects.inactive()) == 1
 
