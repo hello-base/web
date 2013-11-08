@@ -10,7 +10,6 @@ django-configurations >= 0.6, < 1.0
 django-dotenv == 1.2
 django-ecstatic >= 0.1, < 1.0
 django-floppyforms == 1.1
-django-grappelli >= 2.4.7, < 3.0.0
 django-haystack == 2.1.0
 django-heroku-postgresify == 0.3
 django-heroku-redisify == 0.2.1
@@ -33,3 +32,5 @@ requests-oauthlib == 0.4.0
 South >= 0.8.2, < 1.0.0
 twitter >= 1.10.0, < 2.0.0
 typogrify == 2.0.0
+
+git+https://github.com/sehmaschine/django-grappelli.git@stable/2.4.x#egg=django-grappelli
