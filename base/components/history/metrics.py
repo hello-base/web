@@ -9,10 +9,12 @@ from .models import History
 def total_group_count_over_time(datetime):
     # Calculates the total active groups for a given date.
     fields = {
-        'tag': 'total-group-count'
-        'source': ContentType.objects.get(app_label='people', model='group')
-        'sum': Group.objects.active(target=datetime).count()
+        'tag': 'total-group-count',
+        'datetime': datetime,
+        'source': ContentType.objects.get(app_label='people', model='group'),
+        'sum': Group.objects.active(target=datetime).count(),
     }
+    return fields
 
 
 def total_idol_count_over_time(datetime):
@@ -20,3 +22,4 @@ def total_idol_count_over_time(datetime):
     fields = {
         'tag': 'total-idol-count'
     }
+    return fields
