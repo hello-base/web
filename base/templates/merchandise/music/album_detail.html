@@ -89,13 +89,13 @@
                 <tr class="track {% if position.is_instrumental %}instrumental{% endif %}" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
                   <td class="track-number"><span class="pill number">{{ position.position }}</span></td>
                   <td class="track-name">
-                    {% if position.track.get_absolute_url %}<a href="{{ position.track.get_absolute_url }}">{% endif %}
+                    <a href="{{ position.track.get_absolute_url }}">
                       <span class="romanized-name" itemprop="name">
                         {{ position.track.romanized_name }}
                         {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
                         {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                       </span>
-                    {% if position.track.get_absolute_url %}</a>{% endif %}
+                    </a>
                     <span class="name">
                       {{ position.track.name }}
                       {% if position.track.is_alternate %}<span class="">{{ position.track.name_alternate }}</span>{% endif %}
