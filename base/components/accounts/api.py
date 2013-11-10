@@ -38,8 +38,8 @@ def _token_updater(old_token, request):
 
 
 def auth_session(request, token=None, state=None):
-    if token and 'expires_at' in token: # pragma: no branch
-        token['expires_in'] = int(token['expires_at'] - time.time())
+    if token and 'expires_at' in token:  # pragma: no branch
+        token['expires_in'] = int(token['expires_at'] - time.time())  # pragma: no cover
 
     return OAuth2Session(
         config['client_id'],
@@ -59,10 +59,10 @@ def auth_url(oauth):
     return oauth.authorization_url(config['authorization_url'])
 
 
-def auth_token(oauth, response_url): # pragma: no cover
-    token = oauth.fetch_token(
+def auth_token(oauth, response_url):
+    token = oauth.fetch_token(  # pragma: no cover
         config['token_url'],
         auth=(config['client_id'], config['client_secret']),
         authorization_response=response_url
     )
-    return _clean_token(token)
+    return _clean_token(token)  # pragma: no cover
