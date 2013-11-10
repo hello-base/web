@@ -3,8 +3,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from components.people.models import Group
 
-from .models import History
-
 
 def total_group_count_over_time(datetime):
     # Calculates the total active groups for a given date.
