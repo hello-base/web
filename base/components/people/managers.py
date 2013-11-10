@@ -63,11 +63,18 @@ class MembershipQuerySet(QuerySet):
             return qs.filter(group=for_group)
         return qs
 
-    def inactive(self):
-        return self.filter(ended__lte=date.today()).prefetch_related('idol')
+    def inactive(self, target=None):
+        target = target or date.today()
+        return self.filter(ended__lt=target).prefetch_related('idol')
 
     def inactive_leaders(self):
         return self.leaders().filter(leadership_ended__lte=date.today())
 
     def leaders(self):
         return self.filter(is_leader=True).order_by('leadership_started').prefetch_related('idol')
+
+    def lineup(self, target=None):
+        qs = self.select_related('idol')
+        if target is not None:
+            return qs.filter(ended=target)
+        return qs.filter(Q(ended__isnull=True) | Q(ended__gte=date.today()))

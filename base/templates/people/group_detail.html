@@ -76,12 +76,12 @@
 
     <section class="memberships">
       <div class="container">
-        {% if memberships.active %}
+        {% if memberships.lineup %}
         <div class="actives">
           <div class="active-members">
-            <h2 class="section-title">Current Members</h2>
+            <h2 class="section-title">{% if object.ended %}Final Lineup{% else %}Current Members{% endif %}</h2>
             <ul class="membership-list active-members">
-            {% for member in memberships.active %}
+            {% for member in memberships.lineup %}
               <li class="membership" itemprop="musicGroupMember">
                 <div class="idol-image object-image">
                   {% if member.idol.photo %}<a href="{% url 'image-detail' member.idol.photo|urlencode %}" target="_blank"><img src="{% get_media_prefix %}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}

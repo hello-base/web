@@ -95,9 +95,20 @@ class TestMemberships:
     def test_inactive(self):
         [MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=30)) for i in xrange(5)]
         [MembershipFactory(ended=datetime.date.today()) for i in xrange(5)]
-        assert len(Membership.objects.inactive()) == 10
+        assert len(Membership.objects.inactive()) == 5
 
     def test_inactive_leaders(self):
         [MembershipFactory(is_leader=True, leadership_ended=datetime.date.today() - datetime.timedelta(days=30)) for i in xrange(5)]
         [MembershipFactory(is_leader=True, leadership_ended=datetime.date.today()) for i in xrange(5)]
         assert len(Membership.objects.inactive_leaders()) == 10
+
+    def test_active_lineup(self):
+        group = GroupFactory()
+        [MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=30)) for i in xrange(5)]
+        [MembershipFactory(group=group) for i in xrange(5)]
+        assert len(Membership.objects.lineup()) == 10
+
+    def test_inactive_lineup(self):
+        group = GroupFactory(ended=datetime.date.today())
+        [MembershipFactory(ended=datetime.date.today()) for i in xrange(5)]
+        assert len(Membership.objects.lineup(target=group.ended)) == 5
