@@ -8,12 +8,55 @@ from components.merchandise.music.models import (Album, Edition, Single, Track,
 from components.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory, TrackOrderFactory,
     VideoFactory)
-from components.people.factories import GroupFactory
-from components.people.tasks import render_participants
+from components.people.constants import CLASSIFICATIONS
+from components.people.factories import (GroupFactory, MembershipFactory,
+    IdolFactory)
 
 edition_type = Edition.EDITIONS
 video_type = Video.VIDEO_TYPES
 pytestmark = pytest.mark.django_db
+
+
+class TestParticipations:
+    # While this code lives in `components.people.models,` it is tested here
+    # because it is a mixin that nearly all of the music models use.
+    @pytest.fixture
+    def release(self):
+        return SingleFactory()
+
+    def test_render_idols(self, release):
+        release.idols.add(*[IdolFactory() for i in xrange(5)])
+        release.save()
+        assert len(release.participating_idols.all()) == 5
+        assert not release.participating_groups.all()
+
+        # Run it again to make sure the participating_* relations are cleared
+        # on a second run-through.
+        release.idols.clear()
+        release.idols.add(*[IdolFactory() for i in xrange(3)])
+        release.save()
+        assert len(release.participating_idols.all()) == 3
+        assert not release.participating_groups.all()
+
+    def test_render_group(self, release):
+        group = GroupFactory()
+        idols = [IdolFactory() for i in xrange(3)]
+        [MembershipFactory(group=group, idol=idols[i]) for i in xrange(3)]
+        release.groups.add(group)
+        release.idols.add(*idols)
+        release.save()
+        assert len(release.participating_groups.all()) == 1
+        assert not release.participating_idols.all()
+
+    def test_render_supergroup(self, release):
+        supergroup = GroupFactory(classification=CLASSIFICATIONS.supergroup)
+        groups = [GroupFactory() for i in xrange(3)]
+        release.groups.add(supergroup)
+        release.groups.add(*groups)
+        release.save()
+        assert len(release.participating_groups.all()) == 1
+        assert release.participating_groups.all()[0] == supergroup
+        assert not release.participating_idols.all()
 
 
 class TestAlbums:
@@ -158,7 +201,7 @@ class TestEditions:
         single = SingleFactory()
         groups = [GroupFactory() for i in xrange(3)]
         single.groups.add(*groups)
-        render_participants(single)
+        single.save()
 
         edition = EditionFactory(single=single)
         assert len(edition.participants()) == 3
