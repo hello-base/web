@@ -162,7 +162,7 @@ class Group(ContributorMixin):
 
     # Parents & Children.
     parent = models.ForeignKey('self', blank=True, null=True, related_name='subgroups')
-    groups = models.ManyToManyField('self', blank=True, null=True, related_name='member_groups', symmetrical=False)
+    groups = models.ManyToManyField('self', blank=True, null=True, related_name='supergroups', symmetrical=False)
 
     # Options & Extra Information.
     former_names = models.CharField(blank=True, max_length=200)
