@@ -30,14 +30,14 @@ class TestEditors:
         staff = EditorFactory(username='bryan', is_active=True, is_staff=True)
         assert staff.has_perm('test-perm')
 
-        notstaff = EditorFactory(username='tsunku', is_active=True)
+        notstaff = EditorFactory(username='ravyn', is_active=True)
         assert not notstaff.has_perm('test-perm')
 
     def test_has_module_perms(self):
         staff = EditorFactory(username='bryan', is_active=True, is_staff=True)
         assert staff.has_module_perms('testapp')
 
-        notstaff = EditorFactory(username='tsunku', is_active=True)
+        notstaff = EditorFactory(username='ravyn', is_active=True)
         assert not notstaff.has_module_perms('testapp')
 
     def test_email_user(self):
