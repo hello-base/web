@@ -26,10 +26,10 @@
           {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
         </h1>
       </div>
-      {% if object.note or object.get_status_display == "Other" %}
+      {% if fact or object.get_status_display == "Other" %}
       <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
         <h4>{# <span class="ss-icon ss-notepad"></span> #} Random Fact</h4>
-        {% if fact %}{{ fact.body|markdown|typogrify }}{% endif %}
+        {{ fact.body|markdown|typogrify }}
         {% if object.get_status_display == "Other" %}<p>We apologize, but we are unsure of this group's status due to insufficient information.</p>{% endif %}
       </div>
       {% endif %}
