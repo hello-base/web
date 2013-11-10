@@ -3,6 +3,8 @@ from collections import defaultdict
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timesince
 from django.utils.functional import cached_property
 
@@ -332,7 +334,7 @@ class ParticipationMixin(models.Model):
         if not issubclass(instance.__class__, ParticipationMixin):
             return
 
-        from components.people.models import Idol, Membership
+        from components.people.models import Membership
 
         # Do we have existing participants? Clear them out so we can
         # calculate them again.
