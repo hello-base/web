@@ -1,7 +1,6 @@
 import os
 
 from django import get_version
-from django.conf import settings
 
 
 def pytest_report_header(config):
