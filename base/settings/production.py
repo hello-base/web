@@ -43,7 +43,8 @@ class Production(Settings):
     # Database Configuration.
     # --------------------------------------------------------------------------
     DATABASES = postgresify()
-    DATABASES['default']['CONN_MAX_AGE'] = 600
+    if 'default' in DATABASES:  # pragma: no branch
+        DATABASES['default']['CONN_MAX_AGE'] = 600
 
     # Caching Configuration.
     # --------------------------------------------------------------------------
