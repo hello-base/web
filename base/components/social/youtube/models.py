@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import datetime
-import dateutil
+from datetime import timedelta
+from dateutil import parser
 
 from django.db import models
 from django.utils.encoding import smart_unicode
@@ -60,7 +60,7 @@ class Video(models.Model):
         # Set the details.
         self.title = smart_unicode(entry.media.title.text)
         self.description = entry.media.description.text
-        self.published = dateutil.parser.parse(entry.published.text)
+        self.published = parser.parse(entry.published.text)
         self.duration = entry.media.duration.seconds
         self.flash_url = entry.GetSwfUrl()
         self.watch_url = entry.media.player.url
@@ -72,7 +72,7 @@ class Video(models.Model):
             t.save()
 
     def duration_display(self):
-        return str(datetime.timedelta(seconds=int(self.duration)))
+        return str(timedelta(seconds=int(self.duration)))
 
     def entry(self):
         api = Api()
