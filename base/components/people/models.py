@@ -343,10 +343,11 @@ class ParticipationMixin(models.Model):
 
         groups = instance.groups.all()
         if groups.exists():
-            # If a supergroup is one of the groups attributed, just
-            # show the supergroup.
+            # If a supergroup is one of the groups attributed, filter out any
+            # groups that are a member of that supergroup.
             if instance.supergroup in groups:
-                return instance.participating_groups.add(instance.supergroup)
+                instance.participating_groups.add(instance.supergroup)
+                groups = groups.exclude(supergroups__in=[instance.supergroup])
 
             # Gather all of the individual idol's primary keys
             # attributed to the single into a set().

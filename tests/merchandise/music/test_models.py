@@ -48,14 +48,28 @@ class TestParticipations:
         assert len(release.participating_groups.all()) == 1
         assert not release.participating_idols.all()
 
-    def test_render_supergroup(self, release):
+    def test_render_supergroup_with_member_groups(self, release):
         supergroup = GroupFactory(classification=CLASSIFICATIONS.supergroup)
-        groups = [GroupFactory() for i in xrange(3)]
+        member_groups = [GroupFactory() for i in xrange(3)]
+        supergroup.groups.add(*member_groups)
+        release.groups.add(*member_groups)
         release.groups.add(supergroup)
-        release.groups.add(*groups)
         release.save()
         assert len(release.participating_groups.all()) == 1
         assert release.participating_groups.all()[0] == supergroup
+        assert not release.participating_idols.all()
+
+    def test_render_supergroups_with_nonmember_groups(self, release):
+        supergroup = GroupFactory(classification=CLASSIFICATIONS.supergroup)
+        member_groups = [GroupFactory() for i in xrange(3)]
+        nonmember_group = GroupFactory(romanized_name='loner')
+        supergroup.groups.add(*member_groups)
+        release.groups.add(*member_groups)
+        release.groups.add(nonmember_group)
+        release.groups.add(supergroup)
+        release.save()
+        assert len(release.participating_groups.all()) == 2
+        assert member_groups not in release.participating_groups.all()
         assert not release.participating_idols.all()
 
 
