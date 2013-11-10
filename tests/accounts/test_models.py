@@ -26,6 +26,20 @@ class TestEditors:
         factory = EditorFactory(username='bryan', name='Bryan')
         assert factory.get_short_name() == 'Bryan'
 
+    def test_has_perm(self):
+        staff = EditorFactory(username='bryan', is_active=True, is_staff=True)
+        assert staff.has_perm('test-perm')
+
+        notstaff = EditorFactory(username='tsunku', is_active=True)
+        assert not notstaff.has_perm('test-perm')
+
+    def test_has_module_perms(self):
+        staff = EditorFactory(username='bryan', is_active=True, is_staff=True)
+        assert staff.has_module_perms('testapp')
+
+        notstaff = EditorFactory(username='tsunku', is_active=True)
+        assert not notstaff.has_module_perms('testapp')
+
     def test_email_user(self):
         factory = EditorFactory(email='to@example.com')
         factory.email_user('Subject', 'Hello there.', from_email='from@example.com')

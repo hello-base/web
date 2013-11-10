@@ -57,12 +57,12 @@ class Editor(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         # Active superusers have all permissions.
-        if self.is_active and self.is_superuser:
+        if self.is_active and self.is_staff:
             return True
 
     def has_module_perms(self, app_label):
         # Active superusers have all permissions.
-        if self.is_active and self.is_superuser:
+        if self.is_active and self.is_staff:
             return True
 
     def email_user(self, subject, message, from_email=None):
