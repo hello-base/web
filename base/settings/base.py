@@ -203,7 +203,6 @@ class Base(Configuration):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['djcelery']
     CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
     CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
     setup_loader()
