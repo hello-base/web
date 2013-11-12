@@ -3,6 +3,7 @@ from operator import attrgetter
 
 from django.views.generic import DetailView, TemplateView
 
+from braces.views import LoginRequiredMixin, SuperuserRequiredMixin
 from ohashi.shortcuts import get_object_or_none
 
 from components.accounts.views import QuicklinksMixin
@@ -60,7 +61,7 @@ class StaffDetailView(DetailView):
     template_name = ''
 
 
-class HelloProjectDetailView(TemplateView):
+class HelloProjectDetailView(LoginRequiredMixin, SuperuserRequiredMixin, TemplateView):
     idols = Idol.objects.hello_project().select_related('primary_membership__group')
     groups = Group.objects.hello_project()
     template_name = 'people/overrides/hello_project.html'
