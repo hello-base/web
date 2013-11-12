@@ -1,7 +1,7 @@
 from collections import defaultdict
 from operator import attrgetter
 
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 
 from ohashi.shortcuts import get_object_or_none
 
