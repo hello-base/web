@@ -21,7 +21,7 @@ class SingleEditionInline(admin.StackedInline):
 
 class TrackOrderInline(admin.TabularInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('track', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
+    fieldsets = ((None, {'fields': ('track', 'disc', 'position', 'is_aside', 'is_bside', 'is_instrumental', 'is_album_only')}),)
     model = TrackOrder
     verbose_name_plural = 'Track Order'
 
@@ -51,9 +51,10 @@ class VideoTrackOrderInline(admin.TabularInline):
 
 
 class LabelAdmin(admin.ModelAdmin):
-    fieldsets = ((None, {'fields': ('name', 'slug')}),)
-    list_display = ['name', 'slug']
-    prepopulated_fields = {'slug': ['name']}
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'slug', 'logo')}),)
+    list_display = ['romanized_name', 'name', 'slug']
+    list_display_links = ['romanized_name', 'name']
+    prepopulated_fields = {'slug': ['romanized_name']}
 admin.site.register(Label, LabelAdmin)
 
 
@@ -201,11 +202,12 @@ class TrackAdmin(admin.ModelAdmin):
     list_filter = ['is_cover', 'is_alternate']
     list_select_related = True
     ordering = ('-id',)
-    readonly_fields = ['participating_groups', 'participating_idols', 'slug']
+    prepopulated_fields = {'slug': ['romanized_name']}
+    readonly_fields = ['participating_groups', 'participating_idols']
     search_fields = [
         'idols__romanized_name', 'idols__romanized_family_name', 'idols__romanized_given_name',
         'groups__romanized_name', 'groups__name',
-        'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate'
+        'romanized_name', 'name', 'is_alternate', 'romanized_name_alternate', 'name_alternate', 'slug'
     ]
 
     raw_id_fields = ('album', 'single', 'idols', 'groups', 'original_track', 'arrangers', 'composers', 'lyricists')
@@ -224,11 +226,7 @@ class VideoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('kind',)}),
         (None, {'fields': (('romanized_name', 'name'),)}),
-        ('Relations', {'fields': ('album', 'single')}),
-        ('Details', {
-            'classes': ('collapse closed',),
-            'fields': ('released', 'still', 'video_url')
-        })
+        ('Relations', {'fields': ('album', 'single')})
     )
     list_display = ['romanized_name', 'name', 'kind', 'released', 'video_url']
     list_editable = ['kind']

@@ -1,6 +1,7 @@
 from itertools import chain
 from operator import attrgetter
 
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -19,11 +20,13 @@ from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
 
 
 class Label(models.Model):
+    romanized_name = models.CharField()
     name = models.CharField()
+    logo = models.ImageField(blank=True, null=True, upload_to='merchandise/music/labels/')
     slug = models.SlugField()
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%s' % (self.romanized_name)
 
 
 class Base(Merchandise):
@@ -47,9 +50,10 @@ class Base(Merchandise):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
-        if self.editions.exists() and self.regular_edition:
-            self.art = self.regular_edition.art
-            self.released = self.regular_edition.released
+        if self.editions.exists() and (self.regular_edition or self.digital_edition):
+            edition = filter(None, [self.regular_edition, self.digital_edition])[0]
+            self.art = edition.art
+            self.released = edition.released
         super(Base, self).save(*args, **kwargs)
 
     @staticmethod
@@ -58,11 +62,15 @@ class Base(Merchandise):
 
     @property
     def identifier(self):
-        return self._meta.module_name
+        return self._meta.model_name
 
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
+
+    @cached_property
+    def digital_edition(self):
+        return self.editions.digital_edition(release=self)
 
     @cached_property
     def regular_edition(self):
@@ -167,7 +175,7 @@ class Edition(models.Model):
         return self.parent.get_absolute_url()
 
     def save(self, *args, **kwargs):
-        return super(Edition, self).save(*args, **kwargs)
+        super(Edition, self).save(*args, **kwargs)
         if self.kind in [self.EDITIONS.regular, self.EDITIONS.digital] and self.art:
             self.parent.art = self.art
             self.parent.save()
@@ -176,15 +184,16 @@ class Edition(models.Model):
         return self._default_manager.regular_edition(edition=self)
 
     def _render_tracklist(self):
+        order = self.order
         if self.kind != self.EDITIONS.regular and not self.order.exists():
-            return self._get_regular_edition().order.select_related('track')
-        return self.order.select_related('track').prefetch_related('track__participating_idols')
+            order = self._get_regular_edition().order
+        return order.select_related('track').prefetch_related('track__participating_idols')
 
     def _render_videolist(self):
         return self.video_order.select_related('video')
 
     def participants(self):
-        return self.parent.participants()
+        return self.parent.participants
 
     @property
     def parent(self):
@@ -252,6 +261,17 @@ class Track(ParticipationMixin):
             return reverse('track-detail', kwargs={'slug': self.original_track.slug})
         return reverse('track-detail', kwargs={'slug': self.slug})
 
+    def clean(self, *args, **kwargs):
+        # If a track has a parent (original_track), it cannot have a slug.
+        if self.original_track is not None and self.slug:
+            message = u'Alternate tracks cannot have slugs.'
+            raise ValidationError(message)
+        super(Track, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Track, self).save(*args, **kwargs)
+
     @cached_property
     def appearances(self):
         appearances = {}
@@ -285,7 +305,8 @@ class TrackOrder(models.Model):
 
     edition = models.ForeignKey(Edition, related_name='order')
     track = models.ForeignKey(Track, related_name='appears_on')
-    position = models.PositiveSmallIntegerField()
+    disc = models.PositiveSmallIntegerField(default=1)
+    position = models.PositiveSmallIntegerField(default=1)
 
     # A-Side / B-Side / Options
     is_aside = models.BooleanField('a-side?', default=False)
@@ -294,7 +315,7 @@ class TrackOrder(models.Model):
     is_instrumental = models.BooleanField('instrumental?', default=False)
 
     class Meta:
-        ordering = ('position',)
+        ordering = ('disc', 'position')
         verbose_name = 'track'
 
     def __unicode__(self):
@@ -335,9 +356,9 @@ class Video(models.Model):
     romanized_name = models.CharField()
     name = models.CharField(blank=True)
     kind = models.PositiveSmallIntegerField(choices=VIDEO_TYPES, default=VIDEO_TYPES.pv_regular)
-    released = models.DateField(blank=True, null=True)
 
-    # Contents
+    # Saved (but unused) Fields.
+    released = models.DateField(blank=True, null=True)
     still = models.ImageField(blank=True, null=True, upload_to='merchandise/music/videos/')
     video_url = models.URLField('video URL', blank=True)
 

@@ -1,6 +1,10 @@
+# -*- coding:utf-8 -*-
+from collections import defaultdict
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timesince
 from django.utils.functional import cached_property
 
@@ -14,18 +18,20 @@ from components.accounts.models import ContributorMixin
 
 from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
-from .utils import calculate_age, calculate_average_age
+from .utils import calculate_age
 
 
 class Person(ContributorMixin):
     name = models.CharField(editable=False, max_length=60)
-    romanized_name = models.CharField(editable=False, max_length=60)
     family_name = models.CharField(blank=True, max_length=30)
     given_name = models.CharField(blank=True, max_length=30)
+    alias = models.CharField(blank=True, max_length=60)
+
+    romanized_name = models.CharField(editable=False, max_length=60)
     romanized_family_name = models.CharField(blank=True, max_length=30)
     romanized_given_name = models.CharField(blank=True, max_length=30)
-    alias = models.CharField(blank=True, max_length=30)
-    romanized_alias = models.CharField(blank=True, max_length=30)
+    romanized_alias = models.CharField(blank=True, max_length=60)
+
     nicknames = models.CharField(blank=True, max_length=200)
     slug = models.SlugField()
 
@@ -54,7 +60,7 @@ class Person(ContributorMixin):
 
     @property
     def identifier(self):
-        return self._meta.module_name
+        return self._meta.model_name
 
     @staticmethod
     def autocomplete_search_fields():
@@ -62,8 +68,6 @@ class Person(ContributorMixin):
 
 
 class Idol(Person):
-    GAIJINS = ['April', 'Chelsea', 'Danielle', 'Lehua', 'Mika Taressa']
-
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
     birthdays = models.BirthdayManager()
@@ -76,6 +80,8 @@ class Idol(Person):
     # Details.
     bloodtype = models.CharField(blank=True, choices=BLOOD_TYPE, default='A', max_length=2)
     height = models.DecimalField(blank=True, decimal_places=1, max_digits=4, null=True)
+    color = models.CharField(blank=True, default='', max_length=7,
+        help_text='An idol\'s color. Use a hex value (i.e. #000000).')
 
     # Dates.
     started = models.DateField(db_index=True, null=True,
@@ -94,14 +100,13 @@ class Idol(Person):
 
     # Options & Extra Information.
     note = models.TextField(blank=True)
-    note_processed = models.TextField(blank=True, editable=False)
 
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
-    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 
     class Meta:
@@ -111,21 +116,14 @@ class Idol(Person):
         return reverse('idol-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        # Denormalize the idol's primary membership. Make sure that
-        # primary membership exists first.
-        try:
-            self.primary_membership = self.memberships.get(is_primary=True)
-        except Membership.DoesNotExist:
-            pass
-        return super(Idol, self).save(*args, **kwargs)
+        super(Idol, self).save(*args, **kwargs)
 
     @property
     def age(self):
         return calculate_age(self.birthdate)
 
     def is_gaijin(self):
-        if self.romanized_given_name in self.GAIJINS:
-            return True
+        return not bool(self.given_name and self.family_name)
 
     def latest_album(self):
         return self.albums.latest()
@@ -164,19 +162,21 @@ class Group(ContributorMixin):
 
     # Parents & Children.
     parent = models.ForeignKey('self', blank=True, null=True, related_name='subgroups')
-    groups = models.ManyToManyField('self', blank=True, null=True, related_name='member_groups', symmetrical=False)
+    groups = models.ManyToManyField('self', blank=True, null=True, related_name='supergroups', symmetrical=False)
 
     # Options & Extra Information.
     former_names = models.CharField(blank=True, max_length=200)
     note = models.TextField(blank=True)
-    note_processed = models.TextField(blank=True, editable=False)
 
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
-    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+
+    class Meta:
+        ordering = ('started',)
 
     def __unicode__(self):
         return u'%s' % (self.romanized_name)
@@ -196,13 +196,21 @@ class Group(ContributorMixin):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
+    def generations(self):
+        generations = defaultdict(list)
+        for membership in self.memberships.select_related('idol'):
+            generations[membership.generation].append(membership)
+        generations.default_factory = None
+        return generations if all(generations) else None
+
     @property
     def identifier(self):
-        return self._meta.module_name
+        return self._meta.model_name
 
-    def is_active(self):
-        if self.ended is None or self.ended >= date.today():
-            return True
+    def is_active(self, target=None):
+        if target:
+            return bool(self.started < target and (self.ended is None or self.ended >= target))
+        return bool(self.ended is None or self.ended >= date.today())
 
     def latest_album(self):
         return self.albums.latest()
@@ -233,7 +241,7 @@ class Membership(models.Model):
     generation = models.PositiveSmallIntegerField(blank=True, db_index=True, null=True)
 
     # Leadership Details.
-    is_leader = models.BooleanField('Is/Was leader?')
+    is_leader = models.BooleanField('Leader?', default=False)
     leadership_started = models.DateField(blank=True, null=True)
     leadership_ended = models.DateField(blank=True, null=True)
 
@@ -245,9 +253,17 @@ class Membership(models.Model):
     def __unicode__(self):
         return '%s (%s)' % (self.idol, self.group.romanized_name)
 
-    def is_active(self):
-        if self.ended is None or self.ended >= date.today():
-            return True
+    def save(self, *args, **kwargs):
+        # Denormalize the idol's primary membership.
+        super(Membership, self).save(*args, **kwargs)
+        if self.is_primary:
+            self.idol.primary_membership = self
+            self.idol.save()
+
+    def is_active(self, target=None):
+        if target:
+            return bool(self.started < target and (self.ended is None or self.ended >= target))
+        return bool(self.ended is None or self.ended >= date.today())
 
     def days_before_starting(self):
         return (self.started - self.group.started).days
@@ -310,10 +326,52 @@ class ParticipationMixin(models.Model):
     class Meta:
         abstract = True
 
-    def save(self, *args, **kwargs):
-        super(ParticipationMixin, self).save(*args, **kwargs)
-        from .tasks import render_participants
-        render_participants.delay(self)
+    @receiver(post_save)
+    def render_participants(sender, instance, created, **kwargs):
+        # Being a signal without a sender, we need to make sure models
+        # are actually subclasses of ParticipationMixin before we
+        # continue.
+        if not issubclass(instance.__class__, ParticipationMixin):
+            return
+
+        from components.people.models import Membership
+
+        # Do we have existing participants? Clear them out so we can
+        # calculate them again.
+        instance.participating_idols.clear()
+        instance.participating_groups.clear()
+
+        groups = instance.groups.all()
+        if groups.exists():
+            # If a supergroup is one of the groups attributed, filter out any
+            # groups that are a member of that supergroup.
+            if instance.supergroup in groups:
+                instance.participating_groups.add(instance.supergroup)
+                groups = groups.exclude(supergroups__in=[instance.supergroup])
+
+            # Gather all of the individual idol's primary keys
+            # attributed to the single into a set().
+            idols = instance.idols.all()
+
+            # Specify an empty set() that will contain all of the
+            # members of the groups attributed to the single. Then,
+            # loop through all of the groups and update the set with
+            # all of the individual members' primary keys.
+            group_ids = groups.values_list('id', flat=True)
+            group_members = Membership.objects.filter(group__in=group_ids).values_list('idol', flat=True)
+
+            # Subtract group_members from idols.
+            distinct_idols = idols.exclude(pk__in=group_members)
+
+            # Add the calculated groups and idols to our new list of
+            # participating groups and idols.
+            instance.participating_groups.add(*list(groups))
+            instance.participating_idols.add(*list(distinct_idols))
+            return
+
+        # No groups? Just add all the idols.
+        instance.participating_idols.add(*list(instance.idols.all()))
+        return
 
     @cached_property
     def supergroup(self):
@@ -328,7 +386,7 @@ class Groupshot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(blank=True, upload_to='people/groups/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
-    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
@@ -352,7 +410,7 @@ class Headshot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(blank=True, upload_to='people/idols/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
-    # optimized_thumbnail = ImageSpecField(source='photo', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:

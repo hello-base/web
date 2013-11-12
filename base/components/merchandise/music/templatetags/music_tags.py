@@ -1,6 +1,8 @@
 from django import template
 register = template.Library()
 
+from components.people.models import Group
+
 
 @register.inclusion_tag('people/partials/contexted_participants.html')
 def contextual_participants(release, context):
@@ -17,18 +19,15 @@ def contextual_participants(release, context):
 
 
 def parse_idol(participant, idol):
-    relationships = {'for': []}
-    if participant != idol and participant != idol.primary_membership.group:
-        relationships['for'].append(participant)
-    if participant == idol:
-        # We return an empty dictionary to tell the template
-        # tag that this is a solo work.
+    relationships = {}
+    if not isinstance(participant, Group):
         relationships['solo'] = True
-
-        # Hackity hack. We DO NOT want to show the "solo work"
-        # pill for memebers of the soloist group.
         if 'Soloist' in str(idol.primary_membership):
+            # Hackity hack. We DO NOT want to show the "solo work"
+            # pill for memebers of the soloist group.
             relationships['soloist'] = True
+    elif participant != idol.primary_membership.group:
+        relationships['for'] = [participant]
     return relationships
 
 
@@ -36,9 +35,7 @@ def parse_idols(participants, idol):
     groups = idol.groups.all()
     relationships = {'for': [], 'with': []}
     for participant in participants:
-        if participant in groups and (
-            participant != idol.primary_membership.group
-            or participant != idol):
+        if participant in groups and participant != idol.primary_membership.group:
             relationships['for'].append(participant)
         elif participant != idol:
             relationships['with'].append(participant)

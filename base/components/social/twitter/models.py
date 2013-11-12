@@ -1,7 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
-
-from twitter import Twitter
 
 from components.people.models import Group, Idol
 
@@ -37,9 +34,9 @@ class Tweet(models.Model):
 
     # Replies.
     in_reply_to_user_id = models.BigIntegerField(blank=True, null=True)
-    in_reply_to_user_id_str = models.CharField(blank=True, max_length=200)
+    in_reply_to_user_id_str = models.CharField(blank=True, max_length=200, null=True)
     in_reply_to_status_id = models.BigIntegerField(blank=True, null=True)
-    in_reply_to_status_id_str = models.CharField(blank=True, max_length=200)
+    in_reply_to_status_id_str = models.CharField(blank=True, max_length=200, null=True)
 
     # Retweets.
     retweeted = models.BooleanField(default=False)

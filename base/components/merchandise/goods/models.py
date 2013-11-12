@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from model_utils import Choices, FieldTracker
@@ -59,8 +60,27 @@ class Base(base.Merchandise):
             return u'%s from %s' % (self.romanized_name, self.source)
         return u'%s' % self.romanized_name
 
+    def clean(self, *args, **kwargs):
+        # Of course the date a good is available until cannot be earlier than
+        # the date it was released.
+        if (self.available_from and self.available_until) and (self.available_until < self.available_from):
+            message = u'The "Available Until" date is earlier than "Available From".'
+            raise ValidationError(message)
+
+        # Goods must be associated with at least one idol or one group. Raise
+        # a ValidationError if none are associated.
+        if not self.groups and not self.idols:
+            message = u'Goods must be associated with at least one idol or group.'
+            raise ValidationError(message)
+
+        if not self.event and not self.shop:
+            message = u'Goods must either originate from a shop or an event.'
+            raise ValidationError(message)
+        super(Base, self).clean(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         self.released = self.available_from
+        self.full_clean()
         super(Base, self).save(*args, **kwargs)
 
 

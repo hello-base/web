@@ -22,7 +22,13 @@
         </div>
         <h1 class="profile-name">
           <span class="name"><b>{{ object.family_name }}</b>{{ object.given_name }}</span>
-          <span class="romanized-name" itemprop="name"><b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}</span>
+          <span class="romanized-name" itemprop="name">
+          {% if object.is_gaijin %}
+            {{ object.romanized_given_name }} <b>{{ object.romanized_family_name }}</b>
+          {% else %}
+            <b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}
+          {% endif %}
+          </span>
           {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>

@@ -9,3 +9,11 @@ class ChannelFactory(factory.django.DjangoModelFactory):
 
 class VideoFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Video
+
+    channel = factory.SubFactory(ChannelFactory)
+
+
+class ThumbnailFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Thumbnail
+
+    video = factory.SubFactory(VideoFactory)

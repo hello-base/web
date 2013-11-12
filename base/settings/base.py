@@ -28,7 +28,6 @@ class Base(Configuration):
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.humanize',
-        'django.contrib.markup',
         'django.contrib.messages',
         'django.contrib.sessions',
         'django.contrib.sitemaps',
@@ -38,6 +37,7 @@ class Base(Configuration):
     COMPONENTS = [
         'components.accounts',
         'components.events',
+        'components.history',
         'components.merchandise',
         'components.merchandise.goods',
         'components.merchandise.media',
@@ -49,6 +49,7 @@ class Base(Configuration):
     PLUGINS = [
         'floppyforms',
         'imagekit',
+        'markdown_deux',
         'south',
         'typogrify',
     ]
@@ -202,7 +203,6 @@ class Base(Configuration):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['djcelery']
     CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
     CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
     setup_loader()
@@ -244,8 +244,8 @@ class Base(Configuration):
 
     # components.socialize.
     # --------------------------------------------------------------------------
-    TWITTER_CONSUMER_KEY = values.Value('', environ_prefix=None)
-    TWITTER_CONSUMER_SECRET = values.Value('', environ_prefix=None)
-    TWITTER_OAUTH_TOKEN = values.Value('', environ_prefix=None)
-    TWITTER_OAUTH_SECRET = values.Value('', environ_prefix=None)
-    YOUTUBE_DEVELOPER_KEY = values.Value('', environ_prefix=None)
+    TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
+    TWITTER_CONSUMER_SECRET = values.SecretValue(environ_prefix=None)
+    TWITTER_OAUTH_TOKEN = values.SecretValue(environ_prefix=None)
+    TWITTER_OAUTH_SECRET = values.SecretValue(environ_prefix=None)
+    YOUTUBE_DEVELOPER_KEY = values.SecretValue(environ_prefix=None)

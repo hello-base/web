@@ -15,6 +15,7 @@ CLASSIFICATIONS = Choices(
         (3, 'shuffle', 'Shuffle Unit'),
         (6, 'revival', 'Revival Unit'),
         (8, 'satoyama', 'Satoyama Unit'),
+        (9, 'satoumi', 'Satoumi Unit'),
     ]),
     (OTHER, 'other', 'Other')
 )
@@ -27,7 +28,11 @@ PHOTO_SOURCES = Choices(
 
 SCOPE = Choices(
     (1, 'hp', 'Hello! Project'),
-    (2, 'ufa', 'Up Front Agency'),
+    ('Up-Front', [
+        (11, 'ufc', 'Up-Front Create'),
+        (12, 'jp', 'Just Production'),
+        (13, 'jproom', 'J.P ROOM'),
+    ]),
     (OTHER, 'other', 'Other')
 )
 

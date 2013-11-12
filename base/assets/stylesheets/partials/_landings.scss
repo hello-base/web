@@ -99,6 +99,17 @@
   text-align: center;
 }
 
+#standing-idol {
+  background-color: #3c9ce1;
+
+  .recent-posts {
+    height: 36px;
+    padding-top: 0.5rem; padding-bottom: 0.5rem;
+    text-align: center;
+  }
+  .ss-icon { @include position(relative, 1px 0 0 0); }
+}
+
 // .reasonings
 // Set of classes that style the value propositions living below the
 // homepage's masthead.

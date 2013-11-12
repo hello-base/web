@@ -1,7 +1,7 @@
 from collections import defaultdict
 from operator import attrgetter
 
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import DetailView
 
 from ohashi.shortcuts import get_object_or_none
 
@@ -19,15 +19,18 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         # We need to split memberships into four groups. The active
         # leader, the active members, the former members and the
         # former leaders.
+        target = self.object.ended
         memberships = self.object.memberships.order_by('started', 'idol__birthdate').select_related('idol', 'group')
+        context['fact'] = self.object.facts.order_by('?').first()
         context['memberships'] = {
-            'active': [m for m in memberships if m.ended is None],
             'active_count': len([m for m in memberships if m.ended is None]),
-            'inactive': [m for m in memberships if m.ended],
+            'inactive': [m for m in memberships.inactive(target=target)],
             'inactive_count': len([m for m in memberships if m.ended]),
             'leader': get_object_or_none(Membership.objects.select_related('idol'), group=self.object.pk, ended__isnull=True, is_leader=True),
             'leaders': sorted([m for m in memberships if m.ended and m.is_leader and m.leadership_started is not None], key=attrgetter('leadership_started')),
             'leader_count': len([m for m in memberships if m.ended and m.is_leader and m.leadership_started is not None]),
+            'lineup': [m for m in memberships.lineup(target=target)],
+            'lineup_count': len([m for m in memberships.lineup(target=target)]),
 
             # 'active': [m for m in memberships if m.ended is None and m.is_leader == False],
             # 'inactive': [m for m in memberships if m.ended and m.is_leader == False],

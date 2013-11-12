@@ -8,6 +8,8 @@ from components.people.factories import (FactFactory, GroupFactory,
     GroupshotFactory, HeadshotFactory, IdolFactory, LeadershipFactory,
     MembershipFactory, StaffFactory)
 
+today = datetime.date.today()
+delta = datetime.timedelta(days=1)
 pytestmark = pytest.mark.django_db
 
 
@@ -24,12 +26,50 @@ class TestGroups:
         assert response.status_code == 200
 
     def test_age(self):
-        active = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366))
-        inactive = GroupFactory(started=datetime.date.today() - datetime.timedelta(days=366), ended=datetime.date.today())
+        active = GroupFactory(started=today - datetime.timedelta(days=366))
+        inactive = GroupFactory(started=today - datetime.timedelta(days=366), ended=today)
         assert active.age == 1
         assert active.age_in_days == 366
         assert inactive.age == 1
         assert inactive.age_in_days == 366
+
+    def test_targeted_is_active(self):
+        targeted_active = GroupFactory()
+        assert targeted_active.is_active(target=today)
+
+        targeted_inactive = GroupFactory(ended=today - delta)
+        assert not targeted_inactive.is_active(target=today)
+
+        targeted_upcoming = GroupFactory(started=today + delta)
+        assert not targeted_upcoming.is_active(target=today)
+
+    def test_supergroup_subgroups(self):
+        supergroup = GroupFactory()
+        for i in xrange(3):
+            supergroup.groups.add(GroupFactory(started=today - datetime.timedelta(i)))
+        assert supergroup.groups.count() > 0
+        assert supergroup.groups.all()[0] == supergroup.groups.order_by('started')[0]
+
+    def test_generations(self):
+        group = GroupFactory()
+        idols = [IdolFactory() for i in xrange(3)]
+        [
+            MembershipFactory(
+                group=group, idol=idols[i], generation=i + 1
+            ) for i in xrange(3)
+        ]
+
+        generations = group.generations()
+        assert len(generations) == 3
+        for k, v in generations.iteritems():
+            assert isinstance(k, int)
+            assert len(v) == 1
+
+    def test_generations_failure(self):
+        group = GroupFactory()
+        idols = [IdolFactory() for i in xrange(3)]
+        [MembershipFactory(group=group, idol=idols[i]) for i in xrange(3)]
+        assert not group.generations()
 
 
 class TestIdols:
@@ -51,7 +91,7 @@ class TestIdols:
         assert factory.romanized_name == 'JunJun'
 
     def test_gaijin(self):
-        nihonjin = IdolFactory()
+        nihonjin = IdolFactory(family_name=u'譜久村', given_name=u'聖')
         assert not nihonjin.is_gaijin()
 
         gaijin = IdolFactory(romanized_family_name='Sandbo', romanized_given_name='Lehua')
@@ -75,63 +115,97 @@ class TestMemberships:
         assert isinstance(factory.idol, Idol)
         assert 'family' and 'group' in repr(factory)
 
+    def test_primary_membership_switching(self):
+        idol = IdolFactory()
+        membership1 = MembershipFactory(idol=idol, is_primary=True)
+        assert idol.primary_membership == membership1
+
+        membership1.is_primary = False
+        membership1.save()
+        membership2 = MembershipFactory(idol=idol, is_primary=True)
+        assert idol.primary_membership == membership2
+
     def test_is_active(self):
         active = MembershipFactory()
         assert active.is_active()
 
-        impending_inactive = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        impending_inactive = MembershipFactory(ended=today + delta)
         assert impending_inactive.is_active()
 
-        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive = MembershipFactory(ended=today - delta)
         assert not inactive.is_active()
+
+    def test_targeted_is_active(self):
+        targeted_active = MembershipFactory()
+        assert targeted_active.is_active(target=today)
+
+        targeted_inactive = MembershipFactory(ended=today - delta)
+        assert not targeted_inactive.is_active(target=today)
+
+        targeted_upcoming = MembershipFactory(started=today + delta)
+        assert not targeted_upcoming.is_active(target=today)
 
     def test_days_before_starting(self):
         factory = MembershipFactory()
         assert factory.days_before_starting() == 0
 
     def test_days_before_ending(self):
-        factory = MembershipFactory(ended=datetime.date.today())
-        assert factory.days_before_ending() == 365
+        active = MembershipFactory()
+        assert not active.days_before_ending()
+
+        inactive = MembershipFactory(ended=today)
+        assert inactive.days_before_ending() == 365
 
     def test_tenure_in_days(self):
         active = MembershipFactory()
         assert active.tenure_in_days() == 365
 
-        inactive = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive = MembershipFactory(ended=today - delta)
         assert inactive.tenure_in_days() == 364
 
     def test_days_before_becoming_leader(self):
-        factory = LeadershipFactory()
-        assert factory.days_before_becoming_leader() == 0
+        member = MembershipFactory()
+        assert not member.days_before_becoming_leader()
+
+        leader = LeadershipFactory()
+        assert leader.days_before_becoming_leader() == 0
 
     def test_leadership_tenure(self):
-        active_leader = LeadershipFactory()
-        assert active_leader.leadership_tenure() == '1 year'
+        member = MembershipFactory()
+        assert not member.leadership_tenure()
 
-        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
-        assert inactive_leader.leadership_tenure() == '12 months'
+        active_leader = LeadershipFactory()
+        quirk = active_leader.leadership_tenure().replace(u'\xa0', ' ')
+        assert quirk == u'1 year'
+
+        inactive_leader = LeadershipFactory(leadership_ended=today - delta)
+        quirk = inactive_leader.leadership_tenure().replace(u'\xa0', ' ')
+        assert quirk == u'12 months'
 
     def test_leadership_tenure_in_days(self):
+        member = MembershipFactory()
+        assert not member.leadership_tenure_in_days()
+
         active_leader = LeadershipFactory()
         assert active_leader.leadership_tenure_in_days() == 365
 
-        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_leader = LeadershipFactory(leadership_ended=today - delta)
         assert inactive_leader.leadership_tenure_in_days() == 364
 
     def test_standing(self):
         active_member = MembershipFactory()
         assert active_member.standing == 'Member'
 
-        impending_inactive_member = MembershipFactory(ended=datetime.date.today() + datetime.timedelta(days=1))
+        impending_inactive_member = MembershipFactory(ended=today + delta)
         assert impending_inactive_member.standing == 'Member'
 
-        inactive_member = MembershipFactory(ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_member = MembershipFactory(ended=today - delta)
         assert inactive_member.standing == 'Former member'
 
         active_leader = LeadershipFactory()
         assert active_leader.standing == 'Leader'
 
-        inactive_leader = LeadershipFactory(leadership_ended=datetime.date.today() - datetime.timedelta(days=1))
+        inactive_leader = LeadershipFactory(leadership_ended=today - delta)
         assert inactive_leader.standing == 'Former leader'
 
         group = GroupFactory(romanized_name='Soloist')
@@ -170,4 +244,3 @@ class TestFacts:
         idol = IdolFactory()
         idol_fact = FactFactory(idol=idol)
         assert idol_fact.parent == idol
-

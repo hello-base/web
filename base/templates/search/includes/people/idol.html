@@ -1,9 +1,13 @@
+{% load static %}
+
 {% with result.object as object %}
 <div class="result-item people idol">
-  <div class="item-icon"><span class="ss-icon ss-mic"></span></div>
+  <div class="item-image">
+    {% if object.photo_thumbnail %}<img src="{% get_media_prefix %}{{ object.photo_thumbnail }}">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+  </div>
   <div class="item-object">
     <a href="{{ object.get_absolute_url }}">
-      <span class="item-romanized-name">{{ object.romanized_name }}{% if object.romanized_alias %} ({{ object.romanized_alias }}){% endif %}</span>
+      <span class="item-romanized-name">{{ object.romanized_name }}{% if object.romanized_alias %} ({{ object.romanized_family_name }} {{ object.romanized_given_name }}){% endif %}</span>
       <span class="item-name">{{ object.name }}{% if object.alias %} ({{ object.alias }}){% endif %}</span>
     </a>
   </div>

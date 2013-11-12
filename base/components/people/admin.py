@@ -1,8 +1,5 @@
 from django.contrib import admin
 
-from markdown import markdown
-from typogrify.templatetags.typogrify_tags import typogrify
-
 from components.accounts.admin import ContributorMixin
 
 from .models import Fact, Group, Groupshot, Headshot, Idol, Membership, Staff
@@ -65,10 +62,10 @@ class GroupAdmin(ContributorMixin):
         ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    filter_horizontal = ['groups']
     inlines = [GroupMembershipInline, GroupshotInline, GroupFactInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
+    list_filter = ['classification', 'status', 'scope']
     prepopulated_fields = {'slug': ['romanized_name']}
     readonly_fields = ['photo', 'photo_thumbnail']
     search_fields = ['romanized_name', 'name']
@@ -78,32 +75,26 @@ class GroupAdmin(ContributorMixin):
         'fk': ['parent'],
         'm2m': ['groups'],
     }
-
-    def save_model(self, request, obj, form, change):
-        obj.note_processed = typogrify(markdown(obj.note, ('footnotes',)))
-        obj.save()
 admin.site.register(Group, GroupAdmin)
 
 
 class IdolAdmin(ContributorMixin):
     fieldsets = (
         ('Status', {'fields': (('status', 'scope'),)}),
-        ('Basics', {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
+        ('Basics', {'fields': (('romanized_name', 'name'), ('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
         ('Dates', {'fields': (('started', 'graduated', 'retired'),)}),
         ('Birth Details', {'fields': ('birthdate', ('birthplace_romanized', 'birthplace'), ('birthplace_latitude', 'birthplace_longitude'))}),
-        ('Details & Options', {'fields': (('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
+        ('Details & Options', {'fields': ('color', ('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
-    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope']
+    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope', 'started', 'graduated', 'retired']
+    list_display_links = ['romanized_family_name', 'romanized_given_name']
     list_editable = ['status', 'scope']
+    list_filter = ['status', 'scope']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name']}
-    readonly_fields = ['photo', 'photo_thumbnail']
+    readonly_fields = ['romanized_name', 'name', 'photo', 'photo_thumbnail']
     search_fields = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
-
-    def save_model(self, request, obj, form, change):
-        obj.note_processed = typogrify(markdown(obj.note, ('footnotes',)))
-        obj.save()
 admin.site.register(Idol, IdolAdmin)
 
 

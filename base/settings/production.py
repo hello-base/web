@@ -2,7 +2,9 @@
 import os
 import sys
 
+from celery.schedules import crontab
 from configurations import values
+from postgresify import postgresify
 from redisify import redisify
 
 from .base import Base as Settings
@@ -38,6 +40,12 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     SECRET_KEY = os.environ.get('SECUREKEY_VIOLET_KEY', '').split(',')[0]
 
+    # Database Configuration.
+    # --------------------------------------------------------------------------
+    DATABASES = postgresify()
+    if 'default' in DATABASES:  # pragma: no branch
+        DATABASES['default']['CONN_MAX_AGE'] = 600
+
     # Caching Configuration.
     # --------------------------------------------------------------------------
     CACHES = redisify(default='redis://localhost')
@@ -56,7 +64,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['djangosecure']
     SECURE_HSTS_SECONDS = 60
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(False)
     SECURE_FRAME_DENY = values.BooleanValue(True)
     SECURE_CONTENT_TYPE_NOSNIFF = values.BooleanValue(True)
     SECURE_BROWSER_XSS_FILTER = values.BooleanValue(True)
@@ -64,6 +72,7 @@ class Production(Settings):
     SESSION_COOKIE_SECURE = values.BooleanValue(True)
     SESSION_COOKIE_HTTPONLY = values.BooleanValue(True)
     SECURE_SSL_REDIRECT = values.BooleanValue(True)
+    SECURE_REDIRECT_EXEMPT = [r'https?://(blog\.hello-base\.com\/?)']
 
     # Site Configuration.
     # --------------------------------------------------------------------------
@@ -79,9 +88,9 @@ class Production(Settings):
     STATICFILES_STORAGE = 'components.storage.S3ManifestStorage'
 
     # Amazon Web Services
-    AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='', environ_name='AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = values.SecretValue(environ_prefix='', environ_name='AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = values.SecretValue(environ_prefix='', environ_name='AWS_STORAGE_BUCKET_NAME')
+    AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='')
+    AWS_SECRET_ACCESS_KEY = values.SecretValue(environ_prefix='')
+    AWS_STORAGE_BUCKET_NAME = values.SecretValue(environ_prefix='')
     AWS_AUTO_CREATE_BUCKET = True
     AWS_PRELOAD_METADATA = True
     AWS_QUERYSTRING_AUTH = False
@@ -95,7 +104,6 @@ class Production(Settings):
     DEFAULT_S3_PATH = 'media'
     STATIC_S3_PATH = 'static'
     CDN_DOMAIN = 'dxglax8otc2dg.cloudfront.net'
-    # CDN_DOMAIN = 'hellobase-revyverinc.netdna-ssl.com'
     MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
     STATIC_URL = 'https://%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
 
@@ -166,6 +174,13 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     BROKER_URL = values.Value(environ_prefix='', environ_name='OPENREDIS_URL')
     CELERY_RESULT_BACKEND = BROKER_URL
+    CELERY_TIMEZONE = 'UTC'
+    CELERYBEAT_SCHEDULE = {
+        'fetch_latest_youtube_videos': {
+            'task': 'tasks.fetch_latest_videos',
+            'schedule': crontab(minute=0, hour=0),
+        },
+    }
 
     # django-haystack (ElasticSearch).
     # --------------------------------------------------------------------------
@@ -185,6 +200,5 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     IMAGEKIT_CACHE_BACKEND = 'staticfiles'
     IMAGEKIT_CACHEFILE_DIR = 'cache'
-    IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Async'
     IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
     IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'

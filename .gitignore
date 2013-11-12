@@ -39,8 +39,11 @@ nosetests.xml
 .sass-cache
 .venv
 
+*.sublime-*
+
 backups
 base/build
 base/javascripts
 base/media
 base/static
+htmlcov

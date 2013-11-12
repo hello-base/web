@@ -6,11 +6,11 @@ from .models import Editor
 
 class ContributorMixin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
-        super(ContributorMixin, self).save_model(request, obj, form, change)
         if not change:
             obj.submitted_by = request.user
-        obj.edited_by.add(request.user)
         obj.save()
+        obj.edited_by.add(request.user)
+        super(ContributorMixin, self).save_model(request, obj, form, change)
 
 
 class EditorAdmin(admin.ModelAdmin):

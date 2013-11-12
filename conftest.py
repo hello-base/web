@@ -1,7 +1,6 @@
 import os
 
 from django import get_version
-from django.conf import settings
 
 
 def pytest_report_header(config):
@@ -9,6 +8,8 @@ def pytest_report_header(config):
 
 
 def pytest_configure():
-    if not settings.configured:
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'base.settings'
-        os.environ['DJANGO_CONFIGURATION'] = 'Testing'
+    import dotenv
+    dotenv.read_dotenv()
+
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'base.settings'
+    os.environ['DJANGO_CONFIGURATION'] = 'Testing'

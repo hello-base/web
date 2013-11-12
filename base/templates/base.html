@@ -5,6 +5,7 @@
 <head prefix="og: http://ogp.me/ns#">
 <title>{% block title_override %}{% block title %}{% endblock %} &middot; Hello! Base &gt; The Hello! Project Database{% endblock %}</title>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="author" content="Revyver, Inc.">
 <meta name="google" value="notranslate">
 <meta name="description" content="Discover everything about Hello! Project. We are the base of your fandom. We are Hello! Base.">
@@ -17,16 +18,13 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="{% static 'images/avatar.png' %}">
 {% endblock %}
-
 <link rel="author" href="{% url "humans" %}" type="text/plain" />
 <link rel="dns-prefetch" href="//ajax.googleapis.com">
-<link rel="dns-prefetch" href="//hellobase-revyverinc.netdna-ssl.com">
+<link rel="dns-prefetch" href="//dxglax8otc2dg.cloudfront.net">
 <link rel="icon" href="{% static 'images/favicon.ico' %}">
 <link rel="search" type="application/opensearchdescription+xml" title="Hello! Base Search" href="{% url 'opensearch' %}">
-<!-- Stylesheets -->
 <link rel="stylesheet" href="//cloud.typography.com/7547452/745842/css/fonts.css">
 <link rel="stylesheet" href="{% if debug %}{% static 'stylesheets/application.css' %}{% else %}{% static 'stylesheets/production.min.css' %}{% endif %}" data-turbolinks-track>
-<!-- Javascripts -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="{% static 'javascripts/components.min.js' %}" data-turbolinks-track></script>
 <script src="{% static 'javascripts/application.min.js' %}" data-turbolinks-track></script>

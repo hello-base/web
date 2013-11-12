@@ -62,4 +62,4 @@ class TrackSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return Track.objects.all()
+        return Track.objects.originals()

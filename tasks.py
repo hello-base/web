@@ -10,7 +10,7 @@ def _out(name, message):
 
 
 @invoke.task(name='deploy', pre=['test', 'collect'])
-def deploy(verbose=False, **kwargs):
+def deploy(verbose=False, migrate=False, **kwargs):
     out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
 
@@ -24,8 +24,20 @@ def deploy(verbose=False, **kwargs):
         invoke.run('git commit -m "Static manifest has updated; committing updated manifest.json."', hide=hide)
 
     # Ready? Let's go.
+    if migrate:
+        out('Snapshotting the production database.')
+        invoke.run('heroku pgbackups:capture --expire', hide=hide)
+        out('The migrations flag has been triggered, disable preboot.')
+        invoke.run('heroku labs:disable preboot', hide=hide)
+
     out('Deploying project to Heroku.')
     invoke.run('git push heroku master')
+
+    if migrate:
+        out('Deploy to Heroku complete. Migrating...')
+        invoke.run('heroku run python manage.py migrate')
+        out('Re-enabling preboot.')
+        invoke.run('heroku labs:enable preboot', hide=hide)
 
     # Done!
     out('All done~!')
@@ -42,7 +54,7 @@ def collect(verbose=False, **kwargs):
     out('Compiling stylesheets using production environment settings.')
     invoke.run('compass compile -e production --force', hide=hide)
     out('Using Autoprefix to auto-prefix.')
-    invoke.run('autoprefixer base/static/stylesheets/application.css', hide=hide)
+    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css', hide=hide)
 
     # Build and send it off.
     out('Using `buildstatic` to concatenate assets.')
@@ -91,8 +103,9 @@ def development_test(verbose=True, coverage=False, **kwargs):
 
     if coverage:
         out('Running tests (with Coverage report).')
-        invoke.run('coverage run --source base -m %s' % pytest, pty=True, hide=hide)
-        invoke.run('coverage report -m', pty=True, hide=hide)
+        invoke.run('coverage run --branch --source base -m %s' % pytest, pty=True, hide=hide)
+        invoke.run('coverage html', pty=True, hide=hide)
+        invoke.run('open htmlcov/index.html')
     else:
         out('Running tests.')
         invoke.run('%s' % pytest, pty=True, hide=hide)
@@ -132,6 +145,7 @@ def heroku_pull(verbose=False, database='hello-base', **kwargs):
 
     # Restore it.
     invoke.run('pg_restore --verbose --clean --no-acl --no-owner -h localhost -d %s latest.dump' % database, hide=hide)
+    invoke.run('rm latest.dump', hide=hide)
     out('Restored latest production dump to local database.')
 
 

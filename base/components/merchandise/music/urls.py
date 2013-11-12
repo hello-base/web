@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url
 from django.http import Http404
-from django.views.generic.base import RedirectView
 
 from multiurl import ContinueResolving, multiurl
 
@@ -21,6 +20,5 @@ urlpatterns = patterns('',
     url(r'^music/tracks/(?P<slug>[-\w]+)/$', name='track-detail', view=TrackDetailView.as_view()),
     # url(r'^music/tracks/$', name='track-browse', view=TrackBrowseView.as_view()),
 
-    # url(r'^music/browse/$', name='music-browse', view=MusicBrowseView.as_view()),
-    # url(r'^music/$', name='music-list', view=RedirectView.as_view(url='/music/browse/'))
+    # url(r'^music/$', name='music-browse', view=MusicBrowseView.as_view()),
 )

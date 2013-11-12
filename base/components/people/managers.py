@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.db.models import Count, Max, Min, Q
+from django.db.models import Q
 from django.db.models.query import QuerySet
 
 from .constants import CLASSIFICATIONS, SCOPE, STATUS
@@ -15,16 +15,10 @@ class IdolQuerySet(QuerySet):
         return self.exclude(status=STATUS.active)
 
     # Convenience Groupings
-    def everybody_else(self):
-        return self.inactive().filter(memberships__ended__isnull=False).annotate(ended=Max('memberships__ended')).order_by('-ended')
-
     def hello_project(self):
         from .models import Group
         groups = Group.objects.hello_project().values_list('id', flat=True)
         return self.filter(primary_membership__group_id__in=groups, primary_membership__ended__isnull=True)
-
-    def ufa(self):
-        return self.active().filter(scope=SCOPE.ufa)
 
     # Aggregations
     def average_age(self):
@@ -37,50 +31,27 @@ class IdolQuerySet(QuerySet):
         average_height = round(sum(heights) / len(heights))
         return average_height
 
-    def popular_bloodtype(self):
-        return self.values('bloodtype').annotate(Count('bloodtype')).order_by('-bloodtype__count')[0]
-
-    # Superlatives
-    def oldest_member(self):
-        return self.order_by('birthdate')[0]
-
-    def youngest_member(self):
-        return self.order_by('-birthdate')[0]
-
-    def shortest_member(self):
-        return self.exclude(height__isnull=True).order_by('height')[0]
-
-    def tallest_member(self):
-        return self.exclude(height__isnull=True).order_by('-height')[0]
-
-    def most_senior_member(self):
-        return self.annotate(started=Min('memberships__started')).order_by('started', 'birthdate')[0]
-
-    def most_junior_member(self):
-        return self.annotate(count=Count('memberships')).filter(count=1).annotate(started=Max('memberships__started')).order_by('-started', '-birthdate')[0]
-
 
 class GroupQuerySet(QuerySet):
-    def active(self):
+    def active(self, target=None):
+        if target:
+            return self.filtered().filter(Q(ended__isnull=True) | Q(ended__gte=target), started__lt=target)
         return self.filtered().filter(Q(ended__isnull=True) | Q(ended__gte=date.today()))
 
     def inactive(self):
         return self.filtered().filter(ended__lte=date.today())
 
     def filtered(self):
-        return self.exclude(name='Soloist')
+        return self.exclude(romanized_name='Soloist')
 
     def unfiltered(self):
         return self.all()
-
-    def soloists(self):
-        return self.get(name='Soloist')
 
     # Convenience Groupings
     def hello_project(self):
         # Hello Pro Kenshuusei is the only "group" classified as
         # Hello! Project that is not a major group.
-        kenshuusei = self.filter(pk=52)
+        kenshuusei = self.filter(romanized_name='Hello Pro Kenshuusei')
         actives = self.filter(classification=CLASSIFICATIONS.major, scope=SCOPE.hp, status=STATUS.active)
         return (kenshuusei | actives).order_by('started')
 
@@ -92,18 +63,18 @@ class MembershipQuerySet(QuerySet):
             return qs.filter(group=for_group)
         return qs
 
-    def inactive(self):
-        return self.filter(ended__lte=date.today()).prefetch_related('idol')
+    def inactive(self, target=None):
+        target = target or date.today()
+        return self.filter(ended__lt=target).prefetch_related('idol')
 
     def inactive_leaders(self):
         return self.leaders().filter(leadership_ended__lte=date.today())
 
-    def leader(self):
-        return self.leaders().get(Q(leadership_ended__isnull=True) | Q(leadership_ended__gte=date.today()))
-
     def leaders(self):
         return self.filter(is_leader=True).order_by('leadership_started').prefetch_related('idol')
 
-    # Convenience Methods
-    def get_primary_groups(self, idols):
-        return {m.idol_id: (m.group, m.is_leader) for m in self.filter(is_primary=True, idol__in=idols).select_related('group')}
+    def lineup(self, target=None):
+        qs = self.select_related('idol')
+        if target is not None:
+            return qs.filter(ended=target)
+        return qs.filter(Q(ended__isnull=True) | Q(ended__gte=date.today()))

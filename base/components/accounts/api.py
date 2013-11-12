@@ -1,7 +1,6 @@
 import time
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 from requests_oauthlib import OAuth2Session
 
@@ -10,6 +9,7 @@ config = {
     'client_id': getattr(settings, 'HELLO_BASE_CLIENT_ID', ''),
     'client_secret': getattr(settings, 'HELLO_BASE_CLIENT_SECRET', ''),
     'token_url': getattr(settings, 'OAUTH_TOKEN_URL', ''),
+    'redirect_url': getattr(settings, 'OAUTH_REDIRECT_URL', ''),
 }
 
 
@@ -28,7 +28,7 @@ def _token_updater(old_token, request):
 
         # Persist the new token... somehow.
         old_token.update(token)
-        if request.user:
+        if hasattr(request, 'user'):
             user = request.user
             user.access_token = token['access_token']
             user.refresh_token = token['refresh_token']
@@ -38,12 +38,12 @@ def _token_updater(old_token, request):
 
 
 def auth_session(request, token=None, state=None):
-    if token and 'expires_at' in token:
+    if token and 'expires_at' in token:  # pragma: no branch
         token['expires_in'] = int(token['expires_at'] - time.time())
 
     return OAuth2Session(
         config['client_id'],
-        redirect_uri=request.build_absolute_uri(reverse('oauth-callback')),
+        redirect_uri=config['redirect_url'],
         auto_refresh_url=config['token_url'],
         auto_refresh_kwargs={
             'client_id': config['client_id'],

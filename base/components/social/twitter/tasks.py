@@ -18,7 +18,7 @@ replace_usernames = "<a href=\"http://twitter.com/\\1\">@\\1</a>"
 
 
 @task
-def fetch_tweets(**kwargs):
+def fetch_tweets():
     api = Api()
     date_format = '%a %b %d %H:%M:%S +0000 %Y'
 
@@ -26,7 +26,7 @@ def fetch_tweets(**kwargs):
         timeline = api.fetch_timeline_by_screen_name(screen_name=user.screen_name)
         for json in timeline:
             tweet_id = json['id']
-            tweet, created = Tweet.objects.get_or_create(tweet_id=tweet_id)
+            tweet, created = Tweet.objects.get_or_create(user=user, tweet_id=tweet_id)
 
             # Do we have a retweet?
             if 'retweeted_status' in json:
@@ -34,19 +34,19 @@ def fetch_tweets(**kwargs):
 
                 # Process the retweeter.
                 retweet_user = json['retweeted_status']['user']
-                tweet.retweeter_profile_image_url = retweet_user['profile_iamge_url']
+                tweet.retweeter_profile_image_url = retweet_user['profile_image_url']
                 tweet.retweeter_screen_name = retweet_user['screen_name']
                 tweet.retweeter_name = retweet_user['name']
 
                 # Process the retweet.
                 retweet = json['retweeted_status']
-                tweet.retweeted_status_id = retweet['status_id']
-                tweet.retweeted_status_id_str = retweet['status_id_str']
+                tweet.retweeted_status_id = retweet['id']
+                tweet.retweeted_status_id_str = retweet['id_str']
                 tweet.retweeted_status_text = retweet['text']
                 tweet.retweeted_status_source = retweet['source']
 
                 # Process the date of the original retweet.
-                d = datetime.strftime(retweet['created_at'], date_format)
+                d = datetime.strptime(retweet['created_at'], date_format)
                 d -= timedelta(seconds=timezone)
                 tweet.retweeted_status_created_at = make_aware(d, get_default_timezone())
 
@@ -59,7 +59,7 @@ def fetch_tweets(**kwargs):
             tweet.in_reply_to_user_id = json['in_reply_to_user_id']
             tweet.in_reply_to_user_id_str = json['in_reply_to_user_id_str']
             tweet.in_reply_to_status_id = json['in_reply_to_status_id']
-            tweet.in_reply_to_status_id_str = json['in_reply_to_status_str']
+            tweet.in_reply_to_status_id_str = json['in_reply_to_status_id_str']
 
             # Urlize and linkify hashtags and usernames.
             tweet.text = urlize(json['text'])

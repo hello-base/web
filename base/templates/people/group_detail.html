@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load humanize static typogrify_tags %}
+{% load humanize markdown_deux_tags static typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Groups{% endblock %}
 {% block meta %}
@@ -26,10 +26,10 @@
           {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
         </h1>
       </div>
-      {% if object.note or object.get_status_display == "Other" %}
+      {% if fact or object.get_status_display == "Other" %}
       <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
-        <h4><span class="ss-icon ss-notepad"></span> Note</h4>
-        {% if object.note %}{{ object.note_processed|typogrify }}{% endif %}
+        <h4>{# <span class="ss-icon ss-notepad"></span> #} Random Fact</h4>
+        {{ fact.body|markdown|typogrify }}
         {% if object.get_status_display == "Other" %}<p>We apologize, but we are unsure of this group's status due to insufficient information.</p>{% endif %}
       </div>
       {% endif %}
@@ -40,7 +40,7 @@
     <aside class="profile-vitals">
       <div class="container">
         <ul class="vitals-list">
-          <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.age }} ({{ object.age_in_days|intcomma }} days)</li>
+          <li class="vital vital-age"><span class="vital-label"><span class="ss-icon ss-clock"></span> Age</span> {{ object.started|timesince:object.ended }} ({{ object.age_in_days|intcomma }} days)</li>
           <li class="vital vital-anniversary"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Anniversary</span> <time datetime="{{ object.started|date:"c" }}" itemprop="foundingDate">{{ object.started }}</time></li>
           {% if object.ended %}<li class="vital vital-disband"><span class="vital-label"><span class="ss-icon ss-ban"></span> Disbanded</span> <time datetime="{{ object.ended|date:"c" }}">{{ object.ended }}</time></li>{% endif %}
           {% if memberships.active_count %}<li class="vital vital-actives"><span class="vital-label"><span class="ss-icon ss-users"></span> Active Members</span> {{ memberships.active_count }}</li>{% endif %}
@@ -76,12 +76,12 @@
 
     <section class="memberships">
       <div class="container">
-        {% if memberships.active %}
+        {% if memberships.lineup %}
         <div class="actives">
           <div class="active-members">
-            <h2 class="section-title">Current Members</h2>
+            <h2 class="section-title">{% if object.ended %}Final Lineup{% else %}Current Members{% endif %}</h2>
             <ul class="membership-list active-members">
-            {% for member in memberships.active %}
+            {% for member in memberships.lineup %}
               <li class="membership" itemprop="musicGroupMember">
                 <div class="idol-image object-image">
                   {% if member.idol.photo %}<a href="{% url 'image-detail' member.idol.photo|urlencode %}" target="_blank"><img src="{% get_media_prefix %}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
@@ -109,8 +109,9 @@
             <ul class="membership-list">
             {% for member in memberships.inactive %}
               <li class="membership">
-                <div class="idol-image">
-                  {% if member.idol.photo %}<img src="{% get_media_prefix %}{{ member.idol.photo }}" width="60">{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
+                <div class="idol-image object-image">
+                  {% url 'image-detail' member.idol.photo|urlencode as former_member_image_detail %}
+                  {% if member.idol.photo %}<a href="{{ former_member_image_detail }}" target="_blank"><img src="{% get_media_prefix %}{{ member.idol.photo_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-user"></span></div>{% endif %}
                 </div>
                 <div class="idol-meta">
                   <div class="idol-header">

@@ -11,6 +11,5 @@ class EditorFactory(factory.DjangoModelFactory):
     username = factory.Sequence(lambda i: 'dancer#%s' % i)
     password = 'dancefloor'
     name = 'Tsunku'
-    email = factory.LazyAttribute(lambda a: '{0}@example.com'.format(a.name).lower())
+    email = factory.LazyAttribute(lambda a: '{0}@example.com'.format(a.username).lower())
     started = datetime.datetime.now()
-

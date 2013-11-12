@@ -24,7 +24,8 @@ sitemaps = {
     'albums': AlbumSitemap,
     'groups': GroupSitemap,
     'idols': IdolSitemap,
-    'singles': SingleSitemap
+    'singles': SingleSitemap,
+    'tracks': TrackSitemap
 }
 
 # The switch to faceted search requires a custom SearchQuerySet.
@@ -35,7 +36,7 @@ sqs = SearchQuerySet().facet('model')
 urlpatterns = patterns('',
     # Home and Search.
     url(r'^$', name='site-home', view=SiteView.as_view()),
-    url(r'^search/autocomplete/$', view=AutocompleteView.as_view()),
+    url(r'^search/autocomplete/$', name='autocomplete', view=AutocompleteView.as_view()),
     url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
 
     # Imagery.

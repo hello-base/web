@@ -1,8 +1,9 @@
 from rest_framework import generics
 
-from components.people.models import Group, Idol
+from components.people.models import Membership, Group, Idol
 
-from .serializers import GroupSerializer, IdolSerializer
+from .serializers import (GroupSerializer, IdolSerializer,
+    IdolMembershipSerializer)
 
 
 class GroupMixin(object):
@@ -19,22 +20,22 @@ class GroupDetail(GroupMixin, generics.RetrieveAPIView):
 
 
 class GroupMembershipsList(GroupMixin, generics.ListAPIView):
-    serializer_class = IdolSerializer
+    serializer_class = IdolMembershipSerializer
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        group = Group.objects.get(slug=slug)
-        return group.members.all()
+        memberships = Membership.objects.order_by('started').filter(group__slug=slug)
+        return memberships
 
 
 class GroupActiveMembershipsList(GroupMembershipsList):
     def get_queryset(self):
-        return super(GroupActiveMembershipsList, self).get_queryset().filter(memberships__ended__isnull=True)
+        return super(GroupActiveMembershipsList, self).get_queryset().filter(ended__isnull=True)
 
 
 class GroupInactiveMembershipsList(GroupMembershipsList):
     def get_queryset(self):
-        return super(GroupInactiveMembershipsList, self).get_queryset().filter(memberships__ended__isnull=False)
+        return super(GroupInactiveMembershipsList, self).get_queryset().filter(ended__isnull=False)
 
 
 class IdolList(generics.ListAPIView):

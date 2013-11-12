@@ -185,7 +185,7 @@
       display: block;
       height: 42px;
       color: $brand-lightGrey;
-      font-size: 36px;
+      font-size: 24px;
     }
   }
   .item-image {
@@ -195,6 +195,9 @@
     border-radius: 2px;
 
     img { width: 100%; }
+    .empty-image {
+      @include intrinsic(100%, 1);
+    }
   }
   .item-object { @include span-columns(5, 10); }
   .item-romanized-name {
