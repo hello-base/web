@@ -11,8 +11,10 @@ def pytest_report_header(config):
 
 
 def pytest_configure(config):
-    dotenv.read_dotenv()
+    # If we have an .env file, read it.
+    read_dotenv()
 
+    # Specifiy our settings locations, then initialize them.
     os.environ['DJANGO_SETTINGS_MODULE'] = 'base.settings'
     os.environ['DJANGO_CONFIGURATION'] = 'Testing'
     importer.install()
