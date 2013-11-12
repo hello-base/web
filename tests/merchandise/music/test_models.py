@@ -111,6 +111,10 @@ class TestAlbums:
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
 
+    def test_kind_of_compilation(self):
+        factory = AlbumFactory(is_compilation=True)
+        assert factory.kind == u'compilation'
+
     def test_digital_edition(self):
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=edition_type.digital)
@@ -160,6 +164,10 @@ class TestSingles:
         factory = SingleFactory()
         response = client.get(factory.get_absolute_url())
         assert response.status_code == 200
+
+    def test_kind_of_compilation(self):
+        factory = SingleFactory(is_indie=True)
+        assert factory.kind == u'indie'
 
     def test_get_previous_and_next(self):
         single1 = SingleFactory(romanized_name='single#1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')

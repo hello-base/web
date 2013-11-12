@@ -103,6 +103,10 @@ class Album(Base):
             except IndexError:
                 return None
 
+    @property
+    def kind(self):
+        return u'compilation' if self.compilation else None
+
 
 class Single(Base):
     is_indie = models.BooleanField('indie single?', default=False)
@@ -132,6 +136,10 @@ class Single(Base):
                 return qs.filter(released__gt=self.released)[0]
             except IndexError:
                 return None
+
+    @property
+    def kind(self):
+        return u'indie' if self.indie else None
 
 
 class Edition(models.Model):
