@@ -105,7 +105,7 @@ class Album(Base):
 
     @property
     def kind(self):
-        return u'compilation' if self.compilation else None
+        return u'compilation' if self.is_compilation else None
 
 
 class Single(Base):
@@ -139,7 +139,7 @@ class Single(Base):
 
     @property
     def kind(self):
-        return u'indie' if self.indie else None
+        return u'indie' if self.is_indie else None
 
 
 class Edition(models.Model):
