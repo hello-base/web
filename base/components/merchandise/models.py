@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+
 from django_extensions.db import fields as extensions
 
 from components.accounts.models import ContributorMixin
