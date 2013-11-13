@@ -27,6 +27,8 @@ class MagazineFactory(factory.django.DjangoModelFactory):
 class IssueFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Issue
 
+    magazine = factory.SubFactory(MagazineFactory)
+
 
 class IssueImageFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.IssueImage
@@ -38,3 +40,5 @@ class CardSetFactory(factory.django.DjangoModelFactory):
 
 class CardFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Card
+
+    issue = factory.SubFactory(IssueFactory)
