@@ -3,6 +3,7 @@ from collections import defaultdict
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timesince
@@ -12,7 +13,6 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
-from ohashi.db import models
 
 from components.accounts.models import ContributorMixin
 
@@ -94,7 +94,7 @@ class Idol(Person):
     # Birth Information.
     birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True, max_length=200)
-    birthplace_romanized = models.CharField(blank=True)
+    birthplace_romanized = models.CharField(blank=True, max_length=200)
     birthplace_latitude = models.FloatField(blank=True, null=True)
     birthplace_longitude = models.FloatField(blank=True, null=True)
 
