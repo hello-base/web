@@ -41,8 +41,8 @@ class Episode(models.Model):
 
     # Optional Information
     record_date = models.DateField(blank=True, null=True)
-    romanized_name = models.CharField(blank=True)
-    name = models.CharField(blank=True)
+    romanized_name = models.CharField(blank=True, max_length=200)
+    name = models.CharField(blank=True, max_length=200)
     number = models.IntegerField(blank=True, null=True)
 
     # Share
@@ -84,9 +84,9 @@ class Issue(models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
     volume_number = models.CharField(max_length=4)
     release_date = models.DateField(blank=True, null=True)
-    catalog_number = models.CharField(blank=True)
+    catalog_number = models.CharField(blank=True, max_length=30)
     isbn_number = models.CharField(max_length=19)  # ?
-    cover = models.ImageField(blank=True)
+    cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
         return u'%s #%s' % (self.magazine.romanized_name, self.volume_number)
@@ -94,7 +94,7 @@ class Issue(models.Model):
 
 class IssueImage(models.Model):
     issue = models.ForeignKey(Issue, related_name='gallery')
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to='appearances/issues/')
     # Gallery will allow multiple images to be uploaded by users.
 
     def __unicode__(self):
@@ -106,7 +106,7 @@ class CardSet(models.Model):
     romanized_name = models.CharField(max_length=200)
 
     # Gallery
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to='appearances/cards/')
 
     def __unicode__(self):
         return u'%s %s' % (self.magazine.romanized_name, self.romanized_name)
@@ -119,7 +119,7 @@ class Card(models.Model):
     member_of = models.ForeignKey(Group, blank=True, null=True, related_name='idol')
     group = models.ForeignKey(Group, blank=True, null=True, related_name='cards')
     number = models.IntegerField(blank=True, null=True)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to='appearances/cards/')
 
     # Non-H!P Model Information
     other_model_romanized_name = models.CharField(blank=True, max_length=200)
