@@ -32,14 +32,14 @@ class PreAuthorizationView(RedirectView):
 
 
 class PostAuthorizationView(View):
-    def get_token(self, session, redirect_uri):
+    def get_token(self, session, redirect_uri):  # pragma: no cover
         try:
             token = auth_token(session, redirect_uri)
         except InvalidGrantError:  # Whoops, try again.
             return http.HttpResponseRedirect(reverse('oauth-authorize'))
         return token
 
-    def get_profile(self, session):
+    def get_profile(self, session):  # pragma: no cover
         # Hooray! Somebody sent us up the token.
         # Now let's fetch their user from the Hello! Base ID API.
         r = session.get('%s%s' % (settings.MEISHI_ENDPOINT, 'user/'))
