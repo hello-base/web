@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.functional import cached_property
 
+from django_extensions.db import fields as extensions
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
@@ -252,7 +253,7 @@ class Track(ParticipationMixin):
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
 
     # Secondary identifier.
-    uuid = models.UUIDField(auto_add=True, blank=True, null=True)
+    uuid = extensions.UUIDField(auto=True, blank=True, null=True)    
     slug = models.SlugField(blank=True)
 
     def __unicode__(self):
