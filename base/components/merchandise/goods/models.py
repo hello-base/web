@@ -56,8 +56,8 @@ class Base(base.Merchandise):
     def __unicode__(self):
         if self.event:
             return u'%s from %s' % (self.romanized_name, self.event.nickname)
-        if self.source:
-            return u'%s from %s' % (self.romanized_name, self.source)
+        if self.shop:
+            return u'%s from %s' % (self.romanized_name, self.shop)
         return u'%s' % self.romanized_name
 
     def clean(self, *args, **kwargs):
