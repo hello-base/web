@@ -9,6 +9,7 @@ django-celery-with-redis >= 3.0, < 4.0
 django-configurations >= 0.6, < 1.0
 django-dotenv == 1.2
 django-ecstatic >= 0.1, < 1.0
+django-extensions == 1.2.5
 django-floppyforms == 1.1
 django-haystack == 2.1.0
 django-heroku-postgresify == 0.3
