@@ -2,6 +2,8 @@
 import datetime
 import factory
 
+from django.template.defaultfilters import slugify
+
 from components.merchandise.factories import MerchandiseFactory
 
 from . import models
@@ -12,6 +14,8 @@ class VideodiscFactory(MerchandiseFactory):
 
     romanized_name = factory.Sequence(lambda i: 'videodisc#%s' % i)
     name = factory.Sequence(lambda i: 'videodisc#%s' % i)
+    kind = 1  # (1, 'bestshot', 'Best Shot')
+    slug = factory.LazyAttribute(lambda s: slugify(s.romanized_name))
 
 
 class VideodiscFormatFactory(factory.django.DjangoModelFactory):
