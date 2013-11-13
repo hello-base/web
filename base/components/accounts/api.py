@@ -38,7 +38,7 @@ def _token_updater(old_token, request):
 
 
 def auth_session(request, token=None, state=None):
-    if token and 'expires_at' in token:  # pragma: no branch
+    if token and 'expires_at' in token:  # pragma: no cover
         token['expires_in'] = int(token['expires_at'] - time.time())
 
     return OAuth2Session(
