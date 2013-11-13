@@ -36,6 +36,7 @@ class Base(Configuration):
     ]
     COMPONENTS = [
         'components.accounts',
+        'components.appearances',
         'components.events',
         'components.history',
         'components.merchandise',
