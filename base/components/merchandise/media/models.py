@@ -2,9 +2,9 @@
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.db import models
 
 from model_utils import Choices
-from ohashi.db import models
 
 from components.people.models import ParticipationMixin
 from components.merchandise.models import Merchandise
@@ -41,7 +41,7 @@ class VideodiscFormat(models.Model):
     # Metadata
     kind = models.IntegerField(choices=FORMAT_TYPES, default=FORMAT_TYPES.dvd)
     released = models.DateField(blank=True, db_index=True, default=date.min, null=True)
-    catalog_number = models.CharField(blank=True)
+    catalog_number = models.CharField(blank=True, max_length=25)
 
     # Content
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/media/videos/')
@@ -57,9 +57,9 @@ class VideodiscFormat(models.Model):
 
 
 class Clip(ParticipationMixin):
-    romanized_name = models.CharField(blank=True,
+    romanized_name = models.CharField(blank=True, max_length=200,
         help_text='This should be filled out if there is no coorresponding track or if the clip was an MC.')
-    name = models.CharField(blank=True)
+    name = models.CharField(blank=True, max_length=200)
     format = models.ForeignKey(VideodiscFormat, related_name='order')
     track = models.ForeignKey('music.Track', blank=True, null=True, related_name='on_formats')
     disc = models.PositiveSmallIntegerField(default=1)

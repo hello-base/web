@@ -3,6 +3,7 @@ from collections import defaultdict
 from datetime import date
 
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timesince
@@ -12,7 +13,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
-from ohashi.db import models
+from ohashi.db import models as ohashi
 
 from components.accounts.models import ContributorMixin
 
@@ -70,7 +71,7 @@ class Person(ContributorMixin):
 class Idol(Person):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
-    birthdays = models.BirthdayManager()
+    birthdays = ohashi.BirthdayManager()
     tracker = FieldTracker()
 
     # Status.
@@ -92,9 +93,9 @@ class Idol(Person):
         help_text='The date this idol retired.')
 
     # Birth Information.
-    birthdate = models.BirthdayField(blank=True, db_index=True, null=True)
+    birthdate = ohashi.BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True, max_length=200)
-    birthplace_romanized = models.CharField(blank=True)
+    birthplace_romanized = models.CharField(blank=True, max_length=200)
     birthplace_latitude = models.FloatField(blank=True, null=True)
     birthplace_longitude = models.FloatField(blank=True, null=True)
 
@@ -226,7 +227,7 @@ class Membership(models.Model):
     tracker = FieldTracker()
 
     idol = models.ForeignKey(Idol, related_name='memberships')
-    group = models.CustomManagerForeignKey(Group, blank=True, null=True, manager=Group.objects.unfiltered, related_name='memberships')
+    group = ohashi.CustomManagerForeignKey(Group, blank=True, null=True, manager=Group.objects.unfiltered, related_name='memberships')
 
     # Group Involvement Details.
     is_primary = models.BooleanField('Primary?', db_index=True, default=False)

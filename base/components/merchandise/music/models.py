@@ -3,15 +3,16 @@ from operator import attrgetter
 
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.functional import cached_property
 
+from django_extensions.db import fields as extensions
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
-from ohashi.db import models
 
 from components.merchandise.models import Merchandise
 from components.people.models import ParticipationMixin
@@ -20,8 +21,8 @@ from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
 
 
 class Label(models.Model):
-    romanized_name = models.CharField()
-    name = models.CharField()
+    romanized_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     logo = models.ImageField(blank=True, null=True, upload_to='merchandise/music/labels/')
     slug = models.SlugField()
 
@@ -31,7 +32,7 @@ class Label(models.Model):
 
 class Base(Merchandise):
     # Music-specific shared metadata.
-    number = models.CharField(blank=True)
+    number = models.CharField(blank=True, max_length=5)
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
@@ -159,11 +160,11 @@ class Edition(models.Model):
     single = models.ForeignKey(Single, blank=True, null=True, related_name='editions')
 
     # Metadata
-    romanized_name = models.CharField(blank=True)
-    name = models.CharField(blank=True)
+    romanized_name = models.CharField(blank=True, max_length=100)
+    name = models.CharField(blank=True, max_length=100)
     kind = models.IntegerField(choices=EDITIONS, db_index=True, default=EDITIONS.regular)
     released = models.DateField(blank=True, db_index=True, null=True)
-    catalog_number = models.CharField(blank=True)
+    catalog_number = models.CharField(blank=True, max_length=25)
     price = models.IntegerField(blank=True, null=True)
 
     # Contents
@@ -228,17 +229,17 @@ class Track(ParticipationMixin):
     single = models.ForeignKey(Single, blank=True, null=True, related_name='tracks')
 
     # Metadata.
-    romanized_name = models.CharField()
-    name = models.CharField(blank=True)
-    translated_name = models.CharField(blank=True)
+    romanized_name = models.CharField(max_length=200)
+    name = models.CharField(blank=True, max_length=200)
+    translated_name = models.CharField(blank=True, max_length=200)
 
     # Alternate Versions.
     original_track = models.ForeignKey('self', blank=True, null=True, related_name='children',
         help_text='If this track is a cover or alternate, choose the original track it\'s based off of.')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
-    romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True)
-    name_alternate = models.CharField('alternate name', blank=True)
+    romanized_name_alternate = models.CharField('alternate name (romanized)', blank=True, max_length=200)
+    name_alternate = models.CharField('alternate name', blank=True, max_length=200)
 
     # Lyrics.
     lyrics = models.TextField(blank=True)
@@ -252,7 +253,7 @@ class Track(ParticipationMixin):
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
 
     # Secondary identifier.
-    uuid = models.UUIDField(auto_add=True, blank=True, null=True)
+    uuid = extensions.UUIDField(auto=True, blank=True, null=True)    
     slug = models.SlugField(blank=True)
 
     def __unicode__(self):
@@ -361,8 +362,8 @@ class Video(models.Model):
     single = models.ForeignKey(Single, blank=True, null=True, related_name='videos')
 
     # Metadata
-    romanized_name = models.CharField()
-    name = models.CharField(blank=True)
+    romanized_name = models.CharField(max_length=200)
+    name = models.CharField(blank=True, max_length=200)
     kind = models.PositiveSmallIntegerField(choices=VIDEO_TYPES, default=VIDEO_TYPES.pv_regular)
 
     # Saved (but unused) Fields.
