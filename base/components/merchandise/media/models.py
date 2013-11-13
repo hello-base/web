@@ -33,9 +33,6 @@ class Videodisc(Merchandise):
     def get_absolute_url(self):
         return reverse('videodisc-detail', kwargs={'slug': self.slug})
 
-    def save(self, *args, **kwargs):
-        super(Videodisc, self).save(*args, **kwargs)
-
 
 class VideodiscFormat(models.Model):
     FORMAT_TYPES = Choices((1, 'dvd', 'DVD'), (2, 'bluray', 'Blu-ray Disc'))
