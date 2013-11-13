@@ -67,12 +67,6 @@ class Base(base.Merchandise):
             message = u'The "Available Until" date is earlier than "Available From".'
             raise ValidationError(message)
 
-        # Goods must be associated with at least one idol or one group. Raise
-        # a ValidationError if none are associated.
-        if not self.groups and not self.idols:
-            message = u'Goods must be associated with at least one idol or group.'
-            raise ValidationError(message)
-
         if not self.event and not self.shop:
             message = u'Goods must either originate from a shop or an event.'
             raise ValidationError(message)
