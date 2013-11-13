@@ -115,15 +115,13 @@ def test_group(release):
 
 def test_groups(release):
     subject = GroupFactory()
-    release.participants = [subject]
-    release.participants.extend([GroupFactory() for i in xrange(3)])
-    release.participants.extend([IdolFactory() for i in xrange(3)])
+    release.participants = [subject, GroupFactory(), IdolFactory()]
     out = Template(
         '{% load music_tags %}'
         '{% contextual_participants release=release context=object %}'
     ).render(Context({'release': release, 'object': subject}))
     assert 'with' in out
-    assert len(BeautifulSoup(out).find_all('a')) == 6
+    assert len(BeautifulSoup(out).find_all('a')) == 2
 
 
 def test_supergroup_with_group_context(release):
