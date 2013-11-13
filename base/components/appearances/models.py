@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 
 from model_utils import FieldTracker
 
-from ..people.models import Idol, Group
+from components.people.models import Idol, Group
 
 
 class Show(models.Model):
