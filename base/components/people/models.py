@@ -128,9 +128,6 @@ class Idol(Person):
     def latest_album(self):
         return self.albums.latest()
 
-    def latest_event(self):
-        return self.events.latest()
-
     def latest_single(self):
         return self.singles.latest()
 
@@ -214,9 +211,6 @@ class Group(ContributorMixin):
 
     def latest_album(self):
         return self.albums.latest()
-
-    def latest_event(self):
-        return self.events.latest()
 
     def latest_single(self):
         return self.singles.latest()
