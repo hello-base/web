@@ -3,7 +3,6 @@
 analytics-python >= 0.4.2, < 1.0.0
 celery-haystack >= 0.7.2, < 1.0.0
 Django == 1.6
-django-birthday == 0.1.1
 django-braces >=1.2.2, < 2.0.0
 django-celery-with-redis >= 3.0, < 4.0
 django-configurations >= 0.6, < 1.0
