@@ -6,7 +6,7 @@ import uuid
 from . import models
 
 
-class MerchandiseFactory(factory.Factory):
+class MerchandiseFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Merchandise
     ABSTRACT_FACTORY = True
 
