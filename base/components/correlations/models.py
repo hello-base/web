@@ -7,10 +7,8 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.encoding import smart_text
-
-from components.merchandise.music.models import Album, Single
-from components.people.models import Group, Idol, Membership
 
 from .utils import call_attributes
 
@@ -33,7 +31,8 @@ class Event(models.Model):
 
     # Event Details.
     timestamp = models.DateTimeField(blank=True)
-    date_field = models.CharField(max_length=20)
+    identifier = models.CharField(max_length=25)
+    date_field = models.CharField(max_length=25)
     descrption = models.TextField(blank=True)
 
     # Date Details.
@@ -65,8 +64,14 @@ FIELDS = [
     'leadership_ended',     # people.Membership
 ]
 
+@receiver(post_save)
+def record_event(sender, instance, **kwargs):
+    # Being a signal without a sender, we need to make sure models are the ones
+    # we're looking for before we continue.
+    MODELS = ['album', 'single', 'group', 'idol', 'membership']
+    if not instance._meta.model_name in MODELS:
+        return
 
-def record_event(self, sender, instance, **kwargs):
     # Membership is a special case. Since most groups are static
     # (or non-generational), the date the group is formed is the same as
     # the date its members joined. So if those two values are equal, stop
@@ -83,6 +88,7 @@ def record_event(self, sender, instance, **kwargs):
             object_id=smart_text(instance._get_pk_val()),
             defaults={
                 'timestamp': timestamp,
+                'identifier': instance._meta.model_name,
                 'date_field': attribute,
                 'julian': timestamp.timetuple().tm_yday,
                 'year': timestamp.year,
