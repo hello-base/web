@@ -15,17 +15,20 @@ class Event(models.Model):
     day in Hello! Project history?"
 
     """
+    # Model Managers.
+    objects = EventManager()
+
     # Event Object.
     content_type = models.ForeignKey(ContentType)
     object_id = models.IntegerField('object ID')
     content_object = generic.GenericForeignKey()
 
-    # Event details.
+    # Event Details.
     timestamp = models.DateTimeField(blank=True)
     date_field = models.CharField(max_length=20)
     descrption = models.TextField(blank=True)
 
-    # Date details.
+    # Date Details.
     julian = models.PositiveSmallIntegerField(max_length=3)
     year = models.PositiveSmallIntegerField(max_length=4)
     month = models.PositiveSmallIntegerField(max_length=2)
