@@ -3,10 +3,7 @@ from __future__ import unicode_literals
 
 import pytest
 
-from django.utils.encoding import smart_text
-
 from components.appearances.factories import CardFactory
-from components.appearances.models import Card
 from components.people.factories import GroupFactory, IdolFactory
 
 pytestmark = pytest.mark.django_db

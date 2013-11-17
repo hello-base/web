@@ -4,7 +4,6 @@ import pytest
 
 from django.core.exceptions import ValidationError
 
-from components.people.factories import GroupFactory, IdolFactory
 from components.merchandise.goods.factories import GoodFactory, ShopFactory
 from components.merchandise.goods.models import Good
 
@@ -14,7 +13,7 @@ pytestmark = pytest.mark.django_db
 class TestGoods:
     def test_date_validation(self):
         with pytest.raises(ValidationError) as execinfo:
-            good = GoodFactory(
+            GoodFactory(
                 available_from=datetime.date.today(),
                 available_until=datetime.date.today() - datetime.timedelta(days=1),
             )
@@ -23,7 +22,7 @@ class TestGoods:
 
     def test_source_validation(self):
         with pytest.raises(ValidationError) as execinfo:
-            good = GoodFactory()
+            GoodFactory()
             message = u'Goods must either originate from a shop or an event.'
             assert message in execinfo.execonly()
 
