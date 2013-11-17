@@ -8,6 +8,13 @@ from django.db.models.signals import post_save
 
 
 class Event(models.Model):
+    """
+    Events represent activities that occur to any items that have dates. Each
+    activity is referred to via a generic relation. Event objects can answer
+    "What is coming up?" questions as well as ones for "What happened on this
+    day in Hello! Project history?"
+
+    """
     # Event Object.
     content_type = models.ForeignKey(ContentType)
     object_id = models.IntegerField('object ID')
