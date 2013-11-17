@@ -253,7 +253,7 @@ class Track(ParticipationMixin):
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
 
     # Secondary identifier.
-    uuid = extensions.UUIDField(auto=True, blank=True, null=True)    
+    uuid = extensions.UUIDField(auto=True, blank=True, null=True)
     slug = models.SlugField(blank=True)
 
     def __unicode__(self):

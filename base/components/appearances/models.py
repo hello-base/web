@@ -141,27 +141,27 @@ class Card(models.Model):
     @property
     def group_name(self):
         return filter(None, [
-            self.other_group_name, 
+            self.other_group_name,
             getattr(self.group, 'name', '')
         ])[0]
 
     @property
     def group_romanized_name(self):
         return filter(None, [
-            self.other_group_romanized_name, 
+            self.other_group_romanized_name,
             getattr(self.group, 'romanized_name', '')
         ])[0]
 
     @property
     def model_name(self):
         return filter(None, [
-            self.other_model_name, 
+            self.other_model_name,
             getattr(self.hp_model, 'name', '')
         ])[0]
 
     @property
     def model_romanized_name(self):
         return filter(None, [
-            self.other_model_romanized_name, 
+            self.other_model_romanized_name,
             getattr(self.hp_model, 'romanized_name', '')
         ])[0]
