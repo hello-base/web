@@ -12,6 +12,8 @@ from django.utils.encoding import smart_text
 from components.merchandise.music.models import Album, Single
 from components.people.models import Group, Idol, Membership
 
+from .utils import call_attributes
+
 
 class Event(models.Model):
     """
@@ -62,13 +64,6 @@ FIELDS = [
     'ended',                # people.Group, people.Membership
     'leadership_ended',     # people.Membership
 ]
-
-
-def call_attributes(instance, attribute_list):
-    for attribute in attribute_list:
-        if hasattr(instance, attribute):
-            return (getattr(instance, attribute), attribute)
-    raise AttributeError
 
 
 def record_event(self, sender, instance, **kwargs):
