@@ -8,8 +8,8 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Event'
-        db.create_table(u'correlations_event', (
+        # Adding model 'Correlation'
+        db.create_table(u'correlations_correlation', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
             ('object_id', self.gf('django.db.models.fields.IntegerField')()),
@@ -22,18 +22,18 @@ class Migration(SchemaMigration):
             ('month', self.gf('django.db.models.fields.PositiveSmallIntegerField')(max_length=2)),
             ('day', self.gf('django.db.models.fields.PositiveSmallIntegerField')(max_length=2)),
         ))
-        db.send_create_signal(u'correlations', ['Event'])
+        db.send_create_signal(u'correlations', ['Correlation'])
 
-        # Adding unique constraint on 'Event', fields ['content_type', 'object_id']
-        db.create_unique(u'correlations_event', ['content_type_id', 'object_id'])
+        # Adding unique constraint on 'Correlation', fields ['content_type', 'object_id']
+        db.create_unique(u'correlations_correlation', ['content_type_id', 'object_id'])
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'Event', fields ['content_type', 'object_id']
-        db.delete_unique(u'correlations_event', ['content_type_id', 'object_id'])
+        # Removing unique constraint on 'Correlation', fields ['content_type', 'object_id']
+        db.delete_unique(u'correlations_correlation', ['content_type_id', 'object_id'])
 
-        # Deleting model 'Event'
-        db.delete_table(u'correlations_event')
+        # Deleting model 'Correlation'
+        db.delete_table(u'correlations_correlation')
 
 
     models = {
@@ -44,8 +44,8 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'correlations.event': {
-            'Meta': {'ordering': "(u'-timestamp',)", 'unique_together': "((u'content_type', u'object_id'),)", 'object_name': 'Event'},
+        u'correlations.correlation': {
+            'Meta': {'ordering': "(u'-timestamp',)", 'unique_together': "((u'content_type', u'object_id'),)", 'object_name': 'Correlation'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             'date_field': ('django.db.models.fields.CharField', [], {'max_length': '25'}),
             'day': ('django.db.models.fields.PositiveSmallIntegerField', [], {'max_length': '2'}),
