@@ -11,18 +11,12 @@ class Migration(SchemaMigration):
         # Removing unique constraint on 'Track', fields ['uuid']
         db.delete_unique(u'music_track', ['uuid'])
 
-        # Removing unique constraint on 'Single', fields ['uuid']
-        db.delete_unique(u'music_single', ['uuid'])
-
-        # Removing unique constraint on 'Album', fields ['uuid']
-        db.delete_unique(u'music_album', ['uuid'])
-
 
         # Changing field 'Album.name'
         db.alter_column(u'music_album', 'name', self.gf('django.db.models.fields.CharField')(max_length=200))
 
         # Changing field 'Album.number'
-        db.alter_column(u'music_album', 'number', self.gf('django.db.models.fields.CharField')(max_length=5))
+        db.alter_column(u'music_album', 'number', self.gf('django.db.models.fields.CharField')(max_length=10))
 
         # Changing field 'Album.romanized_name'
         db.alter_column(u'music_album', 'romanized_name', self.gf('django.db.models.fields.CharField')(max_length=200))
@@ -49,13 +43,13 @@ class Migration(SchemaMigration):
         db.alter_column(u'music_edition', 'romanized_name', self.gf('django.db.models.fields.CharField')(max_length=100))
 
         # Changing field 'Edition.catalog_number'
-        db.alter_column(u'music_edition', 'catalog_number', self.gf('django.db.models.fields.CharField')(max_length=25))
+        db.alter_column(u'music_edition', 'catalog_number', self.gf('django.db.models.fields.CharField')(max_length=100))
 
         # Changing field 'Single.name'
         db.alter_column(u'music_single', 'name', self.gf('django.db.models.fields.CharField')(max_length=200))
 
         # Changing field 'Single.number'
-        db.alter_column(u'music_single', 'number', self.gf('django.db.models.fields.CharField')(max_length=5))
+        db.alter_column(u'music_single', 'number', self.gf('django.db.models.fields.CharField')(max_length=10))
 
         # Changing field 'Single.romanized_name'
         db.alter_column(u'music_single', 'romanized_name', self.gf('django.db.models.fields.CharField')(max_length=200))
@@ -82,7 +76,7 @@ class Migration(SchemaMigration):
         db.alter_column(u'music_track', 'romanized_name', self.gf('django.db.models.fields.CharField')(max_length=200))
 
         # Changing field 'Track.slug'
-        db.alter_column(u'music_track', 'slug', self.gf('django.db.models.fields.SlugField')(max_length=50))
+        db.alter_column(u'music_track', 'slug', self.gf('django.db.models.fields.SlugField')(max_length=200))
 
         # Changing field 'Track.uuid'
         db.alter_column(u'music_track', 'uuid', self.gf('django.db.models.fields.CharField')(max_length=36, null=True))
@@ -216,7 +210,7 @@ class Migration(SchemaMigration):
             'label': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'albums'", 'null': 'True', 'to': u"orm['music.Label']"}),
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'number': ('django.db.models.fields.CharField', [], {'max_length': '5', 'blank': 'True'}),
+            'number': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'}),
             'participating_groups': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'albums_attributed_to'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['people.Group']"}),
             'participating_idols': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'albums_attributed_to'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['people.Idol']"}),
             'price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
@@ -230,7 +224,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "('kind', 'romanized_name')", 'object_name': 'Edition'},
             'album': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'editions'", 'null': 'True', 'to': u"orm['music.Album']"}),
             'art': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'catalog_number': ('django.db.models.fields.CharField', [], {'max_length': '25', 'blank': 'True'}),
+            'catalog_number': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'kind': ('django.db.models.fields.IntegerField', [], {'default': '1', 'db_index': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
@@ -264,7 +258,7 @@ class Migration(SchemaMigration):
             'label': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'singles'", 'null': 'True', 'to': u"orm['music.Label']"}),
             'modified': ('model_utils.fields.AutoLastModifiedField', [], {'default': 'datetime.datetime.now'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'number': ('django.db.models.fields.CharField', [], {'max_length': '5', 'blank': 'True'}),
+            'number': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'}),
             'participating_groups': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'singles_attributed_to'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['people.Group']"}),
             'participating_idols': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'singles_attributed_to'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['people.Idol']"}),
             'price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
@@ -295,7 +289,7 @@ class Migration(SchemaMigration):
             'romanized_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'romanized_name_alternate': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'single': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'tracks'", 'null': 'True', 'to': u"orm['music.Single']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'blank': 'True'}),
             'translated_lyrics': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'translated_name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'translation_notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),

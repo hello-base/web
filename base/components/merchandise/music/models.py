@@ -32,7 +32,7 @@ class Label(models.Model):
 
 class Base(Merchandise):
     # Music-specific shared metadata.
-    number = models.CharField(blank=True, max_length=5)
+    number = models.CharField(blank=True, max_length=10)
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
 
@@ -164,7 +164,7 @@ class Edition(models.Model):
     name = models.CharField(blank=True, max_length=100)
     kind = models.IntegerField(choices=EDITIONS, db_index=True, default=EDITIONS.regular)
     released = models.DateField(blank=True, db_index=True, null=True)
-    catalog_number = models.CharField(blank=True, max_length=25)
+    catalog_number = models.CharField(blank=True, max_length=100)
     price = models.IntegerField(blank=True, null=True)
 
     # Contents
@@ -254,7 +254,7 @@ class Track(ParticipationMixin):
 
     # Secondary identifier.
     uuid = extensions.UUIDField(auto=True, blank=True, null=True)
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, max_length=200)
 
     def __unicode__(self):
         if self.is_alternate:
