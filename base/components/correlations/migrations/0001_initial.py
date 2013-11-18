@@ -24,14 +24,8 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'correlations', ['Correlation'])
 
-        # Adding unique constraint on 'Correlation', fields ['content_type', 'object_id']
-        db.create_unique(u'correlations_correlation', ['content_type_id', 'object_id'])
-
 
     def backwards(self, orm):
-        # Removing unique constraint on 'Correlation', fields ['content_type', 'object_id']
-        db.delete_unique(u'correlations_correlation', ['content_type_id', 'object_id'])
-
         # Deleting model 'Correlation'
         db.delete_table(u'correlations_correlation')
 
@@ -45,7 +39,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'correlations.correlation': {
-            'Meta': {'ordering': "(u'-timestamp',)", 'unique_together': "((u'content_type', u'object_id'),)", 'object_name': 'Correlation'},
+            'Meta': {'ordering': "(u'-timestamp',)", 'object_name': 'Correlation'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             'date_field': ('django.db.models.fields.CharField', [], {'max_length': '25'}),
             'day': ('django.db.models.fields.PositiveSmallIntegerField', [], {'max_length': '2'}),
