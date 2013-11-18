@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import date
-
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.encoding import smart_text
 
 from .utils import call_attributes
 
@@ -60,6 +57,7 @@ FIELDS = [
     'leadership_ended',     # people.Membership
 ]
 
+
 @receiver(post_save)
 def record_correlation(sender, instance, **kwargs):
     # Being a signal without a sender, we need to make sure models are the ones
@@ -75,23 +73,22 @@ def record_correlation(sender, instance, **kwargs):
     if (instance._meta.model_name == 'membership'
         and instance.started == instance.group.started):
         return
+    ctype = ContentType.objects.get_for_model(sender)
     timestamp, attribute = call_attributes(instance, FIELDS)
-    if timestamp is not None and timestamp != date.min:
-        ctype = ContentType.objects.get_for_model(sender)
-        defaults = {
-            'timestamp': timestamp,
-            'julian': timestamp.timetuple().tm_yday,
-            'year': timestamp.year,
-            'month': timestamp.month,
-            'day': timestamp.day,
-        }
-        correlation, created = Correlation.objects.get_or_create(
-            content_type=ctype,
-            object_id=instance._get_pk_val(),
-            identifier=instance._meta.model_name,
-            date_field=attribute,
-            defaults=defaults
-        )
-        for key, value in defaults.iteritems():
-            setattr(correlation, key, value)
-        correlation.save()
+    defaults = {
+        'timestamp': timestamp,
+        'julian': timestamp.timetuple().tm_yday,
+        'year': timestamp.year,
+        'month': timestamp.month,
+        'day': timestamp.day,
+    }
+    correlation, created = Correlation.objects.get_or_create(
+        content_type=ctype,
+        object_id=instance._get_pk_val(),
+        identifier=instance._meta.model_name,
+        date_field=attribute,
+        defaults=defaults
+    )
+    for key, value in defaults.iteritems():
+        setattr(correlation, key, value)
+    correlation.save()
