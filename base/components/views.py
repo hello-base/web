@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, View
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 from haystack.query import SearchQuerySet
 
+from components.correlations.models import Correlation
 from components.merchandise.music.models import Album, Edition, Single, Track
 from components.people.models import Group, Idol
 
@@ -29,16 +30,18 @@ class SiteView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SiteView, self).get_context_data(**kwargs)
-        context.update({
-            'counts': {
-                'albums': Album.objects.count(),
-                'editions': Edition.objects.count(),
-                'groups': Group.objects.count(),
-                'idols': Idol.objects.count(),
-                'singles': Single.objects.count(),
-                'tracks': Track.objects.count(),
-            }
-        })
+        context['correlations'] = {
+            'today': Correlation.objects.today(),
+            'upcoming': Correlation.objects.all()[10],
+        }
+        context['counts'] = {
+            'albums': Album.objects.count(),
+            'editions': Edition.objects.count(),
+            'groups': Group.objects.count(),
+            'idols': Idol.objects.count(),
+            'singles': Single.objects.count(),
+            'tracks': Track.objects.count(),
+        }
         return context
 
 
