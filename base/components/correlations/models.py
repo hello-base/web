@@ -68,8 +68,6 @@ def record_correlation(sender, instance, **kwargs):
     if not instance._meta.model_name in MODELS:
         return
 
-    from components.people.models import Membership
-
     # Membership is a special case. Since most groups are static
     # (or non-generational), the date the group is formed is the same as
     # the date its members joined. So if those two values are equal, stop
@@ -80,16 +78,20 @@ def record_correlation(sender, instance, **kwargs):
     timestamp, attribute = call_attributes(instance, FIELDS)
     if timestamp is not None and timestamp != date.min:
         ctype = ContentType.objects.get_for_model(sender)
+        defaults = {
+            'timestamp': timestamp,
+            'julian': timestamp.timetuple().tm_yday,
+            'year': timestamp.year,
+            'month': timestamp.month,
+            'day': timestamp.day,
+        }
         correlation, created = Correlation.objects.get_or_create(
             content_type=ctype,
-            object_id=smart_text(instance._get_pk_val()),
-            timestamp=timestamp,
-            defaults={
-                'identifier': instance._meta.model_name,
-                'date_field': attribute,
-                'julian': timestamp.timetuple().tm_yday,
-                'year': timestamp.year,
-                'month': timestamp.month,
-                'day': timestamp.day,
-            }
+            object_id=instance._get_pk_val(),
+            identifier=instance._meta.model_name,
+            date_field=attribute,
+            defaults=defaults
         )
+        for key, value in defaults.iteritems():
+            setattr(correlation, key, value)
+        correlation.save()
