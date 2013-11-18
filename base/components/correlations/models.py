@@ -7,6 +7,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from model_utils.managers import PassThroughManager
+
+from .managers import CorrelationQuerySet
 from .utils import call_attributes
 
 
@@ -18,6 +21,9 @@ class Correlation(models.Model):
     day in Hello! Project history?"
 
     """
+    # Model Managers.
+    objects = PassThroughManager.for_queryset_class(CorrelationQuerySet)()
+
     # Correlation Object.
     content_type = models.ForeignKey(ContentType)
     object_id = models.IntegerField('object ID')
