@@ -13,20 +13,20 @@ from django.utils.encoding import smart_text
 from .utils import call_attributes
 
 
-class Event(models.Model):
+class Correlation(models.Model):
     """
-    Events represent activities that occur to any items that have dates. Each
-    activity is referred to via a generic relation. Event objects can answer
+    Correlations represent activities that occur to any items that have dates.
+    Each activity is referred to via a generic relation. Objects can answer
     "What is coming up?" questions as well as ones for "What happened on this
     day in Hello! Project history?"
 
     """
-    # Event Object.
+    # Correlation Object.
     content_type = models.ForeignKey(ContentType)
     object_id = models.IntegerField('object ID')
     content_object = generic.GenericForeignKey()
 
-    # Event Details.
+    # Correlation Details.
     timestamp = models.DateTimeField(blank=True)
     identifier = models.CharField(max_length=25)
     date_field = models.CharField(max_length=25)
@@ -44,7 +44,7 @@ class Event(models.Model):
         unique_together = ('content_type', 'object_id')
 
     def __unicode__(self):
-        return 'Event for %s' % (self.content_object)
+        return 'Correlation for %s' % (self.content_object)
 
 
 FIELDS = [
@@ -62,7 +62,7 @@ FIELDS = [
 ]
 
 @receiver(post_save)
-def record_event(sender, instance, **kwargs):
+def record_correlation(sender, instance, **kwargs):
     # Being a signal without a sender, we need to make sure models are the ones
     # we're looking for before we continue.
     MODELS = ['album', 'single', 'group', 'idol', 'membership']
@@ -80,7 +80,7 @@ def record_event(sender, instance, **kwargs):
     timestamp, attribute = call_attributes(instance, FIELDS)
     if timestamp is not None and timestamp != date.min:
         ctype = ContentType.objects.get_for_model(sender)
-        event, created = self.get_or_create(
+        correlation, created = self.get_or_create(
             content_type=ctype,
             object_id=smart_text(instance._get_pk_val()),
             defaults={
