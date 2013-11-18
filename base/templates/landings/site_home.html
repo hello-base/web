@@ -70,5 +70,42 @@
 </div>
 {% endfilter %}
 
+
+<div class="correlations">
+  <h2>Recent and Upcoming</h2>
+  <ul>
+  {% for correlation in correlations.upcoming %}
+    <li>
+    {{ correlation }}
+    {% with correlation.content_object as object %}
+    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+    {% endwith %}
+    </li>
+  {% endfor %}
+  {% if today %}{% else %}<li class="today today-empty">Today, {% now "DATE_FORMAT" %}</li>{% endif %}
+  {% for correlation in correlations.recent %}
+    <li>
+    {{ correlation }}
+    {% with correlation.content_object as object %}
+    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+    {% endwith %}
+    </li>
+  {% endfor %}
+  </ul>
+
+  <h2>On this day in Hello! Project.</h2>
+  <ul>
+  {% for correlation in correlations.onthisday %}
+    <li>
+    {{ correlation }}
+    {% with correlation.content_object as object %}
+    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+    {% endwith %}
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+
+
 {% include "partials/footer.html" %}
 {% endblock page %}

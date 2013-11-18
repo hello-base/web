@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+import datetime
+
 from django.views.generic import TemplateView, View
 
 from braces.views import AjaxResponseMixin, JSONResponseMixin
@@ -30,9 +33,12 @@ class SiteView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SiteView, self).get_context_data(**kwargs)
+        correlations = Correlation.objects.all()[:10]
         context['correlations'] = {
-            'today': Correlation.objects.today(),
-            'upcoming': Correlation.objects.all()[10],
+            'onthisday': Correlation.objects.today(),
+            'recent': [c for c in correlations if c.timestamp < datetime.date.today()],
+            'today': [c for c in correlations if c.timestamp == datetime.date.today()],
+            'upcoming': [c for c in correlations if c.timestamp > datetime.date.today()],
         }
         context['counts'] = {
             'albums': Album.objects.count(),
