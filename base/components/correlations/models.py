@@ -50,9 +50,9 @@ class Correlation(models.Model):
 FIELDS = [
     # Positive dates.
     'birthdate',            # people.Idol
-    'started'               # people.Idol, people.Group, people.Membership
-    'leadership_started'    # people.Membership
-    'released'              # merchandise.*
+    'started',              # people.Idol, people.Group, people.Membership
+    'leadership_started',   # people.Membership
+    'released',             # merchandise.*
 
     # Negative dates.
     'graduated',            # people.Idol
