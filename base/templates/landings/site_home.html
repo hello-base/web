@@ -72,38 +72,43 @@
 
 
 <div class="correlations">
-  <h2>Recent and Upcoming</h2>
-  <ul>
-  {% for correlation in correlations.upcoming %}
-    <li>
-    {{ correlation }}
-    {% with correlation.content_object as object %}
-    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-    {% endwith %}
-    </li>
-  {% endfor %}
-  {% if today %}{% else %}<li class="today today-empty">Today, {% now "DATE_FORMAT" %}</li>{% endif %}
-  {% for correlation in correlations.recent %}
-    <li>
-    {{ correlation }}
-    {% with correlation.content_object as object %}
-    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-    {% endwith %}
-    </li>
-  {% endfor %}
-  </ul>
-
-  <h2>On this day in Hello! Project.</h2>
-  <ul>
-  {% for correlation in correlations.onthisday %}
-    <li>
-    {{ correlation }}
-    {% with correlation.content_object as object %}
-    <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-    {% endwith %}
-    </li>
-  {% endfor %}
-  </ul>
+  <div class="container">
+    <div class="correlation-activity">
+      <h2><i>Recent</i> &amp; <i>Upcoming</i></h2>
+      <ul class="correlation-list">
+      {% for correlation in correlations.upcoming %}
+        <li>
+        {# {{ correlation }} #}
+        {% with correlation.content_object as object %}
+        {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }} <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+        {% endwith %}
+        </li>
+      {% endfor %}
+      {% if today %}{% else %}<li class="today today-empty"><span>Today, {% now "SHORT_DATE_FORMAT" %}</span></li>{% endif %}
+      {% for correlation in correlations.recent %}
+        <li>
+        {# {{ correlation }} #}
+        {% with correlation.content_object as object %}
+        {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }} <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+        {% endwith %}
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="correlation-history">
+      <h2><i>On this day</i> in Hello! Project.</h2>
+      <ul class="correlation-list">
+      {% for correlation in correlations.onthisday %}
+        <li>
+        {# {{ correlation }} #}
+        {% with correlation.content_object as object %}
+        <a href="{{ object.get_absolute_url }}">{{ object }}</a> {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}
+        {% endwith %}
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>
 
 
