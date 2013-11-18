@@ -41,7 +41,6 @@ class Correlation(models.Model):
     class Meta:
         get_latest_by = 'timestamp'
         ordering = ('-timestamp',)
-        unique_together = ('content_type', 'object_id')
 
     def __unicode__(self):
         return 'Correlation for %s' % (self.content_object)
