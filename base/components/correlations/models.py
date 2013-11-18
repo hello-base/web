@@ -62,19 +62,21 @@ FIELDS = [
 def record_correlation(sender, instance, **kwargs):
     # Being a signal without a sender, we need to make sure models are the ones
     # we're looking for before we continue.
+    model_name = instance._meta.model_name
     MODELS = ['album', 'single', 'group', 'idol', 'membership']
-    if not instance._meta.model_name in MODELS:
+    if not model_name in MODELS:
         return
 
+    timestamp, attribute = call_attributes(instance, FIELDS)
     # Membership is a special case. Since most groups are static
     # (or non-generational), the date the group is formed is the same as
     # the date its members joined. So if those two values are equal, stop
     # the process.
-    if (instance._meta.model_name == 'membership'
+    if not timestamp or (model_name == 'membership'
         and instance.started == instance.group.started):
         return
+
     ctype = ContentType.objects.get_for_model(sender)
-    timestamp, attribute = call_attributes(instance, FIELDS)
     defaults = {
         'timestamp': timestamp,
         'julian': timestamp.timetuple().tm_yday,
@@ -85,7 +87,7 @@ def record_correlation(sender, instance, **kwargs):
     correlation, created = Correlation.objects.get_or_create(
         content_type=ctype,
         object_id=instance._get_pk_val(),
-        identifier=instance._meta.model_name,
+        identifier=model_name,
         date_field=attribute,
         defaults=defaults
     )
