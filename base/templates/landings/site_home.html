@@ -84,7 +84,7 @@
         {% endwith %}
         </li>
       {% endfor %}
-      {% if today %}{% else %}<li class="today today-empty"><span>Today, {% now "SHORT_DATE_FORMAT" %}</span></li>{% endif %}
+      {# {% if today %}{% else %}<li class="today today-empty"><span>Today, {% now "SHORT_DATE_FORMAT" %}</span></li>{% endif %} #}
       {% for correlation in correlations.recent %}
         <li>
         {# {{ correlation }} #}
