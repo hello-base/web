@@ -24,7 +24,7 @@ class Correlation(models.Model):
     content_object = generic.GenericForeignKey()
 
     # Correlation Details.
-    timestamp = models.DateTimeField(blank=True)
+    timestamp = models.DateField(blank=True)
     identifier = models.CharField(max_length=25)
     date_field = models.CharField(max_length=25)
     descrption = models.TextField(blank=True)

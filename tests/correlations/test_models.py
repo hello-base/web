@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 import pytest
-import pytz
 
 from django.contrib.contenttypes.models import ContentType
 
@@ -13,11 +12,11 @@ pytestmark = pytest.mark.django_db
 
 class TestCorrelations:
     def test_basic_correlation(self):
-        group = GroupFactory(started=datetime.datetime(2013, 1, 1))
+        group = GroupFactory(started=datetime.date(2013, 1, 1))
         assert Correlation.objects.count() == 1
 
         correlation = Correlation.objects.all()[0]
-        assert correlation.timestamp == group.started.replace(tzinfo=pytz.UTC)
+        assert correlation.timestamp == group.started
         assert correlation.identifier == 'group'
         assert correlation.date_field == 'started'
         assert correlation.julian == 1
@@ -27,12 +26,12 @@ class TestCorrelations:
 
         # Take the same group and change the started date, this should update
         # the correlation, rather than create a new one.
-        group.started = datetime.datetime(2013, 1, 2)
+        group.started = datetime.date(2013, 1, 2)
         group.save()
         assert Correlation.objects.count() == 1
 
         correlation = Correlation.objects.all()[0]
-        assert correlation.timestamp == group.started.replace(tzinfo=pytz.UTC)
+        assert correlation.timestamp == group.started
         assert correlation.julian == 2
         assert correlation.year == 2013
         assert correlation.month == 1
