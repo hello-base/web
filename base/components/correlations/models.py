@@ -34,7 +34,8 @@ class Correlation(models.Model):
     description = models.TextField(blank=True)
 
     # Date Details.
-    julian = models.PositiveSmallIntegerField(max_length=3)
+    julian = models.PositiveSmallIntegerField('julian date', max_length=3,
+        help_text='The day of the year (1 to 365).')
     year = models.PositiveSmallIntegerField(max_length=4)
     month = models.PositiveSmallIntegerField(max_length=2)
     day = models.PositiveSmallIntegerField(max_length=2)
