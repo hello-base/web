@@ -95,20 +95,17 @@
     </div>
     <div class="correlation-history">
       <h2><i>On this day</i> in Hello! Project.</h2>
-      ({% filter ordinal %}{% now "z" %}{% endfilter %})
       <ul class="correlation-list">
       {% for correlation in correlations.onthisday %}
         <li>
-        {# {{ correlation }} #}
-        {% render_correlation correlation %}
-        {% comment %}
-        {% with correlation.content_object as object %}
-        <a href="{{ object.get_absolute_url }}">{{ object }}</a> {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}
-        {% endwith %}
-        {% endcomment %}
+          <span class="correlation">{% render_correlation correlation %}</span>
+          <span class="correlation-timestamp">{{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}</span>
         </li>
       {% endfor %}
       </ul>
+      <div>
+      Today is the {% filter ordinal %}{% now "z" %}{% endfilter %} day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.
+      </div>
     </div>
   </div>
 </div>
