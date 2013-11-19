@@ -31,7 +31,7 @@ class Correlation(models.Model):
     timestamp = models.DateField(blank=True)
     identifier = models.CharField(max_length=25)
     date_field = models.CharField(max_length=25)
-    descrption = models.TextField(blank=True)
+    description = models.TextField(blank=True)
 
     # Date Details.
     julian = models.PositiveSmallIntegerField(max_length=3)
