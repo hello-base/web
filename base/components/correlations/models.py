@@ -7,9 +7,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from model_utils.managers import PassThroughManager
-
-from .managers import CorrelationQuerySet
+from .managers import CorrelationManager
 from .utils import call_attributes
 
 
@@ -22,7 +20,7 @@ class Correlation(models.Model):
 
     """
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(CorrelationQuerySet)()
+    objects = CorrelationManager()
 
     # Correlation Object.
     content_type = models.ForeignKey(ContentType)
@@ -68,35 +66,15 @@ FIELDS = [
 def record_correlation(sender, instance, **kwargs):
     # Being a signal without a sender, we need to make sure models are the ones
     # we're looking for before we continue.
-    model_name = instance._meta.model_name
     MODELS = ['album', 'single', 'group', 'idol', 'membership']
-    if not model_name in MODELS:
+    if not instance._meta.model_name in MODELS:
         return
 
-    timestamp, attribute = call_attributes(instance, FIELDS)
-    # Membership is a special case. Since most groups are static
-    # (or non-generational), the date the group is formed is the same as
-    # the date its members joined. So if those two values are equal, stop
-    # the process.
-    if not timestamp or (model_name == 'membership'
-        and instance.started == instance.group.started):
-        return
-
-    ctype = ContentType.objects.get_for_model(sender)
-    defaults = {
-        'timestamp': timestamp,
-        'julian': timestamp.timetuple().tm_yday,
-        'year': timestamp.year,
-        'month': timestamp.month,
-        'day': timestamp.day,
-    }
-    correlation, created = Correlation.objects.get_or_create(
-        content_type=ctype,
-        object_id=instance._get_pk_val(),
-        identifier=model_name,
-        date_field=attribute,
-        defaults=defaults
-    )
-    for key, value in defaults.iteritems():
-        setattr(correlation, key, value)
-    correlation.save()
+    for field in FIELDS:
+        try:
+            timestamp = getattr(instance, field)
+        except AttributeError as e:
+            continue
+        else:
+            instance.sender = sender
+            Correlation.objects.update_or_create(instance, timestamp, field)

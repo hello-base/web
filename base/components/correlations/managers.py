@@ -1,9 +1,44 @@
 # -*- coding: utf-8 -*-
 from datetime import date
 
-from django.db.models.query import QuerySet
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
-class CorrelationQuerySet(QuerySet):
+class CorrelationManager(models.Manager):
+    def update_or_create(self, instance, timestamp, attribute):
+        # Membership is a special case. Since most groups are static
+        # (or non-generational), the date the group is formed is the same as
+        # the date its members joined. So if those two values are equal, stop
+        # the process.
+        if not timestamp or (instance._meta.model_name == 'membership'
+            and instance.started == instance.group.started):
+            return
+
+        ctype = ContentType.objects.get_for_model(instance.sender)
+        defaults = {
+            'timestamp': timestamp,
+            'julian': timestamp.timetuple().tm_yday,
+            'year': timestamp.year,
+            'month': timestamp.month,
+            'day': timestamp.day,
+        }
+        correlation, created = self.get_or_create(
+            content_type=ctype,
+            object_id=instance._get_pk_val(),
+            identifier=instance._meta.model_name,
+            date_field=attribute,
+            defaults=defaults
+        )
+        for key, value in defaults.iteritems():
+            setattr(correlation, key, value)
+        correlation.save()
+        return
+
+    def get_query_set(self):
+        qs = super(CorrelationManager, self).get_query_set()
+        return qs.prefetch_related('content_object')
+
     def today(self):
-        return self.filter(julian=date.today().timetuple().tm_yday)
+        qs = self.get_query_set()
+        return qs.filter(julian=date.today().timetuple().tm_yday)

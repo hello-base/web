@@ -5,7 +5,8 @@ import pytest
 from django.contrib.contenttypes.models import ContentType
 
 from components.correlations.models import Correlation
-from components.people.factories import GroupFactory, MembershipFactory
+from components.people.factories import (GroupFactory, IdolFactory,
+    MembershipFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -36,6 +37,11 @@ class TestCorrelations:
         assert correlation.year == 2013
         assert correlation.month == 1
         assert correlation.day == 2
+
+    def test_multiple_correlations(self):
+        idol = IdolFactory(birthdate=datetime.date(1983, 4, 2), started=datetime.date(2013, 1, 1))
+        assert Correlation.objects.count() == 2
+
 
     def test_membership_exception(self):
         group = GroupFactory(started=datetime.datetime(2013, 1, 1))
