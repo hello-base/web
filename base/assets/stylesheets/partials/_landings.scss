@@ -226,7 +226,8 @@
   display: flex;
   justify-content: space-between;
 }
-.correlation-activity, .correlation-history {
+.correlation-happenings,
+.correlation-history {
   h2 {
     font-family: $font-family-primary;
     font-size: 1.777em;
