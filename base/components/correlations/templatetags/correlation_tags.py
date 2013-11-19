@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import calendar
+
 from django import template
 register = template.Library()
 
@@ -11,3 +13,8 @@ def render_correlation(instance):
         'object': instance.content_object,
         'timestamp': instance.timestamp
     }
+
+
+@register.filter
+def month_name(month_number):
+    return calendar.month_name[month_number]

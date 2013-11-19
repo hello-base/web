@@ -1,0 +1,34 @@
+{% load correlation_tags %}
+
+<h1>{{ year|date:"Y" }} Happenings</h1>
+
+<ul>
+{% for year in years %}
+  <li><a href="{% url 'happenings-by-year' year|date:'Y' %}">{{ year|date:"Y" }}</a></li>
+{% endfor %}
+</ul>
+
+<ul>
+{% if next_year %}<li><a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }}</a></li>{% endif %}
+{% if previous_year %}<li><a href="{% url 'happenings-by-year' previous_year|date:'Y' %}">{{ previous_year|date:"Y" }}</a></li>{% endif %}
+</ul>
+
+<ul>
+    {% for date in date_list %}
+        <li>{{ date|date:"F" }}</li>
+    {% endfor %}
+</ul>
+
+{% regroup object_list by timestamp.month as month_list %}
+
+<ul>
+{% for month in month_list %}
+    <li>{{ month.grouper|month_name }}
+    <ul>
+        {% for item in month.list %}
+          <li>{{ item }}: {{ item.timestamp }}</li>
+        {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>
