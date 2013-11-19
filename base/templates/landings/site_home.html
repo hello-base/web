@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-{% load cache %}
-{% load humanize %}
+{% load cache correlation_tags humanize typogrify_tags %}
 {% load static from staticfiles %}
-{% load typogrify_tags %}
 
 {% block title_override %}Discover everything about Hello! Project &middot; Welcome to Hello! Base, the Hello! Project Database{% endblock %}
 {% block body-class %}landing landing-home{% endblock %}
@@ -97,13 +95,17 @@
     </div>
     <div class="correlation-history">
       <h2><i>On this day</i> in Hello! Project.</h2>
+      ({% filter ordinal %}{% now "z" %}{% endfilter %})
       <ul class="correlation-list">
       {% for correlation in correlations.onthisday %}
         <li>
         {# {{ correlation }} #}
+        {% render_correlation correlation %}
+        {% comment %}
         {% with correlation.content_object as object %}
         <a href="{{ object.get_absolute_url }}">{{ object }}</a> {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}
         {% endwith %}
+        {% endcomment %}
         </li>
       {% endfor %}
       </ul>
