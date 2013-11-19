@@ -98,14 +98,12 @@
       <ul class="correlation-list">
       {% for correlation in correlations.onthisday %}
         <li>
-          <span class="correlation">{% render_correlation correlation %}</span>
           <span class="correlation-timestamp">{{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}</span>
+          <span class="correlation">{% render_correlation correlation %}</span>
         </li>
       {% endfor %}
       </ul>
-      <div>
-      Today is the {% filter ordinal %}{% now "z" %}{% endfilter %} day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.
-      </div>
+      <p class="admonition">Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.</p>
     </div>
   </div>
 </div>
