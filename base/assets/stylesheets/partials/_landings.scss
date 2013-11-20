@@ -5,13 +5,13 @@
 // ---------------------------------------------------------------------
 .landing-home {
   .header-tagline { color: rgba(#FFF, 0.75); }
-  .masthead.container { padding-top: 24px; padding-bottom: 72px; }
-}
-
-.hero-tagline, .hero-search {
-  @include span-columns(8, $total-columns);
-  @include squish(2, 2);
-  position: relative;
+  .masthead.container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 36px;
+    padding-bottom: 72px;
+  }
 }
 
 .hero {
@@ -23,33 +23,34 @@
     @include link-colors(#FFF);
     font-weight: 600;
   }
-  .hero-image {
-    @include position(absolute, 0px 0px 0px 0px);
-    overflow: hidden;
+}
+.hero-image {
+  @include position(absolute, 0px 0px 0px 0px);
+  overflow: hidden;
+  width: 100%;
+  z-index: -1;
+
+  background-color: #272E37;
+
+  img {
+    margin-top: -160px;
     width: 100%;
-    z-index: -1;
-
-    background-color: #272E37;
-
-    img {
-      margin-top: -120px;
-      width: 100%;
-      opacity: 0;
-    }
-  }
-  .hero-tagline {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-
-    color: #FFF;
-    font-size: 64px;
-    font-weight: 200;
-    letter-spacing: -3px;
-    line-height: 1;
-    text-align: center;
+    opacity: 0;
   }
 }
+.hero-tagline, .hero-search {
+  @include position(relative);
+  width: columns(6, 12);
+}
+.hero-tagline {
+  margin: 0 gutter(12) 0 0;
 
+  color: #FFF;
+  font-size: 48px;
+  font-weight: 200;
+  letter-spacing: -3px;
+  line-height: 1;
+}
 .hero-search .search-container {
   @include clearfix;
   padding: 4px;
@@ -92,7 +93,7 @@
   &.focus { background-color: rgba(#000, 0.5); }
 }
 .examples {
-  padding: 1em 0;
+  padding-top: 1em;
 
   color: rgba(#FFF, 0.75);
   font-size: 12px;
