@@ -228,6 +228,9 @@
 }
 .correlation-happenings,
 .correlation-history {
+  display: flex;
+  flex-direction: column;
+
   h2 {
     font-family: $font-family-primary;
     font-size: 1.777em;
@@ -244,6 +247,19 @@
     @include reset-list-style;
   }
 }
+.correlation-list { flex: 1; }
+.correlation-footer {
+  border-top: 1px solid $brand-paleGrey;
+  align-self: flex-end;
+
+  p {
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+
+}
+
+
 .today-empty {
   padding: 0.5rem 0;
 
