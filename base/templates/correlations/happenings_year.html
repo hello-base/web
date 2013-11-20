@@ -23,7 +23,7 @@
 </ul>
 
 <ul>
-{% for date in date_list reversed %}
+{% for date in date_list %}
   <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
 {% endfor %}
 </ul>
