@@ -233,6 +233,12 @@ class Base(Configuration):
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
     HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
+    # django-imagekit.
+    # --------------------------------------------------------------------------
+    IMAGEKIT_CACHEFILE_DIR = 'cache'
+    IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+    IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'
+
     # django-rest-framework.
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['rest_framework']
