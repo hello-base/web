@@ -3,8 +3,14 @@
 <h1>{{ year|date:"Y" }} Happenings</h1>
 
 <ul>
-{% for year in years %}
-  <li><a href="{% url 'happenings-by-year' year|date:'Y' %}">{{ year|date:"Y" }}</a></li>
+{% for decade, values in years.items %}
+  <li>{{ decade }}
+  <ul>
+  {% for year in values %}
+    <li><a href="{% url 'happenings-by-year' year|date:'Y' %}">{{ year|date:"Y" }}</a></li>
+  {% endfor %}
+  </ul>
+  </li>
 {% endfor %}
 </ul>
 
@@ -14,16 +20,16 @@
 </ul>
 
 <ul>
-    {% for date in date_list %}
-        <li>{{ date|date:"F" }}</li>
-    {% endfor %}
+{% for date in date_list reversed %}
+  <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
+{% endfor %}
 </ul>
 
 {% regroup object_list by timestamp.month as month_list %}
 
 <ul>
 {% for month in month_list %}
-    <li>{{ month.grouper|month_name }}
+    <li id="{{ month.grouper|month_name|lower }}">{{ month.grouper|month_name }}
     <ul>
         {% for item in month.list %}
           <li>{{ item }}: {{ item.timestamp }}</li>
