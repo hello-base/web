@@ -5,7 +5,7 @@
   {% if object.participants|length == 1 %}
     <span class="">
       <span class="ss-icon ss-music"></span>
-      <a href="{{ object.participants.0.get_absolute_url }}">{{ object.participants.0 }}</a> released {% if object.number %}their {{ object.number }} {{ identifier }},{% endif %}<a href="{{ object.get_absolute_url }}">{{ object }}</a>
+      <a href="{{ object.participants.0.get_absolute_url }}">{{ object.participants.0 }}</a> released {% if object.number %}their {{ object.number|ordinal }} {{ identifier }}, {% endif %}<a href="{{ object.get_absolute_url }}">{{ object }}</a>
     </span>
   {% endif %}
 {% endif %}
