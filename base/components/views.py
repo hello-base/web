@@ -33,7 +33,7 @@ class SiteView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SiteView, self).get_context_data(**kwargs)
-        correlations = Correlation.objects.all()[:10]
+        correlations = Correlation.objects.all()[:8]
         context['correlations'] = {
             'onthisday': Correlation.objects.today(),
             'recent': [c for c in correlations if c.timestamp < datetime.date.today()],
