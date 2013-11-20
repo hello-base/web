@@ -16,7 +16,7 @@
 
 .hero {
   @include position(relative);
-  box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
+  box-shadow: 0 3px 0 #00223A, 0 76px 0 #002D48, 0 77px 0 #F0F3F7;
   color: #FFF;
 
   a {
@@ -222,6 +222,10 @@
 }
 
 // .correlations
+.correlations {
+  background-color: #F9FAFC;
+  box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
+}
 .correlations .container {
   align-content: stretch;
   display: flex;
