@@ -1,0 +1,6 @@
+<li>
+{% with correlation.content_object as object %}
+  {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }} <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+  <img src="{{ MEDIA_URL }}{{ object.image }}">
+{% endwith %}
+</li>

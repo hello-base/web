@@ -5,7 +5,7 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag('correlations/partials/historic_correlation.html')
+@register.inclusion_tag('correlations/partials/history_list_item.html')
 def render_correlation(instance):
     return {
         'field': instance.date_field,
