@@ -75,21 +75,11 @@
       <h2>Hello! Project <i>Happenings</i></h2>
       <ul class="correlation-list">
       {% for correlation in correlations.upcoming %}
-        <li>
-        {# {{ correlation }} #}
-        {% with correlation.content_object as object %}
-        {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }} <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-        {% endwith %}
-        </li>
+        {% include "correlations/partials/happening_list_item.html" with correlation=correlation %}
       {% endfor %}
       {# {% if today %}{% else %}<li class="today today-empty"><span>Today, {% now "SHORT_DATE_FORMAT" %}</span></li>{% endif %} #}
       {% for correlation in correlations.recent %}
-        <li>
-        {# {{ correlation }} #}
-        {% with correlation.content_object as object %}
-        {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }} <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-        {% endwith %}
-        </li>
+        {% include "correlations/partials/happening_list_item.html" with correlation=correlation %}
       {% endfor %}
       </ul>
       <footer class="correlation-footer">
