@@ -253,6 +253,12 @@
     @include reset-box-model;
     @include reset-list-style;
   }
+  li {
+    @include clearfix;
+  }
+  .profile-image {
+    @include span-columns(1, 6);
+  }
 }
 .correlation-happenings { margin-right: gutter(12); }
 .correlation-list { flex: 1; }
