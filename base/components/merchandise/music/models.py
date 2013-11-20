@@ -65,6 +65,10 @@ class Base(Merchandise):
     def identifier(self):
         return self._meta.model_name
 
+    @property
+    def image(self):
+        return self.art_thumbnail
+
     @cached_property
     def participants(self):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))

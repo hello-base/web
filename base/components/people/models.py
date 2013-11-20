@@ -123,6 +123,10 @@ class Idol(Person):
     def age(self):
         return calculate_age(self.birthdate)
 
+    @property
+    def image(self):
+        return self.optimized_thumbnail
+
     def is_gaijin(self):
         return not bool(self.given_name and self.family_name)
 
@@ -204,6 +208,10 @@ class Group(ContributorMixin):
     @property
     def identifier(self):
         return self._meta.model_name
+
+    @property
+    def image(self):
+        return self.optimized_thumbnail
 
     def is_active(self, target=None):
         if target:
