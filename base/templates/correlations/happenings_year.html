@@ -1,5 +1,8 @@
+{% extends "layouts/site_base.html" %}
 {% load correlation_tags %}
 
+{% block title %}{{ year|date:"Y" }} Happenings{% endblock %}
+{% block content %}
 <h1>{{ year|date:"Y" }} Happenings</h1>
 
 <ul>
@@ -38,3 +41,4 @@
     </li>
 {% endfor %}
 </ul>
+{% endblock content %}
