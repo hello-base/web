@@ -85,7 +85,7 @@
       <footer class="correlation-footer">
         <p>
           <i>Happenings</i> are more than just release dates. Everything with a date is a <i>happening</i> on Hello! Base.
-          <a href="{% url 'happenings-by-year' 2013 %}">Explore all of our Hello! Project Happenings.</a>
+          <a href="{% url 'happenings-by-year' 2013 %}"><strong>Explore all of our Hello! Project Happenings.</strong></a>
         </p>
       </footer>
     </div>
@@ -100,7 +100,10 @@
       {% endfor %}
       </ul>
       <footer class="correlation-footer">
-        <p>Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.</p>
+        <p>
+          Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.
+          We know, dates are silly things.
+        </p>
       </footer>
     </div>
   </div>
