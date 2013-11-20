@@ -92,9 +92,15 @@
         </li>
       {% endfor %}
       </ul>
+      <footer class="correlation-footer">
+        <p>
+          <i>Happenings</i> are more than just release dates. Everything with a date is a <i>happening</i> on Hello! Base.
+          <a href="{% url 'happenings-by-year' 2013 %}">Explore all of our Hello! Project Happenings.</a>
+        </p>
+      </footer>
     </div>
     <div class="correlation-history">
-      <h2><i>On this day</i> in Hello! Project.</h2>
+      <h2><i>This day</i> in Hello! Project.</h2>
       <ul class="correlation-list">
       {% for correlation in correlations.onthisday %}
         <li>
@@ -103,7 +109,9 @@
         </li>
       {% endfor %}
       </ul>
-      <p class="admonition">Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.</p>
+      <footer class="correlation-footer">
+        <p>Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.</p>
+      </footer>
     </div>
   </div>
 </div>
