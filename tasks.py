@@ -65,7 +65,7 @@ def collect(verbose=False, **kwargs):
 
 @invoke.task(name='compile')
 def development_compile(**kwargs):
-    out = functools.partial(_out, 'development.yuglify')
+    out = functools.partial(_out, 'development.compile')
     STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base', 'static')
 
     # Compile the application-specific Javascript.
@@ -81,7 +81,7 @@ def development_compile(**kwargs):
     out('javascripts/components.min.js created and minified.')
 
     # Compile the stylesheets.
-    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css', hide=hide)
+    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css')
     out('stylesheets/application.css auto-prefixed.')
 
     invoke.run('yuglify {input} --type css --combine {output}'.format(
