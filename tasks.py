@@ -53,8 +53,6 @@ def collect(verbose=False, **kwargs):
     invoke.run('handlebars base/templates/partials/handlebars -f base/static/javascripts/application/templates.js', hide=hide)
     out('Compiling stylesheets using production environment settings.')
     invoke.run('compass compile -e production --force', hide=hide)
-    out('Using Autoprefix to auto-prefix.')
-    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css', hide=hide)
 
     # Build and send it off.
     out('Using `buildstatic` to concatenate assets.')
@@ -65,8 +63,8 @@ def collect(verbose=False, **kwargs):
     invoke.run('python manage.py eccollect --configuration=Production --noinput', hide=hide)
 
 
-@invoke.task(name='yuglify')
-def development_yuglify(**kwargs):
+@invoke.task(name='compile')
+def development_compile(**kwargs):
     out = functools.partial(_out, 'development.yuglify')
     STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base', 'static')
 
@@ -83,6 +81,9 @@ def development_yuglify(**kwargs):
     out('javascripts/components.min.js created and minified.')
 
     # Compile the stylesheets.
+    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css', hide=hide)
+    out('stylesheets/application.css auto-prefixed.')
+
     invoke.run('yuglify {input} --type css --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
         output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')))
@@ -155,7 +156,7 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    collect, deploy, development_server, development_test, development_yuglify,
+    collect, deploy, development_compile, development_server, development_test,
     heroku=invoke.Collection(
         heroku_capture, heroku_imagekit, heroku_migrate, heroku_pull, heroku_syncdb,
     )
