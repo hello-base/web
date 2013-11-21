@@ -64,29 +64,30 @@ def collect(verbose=False, **kwargs):
 
 
 @invoke.task(name='compile')
-def development_compile(**kwargs):
+def development_compile(verbose=False, **kwargs):
     out = functools.partial(_out, 'development.compile')
+    hide = 'out' if not verbose else None
     STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base', 'static')
 
     # Compile the application-specific Javascript.
     invoke.run('yuglify {input} --type js --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'javascripts', 'application', '*.js'),
-        output=os.path.join(STATIC_ROOT, 'javascripts', 'application')))
+        output=os.path.join(STATIC_ROOT, 'javascripts', 'application')), hide=hide)
     out('javascripts/application.min.js created and minified.')
 
     # Compile the 3rd-party Javascript components.
     invoke.run('yuglify {input} --type js --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'javascripts', 'components', '*.js'),
-        output=os.path.join(STATIC_ROOT, 'javascripts', 'components')))
+        output=os.path.join(STATIC_ROOT, 'javascripts', 'components')), hide=hide)
     out('javascripts/components.min.js created and minified.')
 
     # Compile the stylesheets.
-    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css')
+    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/application.css', hide=hide)
     out('stylesheets/application.css auto-prefixed.')
 
     invoke.run('yuglify {input} --type css --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
-        output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')))
+        output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')), hide=hide)
     out('stylesheets/production.min.css created and minified.')
 
 
