@@ -116,9 +116,10 @@
 // homepage's masthead.
 .reasonings {
   padding-top: 48px; padding-bottom: 24px;
+  text-align: center;
 
   h2 {
-    padding-right: 48px;
+    padding: 0 24px;
 
     color: #454D57;
     font-family: $font-family-primary;
@@ -160,6 +161,7 @@
     font-weight: 600;
     &:link, &:visited { color: $headings-font-color; }
   }
+  p { padding: 0 12px; }
 
   .reasoning-icon {
     .ss-books { background: linear-gradient(#CC82EE, #B563E5); }
