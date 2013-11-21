@@ -1,7 +1,24 @@
 <li>
 {% with correlation.content_object as object %}
-  {{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}
-  <div class="profile-image object-image"><img src="{{ MEDIA_URL }}{{ object.image }}"></div>
-  <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+  <div class="correlation-timestamp">
+    <span class="stamp-month">{{ correlation.timestamp|date:"M"}}</span>
+    <span class="stamp-day">{{ correlation.timestamp|date:"d"}}</span>
+  </div>
+  <div class="correlation-content">
+    {# <div class="profile-image object-image"><img src="{{ MEDIA_URL }}{{ object.image }}"></div> #}
+    <a href="{{ object.get_absolute_url }}">
+      <span class="romanized-name">{{ object }}</span>
+      <span class="name">{{ object.name }}</span>
+    </a>
+
+    <div class="correlation-participants">
+    {% for participant in object.participants %}
+      <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
+        <span itemprop="name">{{ participant }}</span>
+      </a>
+      {% include "utilities/commaify.html" %}
+    {% endfor %}
+    </div>
+  </div>
 {% endwith %}
 </li>
