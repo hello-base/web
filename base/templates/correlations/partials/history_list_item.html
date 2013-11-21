@@ -11,6 +11,15 @@
   {% endif %}
 {% endif %}
 
+{# people.group #}
+{% if identifier == 'group' %}
+  {% if field == 'started' %}
+    <span class="">
+      <span class="ss-icon ss-balloon"></span>
+      <a href="{{ object.get_absolute_url }}">{{ object }}</a> was formed
+  {% endif %}
+{% endif %}
+
 {# people.idol #}
 {% if identifier == 'idol' %}
   {% if field == 'birthdate' %}
