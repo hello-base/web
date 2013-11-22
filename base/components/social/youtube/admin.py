@@ -29,7 +29,7 @@ admin.site.register(Channel, ChannelAdmin)
 
 class VideoAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('channel',)}),
+        (None, {'fields': ('channel', 'ytid')}),
         (None, {'fields': ('title', 'description', 'published', 'duration')}),
     )
     inlines = [ThumbnailInline]
