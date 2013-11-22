@@ -45,3 +45,6 @@ class Api:
         for item in playlist_items.get('items', []):
             videos.append(item['contentDetails']['videoId'])
         return videos
+
+    def get_video(self, video_id):
+        return self.service.videos().list(part='id,snippet,contentDetails', id=video_id)

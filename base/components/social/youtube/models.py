@@ -31,11 +31,11 @@ class Channel(models.Model):
 
     def entries(self):
         api = Api()
-        return api.fetch_all_videos_by_username(self.ytid)
+        return api.get_all_videos(self.ytid)
 
     def latest_entries(self):
         api = Api()
-        return api.fetch_latest_videos_by_username(self.ytid)
+        return api.get_latest_videos(self.ytid)
 
 
 class Video(models.Model):
@@ -80,7 +80,7 @@ class Video(models.Model):
 
     def entry(self):
         api = Api()
-        return api.fetch_video(self.ytid)
+        return api.get_video(self.ytid)
 
 
 class Thumbnail(models.Model):
