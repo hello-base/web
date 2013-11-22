@@ -48,9 +48,6 @@ class Video(models.Model):
     published = models.DateTimeField(blank=True, null=True)
     duration = models.IntegerField(blank=True, null=True)
 
-    flash_url = models.URLField('flash URL', blank=True)
-    watch_url = models.URLField('watch URL', blank=True)
-
     def __unicode__(self):
         return u'%s' % (self.title)
 

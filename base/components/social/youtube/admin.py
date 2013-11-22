@@ -31,7 +31,6 @@ class VideoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('channel',)}),
         (None, {'fields': ('title', 'description', 'published', 'duration')}),
-        (None, {'fields': ('ytid', ('flash_url', 'watch_url'))})
     )
     inlines = [ThumbnailInline]
     list_display = ['title', 'channel', 'published', 'duration', 'ytid']
