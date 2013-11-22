@@ -82,6 +82,7 @@ class Video(models.Model):
 
 class Thumbnail(models.Model):
     video = models.ForeignKey(Video, null=True, related_name='thumbnails')
+    quality = models.CharField(default='default', max_length=10)
     url = models.URLField('URL')
 
     def __unicode__(self):
