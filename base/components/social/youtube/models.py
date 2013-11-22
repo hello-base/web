@@ -46,7 +46,7 @@ class Video(models.Model):
     title = models.CharField(blank=True, max_length=200)
     description = models.TextField(blank=True, null=True)
     published = models.DateTimeField(blank=True, null=True)
-    duration = models.IntegerField(blank=True, null=True)
+    duration = models.CharField(blank=True, max_length=10, null=True)
 
     def __unicode__(self):
         return u'%s' % (self.title)
