@@ -47,4 +47,5 @@ class Api:
         return videos
 
     def get_video(self, video_id):
-        return self.service.videos().list(part='id,snippet,contentDetails', id=video_id)
+        video = self.service.videos().list(part='id,snippet,contentDetails', id=video_id)
+        return video['items'][0]

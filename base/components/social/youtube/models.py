@@ -59,17 +59,16 @@ class Video(models.Model):
         entry = self.entry()
 
         # Set the details.
-        self.title = smart_unicode(entry.media.title.text)
-        self.description = entry.media.description.text
-        self.published = parser.parse(entry.published.text)
-        self.duration = entry.media.duration.seconds
-        self.flash_url = entry.GetSwfUrl()
-        self.watch_url = entry.media.player.url
+        self.title = entry['snippet']['title']
+        self.description = entry['snippet']['description']
+        self.published = parser.parse(entry['snippet']['publishedAt'])
+        self.duration = entry['contentDetails']['duration']
         super(Video, self).save(*args, **kwargs)
 
         # Save the thumbnails.
-        for thumbnail in entry.media.thumbnail:
-            t, created = Thumbnail.objects.get_or_create(video=self, url=thumbnail.url)
+        thumbnails = entry['snippet']['thumbnails']
+        for key, value in thumbnails.iteritems():
+            t, created = Thumbnail.objects.get_or_create(video=self, quality=key, url=value['url'])
             t.save()
 
     def duration_display(self):
