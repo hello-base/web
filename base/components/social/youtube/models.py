@@ -52,7 +52,7 @@ class Video(models.Model):
         return u'%s' % (self.title)
 
     def get_absolute_url(self):
-        return self.watch_url
+        return 'http://youtu.be/%s' % (self.ytid)
 
     def save(self, *args, **kwargs):
         # Connect to API and get the details.
