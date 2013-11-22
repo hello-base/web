@@ -1,58 +1,47 @@
 # -*- coding: utf-8 -*-
-import logging
-logger = logging.getLogger(__name__)
-
-import gdata.youtube.service
-import os
-import urllib
-import urlparse
+from apiclient import discovery
 
 from django.conf import settings
 
 
 class Api:
-    service = gdata.youtube.service.YouTubeService()
+    def __init__(self, http=None, **kwargs):
+        kwargs['http'] = http or None
+        self.service = discovery.build('youtube', 'v3', developerKey=settings.YOUTUBE_DEVELOPER_KEY, **kwargs)
 
-    def __init__(self):
-        self.developer_key = settings.YOUTUBE_DEVELOPER_KEY
-        self.client_id = 'hello-base'
-        self.base_url = 'http://gdata.youtube.com/feeds/api'
+    def get_upload_playlist(self, channel_id):
+        channel = self.service.channels().list(part='contentDetails', id=channel_id).execute()
+        return channel['items'][0]['contentDetails']['relatedPlaylists']['uploads']
 
-        Api.service.developer_key = self.developer_key
-        Api.service.client_id = self.client_id
+    def get_ytid(self, username):
+        channel = self.service.channels().list(part='id', forUsername=username).execute()
+        return channel['items'][0]['id']
 
-    def process_params(self, url, params):
-        url_parts = list(urlparse.urlparse(url))
-        url_parts[4] = urllib.urlencode(params)
-        url = urlparse.urlunparse(url_parts)
-        return url
+    def get_all_videos(self, channel_id):
+        playlist_id = self.get_upload_playlist(channel_id)
+        playlist_items = self.service.playlistItems()
+        request = playlist_items.list(
+            part='contentDetails',
+            playlistId=playlist_id,
+            maxResults=50
+        )
 
-    def fetch_video(self, video_id):
-        return Api.service.GetYouTubeVideoEntry(video_id=video_id)
-
-    def fetch_latest_videos_by_username(self, username):
-        params = {'start-index': 1, 'max-results': 10}
-        url = os.sep.join([self.base_url, 'users', username, 'uploads'])
-        url = self.process_params(url, params)
-        return Api.service.GetYouTubeVideoFeed(url)
-
-    def fetch_all_videos_by_username(self, username):
         videos = []
+        while request != None:
+            items = request.execute()
+            for item in items.get('items', []):
+                videos.append(item['contentDetails']['videoId'])
+            request = playlist_items.list_next(request, items)
+        return videos
 
-        params = {'start-index': 1, 'max-results': 10}
-        url = os.sep.join([self.base_url, 'users', username, 'uploads'])
-        feed = Api.service.GetYouTubeVideoFeed(self.process_params(url, params))
-        videos.extend([video for video in feed.entry])
-        total_results = feed.total_results.text
+    def get_latest_videos(self, channel_id):
+        playlist_id = self.get_upload_playlist(channel_id)
+        playlist_items = self.service.playlistItems().list(
+            part='contentDetails',
+            playlistId=playlist_id
+        ).execute()
 
-        total_pages = float(total_results) / 10
-        current_page = 0
-        start_index = 1
-        while current_page <= total_pages:
-            logger.debug('Fetching feed for %s, page %s' % (username, current_page))
-            current_page += 1
-            params = {'start-index': start_index, 'max-results': 10}
-            feed = Api.service.GetYouTubeVideoFeed(self.process_params(url, params))
-            videos.extend([video for video in feed.entry])
-            start_index += 10
+        videos = []
+        for item in playlist_items.get('items', []):
+            videos.append(item['contentDetails']['videoId'])
         return videos

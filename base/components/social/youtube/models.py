@@ -22,17 +22,20 @@ class Channel(models.Model):
         return u'%s' % (self.username)
 
     def save(self, *args, **kwargs):
+        if not ytid:
+            api = Api()
+            self.ytid = api.get_ytid(self.username)
         super(Channel, self).save(*args, **kwargs)
         from .tasks import fetch_all_videos
         fetch_all_videos.delay(self.username)
 
     def entries(self):
         api = Api()
-        return api.fetch_all_videos_by_username(self.username)
+        return api.fetch_all_videos_by_username(self.ytid)
 
     def latest_entries(self):
         api = Api()
-        return api.fetch_latest_videos_by_username(self.username)
+        return api.fetch_latest_videos_by_username(self.ytid)
 
 
 class Video(models.Model):
