@@ -15,7 +15,7 @@ class ThumbnailInline(admin.TabularInline):
 
 class ChannelAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('username',)}),
+        (None, {'fields': ('username', 'ytid')}),
         ('Relations', {'fields': ('idol', 'group')}),
     )
     inlines = [VideoInline]
