@@ -11,8 +11,8 @@ from .api import Api
 
 
 class Channel(models.Model):
-    ytid = models.CharField(default='', max_length=60)
     username = models.CharField(max_length=60)
+    ytid = models.CharField(default='', max_length=60)
 
     # Optional relationships.
     idol = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
