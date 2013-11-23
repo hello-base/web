@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 from apiclient import discovery
+from httplib2 import Http
 
 from django.conf import settings
 
 
 class Api:
-    def __init__(self, http=None, **kwargs):
-        kwargs['http'] = http or None
-        self.service = discovery.build('youtube', 'v3', developerKey=settings.YOUTUBE_DEVELOPER_KEY, **kwargs)
+    http = Http(cache='.cache')
+    developer_key = settings.YOUTUBE_DEVELOPER_KEY
+    service = discovery.build('youtube', 'v3', developerKey=developer_key, http=http)
 
     def get_upload_playlist(self, channel_id):
-        channel = self.service.channels().list(part='contentDetails', id=channel_id).execute()
+        channel = Api.service.channels().list(part='contentDetails', id=channel_id).execute()
         return channel['items'][0]['contentDetails']['relatedPlaylists']['uploads']
 
     def get_ytid(self, username):
-        channel = self.service.channels().list(part='id', forUsername=username).execute()
+        channel = Api.service.channels().list(part='id', forUsername=username).execute()
         return channel['items'][0]['id']
 
     def get_all_videos(self, channel_id):
@@ -47,5 +48,5 @@ class Api:
         return videos
 
     def get_video(self, video_id):
-        video = self.service.videos().list(part='id,snippet,contentDetails', id=video_id).execute()
+        video = Api.service.videos().list(part='id,snippet,contentDetails', id=video_id).execute()
         return video['items'][0]
