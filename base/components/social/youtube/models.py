@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import timedelta
 from dateutil import parser
 
 from django.db import models
@@ -28,14 +27,6 @@ class Channel(models.Model):
         super(Channel, self).save(*args, **kwargs)
         from .tasks import fetch_all_videos
         fetch_all_videos.delay(self.username)
-
-    def entries(self):
-        api = Api()
-        return api.get_all_videos(self.ytid)
-
-    def latest_entries(self):
-        api = Api()
-        return api.get_latest_videos(self.ytid)
 
 
 class Video(models.Model):
@@ -70,9 +61,6 @@ class Video(models.Model):
         for key, value in thumbnails.iteritems():
             t, created = Thumbnail.objects.get_or_create(video=self, quality=key, url=value['url'])
             t.save()
-
-    def duration_display(self):
-        return str(timedelta(seconds=int(self.duration)))
 
     def entry(self):
         api = Api()
