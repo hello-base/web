@@ -21,7 +21,7 @@ django-multiurl == 1.0.1
 django-secure == 1.0
 django-staticbuilder >= 0.5.0, < 1.0.0
 djangorestframework == 2.3.8
-gdata >= 2.0.18, < 3.0.0
+google-api-python-client >= 1.2, < 2.0
 Markdown == 2.3.1
 ohashi == 0.2.6
 Pillow == 2.2.1

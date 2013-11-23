@@ -15,7 +15,7 @@ class ThumbnailInline(admin.TabularInline):
 
 class ChannelAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('username',)}),
+        (None, {'fields': ('username', 'ytid')}),
         ('Relations', {'fields': ('idol', 'group')}),
     )
     inlines = [VideoInline]
@@ -28,13 +28,14 @@ admin.site.register(Channel, ChannelAdmin)
 
 
 class VideoAdmin(admin.ModelAdmin):
+    date_hierarchy = 'published'
     fieldsets = (
-        (None, {'fields': ('channel',)}),
+        (None, {'fields': ('channel', 'ytid')}),
         (None, {'fields': ('title', 'description', 'published', 'duration')}),
-        (None, {'fields': ('ytid', ('flash_url', 'watch_url'))})
     )
     inlines = [ThumbnailInline]
     list_display = ['title', 'channel', 'published', 'duration', 'ytid']
+    list_filter = ['channel']
     list_select_related = True
 
     raw_id_fields = ('channel',)

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import timedelta
 from dateutil import parser
 
 from django.db import models
@@ -12,6 +11,7 @@ from .api import Api
 
 class Channel(models.Model):
     username = models.CharField(max_length=60)
+    ytid = models.CharField('YouTube ID', blank=True, max_length=60)
 
     # Optional relationships.
     idol = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
@@ -21,17 +21,12 @@ class Channel(models.Model):
         return u'%s' % (self.username)
 
     def save(self, *args, **kwargs):
+        if not self.ytid:
+            api = Api()
+            self.ytid = api.get_ytid(self.username)
         super(Channel, self).save(*args, **kwargs)
         from .tasks import fetch_all_videos
         fetch_all_videos.delay(self.username)
-
-    def entries(self):
-        api = Api()
-        return api.fetch_all_videos_by_username(self.username)
-
-    def latest_entries(self):
-        api = Api()
-        return api.fetch_latest_videos_by_username(self.username)
 
 
 class Video(models.Model):
@@ -42,45 +37,39 @@ class Video(models.Model):
     title = models.CharField(blank=True, max_length=200)
     description = models.TextField(blank=True, null=True)
     published = models.DateTimeField(blank=True, null=True)
-    duration = models.IntegerField(blank=True, null=True)
-
-    flash_url = models.URLField('flash URL', blank=True)
-    watch_url = models.URLField('watch URL', blank=True)
+    duration = models.CharField(blank=True, max_length=10, null=True)
 
     def __unicode__(self):
         return u'%s' % (self.title)
 
     def get_absolute_url(self):
-        return self.watch_url
+        return 'http://youtu.be/%s' % (self.ytid)
 
     def save(self, *args, **kwargs):
         # Connect to API and get the details.
         entry = self.entry()
 
         # Set the details.
-        self.title = smart_unicode(entry.media.title.text)
-        self.description = entry.media.description.text
-        self.published = parser.parse(entry.published.text)
-        self.duration = entry.media.duration.seconds
-        self.flash_url = entry.GetSwfUrl()
-        self.watch_url = entry.media.player.url
+        self.title = entry['snippet']['title']
+        self.description = entry['snippet']['description']
+        self.published = parser.parse(entry['snippet']['publishedAt'])
+        self.duration = entry['contentDetails']['duration']
         super(Video, self).save(*args, **kwargs)
 
         # Save the thumbnails.
-        for thumbnail in entry.media.thumbnail:
-            t, created = Thumbnail.objects.get_or_create(video=self, url=thumbnail.url)
+        thumbnails = entry['snippet']['thumbnails']
+        for key, value in thumbnails.iteritems():
+            t, created = Thumbnail.objects.get_or_create(video=self, quality=key, url=value['url'])
             t.save()
-
-    def duration_display(self):
-        return str(timedelta(seconds=int(self.duration)))
 
     def entry(self):
         api = Api()
-        return api.fetch_video(self.ytid)
+        return api.get_video(self.ytid)
 
 
 class Thumbnail(models.Model):
     video = models.ForeignKey(Video, null=True, related_name='thumbnails')
+    quality = models.CharField(default='default', max_length=10)
     url = models.URLField('URL')
 
     def __unicode__(self):
