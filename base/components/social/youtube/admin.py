@@ -28,12 +28,14 @@ admin.site.register(Channel, ChannelAdmin)
 
 
 class VideoAdmin(admin.ModelAdmin):
+    date_hierarchy = 'published'
     fieldsets = (
         (None, {'fields': ('channel', 'ytid')}),
         (None, {'fields': ('title', 'description', 'published', 'duration')}),
     )
     inlines = [ThumbnailInline]
     list_display = ['title', 'channel', 'published', 'duration', 'ytid']
+    list_filter = ['channel']
     list_select_related = True
 
     raw_id_fields = ('channel',)
