@@ -10,8 +10,9 @@ pytestmark = pytest.mark.django_db
 
 class TestChannels:
     def test_factory(self):
-        factory = ChannelFactory()
+        factory = ChannelFactory(ytid='')
         assert isinstance(factory, Channel)
+        assert factory.ytid == 'UCZEFNpu29g_QBqkNC619tEA'
 
 
 class TestVideos:
