@@ -1,0 +1,22 @@
+.override-header {
+  margin-top: -61px;
+  padding: 8rem 0 6rem;
+}
+.override-logo {
+  @include squish(3, 3);
+  padding: 1.5rem 0;
+
+  border-radius: 4px;
+  color: #FFF;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    color: #FFF;
+    font-size: 30px;
+  }
+  p {
+    margin: 0.5rem 0 0;
+    line-height: 1;
+  }
+}
