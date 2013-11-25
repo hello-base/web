@@ -2,50 +2,60 @@
 {% load correlation_tags %}
 
 {% block title %}{{ year|date:"Y" }} Happenings{% endblock %}
+{% block body-class %}override{% endblock %}
 {% block content %}
-<h1><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
+<section class="happenings">
+  <header class="override-header">
+    <div class="container">
+      <h1 class="happening-header"><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
 
-<ul>
-{% for decade, values in years.items %}
-  <li class="{{ decade }}">{{ decade }}
+      <ul class="happening-decade-list">
+      {% for decade, values in years.items %}
+        <li class="{{ decade }}">
+          <strong>{{ decade }}</strong>
+          <ul class="happening-year-list">
+          {% for value in values %}
+            <li{% if year == value %} class="selected"{% endif %}>
+              <a href="{% url 'happenings-by-year' value|date:'Y' %}">{{ value|date:"Y" }}</a>
+            </li>
+          {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </header>
+
   <ul>
-  {% for year in values %}
-    <li><a href="{% url 'happenings-by-year' year|date:'Y' %}">{{ year|date:"Y" }}</a></li>
+  {% if next_year %}<li><a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }}</a></li>{% endif %}
+  {% if previous_year %}<li><a href="{% url 'happenings-by-year' previous_year|date:'Y' %}">{{ previous_year|date:"Y" }}</a></li>{% endif %}
+  </ul>
+
+  <div class="container">
+  <ul>
+  {% for date in date_list %}
+    <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
   {% endfor %}
   </ul>
-  </li>
-{% endfor %}
-</ul>
 
-<ul>
-{% if next_year %}<li><a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }}</a></li>{% endif %}
-{% if previous_year %}<li><a href="{% url 'happenings-by-year' previous_year|date:'Y' %}">{{ previous_year|date:"Y" }}</a></li>{% endif %}
-</ul>
+  {% regroup object_list by timestamp.month as month_list %}
 
-<div class="container">
-<ul>
-{% for date in date_list %}
-  <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
-{% endfor %}
-</ul>
-
-{% regroup object_list by timestamp.month as month_list %}
-
-<ul>
-{% for month in month_list reversed %}
-    <li id="{{ month.grouper|month_name|lower }}">{{ month.grouper|month_name }}
-    <ul>
-        {% for item in month.list %}
-          <li>
-            {{ item.timestamp|date:"jS" }}
-            {% with item.content_object as object %}
-            <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-            {% endwith %}
-          </li>
-        {% endfor %}
-    </ul>
-    </li>
-{% endfor %}
-</ul>
-</div>
+  <ul>
+  {% for month in month_list reversed %}
+      <li id="{{ month.grouper|month_name|lower }}">{{ month.grouper|month_name }}
+      <ul>
+          {% for item in month.list %}
+            <li>
+              {{ item.timestamp|date:"jS" }}
+              {% with item.content_object as object %}
+              <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+              {% endwith %}
+            </li>
+          {% endfor %}
+      </ul>
+      </li>
+  {% endfor %}
+  </ul>
+  </div>
+</section>
 {% endblock content %}
