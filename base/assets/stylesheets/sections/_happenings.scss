@@ -1,0 +1,52 @@
+.happenings {
+  .override-header {
+    background: #0B1C2D;
+    color: #FFF;
+    padding: 6rem 0;
+
+    h1 {
+      margin: 0 0 2.763rem;
+
+      color: #FFF;
+      font-family: $font-family-primary;
+      font-size: 4.909rem;
+      font-style: italic;
+      font-weight: 800;
+      letter-spacing: -3px;
+    }
+    .year {
+      @include position(relative);
+      margin-right: -0.875rem;
+      vertical-align: 1rem;
+
+      font-family: $font-family-secondary;
+      font-size: 2.763rem;
+      font-style: normal;
+      font-weight: 200;
+      letter-spacing: -2px;
+    }
+  }
+}
+
+.happening-decade-list,
+.happening-year-list {
+  @include reset-list-style;
+  @include reset-box-model;
+}
+
+// .hello-project .override-logo {
+//   background: linear-gradient(#17385b, darken(#17385b, 5%));
+//   box-shadow: 0 0 2rem rgba(#000, 0.25), inset 0 0 0 1px rgba(#FFF, 0.05);
+//   text-shadow: 0 1px 0 rgba(#000, 0.25);
+
+//   h1 {
+//     font-family: $font-family-hello-project;
+//     text-transform: uppercase;
+//     letter-spacing: 0.2em;
+//   }
+//   p {
+//     color: rgba(#FFF, 0.75);
+//     font-family: $font-family-hello-project-secondary;
+//     letter-spacing: 0.1em;
+//   }
+// }
