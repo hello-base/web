@@ -4,7 +4,7 @@
 {% block title %}{{ year|date:"Y" }} Happenings{% endblock %}
 {% block body-class %}override{% endblock %}
 {% block content %}
-<section class="happenings">
+<section class="happenings {{ year|date:'Y'|slice:':3' }}0s">
   <header class="override-header">
     <div class="container">
       <h1 class="happening-header"><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
