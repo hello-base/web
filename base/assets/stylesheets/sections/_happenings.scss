@@ -33,6 +33,7 @@
   @include reset-list-style;
   @include reset-box-model;
 }
+.happening-year-list .selected { font-weight: 500; }
 
 // .hello-project .override-logo {
 //   background: linear-gradient(#17385b, darken(#17385b, 5%));
