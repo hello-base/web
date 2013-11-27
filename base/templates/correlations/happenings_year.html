@@ -39,21 +39,20 @@
   </ul>
 
   {% regroup object_list by timestamp.month as month_list %}
-
   <ul>
   {% for month in month_list reversed %}
-      <li id="{{ month.grouper|month_name|lower }}">{{ month.grouper|month_name }}
-      <ul>
-          {% for item in month.list %}
-            <li>
-              {{ item.timestamp|date:"jS" }}
-              {% with item.content_object as object %}
-              <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-              {% endwith %}
-            </li>
-          {% endfor %}
+    <li id="{{ month.grouper|month_name|lower }}">{{ month.grouper|month_name }}
+      <ul>  
+      {% for item in month.list %}
+        <li>
+          {{ item.timestamp|date:"jS" }}
+          {% with item.content_object as object %}
+          <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+          {% endwith %}
+        </li>
+      {% endfor %}
       </ul>
-      </li>
+    </li>
   {% endfor %}
   </ul>
   </div>
