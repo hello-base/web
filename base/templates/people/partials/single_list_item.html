@@ -1,6 +1,6 @@
 {% load humanize music_tags static typogrify_tags %}
 
-<li class="release {% if release.number %}major{% else %}minor{% endif %}{% if release.is_indie %}indie{% endif %}-release">
+<li class="release {% if release.is_indie %}indie{% else %}{% if release.number %}major{% else %}minor{% endif %}{% endif %}-release">
   <div class="release-image object-image">
     {% url 'image-detail' release.art|urlencode as image_detail_url %}
     {% if release.art %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ release.art_thumbnail }}" width="60"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
