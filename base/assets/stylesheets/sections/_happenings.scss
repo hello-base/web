@@ -28,10 +28,22 @@
   }
 }
 
+.happening-decade-1970 .override-header { background-color: #027298; }
+.happening-decade-1980 .override-header { background-color: #BA88A5; }
+.happening-decade-1990 .override-header { background-color: #A9B35D; }
+.happening-decade-2000 .override-header { background-color: #F6D258; }
+.happening-decade-2010 .override-header { background-color: #00A68E; }
+
 .happening-decade-list,
 .happening-year-list {
   @include reset-list-style;
   @include reset-box-model;
+}
+.happening-year-list {
+  display: inline-block;
+}
+.happening-year-list li {
+  display: inline-block;
 }
 .happening-year-list .selected { font-weight: 500; }
 

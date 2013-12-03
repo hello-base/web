@@ -4,7 +4,7 @@
 {% block title %}{{ year|date:"Y" }} Happenings{% endblock %}
 {% block body-class %}override{% endblock %}
 {% block content %}
-<section class="happenings {{ year|date:'Y'|slice:':3' }}0s">
+<section class="happenings happening-decade-{{ year|date:'Y'|slice:':3' }}0">
   <header class="override-header">
     <div class="container">
       <h1 class="happening-header"><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
@@ -42,7 +42,7 @@
     <ul>
     {% for month in month_list reversed %}
       <li id="{{ month.grouper|month_name|lower }}">{{ month.grouper|month_name }}
-        <ul>  
+        <ul>
         {% for item in month.list %}
           <li>
             {{ item.timestamp|date:"jS" }}
