@@ -246,7 +246,8 @@ class Track(ParticipationMixin):
     name_alternate = models.CharField('alternate name', blank=True, max_length=200)
 
     # Lyrics.
-    lyrics = models.TextField(blank=True)
+    lyrics = models.TextField(blank=True,
+        help_text='Remember to use two spaces at the end of a line for line breaks!')
     romanized_lyrics = models.TextField(blank=True)
     translated_lyrics = models.TextField(blank=True)
     translation_notes = models.TextField(blank=True)
