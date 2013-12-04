@@ -25,7 +25,6 @@ window.onload = ->
 
 # Happenings-related calls.
 ($ document).ready ->
-  # ($ '.happening-toggle').click ->
   ($ document).on 'click', '.happening-toggle', ->
-    console.log 'what'
     ($ '.happening-decade-list').toggleClass 'visible'
+    ($ '.happening-toggle .ss-icon:last-child').toggleClass 'ss-dropdown ss-directup'
