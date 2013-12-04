@@ -59,17 +59,23 @@
     {% endcomment %}
 
     {% regroup object_list by timestamp.month as month_list %}
-    <ul class="happening-event-list">
+    <ul class="happening-month-list">
     {% for month in month_list reversed %}
-      <li id="{{ month.grouper|month_name|lower }}">
+      <li class="happening-month" id="{{ month.grouper|month_name|lower }}">
         <h2>{{ month.grouper|month_name }}</h2>
         <ul class="happening-date-list">
         {% for item in month.list %}
-          <li>
-            {{ item.timestamp|date:"jS" }}
-            {% with item.content_object as object %}
-            <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-            {% endwith %}
+          <li class="happening-date">
+            <div class="happening-timestamp">{% ifchanged %}{{ item.timestamp|date:"j" }}{% endifchanged %}</div>
+            <div class="happening-verb"><span class="pill">{{ item.date_field }}</span></div>
+            <div class="happening-event">
+              {% with item.content_object as object %}
+              <a href="{{ object.get_absolute_url }}">
+                <span class="romanized-name">{{ object }}</span>
+                <span class="name">{{ object.name }}</span>
+              </a>
+              {% endwith %}
+            </div>
           </li>
         {% endfor %}
         </ul>

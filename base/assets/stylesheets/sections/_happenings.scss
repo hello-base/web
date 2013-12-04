@@ -149,14 +149,49 @@
   @include reset-list-style;
   @include reset-box-model;
 }
-.happening-month-list {
+.happening-month {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-top: 2rem;
 
+  border-top: 1px solid $brand-paleGrey;
+
+  h2 {
+    margin-top: 4px;
+    width: columns(2, 12);
+
+    font-size: 1.166rem;
+    font-weight: 300;
+  }
   li { font-size: 13px; }
 }
+
 .happening-event-list {
 
+}
+
+.happening-date-list {
+  flex: 1;
+}
+.happening-date {
+  display: flex;
+  min-height: 27px;
+}
+.happening-timestamp {
+  margin-left: gutter(12);
+  width: columns(1, 12);
+
+  font-size: 1.166rem;
+  font-family: $font-family-secondary;
+  text-align: right;
+}
+.happening-verb {
+  margin-left: gutter(12);
+  width: columns(2, 12);
+}
+.happening-event {
+  flex: 1;
 }
 
 // .hello-project .override-logo {
