@@ -43,19 +43,27 @@
 .happening-decade-2010 .override-header { background-color: #00A68E; }
 
 .happening-navigation {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $brand-paleGrey;
 
   .container {
+    align-items: center;
     display: flex;
   }
   .next-year, .previous-year { width: columns(1, 12); }
+  .next-year { text-align: right; }
   .ss-icon { @include position(relative, 2px 0 0 0); }
 }
 .happening-decades {
   flex: 1;
   margin: 0 gutter(12);
+
+  border: 1px solid $brand-paleGrey;
+  border-width: 0 1px;
 }
 .happening-decades-header {
+  padding: 0.656rem 0.875rem;
+
   a {
     align-items: center;
     display: flex;
@@ -79,20 +87,44 @@
   display: flex;
   height: 0;
   overflow: hidden;
+  padding: 0 0.875rem;
+  transition: all 250ms ease;
 
-  &.visible {
-    height: auto;
+  &.visible { height: calc(75px + 1.312rem); }
+  > li {
+    margin-right: gutter(12);
+    width: 20%;
+
+
+    &:last-child { margin-right: 0; }
+    & strong {
+      display: block;
+      margin-bottom: 0.369rem;
+      padding-bottom: 0.369rem;
+
+      border-bottom: 1px solid $brand-paleGrey;
+      color: $brand-medGrey;
+      font-size: 12px;
+    }
   }
 }
+
 .happening-year-list {
   display: inline-block;
   font-size: 12px;
 }
 .happening-year-list li {
   display: inline-block;
+  margin-right: 5px;
   font-size: 12px;
+
+  &:nth-child(4n) { margin-right: 0; }
+  &.selected a {
+    @include link-colors(#009DDD, #00B64F);
+    font-weight: 700;
+  }
+  a { @include link-colors($brand-lightGrey, rgba(#00B64F, 0.5)); }
 }
-.happening-year-list .selected { font-weight: 500; }
 
 // .hello-project .override-logo {
 //   background: linear-gradient(#17385b, darken(#17385b, 5%));
