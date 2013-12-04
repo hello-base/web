@@ -8,14 +8,20 @@
   <header class="override-header">
     <div class="container">
       <h1 class="happening-header"><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
+    </div>
+  </header>
 
+  <div class="container">
+    {% if next_year %}<div class="previous-year"><a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }}</a></div>{% endif %}
+    <div class="happening-decades">
+      <h2>Other Years</h2>
       <ul class="happening-decade-list">
       {% for decade, values in years.items %}
         <li class="{{ decade }}">
           <strong>{{ decade }}</strong>
           <ul class="happening-year-list">
           {% for value in values %}
-            <li{% if year == value %} class="selected"{% endif %}>
+            <li {% if year == value %}class="selected"{% endif %}>
               <a href="{% url 'happenings-by-year' value|date:'Y' %}">{{ value|date:"Y" }}</a>
             </li>
           {% endfor %}
@@ -24,12 +30,8 @@
       {% endfor %}
       </ul>
     </div>
-  </header>
-
-  <ul>
-    {% if next_year %}<li><a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }}</a></li>{% endif %}
-    {% if previous_year %}<li><a href="{% url 'happenings-by-year' previous_year|date:'Y' %}">{{ previous_year|date:"Y" }}</a></li>{% endif %}
-  </ul>
+    {% if previous_year %}<div class="next-year"><a href="{% url 'happenings-by-year' previous_year|date:'Y' %}">{{ previous_year|date:"Y" }}</a></div>{% endif %}
+  </div>
 
   <div class="container">
     <ul>
