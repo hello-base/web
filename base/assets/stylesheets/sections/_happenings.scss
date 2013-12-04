@@ -9,11 +9,11 @@
   .override-header {
     background: #0B1C2D;
     color: #FFF;
-    padding: 6rem 0;
+    padding: 6rem 0 0;
 
     h1 {
       // margin: 0 0 2.763rem;
-      margin: 0;
+      margin: 0 0 calc(6rem - 41px);
 
       color: #FFF;
       font-family: $font-family-primary;
@@ -43,39 +43,56 @@
 .happening-decade-2010 .override-header { background-color: #00A68E; }
 
 .happening-navigation {
-  margin-bottom: 1rem;
-  border-bottom: 1px solid $brand-paleGrey;
+  background: rgba(#000, 0.05);
+  border-top: 1px solid rgba(#FFF, 0.25);
+  box-shadow: inset 0 2px 0 rgba(#000, 0.01);
 
   .container {
     align-items: center;
     display: flex;
   }
-  .next-year, .previous-year { width: columns(1, 12); }
+  .next-year, .previous-year {
+    width: columns(1, 12);
+
+    a {
+      @include link-colors(rgba(#FFF, 0.75), rgba(#FFF, 1.0));
+      font-size: 13px;
+      font-weight: 700;
+    }
+  }
   .next-year { text-align: right; }
   .ss-icon { @include position(relative, 2px 0 0 0); }
 }
 .happening-decades {
   flex: 1;
   margin: 0 gutter(12);
-
-  border: 1px solid $brand-paleGrey;
-  border-width: 0 1px;
 }
 .happening-decades-header {
-  padding: 0.656rem 0.875rem;
+  padding: 0.356rem 0.375rem;
 
   a {
     align-items: center;
     display: flex;
+    padding: 0.3rem 0.5rem;
+
+    background: rgba(#000, 0.05);
+    border-radius: 4px;
+    color: #FFF;
+
+    strong { @include link-colors(#FFF); }
   }
-  h2 {
+  a:hover {
+    background: rgba(#000, 0.25);
+  }
+  strong {
     flex: 1;
-    margin: 0;
+    display: block;
     padding-left: 4px;
 
     font-size: 12px;
     font-weight: 600;
   }
+  .ss-icon { @include position(relative, 1px 0 0 0); }
 }
 
 .happening-decade-list,
@@ -102,8 +119,8 @@
       margin-bottom: 0.369rem;
       padding-bottom: 0.369rem;
 
-      border-bottom: 1px solid $brand-paleGrey;
-      color: $brand-medGrey;
+      border-bottom: 1px solid rgba(#FFF, 0.25);
+      color: rgba(#FFF, 0.75);
       font-size: 12px;
     }
   }
@@ -120,10 +137,26 @@
 
   &:nth-child(4n) { margin-right: 0; }
   &.selected a {
-    @include link-colors(#009DDD, #00B64F);
+    @include link-colors(#FFF);
     font-weight: 700;
   }
-  a { @include link-colors($brand-lightGrey, rgba(#00B64F, 0.5)); }
+  a { @include link-colors(rgba(#FFF, 0.75), #FFF); }
+}
+
+.happening-month-list,
+.happening-event-list,
+.happening-date-list {
+  @include reset-list-style;
+  @include reset-box-model;
+}
+.happening-month-list {
+  display: flex;
+  justify-content: space-between;
+
+  li { font-size: 13px; }
+}
+.happening-event-list {
+
 }
 
 // .hello-project .override-logo {
