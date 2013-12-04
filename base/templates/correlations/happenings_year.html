@@ -27,7 +27,7 @@
           </a>
         </header>
         <ul class="happening-decade-list">
-        {% for decade, values in years.items %}
+        {% for decade, values in years.items reversed %}
           <li class="{{ decade }}">
             <strong>{{ decade }}</strong>
             <ul class="happening-year-list">
