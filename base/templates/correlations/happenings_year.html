@@ -10,43 +10,43 @@
       <h1 class="happening-header"><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
     </div>
 
-  <div class="happening-navigation">
-    <div class="container">
-      <div class="previous-year">
-      {% if previous_year %}
-        <a href="{% url 'happenings-by-year' previous_year|date:'Y' %}"><span class="ss-icon ss-navigateleft"></span> {{ previous_year|date:"Y" }}</a>
-      {% endif %}
-      </div>
-      <div class="happening-decades">
-        <header class="happening-decades-header">
-          <a href="javascript:;" class="happening-toggle">
-            <span class="ss-icon ss-calendar"></span>
-            <strong>Other Years</strong>
-            <span class="ss-icon ss-dropdown"></span>
-          </a>
-        </header>
-        <ul class="happening-decade-list">
-        {% for decade, values in years.items reversed %}
-          <li class="{{ decade }}">
-            <strong>{{ decade }}</strong>
-            <ul class="happening-year-list">
-            {% for value in values %}
-              <li {% if year == value %}class="selected"{% endif %}>
-                <a href="{% url 'happenings-by-year' value|date:'Y' %}">{{ value|date:"Y" }}</a>
-              </li>
-            {% endfor %}
-            </ul>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
-      <div class="next-year">
-      {% if next_year %}
-        <a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }} <span class="ss-icon ss-navigateright"></span></a>
-      {% endif %}
+    <div class="happening-navigation">
+      <div class="container">
+        <div class="previous-year">
+        {% if previous_year %}
+          <a href="{% url 'happenings-by-year' previous_year|date:'Y' %}"><span class="ss-icon ss-navigateleft"></span> {{ previous_year|date:"Y" }}</a>
+        {% endif %}
+        </div>
+        <div class="happening-decades">
+          <header class="happening-decades-header">
+            <a href="javascript:;" class="happening-toggle">
+              <span class="ss-icon ss-calendar"></span>
+              <strong>Other Years</strong>
+              <span class="ss-icon ss-dropdown"></span>
+            </a>
+          </header>
+          <ul class="happening-decade-list">
+          {% for decade, values in years.items reversed %}
+            <li class="{{ decade }}">
+              <strong>{{ decade }}</strong>
+              <ul class="happening-year-list">
+              {% for value in values %}
+                <li {% if year == value %}class="selected"{% endif %}>
+                  <a href="{% url 'happenings-by-year' value|date:'Y' %}">{{ value|date:"Y" }}</a>
+                </li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+        <div class="next-year">
+        {% if next_year %}
+          <a href="{% url 'happenings-by-year' next_year|date:'Y' %}">{{ next_year|date:"Y" }} <span class="ss-icon ss-navigateright"></span></a>
+        {% endif %}
+        </div>
       </div>
     </div>
-  </div>
   </header>
 
 
