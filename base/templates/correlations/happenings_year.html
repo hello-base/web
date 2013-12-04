@@ -49,13 +49,14 @@
     </div>
   </header>
 
-
   <div class="container">
+    {% comment %}
     <ul class="happening-month-list">
     {% for date in date_list %}
       <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
     {% endfor %}
     </ul>
+    {% endcomment %}
 
     {% regroup object_list by timestamp.month as month_list %}
     <ul class="happening-event-list">
