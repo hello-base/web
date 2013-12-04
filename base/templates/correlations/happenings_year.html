@@ -64,17 +64,25 @@
       <li class="happening-month" id="{{ month.grouper|month_name|lower }}">
         <h2>{{ month.grouper|month_name }}</h2>
         <ul class="happening-date-list">
-        {% for item in month.list %}
+        {% for item in month.list reversed %}
           <li class="happening-date">
-            <div class="happening-timestamp">{% ifchanged %}{{ item.timestamp|date:"j" }}{% endifchanged %}</div>
+            <div class="happening-timestamp">
+            {% ifchanged %}
+              <div class="timestamp-box">
+                <span class="timestamp-date">{{ item.timestamp|date:"j" }}</span>
+                <span class="timestamp-day">{{ item.timestamp|date:"D" }}</span>
+              </div>
+            {% endifchanged %}
+            </div>
             <div class="happening-verb"><span class="pill">{{ item.date_field }}</span></div>
             <div class="happening-event">
-              {% with item.content_object as object %}
+            {% with item.content_object as object %}
               <a href="{{ object.get_absolute_url }}">
                 <span class="romanized-name">{{ object }}</span>
                 <span class="name">{{ object.name }}</span>
               </a>
-              {% endwith %}
+              {% if item.date_field == "released" %}{{ object.participants }}{% endif %}
+            {% endwith %}
             </div>
           </li>
         {% endfor %}

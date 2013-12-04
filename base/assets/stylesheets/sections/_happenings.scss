@@ -184,8 +184,28 @@
 
   font-size: 1.166rem;
   font-family: $font-family-secondary;
-  text-align: right;
+  text-align: center;
 }
+
+.timestamp-box {
+  border: 1px solid #ccc;
+}
+.timestamp-day,
+.timestamp-date {
+  display: block;
+}
+.timestamp-day {
+  padding: 2px 0;
+
+  color: $brand-medGrey;
+  font-size: 0.656rem;
+  font-weight: 700;
+}
+.timestamp-date {
+  font-size: 1.166rem;
+  font-weight: 700;
+}
+
 .happening-verb {
   margin-left: gutter(12);
   width: columns(2, 12);
