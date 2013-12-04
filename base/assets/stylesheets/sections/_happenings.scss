@@ -42,16 +42,55 @@
 .happening-decade-2000 .override-header { background-color: #F6D258; }
 .happening-decade-2010 .override-header { background-color: #00A68E; }
 
+.happening-navigation {
+  margin: 1rem 0;
+
+  .container {
+    display: flex;
+  }
+  .next-year, .previous-year { width: columns(1, 12); }
+  .ss-icon { @include position(relative, 2px 0 0 0); }
+}
+.happening-decades {
+  flex: 1;
+  margin: 0 gutter(12);
+}
+.happening-decades-header {
+  a {
+    align-items: center;
+    display: flex;
+  }
+  h2 {
+    flex: 1;
+    margin: 0;
+    padding-left: 4px;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
 .happening-decade-list,
 .happening-year-list {
   @include reset-list-style;
   @include reset-box-model;
 }
+.happening-decade-list {
+  display: flex;
+  height: 0;
+  overflow: hidden;
+
+  &.visible {
+    height: auto;
+  }
+}
 .happening-year-list {
   display: inline-block;
+  font-size: 12px;
 }
 .happening-year-list li {
   display: inline-block;
+  font-size: 12px;
 }
 .happening-year-list .selected { font-weight: 500; }
 
