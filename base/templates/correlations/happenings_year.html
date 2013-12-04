@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load correlation_tags %}
+{% load correlation_tags static %}
 
 {% block title %}{{ year|date:"Y" }} Happenings{% endblock %}
 {% block body-class %}override{% endblock %}
@@ -74,15 +74,20 @@
               </div>
             {% endifchanged %}
             </div>
-            <div class="happening-verb"><span class="pill">{{ item.date_field }}</span></div>
             <div class="happening-event">
             {% with item.content_object as object %}
               <a href="{{ object.get_absolute_url }}">
                 <span class="romanized-name">{{ object }}</span>
                 <span class="name">{{ object.name }}</span>
               </a>
+              {% if object.image %}<img src="{% get_media_prefix %}{{ object.image }}">{% endif %}
+              {% if item.date_field == "birthdate" %}({{ object.age }}){% endif %}
               {% if item.date_field == "released" %}{{ object.participants }}{% endif %}
             {% endwith %}
+            </div>
+            <div class="happening-verb">
+              <span class="pill">{{ item.identifier }}</span>
+              <span class="pill">{{ item.date_field }}</span>
             </div>
           </li>
         {% endfor %}
