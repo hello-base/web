@@ -22,3 +22,10 @@ window.onload = ->
 
 ($ document).on 'page:restore', ->
   NProgress.remove()
+
+# Happenings-related calls.
+($ document).ready ->
+  # ($ '.happening-toggle').click ->
+  ($ document).on 'click', '.happening-toggle', ->
+    console.log 'what'
+    ($ '.happening-decade-list').toggleClass 'visible'
