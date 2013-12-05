@@ -33,24 +33,24 @@
 
 {# merchandise.music #}
 {% if item.identifier == "album" %}
-  {{ object.participants }} released {{ object }}
+  {{ object.participants }} releases {{ object }}
   <span class="ss-icon ss-music"></span>
 {% endif %}
 
 {% if item.identifier == "single" %}
-  {{ object.participants }} released {{ object }}
+  {{ object.participants }} releases {{ object }}
   <span class="ss-icon ss-eighthnote"></span>
 {% endif %}
 
 {# people.group #}
 {% if item.identifier == "group" %}
   {% if item.date_field == "started" %}
-  <a href="{{ object.get_absolute_url }}">{{ object }}</a> was formed
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> forms
   Original members: {% for member in object.memberships.all reversed %}{% if member.started == object.started %}{{ member.idol }}{% include "utilities/commaify.html" %}{% endif %}{% endfor %}
   <span class="ss-icon ss-scaledown"></span>
   {% endif %}
   {% if item.date_field == "ended" %}
-  <a href="{{ object.get_absolute_url }}">{{ object }}</a> disbanded
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> disbands
   <span class="ss-icon ss-scaleup"></span>
   {% endif %}
 {% endif %}
@@ -58,15 +58,15 @@
 {# people.idol #}
 {% if item.identifier == "idol" %}
   {% if item.date_field == "started" %}
-  <a href="{{ object.get_absolute_url }}">{{ object }}</a> joined Hello! Project
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> joins Hello! Project
   <span class="ss-icon ss-login"></span>
   {% endif %}
   {% if item.date_field == "graduated" %}
-  <a href="{{ object.get_absolute_url }}">{{ object }}</a> left Hello! Project
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> leaves Hello! Project
   <span class="ss-icon ss-logout"></span>
   {% endif %}
   {% if item.date_field == "retired" %}
-  <a href="{{ object.get_absolute_url }}">{{ object }}</a> retired from show business
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> retires from show business
   <span class="ss-icon ss-luggage"></span>
   {% endif %}
 {% endif %}
@@ -75,28 +75,28 @@
 {% if item.identifier == "membership" %}
   {% if item.date_field == "started" %}
     {% if object.group.romanized_name == "Soloist" %}
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> became a soloist
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes a soloist
     <span class="ss-icon ss-mic"></span>
     {% else %}
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> joined <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> joins <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
     <span class="ss-icon ss-login"></span>
     {% endif %}
   {% endif %}
   {% if item.date_field == "ended" %}
     {% if object.group.romanized_name == "Soloist" %}
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stopped being a soloist
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stops being a soloist
     <span class="ss-icon ss-mic"></span>
     {% else %}
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> left <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> leaves <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
     <span class="ss-icon ss-logout"></span>
     {% endif %}
   {% endif %}
   {% if item.date_field == "leadership_started" %}
-  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> became leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
   <span class="ss-icon ss-login"></span>
   {% endif %}
   {% if item.date_field == "leadership_ended" %}
-  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stepped down as leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
   <span class="ss-icon ss-logout"></span>
   {% endif %}
 
