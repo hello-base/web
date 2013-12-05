@@ -175,6 +175,7 @@
   flex: 1;
 }
 .happening-date {
+  @include position(relative);
   display: flex;
   min-height: 27px;
 }
@@ -188,6 +189,7 @@
 }
 
 .timestamp-box {
+  @include position(absolute);
   border: 1px solid #ccc;
 }
 .timestamp-day,
