@@ -1,0 +1,109 @@
+{% load static %}
+
+{% for item in month.list %}
+<li class="happening-date">
+{% with item.content_object as object %}
+  <div class="happening-timestamp">
+  {# {% ifchanged %} #}
+    <div class="timestamp-box">
+      <span class="timestamp-date">{{ item.timestamp|date:"j" }}</span>
+      {# <span class="timestamp-day">{{ item.timestamp|date:"D" }}</span> #}
+    </div>
+  {# {% endifchanged %} #}
+  </div>
+  <div class="happening-event">
+    {% comment %}
+    <a href="{{ object.get_absolute_url }}">
+      <span class="romanized-name">{{ object.romanized_name }}</span>
+      <span class="name">{{ object.name }}</span>
+    </a>
+    {% if object.idol %}{{ object.idol }}{% endif %}
+    {% if object.group %}{{ object.group }}{% endif %}
+    {% if item.date_field == "birthdate" %}({{ object.age }}){% endif %}
+    {% if item.date_field == "released" %}{{ object.participants }}{% endif %}
+  </div>
+  <div class="happening-image">
+    {% if object.image %}<img src="{% get_media_prefix %}{{ object.image }}">{% endif %}
+  </div>
+  <div class="happening-verb">
+  {% endcomment %}
+
+    <span class="pill">{{ item.identifier }}</span>
+    <span class="pill">{{ item.date_field }}</span>
+
+{# merchandise.music #}
+{% if item.identifier == "album" %}
+  {{ object.participants }} released {{ object }}
+  <span class="ss-icon ss-music"></span>
+{% endif %}
+
+{% if item.identifier == "single" %}
+  {{ object.participants }} released {{ object }}
+  <span class="ss-icon ss-eighthnote"></span>
+{% endif %}
+
+{# people.group #}
+{% if item.identifier == "group" %}
+  {% if item.date_field == "started" %}
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> was formed
+  Original members: {% for member in object.memberships.all reversed %}{% if member.started == object.started %}{{ member.idol }}{% include "utilities/commaify.html" %}{% endif %}{% endfor %}
+  <span class="ss-icon ss-scaledown"></span>
+  {% endif %}
+  {% if item.date_field == "ended" %}
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> disbanded
+  <span class="ss-icon ss-scaleup"></span>
+  {% endif %}
+{% endif %}
+
+{# people.idol #}
+{% if item.identifier == "idol" %}
+  {% if item.date_field == "started" %}
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> joined Hello! Project
+  <span class="ss-icon ss-login"></span>
+  {% endif %}
+  {% if item.date_field == "graduated" %}
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> left Hello! Project
+  <span class="ss-icon ss-logout"></span>
+  {% endif %}
+  {% if item.date_field == "retired" %}
+  <a href="{{ object.get_absolute_url }}">{{ object }}</a> retired from show business
+  <span class="ss-icon ss-luggage"></span>
+  {% endif %}
+{% endif %}
+
+{# people.membership #}
+{% if item.identifier == "membership" %}
+  {% if item.date_field == "started" %}
+    {% if object.group.romanized_name == "Soloist" %}
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> became a soloist
+    <span class="ss-icon ss-mic"></span>
+    {% else %}
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> joined <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    <span class="ss-icon ss-login"></span>
+    {% endif %}
+  {% endif %}
+  {% if item.date_field == "ended" %}
+    {% if object.group.romanized_name == "Soloist" %}
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stopped being a soloist
+    <span class="ss-icon ss-mic"></span>
+    {% else %}
+    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> left <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    <span class="ss-icon ss-logout"></span>
+    {% endif %}
+  {% endif %}
+  {% if item.date_field == "leadership_started" %}
+  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> became leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  <span class="ss-icon ss-login"></span>
+  {% endif %}
+  {% if item.date_field == "leadership_ended" %}
+  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stepped down as leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  <span class="ss-icon ss-logout"></span>
+  {% endif %}
+
+{% endif %}
+
+  </div>
+
+{% endwith %}
+</li>
+{% endfor %}
