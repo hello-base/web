@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 
 from django_extensions.db import fields as extensions
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFit
+from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
 
@@ -40,6 +40,7 @@ class Base(Merchandise):
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
+    art_square = ImageSpecField(source='art', processors=[SmartResize(width=300,height=300)], format='JPEG', options={'quality': 70})
     art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
     class Meta:
