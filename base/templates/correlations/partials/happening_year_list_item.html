@@ -11,8 +11,8 @@
     </div>
   {# {% endifchanged %} #}
   </div>
+  {% comment %}
   <div class="happening-event">
-    {% comment %}
     <a href="{{ object.get_absolute_url }}">
       <span class="romanized-name">{{ object.romanized_name }}</span>
       <span class="name">{{ object.name }}</span>
@@ -28,18 +28,31 @@
   <div class="happening-verb">
     <span class="pill">{{ item.identifier }}</span>
     <span class="pill">{{ item.date_field }}</span>
+  </div>
   {% endcomment %}
 
 
 {# merchandise.music #}
 {% if item.identifier == "album" %}
-  {{ object.participants }} releases {{ object }}
-  <span class="ss-icon ss-music"></span>
+<div class="happening-event">
+  {{ object.participants }} releases <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+</div>
+<div class="happening-illustration">
+  {% for participant in object.participants %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endfor %}
+  <div class="happening-action"><span class="ss-icon ss-vinylrecord"></span></div>
+  <img src="{% get_media_prefix %}{{ object.image }}">
+</div>
 {% endif %}
 
 {% if item.identifier == "single" %}
-  {{ object.participants }} releases {{ object }}
-  <span class="ss-icon ss-eighthnote"></span>
+<div class="happening-event">
+  {{ object.participants }} releases <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+</div>
+<div class="happening-illustration">
+  {% for participant in object.participants %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endfor %}
+  <div class="happening-action"><span class="ss-icon ss-disc"></span></div>
+  <img src="{% get_media_prefix %}{{ object.image }}">
+</div>
 {% endif %}
 
 {# people.group #}
@@ -100,8 +113,6 @@
   <span class="ss-icon ss-logout"></span>
   {% endif %}
 {% endif %}
-
-  </div>
 
 {% endwith %}
 </li>

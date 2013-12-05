@@ -176,8 +176,9 @@
 }
 .happening-date {
   @include position(relative);
+  align-items: center;
   display: flex;
-  min-height: 27px;
+  min-height: 3.157rem;
 }
 .happening-timestamp {
   margin-left: gutter(12);
@@ -189,8 +190,8 @@
 }
 
 .timestamp-box {
-  @include position(absolute);
-  border: 1px solid #ccc;
+  // @include position(absolute);
+  // border: 1px solid #ccc;
 }
 .timestamp-day,
 .timestamp-date {
@@ -208,6 +209,9 @@
   font-weight: 700;
 }
 
+.happening-image {
+  min-width: 50px;
+}
 .happening-verb {
   margin-left: gutter(12);
   width: columns(2, 12);
@@ -215,6 +219,30 @@
 .happening-event {
   flex: 1;
 }
+
+.happening-illustration {
+  display: flex;
+  align-items: center;
+}
+.happening-illustration img {
+  height: 2.369rem;
+  border-radius: 2px;
+}
+.happening-action {
+  height: 2.369rem;
+  width: 2.369rem;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3), 0 0 0 2px white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  margin: 0 -5px;
+  position: relative;
+  z-index: 5;
+}
+
+
 
 // .hello-project .override-logo {
 //   background: linear-gradient(#17385b, darken(#17385b, 5%));
