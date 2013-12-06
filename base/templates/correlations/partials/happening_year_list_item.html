@@ -134,7 +134,7 @@
     {% if item.date_field == "ended" %}
       {% if object.group.romanized_name == "Soloist" %}
       <div class="happening-event">
-        <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stops being a soloist
+        <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> discontinues soloist work
       </div>
       <div class="happening-illustration">
         <div class="happening-actor"><img src="{% get_media_prefix %}{{ object.idol.image }}"></div>
