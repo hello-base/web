@@ -8,6 +8,10 @@ from .constants import SUBJECTS
 from .models import Correlation
 
 
+def dictify(d):
+    return {k: dictify(v) for k,v in d.items()} if isinstance(d, defaultdict) else d
+
+
 class HappeningsByYearView(YearArchiveView):
     allow_future = True
     date_field = 'timestamp'
