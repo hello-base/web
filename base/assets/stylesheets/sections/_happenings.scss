@@ -106,7 +106,7 @@
   padding: 0 0.875rem;
   transition: all 250ms ease;
 
-  &.visible { height: calc(75px + 1.312rem); }
+  &.visible { height: 96px; }
   > li {
     margin-right: gutter(12);
     width: 20%;
