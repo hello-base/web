@@ -52,21 +52,27 @@
   <div class="happening-statistics">
     {# <h2>The Year in Review</h2> #}
     <div class="container">
+
       <ul class="happening-statistic-list">
-      {% for identifier, fields in statistics.iteritems %}
-        <li>
-          {{ identifier }}
-          <ul class="happening-field-list {{ identifier }}-field">
-          {% for field, count in fields.iteritems %}
-            <li class="happening-field">
-            <strong class="statistic-count">{{ count }}</strong>
+      {% for app_label, model in statistics.iteritems %}
+        <li class="happening-app">
+          {{ app_label }}
+          <ul class="happening-model-list model-{{ model }}">
+          {% for identifier, fields in model.iteritems %}
+            <li>
+            {{ identifier }}
+            {% for field, count in fields.iteritems %}
+            <strong class="statistic-count">{{ count.0 }}</strong>
+            <strong class="statistic-change">{{ count.1 }}</strong>
             <span class="statistic-label">{{ field }}</span>
+            {% endfor %}
             </li>
           {% endfor %}
           </ul>
         </li>
       {% endfor %}
       </ul>
+
     </div>
   </div>
 

@@ -30,13 +30,17 @@ class HappeningsByYearView(YearArchiveView):
         return OrderedDict(sorted(decades.iteritems(), key=lambda y: y[0]))
 
     def get_statistics(self):
-        statistics = defaultdict(lambda: defaultdict(int))
+        statistics = defaultdict(lambda: defaultdict(dict))
         correlations = Correlation.objects.filter(year=self.get_year())
+        previous_correlations = Correlation.objects.filter(year=int(self.get_year()) - 1)
 
+        # `identifiers` consists of tuples with the following signature:
+        # "(subject app label, subject model name, subject date field)"
         identifiers = ((s[0]._meta.app_label, s[0]._meta.model_name, s[1]) for s in SUBJECTS)
         for i in identifiers:
             statistic = len([c for c in correlations if c.identifier == i[1] and c.date_field == i[2]])
-            statistics['%s:%s' % (i[0], i[1])][i[2]] = statistic
+            previous = len([c for c in previous_correlations if c.identifier == i[1] and c.date_field == i[2]])
+            statistics[i[0]][i[1]][i[2]] = (statistic, statistic - previous)
         return dictify(statistics)
 
     def get_average_statistics(self):
