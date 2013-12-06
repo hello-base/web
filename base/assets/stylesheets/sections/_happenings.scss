@@ -158,13 +158,20 @@
   // }
 }
 .happening-statistic-list,
+.happening-model-list,
 .happening-field-list {
   @include reset-list-style;
   @include reset-box-model;
   display: flex;
 }
 
+.happening-app {
+  align-items: center;
+  display: flex;
+}
+
 .happening-statistic-list {
+  flex-direction: column;
   margin: 0;
 
   border: 1px solid #454D57;
@@ -179,7 +186,7 @@
   color: #828B96;
 }
 .statistic-count {
-  font-size: 2.369rem;
+  font-size: 1.777rem;
   color: #FFF;
 }
 
