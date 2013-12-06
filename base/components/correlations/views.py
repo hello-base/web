@@ -21,7 +21,7 @@ class HappeningsByYearView(YearArchiveView):
 
     def get_years(self):
         decades = {}
-        dqs = Correlation.objects.dates('timestamp', 'year')
+        dqs = Correlation.objects.dates('timestamp', 'year').reverse()
         for key, group in groupby(dqs, lambda y: str(y.year)[:3]):
             key = '%s0s' % key
             decades[key] = list(year for year in group)
