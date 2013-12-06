@@ -142,6 +142,49 @@
   a { @include link-colors(rgba(#FFF, 0.75), #FFF); }
 }
 
+//
+.happening-statistics {
+  background-color: #272E37;
+
+  // h2 {
+  //   margin: 0;
+  //   padding: 1.333rem 0 0.75rem;
+
+  //   border-bottom: 1px solid #454D57;
+  //   color: #FFF;
+  //   font-size: 12px;
+  //   font-weight: 700;
+  //   text-align: center;
+  // }
+}
+.happening-statistic-list,
+.happening-field-list {
+  @include reset-list-style;
+  @include reset-box-model;
+  display: flex;
+}
+
+.happening-statistic-list {
+  margin: 0;
+
+  border: 1px solid #454D57;
+  border-width: 0 1px;
+}
+
+.happening-field {
+  text-align: center;
+}
+
+.statistic-label {
+  color: #828B96;
+}
+.statistic-count {
+  font-size: 2.369rem;
+  color: #FFF;
+}
+
+
+
 .happening-month-list,
 .happening-event-list,
 .happening-date-list {

@@ -49,8 +49,28 @@
     </div>
   </header>
 
+  <div class="happening-statistics">
+    {# <h2>The Year in Review</h2> #}
+    <div class="container">
+      <ul class="happening-statistic-list">
+      {% for identifier, fields in statistics.iteritems %}
+        <li>
+          {{ identifier }}
+          <ul class="happening-field-list {{ identifier }}-field">
+          {% for field, count in fields.iteritems %}
+            <li class="happening-field">
+            <strong class="statistic-count">{{ count }}</strong>
+            <span class="statistic-label">{{ field }}</span>
+            </li>
+          {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+
   <div class="container">
-    {{ statistics }}
     {% comment %}
     <ul class="happening-month-list">
     {% for date in date_list %}

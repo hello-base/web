@@ -33,12 +33,11 @@ class HappeningsByYearView(YearArchiveView):
         statistics = defaultdict(lambda: defaultdict(int))
         correlations = Correlation.objects.filter(year=self.get_year())
 
-        identifiers = ((s[0]._meta.model_name, s[1]) for s in SUBJECTS)
+        identifiers = ((s[0]._meta.app_label, s[0]._meta.model_name, s[1]) for s in SUBJECTS)
         for i in identifiers:
-            statistic = len([c for c in correlations if c.identifier == i[0] and c.date_field == i[1]])
-            if statistic != 0:
-                statistics[i[0]][i[1]] = statistic
-        return dict(statistics)
+            statistic = len([c for c in correlations if c.identifier == i[1] and c.date_field == i[2]])
+            statistics['%s:%s' % (i[0], i[1])][i[2]] = statistic
+        return dictify(statistics)
 
     def get_average_statistics(self):
         pass
