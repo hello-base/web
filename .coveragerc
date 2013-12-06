@@ -1,6 +1,7 @@
 [run]
 omit =
     ../*admin*
+    ../*commands*
     ../*dashboard*
     ../*migrations*
     ../*search*
