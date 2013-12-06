@@ -7,6 +7,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from components.merchandise.music.models import Album, Single
+from components.people.models import Group, Membership, Idol
+
 from .managers import CorrelationManager
 from .utils import call_attributes
 
@@ -61,14 +64,17 @@ FIELDS = [
     'ended',                # people.Group, people.Membership
     'leadership_ended',     # people.Membership
 ]
+MODELS = [
+    Album, Single,  # components.merchandise
+    Group, Idol, Membership,  # components.people
+]
 
 
 @receiver(post_save)
 def record_correlation(sender, instance, **kwargs):
     # Being a signal without a sender, we need to make sure models are the ones
     # we're looking for before we continue.
-    MODELS = ['album', 'single', 'group', 'idol', 'membership']
-    if not instance._meta.model_name in MODELS:
+    if not type(instance) in MODELS:
         return
 
     for field in FIELDS:
