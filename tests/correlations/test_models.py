@@ -39,9 +39,8 @@ class TestCorrelations:
         assert correlation.day == 2
 
     def test_multiple_correlations(self):
-        idol = IdolFactory(birthdate=datetime.date(1983, 4, 2), started=datetime.date(2013, 1, 1))
+        IdolFactory(birthdate=datetime.date(1983, 4, 2), started=datetime.date(2013, 1, 1))
         assert Correlation.objects.count() == 2
-
 
     def test_membership_exception(self):
         group = GroupFactory(started=datetime.datetime(2013, 1, 1))

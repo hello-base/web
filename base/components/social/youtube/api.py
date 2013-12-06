@@ -28,7 +28,7 @@ class Api:
         )
 
         videos = []
-        while request != None:
+        while request is not None:
             items = request.execute()
             for item in items.get('items', []):
                 videos.append(item['contentDetails']['videoId'])

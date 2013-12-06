@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from itertools import chain
-
 from django.core.management.base import NoArgsCommand
-from django.db.models.signals import pre_save
 
 from components.correlations.models import record_correlation
 from components.people.models import Group, Idol, Membership

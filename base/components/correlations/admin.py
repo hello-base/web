@@ -14,7 +14,7 @@ class CorrelationAdmin(admin.ModelAdmin):
             'fields': (('year', 'month', 'day'), 'julian')
         })
     )
-    list_display = ['content_object', 'content_type', 'timestamp', 'date_field',]
+    list_display = ['content_object', 'content_type', 'timestamp', 'date_field']
     list_filter = ['content_type', 'date_field']
 
     autocomplete_lookup_fields = {'generic': [['content_type', 'object_id']]}

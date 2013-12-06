@@ -9,7 +9,6 @@ from django.dispatch import receiver
 
 from .constants import FIELDS, MODELS
 from .managers import CorrelationManager
-from .utils import call_attributes
 
 
 class Correlation(models.Model):
@@ -60,6 +59,7 @@ def record_correlation(sender, instance, **kwargs):
         try:
             timestamp = getattr(instance, field)
         except AttributeError as e:
+            print(e)  # ew...
             continue
         else:
             instance.sender = sender

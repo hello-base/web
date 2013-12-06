@@ -2,7 +2,6 @@
 from dateutil import parser
 
 from django.db import models
-from django.utils.encoding import smart_unicode
 
 from components.people.models import Group, Idol
 
