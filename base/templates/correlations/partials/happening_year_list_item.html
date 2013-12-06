@@ -1,9 +1,9 @@
 {% load static %}
 
 {% for item in month.list %}
-<li class="happening-date">
+<li class="happening-date {% ifchanged item.timestamp %}new-day{% endifchanged %}">
 {% with item.content_object as object %}
-  <div class="happening-timestamp {% ifchanged %}new-day{% endifchanged %}">
+  <div class="happening-timestamp">
   {% ifchanged %}
     <div class="timestamp-box">
       <span class="timestamp-date">{{ item.timestamp|date:"j" }}</span>
@@ -67,7 +67,8 @@
     </div>
     <div class="happening-illustration">
       <img src="{% get_media_prefix %}{{ object.image }}">
-      <div class="happening-action"><span class="ss-icon ss-login"></span></div>
+      <div class="happening-action"><span class="ss-icon ss-download"></span></div>
+      <div class="happening-subject hp-subject"><span>H!P<strong>'98</strong></span></div>
     </div>
     {% endif %}
     {% if item.date_field == "graduated" %}
@@ -76,7 +77,8 @@
     </div>
     <div class="happening-illustration">
       <img src="{% get_media_prefix %}{{ object.image }}">
-      <div class="happening-action"><span class="ss-icon ss-logout"></span></div>
+      <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
+      <div class="happening-subject hp-subject"><span>H!P<strong>'98</strong></span></div>
     </div>
     {% endif %}
     {% if item.date_field == "retired" %}
@@ -85,7 +87,10 @@
     </div>
     <div class="happening-illustration">
       <img src="{% get_media_prefix %}{{ object.image }}">
-      <div class="happening-action"><span class="ss-icon ss-luggage"></span></div>
+      <div class="happening-action"><span class="ss-icon ss-right"></span></div>
+      <div class="happening-subject icon-subject">
+        <span class="ss-icon ss-luggage"></span>
+      </div>
     </div>
     {% endif %}
   {% endif %}
@@ -107,7 +112,7 @@
       </div>
       <div class="happening-illustration">
         <img src="{% get_media_prefix %}{{ object.idol.image }}">
-        <div class="happening-action"><span class="ss-icon ss-login"></span></div>
+        <div class="happening-action"><span class="ss-icon ss-download"></span></div>
         <img src="{% get_media_prefix %}{{ object.group.image }}">
       </div>
       {% endif %}
@@ -118,8 +123,11 @@
         <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> stops being a soloist
       </div>
       <div class="happening-illustration">
-        <img src="{% get_media_prefix %}{{ object.idol.image }}">
-        <div class="happening-action"><span class="ss-icon ss-mic"></span></div>
+        <div class="happening-actor"><img src="{% get_media_prefix %}{{ object.idol.image }}"></div>
+        <div class="happening-action"><span class="ss-icon ss-ban"></span></div>
+        <div class="happening-subject icon-subject">
+          <span class="ss-icon ss-mic"></span>
+        </div>
       </div>
       {% else %}
       <div class="happening-event">
@@ -127,7 +135,7 @@
       </div>
       <div class="happening-illustration">
         <img src="{% get_media_prefix %}{{ object.idol.image }}">
-        <div class="happening-action"><span class="ss-icon ss-logout"></span></div>
+        <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
         <img src="{% get_media_prefix %}{{ object.group.image }}">
       </div>
       {% endif %}
@@ -138,7 +146,7 @@
     </div>
     <div class="happening-illustration">
       <img src="{% get_media_prefix %}{{ object.idol.image }}">
-      <div class="happening-action"><span class="ss-icon ss-login"></span></div>
+      <div class="happening-action"><span class="ss-icon ss-download"></span></div>
       <img src="{% get_media_prefix %}{{ object.group.image }}">
     </div>
     {% endif %}
@@ -147,8 +155,8 @@
       <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
     </div>
     <div class="happening-illustration">
-        <img src="{% get_media_prefix %}{{ object.idol.image }}">
-      <div class="happening-action"><span class="ss-icon ss-logout"></span></div>
+      <img src="{% get_media_prefix %}{{ object.idol.image }}">
+      <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
       <img src="{% get_media_prefix %}{{ object.group.image }}">
     </div>
     {% endif %}
