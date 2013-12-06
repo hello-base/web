@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from collections import OrderedDict
+from collections import defaultdict, OrderedDict
 from itertools import groupby
 
 from django.views.generic.dates import YearArchiveView
 
-from .models import Correlation, MODELS
+from .constants import SUBJECTS
+from .models import Correlation
 
 
 class HappeningsByYearView(YearArchiveView):
@@ -29,12 +30,15 @@ class HappeningsByYearView(YearArchiveView):
         return OrderedDict(sorted(decades.iteritems(), key=lambda y: y[0]))
 
     def get_statistics(self):
-        statistics = {}
+        statistics = defaultdict(lambda: defaultdict(int))
         correlations = Correlation.objects.filter(year=self.get_year())
-        identifiers = [m._meta.model_name for m in MODELS]
+
+        identifiers = ((s[0]._meta.model_name, s[1]) for s in SUBJECTS)
         for i in identifiers:
-            statistics[i] = len(correlations.filter(identifier=i))
-        return statistics
+            statistic = len([c for c in correlations if c.identifier == i[0] and c.date_field == i[1]])
+            if statistic != 0:
+                statistics[i[0]][i[1]] = statistic
+        return dict(statistics)
 
     def get_average_statistics(self):
         pass
