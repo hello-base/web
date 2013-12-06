@@ -1,6 +1,6 @@
 {% load static %}
 
-{% for item in month.list reversed %}
+{% for item in month.list %}
 <li class="happening-date {% ifchanged item.timestamp %}new-day{% endifchanged %}">
 {% with item.content_object as object %}
   <div class="happening-timestamp">

@@ -60,7 +60,7 @@
 
     {% regroup object_list by month as month_list %}
     <ul class="happening-month-list">
-    {% for month in month_list reversed %}
+    {% for month in month_list %}
       <li class="happening-month" id="{{ month.grouper|month_name|lower }}">
         <h2>
           {{ month.grouper|month_name }}
