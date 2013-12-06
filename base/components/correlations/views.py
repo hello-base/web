@@ -4,7 +4,7 @@ from itertools import groupby
 
 from django.views.generic.dates import YearArchiveView
 
-from .models import Correlation
+from .models import Correlation, MODELS
 
 
 class HappeningsByYearView(YearArchiveView):
@@ -16,6 +16,7 @@ class HappeningsByYearView(YearArchiveView):
 
     def get_context_data(self, **kwargs):
         context = super(HappeningsByYearView, self).get_context_data(**kwargs)
+        context['statistics'] = self.get_statistics()
         context['years'] = self.get_years()
         return context
 
@@ -26,3 +27,14 @@ class HappeningsByYearView(YearArchiveView):
             key = '%s0s' % key
             decades[key] = list(year for year in group)
         return OrderedDict(sorted(decades.iteritems(), key=lambda y: y[0]))
+
+    def get_statistics(self):
+        statistics = {}
+        correlations = Correlation.objects.filter(year=self.get_year())
+        identifiers = [m._meta.model_name for m in MODELS]
+        for i in identifiers:
+            statistics[i] = len(correlations.filter(identifier=i))
+        return statistics
+
+    def get_average_statistics(self):
+        pass
