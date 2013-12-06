@@ -61,6 +61,14 @@
 
   {# people.idol #}
   {% if item.identifier == "idol" %}
+    {% if item.date_field == "birthdate" %}
+    <div class="happening-event">
+      <a href="{{ object.get_absolute_url }}">{{ object }}</a> is born
+    </div>
+    <div class="happening-illustration">
+      <img src="{% get_media_prefix %}{{ object.image }}">
+    </div>
+    {% endif %}
     {% if item.date_field == "started" %}
     <div class="happening-event">
       <a href="{{ object.get_absolute_url }}">{{ object }}</a> joins Hello! Project

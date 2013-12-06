@@ -92,7 +92,6 @@
     font-size: 12px;
     font-weight: 600;
   }
-  .ss-icon { @include position(relative, 1px 0 0 0); }
 }
 
 .happening-decade-list,
@@ -229,23 +228,25 @@
   align-items: center;
   margin-left: gutter(12);
 }
+.happening-illustration:hover {
+  transform: scale(1.5);
+}
 .happening-illustration img {
   height: 2.369rem;
   border-radius: 2px;
 }
 .happening-action {
-  height: 2.369rem;
-  width: 2.369rem;
-  font-size: 1.333rem;
-  // box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3), 0 0 0 2px white;
-  border-radius: 50%;
+  @include position(relative);
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: white;
   margin: 0 2px;
-  position: relative;
+  width: 2.369rem; height: 2.369rem;
   z-index: 5;
+
+  font-size: 1.333rem;
+
+  .ss-icon { @include position(relative, 3px 0 0 0); }
 }
 
 .icon-subject {
