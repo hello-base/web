@@ -7,9 +7,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from components.merchandise.music.models import Album, Single
-from components.people.models import Group, Membership, Idol
-
+from .constants import FIELDS, MODELS
 from .managers import CorrelationManager
 from .utils import call_attributes
 
@@ -49,25 +47,6 @@ class Correlation(models.Model):
 
     def __unicode__(self):
         return 'Correlation for %s [%s]' % (self.content_object, self.timestamp)
-
-
-FIELDS = [
-    # Positive dates.
-    'birthdate',            # people.Idol
-    'started',              # people.Idol, people.Group, people.Membership
-    'leadership_started',   # people.Membership
-    'released',             # merchandise.*
-
-    # Negative dates.
-    'graduated',            # people.Idol
-    'retired',              # people.Idol
-    'ended',                # people.Group, people.Membership
-    'leadership_ended',     # people.Membership
-]
-MODELS = [
-    Album, Single,  # components.merchandise
-    Group, Idol, Membership,  # components.people
-]
 
 
 @receiver(post_save)
