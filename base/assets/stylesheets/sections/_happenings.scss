@@ -223,6 +223,11 @@
   flex: 1;
 }
 
+.happening-actors {
+  img { margin-right: 1px; }
+  img:last-child { margin-right: 0; }
+}
+
 .happening-illustration {
   display: flex;
   align-items: center;
@@ -268,14 +273,11 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  width: 67px; height: 38px;
+  width: 2.369rem; height: 2.369rem;
 
   background-color: #17385b;
   border-radius: 2px;
   color: #FFF;
   font-family: $font-family-hello-project;
-
-  strong {
-    font-family: $font-family-hello-project-secondary;
-  }
+  font-size: 13px;
 }
