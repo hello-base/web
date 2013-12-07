@@ -211,6 +211,12 @@
   .ss-directdown { @include position(relative, 1px 0 0 0); }
 }
 
+
+// .happenings-list
+// -----------------------------------------------------------------------------
+.happenings-list {
+  padding-top: 2.369rem;
+}
 .happening-month-list,
 .happening-event-list,
 .happening-date-list {

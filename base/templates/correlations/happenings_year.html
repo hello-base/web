@@ -49,56 +49,33 @@
     </div>
   </header>
 
-  <div class="happening-statistics">
-    {# <h2>The Year in Review</h2> #}
-    <div class="container">
+  {% include "correlations/partials/happenings_year_statistics.html" %}
 
-      <ul class="happening-statistic-list">
-      {% for app_label, model in statistics.iteritems %}
-        <li class="happening-app">
-          {{ app_label }}
-          <ul class="happening-model-list model-{{ model }}">
-          {% for identifier, fields in model.iteritems %}
-            <li>
-            {{ identifier }}
-            {% for field, count in fields.iteritems %}
-            <strong class="statistic-count">{{ count.0 }}</strong>
-            <strong class="statistic-change">{{ count.1 }}</strong>
-            <span class="statistic-label">{{ field }}</span>
-            {% endfor %}
-            </li>
-          {% endfor %}
+  <div class="happenings-list">
+    <div class="container">
+      {% comment %}
+      <ul class="happening-month-list">
+      {% for date in date_list %}
+        <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
+      {% endfor %}
+      </ul>
+      {% endcomment %}
+
+      {% regroup object_list by month as month_list %}
+      <ul class="happening-month-list">
+      {% for month in month_list %}
+        <li class="happening-month" id="{{ month.grouper|month_name|lower }}">
+          <h2>
+            {{ month.grouper|month_name }}
+            <small>{{ year|date:"Y" }}</small>
+          </h2>
+          <ul class="happening-date-list">
+          {% include "correlations/partials/happening_year_list_item.html" %}
           </ul>
         </li>
       {% endfor %}
       </ul>
-
     </div>
-  </div>
-
-  <div class="container">
-    {% comment %}
-    <ul class="happening-month-list">
-    {% for date in date_list %}
-      <li><a href="#{{ date|date:"F"|lower }}">{{ date|date:"F" }}</a></li>
-    {% endfor %}
-    </ul>
-    {% endcomment %}
-
-    {% regroup object_list by month as month_list %}
-    <ul class="happening-month-list">
-    {% for month in month_list %}
-      <li class="happening-month" id="{{ month.grouper|month_name|lower }}">
-        <h2>
-          {{ month.grouper|month_name }}
-          <small>{{ year|date:"Y" }}</small>
-        </h2>
-        <ul class="happening-date-list">
-        {% include "correlations/partials/happening_year_list_item.html" %}
-        </ul>
-      </li>
-    {% endfor %}
-    </ul>
   </div>
 </section>
 {% endblock content %}

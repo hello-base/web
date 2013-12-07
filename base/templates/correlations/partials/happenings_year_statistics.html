@@ -1,0 +1,36 @@
+{% load correlation_tags %}
+
+<div class="happening-statistics">
+  <div class="container">
+    <ul class="happening-statistic-list">
+    {% for app_label, model in statistics.iteritems reversed %}
+      <li class="happening-app {{ app_label }}-app">
+        <span class="happening-app-label">
+          {% if app_label == "music" %}<span class="ss-icon ss-music"></span>{% endif %}
+          {% if app_label == "people" %}<span class="ss-icon ss-userprofile"></span>{% endif %}
+          {{ app_label }}
+        </span>
+        <ul class="happening-field-list">
+        {% for identifier, fields in model.iteritems %}
+        {% for field, count in fields.iteritems %}
+          <li class="happening-field">
+            <strong class="statistic-count">
+              {{ count.0 }}
+              <span class="statistic-change
+                {% if count.1 > 0 %}positive{% elif count.1 < 0 %}negative{% else %}no-change{% endif %}
+              ">
+                {% if count.1 > 0 %}<span class="ss-icon ss-directup"></span> {{ count.1 }}
+                {% elif count.1 < 0 %}<span class="ss-icon ss-dropdown"></span> {{ count.1 }}
+                {% else %}{{ count.1 }}{% endif %}
+              </span>
+            </strong>
+            <span class="statistic-label">{% render_statistic_label app_label identifier field %}</span>
+          </li>
+        {% endfor %}
+        {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
