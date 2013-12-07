@@ -7,14 +7,6 @@ from django.db import models
 
 class CorrelationManager(models.Manager):
     def update_or_create(self, instance, timestamp, attribute):
-        # Membership is a special case. Since most groups are static
-        # (or non-generational), the date the group is formed is the same as
-        # the date its members joined. So if those two values are equal, stop
-        # the process.
-        if not timestamp or (instance._meta.model_name == 'membership'
-            and instance.started == instance.group.started):
-            return
-
         ctype = ContentType.objects.get_for_model(instance.sender)
         defaults = {
             'timestamp': timestamp,
