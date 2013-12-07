@@ -48,7 +48,7 @@
     </div>
     <div class="happening-illustration">
       <div class="happening-actors">
-        {% for participant in object.members.all %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endfor %}
+        {% for participant in object.original_members %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endfor %}
       </div>
       <div class="happening-action"><span class="ss-icon ss-scaledown"></span></div>
       <img src="{% get_media_prefix %}{{ object.image }}">
