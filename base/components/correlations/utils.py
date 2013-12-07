@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
+
+
 def call_attributes(instance, attribute_list):
     for attribute in attribute_list:
         if hasattr(instance, attribute):
