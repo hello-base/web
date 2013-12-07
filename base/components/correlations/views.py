@@ -6,10 +6,7 @@ from django.views.generic.dates import YearArchiveView
 
 from .constants import SUBJECTS
 from .models import Correlation
-
-
-def dictify(d):
-    return {k: dictify(v) for k,v in d.items()} if isinstance(d, defaultdict) else d
+from .utils import dictify
 
 
 class HappeningsByYearView(YearArchiveView):
