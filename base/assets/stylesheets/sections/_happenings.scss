@@ -142,21 +142,11 @@
   a { @include link-colors(rgba(#FFF, 0.75), #FFF); }
 }
 
-//
-.happening-statistics {
-  background-color: #272E37;
-
-  // h2 {
-  //   margin: 0;
-  //   padding: 1.333rem 0 0.75rem;
-
-  //   border-bottom: 1px solid #454D57;
-  //   color: #FFF;
-  //   font-size: 12px;
-  //   font-weight: 700;
-  //   text-align: center;
-  // }
-}
+// .happening-statistics
+// Set of classes that style the yearly statistics count module on a given
+// yearly happenings page.
+// -----------------------------------------------------------------------------
+.happening-statistics { background-color: #272E37; }
 .happening-statistic-list,
 .happening-model-list,
 .happening-field-list {
@@ -164,33 +154,62 @@
   @include reset-box-model;
   display: flex;
 }
-
 .happening-app {
   align-items: center;
   display: flex;
-}
+  margin: 1rem 0;
 
+  &:last-child { margin-top: 0; }
+}
+.happening-app-label {
+  flex: 1;
+  color: #A0ABB6;
+  font-family: $font-family-secondary;
+  text-transform: uppercase;
+
+  .ss-icon {
+    @include position(relative, 1px 0 0 0);
+    color: #FFF;
+  }
+}
 .happening-statistic-list {
   flex-direction: column;
   margin: 0;
-
-  border: 1px solid #454D57;
   border-width: 0 1px;
 }
 
-.happening-field {
-  text-align: center;
+.happening-field-list {
+  flex: 9;
+  padding: 0.422rem 0;
+  border-left: 1px solid #454D57;
 }
-
+.happening-field {
+  padding-left: 1rem;
+  line-height: 1;
+}
 .statistic-label {
+  display: block;
+  padding-top: 0.317rem;
+
   color: #828B96;
+  font-size: 11px;
+  line-height: 1;
 }
 .statistic-count {
-  font-size: 1.777rem;
   color: #FFF;
+  font-size: 1.777rem;
+  white-space: nowrap;
 }
+.statistic-change {
+  font-size: 12px;
 
+  &.negative { color: #E9173F; }
+  &.no-change { color: #454D57; }
+  &.positive { color: #00D8AE; }
 
+  .ss-directup { @include position(relative, 2px 0 0 0); }
+  .ss-directdown { @include position(relative, 1px 0 0 0); }
+}
 
 .happening-month-list,
 .happening-event-list,
