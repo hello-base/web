@@ -27,4 +27,4 @@ window.onload = ->
 ($ document).ready ->
   ($ document).on 'click', '.happening-toggle', ->
     ($ '.happening-decade-list').toggleClass 'visible'
-    ($ '.happening-toggle .ss-icon:last-child').toggleClass 'ss-dropdown ss-directup'
+    ($ '.happening-toggle .ss-icon:last-child').toggleClass 'ss-navigatedown ss-navigateup'
