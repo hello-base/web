@@ -45,7 +45,7 @@ class Correlation(models.Model):
         ordering = ('-timestamp',)
 
     def __unicode__(self):
-        return 'Correlation for %s [%s]' % (self.content_object, self.timestamp)
+        return '%s [%s:%s]' % (self.timestamp, self.content_type_id, self.object_id)
 
 
 @receiver(post_save)
