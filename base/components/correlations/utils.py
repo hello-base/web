@@ -10,4 +10,4 @@ def call_attributes(instance, attribute_list):
 
 
 def dictify(d):
-    return {k: dictify(v) for k,v in d.items()} if isinstance(d, defaultdict) else d
+    return {k: dictify(v) for k, v in d.items()} if isinstance(d, defaultdict) else d
