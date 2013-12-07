@@ -3,7 +3,7 @@
 <div class="happening-statistics">
   <div class="container">
     <ul class="happening-statistic-list">
-    {% for app_label, model in statistics.iteritems reversed %}
+    {% for app_label, model in statistics.iteritems %}
       <li class="happening-app {{ app_label }}-app">
         <span class="happening-app-label">
           {% if app_label == "music" %}<span class="ss-icon ss-music"></span>{% endif %}

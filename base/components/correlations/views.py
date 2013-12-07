@@ -48,7 +48,7 @@ class HappeningsByYearView(YearArchiveView):
             statistic = len([c for c in correlations if c.identifier == i[1] and c.date_field == i[2]])
             previous = len([c for c in previous_correlations if c.identifier == i[1] and c.date_field == i[2]])
             statistics[i[0]][i[1]][i[2]] = (statistic, statistic - previous)
-        return dictify(statistics)
+        return OrderedDict(sorted(dictify(statistics).iteritems(), key=lambda y: y[0], reverse=True))
 
     def get_average_statistics(self):
         pass
