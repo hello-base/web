@@ -21,8 +21,11 @@ class HappeningsByYearView(YearArchiveView):
 
     def get_context_data(self, **kwargs):
         context = super(HappeningsByYearView, self).get_context_data(**kwargs)
-        context['statistics'] = self.get_statistics()
         context['years'] = self.get_years()
+
+        # Only show statistics from 1997 on.
+        if self.get_year() >= '1997':
+            context['statistics'] = self.get_statistics()
         return context
 
     def get_years(self):
