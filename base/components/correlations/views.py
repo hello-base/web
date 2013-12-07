@@ -2,7 +2,10 @@
 from collections import defaultdict, OrderedDict
 from itertools import groupby
 
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic.dates import YearArchiveView
+
+from components.people.models import Membership
 
 from .constants import SUBJECTS
 from .models import Correlation
@@ -27,8 +30,29 @@ class HappeningsByYearView(YearArchiveView):
         return context
 
     def get_objects(self):
+        correlations = self.queryset.filter(year=self.get_year()).order_by('object_id')
+
+        # Because of the way generic relations work, the foreign keys of any
+        # content object can't be prefetched. We'll manually prefetch what we
+        # need for the Membership class and strap that to the existing queryset.
+        generics = {}
+        for item in correlations:
+            generics.setdefault(item.content_type_id, set()).add(item.object_id)
+
+        content_types = ContentType.objects.in_bulk(generics.keys())
+
+        relations = {}
+        for ct, fk_list in generics.items():
+            ct_model = content_types[ct].model_class()
+            if ct_model is Membership:
+                relations[ct] = ct_model.objects.select_related('idol', 'group').in_bulk(list(fk_list))
+            else:
+                relations[ct] = ct_model.objects.in_bulk(list(fk_list))
+
+        for item in correlations:
+            setattr(item, '_content_object_cache', relations[item.content_type_id][item.object_id])
+
         objects = defaultdict(lambda: defaultdict(list))
-        correlations = self.queryset.filter(year=self.get_year()).order_by('identifier', 'date_field')
         for c in correlations:
             objects[c.month][c.day].append(c)
 
