@@ -57,10 +57,9 @@ def record_correlation(sender, instance, **kwargs):
 
     for field in FIELDS:
         try:
+            instance.sender = sender
             timestamp = getattr(instance, field)
+            Correlation.objects.update_or_create(instance, timestamp, field)
         except AttributeError as e:
             print(e)  # ew...
             continue
-        else:
-            instance.sender = sender
-            Correlation.objects.update_or_create(instance, timestamp, field)
