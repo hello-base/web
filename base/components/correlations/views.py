@@ -31,7 +31,13 @@ class HappeningsByYearView(YearArchiveView):
         correlations = self.queryset.filter(year=self.get_year()).order_by('identifier', 'date_field')
         for c in correlations:
             objects[c.month][c.day].append(c)
-        return dictify(objects)
+
+        # Remove the defaultdict-ness from the objects. Then, sort the nested
+        # dictionaries and then finally the main dictionary--all in reverse.
+        objects = dictify(objects)
+        for k, v in objects.iteritems():
+            objects[k] = OrderedDict(sorted(v.iteritems(), reverse=True))
+        return OrderedDict(sorted(objects.iteritems(), reverse=True))
 
     def get_years(self):
         decades = {}
