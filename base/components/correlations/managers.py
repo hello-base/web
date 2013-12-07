@@ -37,7 +37,7 @@ class CorrelationManager(models.Manager):
 
     def get_query_set(self):
         qs = super(CorrelationManager, self).get_query_set()
-        return qs.prefetch_related('content_object')
+        return qs #.prefetch_related('content_object')
 
     def today(self):
         qs = self.get_query_set()
