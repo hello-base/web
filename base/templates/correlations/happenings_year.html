@@ -61,6 +61,28 @@
       </ul>
       {% endcomment %}
 
+      {# {{ objects }} #}
+      <ul>
+      {% for month, days in objects.iteritems %}
+        <li>
+          {{ month|month_name }}
+          <ul>
+          {% for day, events in days.iteritems %}
+            <li>
+              {{ day }}
+              <ul>
+              {% for event in events %}
+                <li>{{ event }}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+      </ul>
+
+      {% comment %}
       {% regroup object_list by month as month_list %}
       <ul class="happening-month-list">
       {% for month in month_list %}
@@ -75,6 +97,7 @@
         </li>
       {% endfor %}
       </ul>
+      {% endcomment %}
     </div>
   </div>
 </section>

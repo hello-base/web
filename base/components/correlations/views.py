@@ -18,12 +18,20 @@ class HappeningsByYearView(YearArchiveView):
 
     def get_context_data(self, **kwargs):
         context = super(HappeningsByYearView, self).get_context_data(**kwargs)
+        context['objects'] = self.get_objects()
         context['years'] = self.get_years()
 
         # Only show statistics from 1997 on.
         if self.get_year() >= '1997':
             context['statistics'] = self.get_statistics()
         return context
+
+    def get_objects(self):
+        objects = defaultdict(lambda: defaultdict(list))
+        correlations = self.queryset.filter(year=self.get_year()).order_by('identifier', 'date_field')
+        for c in correlations:
+            objects[c.month][c.day].append(c)
+        return dictify(objects)
 
     def get_years(self):
         decades = {}
