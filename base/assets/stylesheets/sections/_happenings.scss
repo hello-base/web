@@ -36,17 +36,28 @@
   }
 }
 
-.happening-decade-1970 .override-header { background-color: #027298; }
-.happening-decade-1980 .override-header { background-color: #BA88A5; }
-.happening-decade-1990 .override-header { background-color: #A9B35D; }
-.happening-decade-2000 .override-header { background-color: #9BC0DD; }
-.happening-decade-2010 .override-header { background-color: #00A68E; }
+.happening-decade-1970 {
+  .override-header { background-color: #027298; }
+  .happening-navigation { background-color: #015279; }
+}
+.happening-decade-1980 {
+  .override-header { background-color: #BA88A5; }
+  .happening-navigation { background-color: #A06887; }
+}
+.happening-decade-1990 {
+  .override-header { background-color: #A9B35D; }
+  .happening-navigation { background-color: #8C983F; }
+}
+.happening-decade-2000 {
+  .override-header { background-color: #9BC0DD; }
+  .happening-navigation { background-color: #7CA8CE; }
+}
+.happening-decade-2010 {
+  .override-header { background-color: #00A68E; }
+  .happening-navigation { background-color: #00886E; }
+}
 
 .happening-navigation {
-  background: rgba(#000, 0.05);
-  border-top: 1px solid rgba(#FFF, 0.25);
-  box-shadow: inset 0 1px 1px rgba(#000, 0.01);
-
   .container {
     align-items: center;
     display: flex;
@@ -75,14 +86,14 @@
     display: flex;
     padding: 0.3rem 0.5rem;
 
-    background: rgba(#000, 0.05);
+    background: rgba(#000, 0.15);
     border-radius: 4px;
     color: #FFF;
 
     strong { @include link-colors(#FFF); }
   }
   a:hover {
-    background: rgba(#000, 0.25);
+    background: rgba(#000, 0.35);
   }
   strong {
     flex: 1;
