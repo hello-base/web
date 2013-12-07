@@ -224,6 +224,9 @@ class Group(ContributorMixin):
     def latest_single(self):
         return self.singles.latest()
 
+    def original_members(self):
+        return self.members.filter(memberships__started=self.started)
+
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
