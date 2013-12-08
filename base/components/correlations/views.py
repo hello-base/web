@@ -6,6 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.views.generic.dates import YearArchiveView
 
 from components.people.models import Membership
+from components.merchandise.music.models import Album, Single
 
 from .constants import SUBJECTS
 from .models import Correlation
@@ -46,6 +47,8 @@ class HappeningsByYearView(YearArchiveView):
             ct_model = content_types[ct].model_class()
             if ct_model is Membership:
                 relations[ct] = ct_model.objects.select_related('idol', 'group').in_bulk(list(fk_list))
+            elif ct_model in [Album, Single]:
+                relations[ct] = ct_model.objects.prefetch_related('participating_idols', 'participating_groups').in_bulk(list(fk_list))
             else:
                 relations[ct] = ct_model.objects.in_bulk(list(fk_list))
 
