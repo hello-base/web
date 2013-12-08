@@ -86,23 +86,6 @@
         </li>
       {% endfor %}
       </ul>
-
-      {% comment %}
-      {% regroup object_list by month as month_list %}
-      <ul class="happening-month-list">
-      {% for month in month_list %}
-        <li class="happening-month" id="{{ month.grouper|month_name|lower }}">
-          <h2>
-            {{ month.grouper|month_name }}
-            <small>{{ year|date:"Y" }}</small>
-          </h2>
-          <ul class="happening-date-list">
-          {% include "correlations/partials/happenings_year_list_item.html" %}
-          </ul>
-        </li>
-      {% endfor %}
-      </ul>
-      {% endcomment %}
     </div>
   </div>
 </section>
