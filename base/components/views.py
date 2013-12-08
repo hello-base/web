@@ -7,6 +7,7 @@ from braces.views import AjaxResponseMixin, JSONResponseMixin
 from haystack.query import SearchQuerySet
 
 from components.correlations.models import Correlation
+from components.correlations.utils import prefetch_relations, regroup_correlations
 from components.merchandise.music.models import Album, Edition, Single, Track
 from components.people.models import Group, Idol
 
@@ -33,14 +34,16 @@ class SiteView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SiteView, self).get_context_data(**kwargs)
-        correlations = Correlation.objects.all()[:8]
-        context['correlations'] = {
-            'onthisday': Correlation.objects.today(),
-            'recent': [c for c in correlations if c.timestamp < datetime.date.today()],
-            'today': [c for c in correlations if c.timestamp == datetime.date.today()],
-            'upcoming': [c for c in correlations if c.timestamp > datetime.date.today()],
-        }
-        context['counts'] = {
+        context['happenings'] = self.get_happenings()
+        context['counts'] = self.get_counts()
+        return context
+
+    def get_happenings(self):
+        correlations = Correlation.objects.exclude(identifier='idol')[:10]
+        return regroup_correlations(prefetch_relations(correlations))
+
+    def get_counts(self):
+        return {
             'albums': Album.objects.count(),
             'editions': Edition.objects.count(),
             'groups': Group.objects.count(),
@@ -48,7 +51,6 @@ class SiteView(TemplateView):
             'singles': Single.objects.count(),
             'tracks': Track.objects.count(),
         }
-        return context
 
 
 class ImageDetailView(TemplateView):
