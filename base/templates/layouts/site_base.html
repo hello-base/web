@@ -25,6 +25,12 @@
       <div class="search-results js-search-results"></div>
     </form>
 
+    {% comment %}
+    <div class="header-navigation">
+      <a href="{% url 'happenings-by-year' 2013 %}">Happenings</a>
+    </div>
+    {% endcomment %}
+
     <div class="header-userbox">
     {% if request.user.is_authenticated %}
        {# <a href="{% url "signout" %}">Sign out</a> #}
