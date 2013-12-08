@@ -6,12 +6,17 @@
 window.onload = ->
   ($ '.hero-image img').animate({opacity: 1}, 300)
 
-# Search field highlighting.
 ($ document).ready ->
+  # Search field highlighting.
   ($ '#id_q').focus ->
     ($ this).closest('.searchbar').addClass 'focus'
   ($ '#id_q').blur ->
     ($ this).closest('.searchbar').removeClass 'focus'
+
+  # Happenings-related calls.
+  ($ document).on 'click', '.happening-toggle', ->
+    ($ '.happening-decade-list').toggleClass 'visible'
+    ($ '.happening-toggle .ss-icon:last-child').toggleClass 'ss-navigatedown ss-navigateup'
 
 # NProgress-related calls.
 ($ document).on 'page:fetch', ->
@@ -22,9 +27,3 @@ window.onload = ->
 
 ($ document).on 'page:restore', ->
   NProgress.remove()
-
-# Happenings-related calls.
-($ document).ready ->
-  ($ document).on 'click', '.happening-toggle', ->
-    ($ '.happening-decade-list').toggleClass 'visible'
-    ($ '.happening-toggle .ss-icon:last-child').toggleClass 'ss-navigatedown ss-navigateup'
