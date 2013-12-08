@@ -1,0 +1,44 @@
+{% load static %}
+
+{% with event.content_object as object %}
+{% if event.date_field == "birthdate" %}
+<div class="happening-event">
+  <strong><a href="{{ object.get_absolute_url }}">{{ object }}</a></strong> is born
+</div>
+<div class="happening-illustration">
+  <img src="{% get_media_prefix %}{{ object.image }}">
+</div>
+{% endif %}
+{% if event.date_field == "started" %}
+<div class="happening-event">
+  <strong><a href="{{ object.get_absolute_url }}">{{ object }}</a></strong> joins <strong>Hello! Project</strong>
+</div>
+<div class="happening-illustration">
+  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-action"><span class="ss-icon ss-download"></span></div>
+  <div class="happening-subject hp-subject"><span>H!P</span></div>
+</div>
+{% endif %}
+{% if event.date_field == "graduated" %}
+<div class="happening-event">
+  <strong><a href="{{ object.get_absolute_url }}">{{ object }}</a></strong> leaves <strong>Hello! Project</strong>
+</div>
+<div class="happening-illustration">
+  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
+  <div class="happening-subject hp-subject"><span>H!P</span></div>
+</div>
+{% endif %}
+{% if event.date_field == "retired" %}
+<div class="happening-event">
+  <strong><a href="{{ object.get_absolute_url }}">{{ object }}</a></strong> retires from show business
+</div>
+<div class="happening-illustration">
+  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
+  <div class="happening-subject icon-subject">
+    <span class="ss-icon ss-luggage"></span>
+  </div>
+</div>
+{% endif %}
+{% endwith %}
