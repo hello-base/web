@@ -4,15 +4,15 @@
 {% if event.date_field == "started" %}
   {% if object.group.romanized_name == "Soloist" %}
   <div class="happening-event">
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes a soloist
+    <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes a <span class="subject">soloist</span>
   </div>
   <div class="happening-illustration">
     <img src="{% get_media_prefix %}{{ object.idol.image }}">
     <div class="happening-action"><span class="ss-icon ss-mic"></span></div>
   </div>
-  {% else %}
+  {% elif object.started != object.group.started %}
   <div class="happening-event">
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> joins <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> joins <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
   </div>
   <div class="happening-illustration">
     <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -24,7 +24,7 @@
 {% if event.date_field == "ended" %}
   {% if object.group.romanized_name == "Soloist" %}
   <div class="happening-event">
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> discontinues soloist work
+    <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> discontinues <span class="subject">soloist work</span>
   </div>
   <div class="happening-illustration">
     <div class="happening-actor"><img src="{% get_media_prefix %}{{ object.idol.image }}"></div>
@@ -35,7 +35,7 @@
   </div>
   {% else %}
   <div class="happening-event">
-    <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> leaves <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> leaves <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
   </div>
   <div class="happening-illustration">
     <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -46,7 +46,7 @@
 {% endif %}
 {% if event.date_field == "leadership_started" %}
 <div class="happening-event">
-  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -56,7 +56,7 @@
 {% endif %}
 {% if event.date_field == "leadership_ended" %}
 <div class="happening-event">
-  <a href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.idol.image }}">

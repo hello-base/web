@@ -1,10 +1,12 @@
-{% load static %}
+{% load static typogrify_tags %}
 
 {% with event.content_object as object %}
 {% if event.date_field == "started" %}
 <div class="happening-event">
-  <strong><a href="{{ object.get_absolute_url }}">{{ object }}</a></strong> is formed
-  {# Original members: {% for member in object.memberships.all reversed %}{% if member.started == object.started %}{{ member.idol }}{% include "utilities/commaify.html" %}{% endif %}{% endfor %} #}
+  {% filter typogrify %}
+  <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> is formed
+  <div class="happening-originals">with {% for member in object.original_members %}<a href="{{ member.get_absolute_url }}">{{ member }}</a>{% include "utilities/commaify.html" %}{% endfor %}</div>
+  {% endfilter %}
 </div>
 <div class="happening-illustration">
   <div class="happening-actors">
@@ -16,7 +18,7 @@
 {% endif %}
 {% if event.date_field == "ended" %}
 <div class="happening-event">
-  <strong><a href="{{ object.get_absolute_url }}">{{ object }}</a></strong> disbands
+  <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> disbands
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">
