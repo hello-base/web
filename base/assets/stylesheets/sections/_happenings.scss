@@ -225,9 +225,6 @@
 
 // .happenings-list
 // -----------------------------------------------------------------------------
-.happenings-list {
-  padding-top: 2.369rem;
-}
 .happening-month-list,
 .happening-event-list,
 .happening-date-list {
@@ -255,6 +252,10 @@
 .happening-month:last-child .happening-date-list {
   padding-bottom: 0;
 }
+#december .happening-month-name,
+#december .happening-date-list {
+  padding-top: 2.369rem;
+}
 
 .happening-date-list {
   flex: 4;
@@ -273,6 +274,7 @@
   padding: 0.75rem 0 0.563rem;
   width: 2.369rem;
 
+  background-color: #FFF;
   border-radius: 3px;
   box-shadow: inset 0 4px 0 0 #828B96, inset 0 0 0 1px #DFE3E8, 0 1px 0 #F4F6F9;
   color: #454D57;
@@ -297,6 +299,7 @@
   margin-bottom: 1rem;
   padding: 0.512rem 0.75rem;
 
+  background-color: #FFF;
   border-radius: 4px;
   box-shadow: inset 0 0 0 1px #DFE3E8, 0 1px 0 #F4F6F9;
 }
