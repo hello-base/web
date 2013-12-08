@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from itertools import chain
 from operator import attrgetter
 
@@ -254,9 +255,12 @@ class Track(ParticipationMixin):
     translation_notes = models.TextField(blank=True)
 
     # Staff.
-    composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
-    lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
-    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
+    lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote',
+        help_text=u'Kanji: 作詞')
+    composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed',
+        help_text=u'Kanji: 作曲')
+    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged',
+        help_text=u'Kanji: 編曲')
 
     # Secondary identifier.
     uuid = extensions.UUIDField(auto=True, blank=True, null=True)

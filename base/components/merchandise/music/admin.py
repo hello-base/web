@@ -190,7 +190,7 @@ class TrackAdmin(admin.ModelAdmin):
             'fields': ('participating_idols', 'participating_groups')
         }),
         ('Alternates', {'fields': ('original_track', 'is_cover', 'is_alternate', ('romanized_name_alternate', 'name_alternate'))}),
-        ('Staff Involved', {'fields': ('arrangers', 'composers', 'lyricists')}),
+        ('Staff Involved', {'fields': ('lyricists', 'composers', 'arrangers')}),
         ('Lyrics', {
             'classes': ('grp-collapse grp-closed',),
             'fields': ('translated_name', 'lyrics', 'romanized_lyrics', 'translated_lyrics', 'translation_notes')
