@@ -1,4 +1,4 @@
-{% load url from future %}
+{% load cycle from future %}
 {% load i18n grp_tags %}
 
 <!-- group -->
@@ -262,12 +262,12 @@
                 $(window).scrollTop(lastScrollTop);
             }
         });
-        $("#{{ opts.module_name }}_form").bind("submit", function(){
+        $("#{{ opts.model_name }}_form").bind("submit", function(){
             var sortable_field_name = "{{ inline_admin_formset.opts.sortable_field_name }}",
                 sortable_excludes = {% get_sortable_excludes inline_admin_formset.opts %},
                 i = 0;
             $("#{{ inline_admin_formset.formset.prefix }}-group").find("div.grp-tbody.grp-dynamic-form").each(function(){
-                var fields = $(this).find("div.grp-td :input[value][value!=''][type!=radio][type!=checkbox],input:checked,input[type=file]"),
+                var fields = $(this).find("div.grp-td :input[type!=radio][type!=checkbox],input:checked,input[type=file]"),
                     submit_values = false,
                     has_value;
                 $(fields).each(function() {
