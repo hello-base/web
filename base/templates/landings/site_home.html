@@ -46,6 +46,7 @@
 </header>
 <div class="correlations">
   <div class="container">
+    {% cache 3600 home.happenings %}
     <div class="correlation-happenings">
       <ul class="happening-date-list">
       {% for month, days in happenings.iteritems %}
@@ -64,6 +65,8 @@
       {% endfor %}
       </ul>
     </div>
+    {% endcache %}
+    {% cache 3600 home.thisdayin %}
     <div class="correlation-history">
       <h2><i>This day</i> in Hello! Project.</h2>
       <p>(Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year.)</p>
@@ -79,6 +82,7 @@
       {% endfor %}
       </ul>
     </div>
+    {% endcache %}
   </div>
 </div>
 
