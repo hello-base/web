@@ -41,11 +41,3 @@ class TestCorrelations:
     def test_multiple_correlations(self):
         IdolFactory(birthdate=datetime.date(1983, 4, 2), started=datetime.date(2013, 1, 1))
         assert Correlation.objects.count() == 2
-
-    def test_membership_exception(self):
-        group = GroupFactory(started=datetime.datetime(2013, 1, 1))
-        content_type = ContentType.objects.get(app_label='people', model='membership')
-
-        with pytest.raises(Correlation.DoesNotExist):
-            MembershipFactory(group=group, started=group.started)
-            Correlation.objects.get(content_type=content_type)
