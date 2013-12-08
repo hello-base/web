@@ -56,7 +56,21 @@
       {% endfor %}
       </ul>
     </div>
-
+    <div class="correlation-history">
+      <h2><i>This day</i> in Hello! Project.</h2>
+      <p>(Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year.)</p>
+      <ul class="history-list">
+      {% for event in onthisday %}
+        <li class="history-item">
+          <div class="history-timestamp">
+            <span class="history-date">{{ event.timestamp|date:"SHORT_DATE_FORMAT" }}</span>
+            <span class="history-weekdate">{{ event.timestamp|date:"l" }}</span>
+          </div>
+          <div class="history-event">{% include event.get_include_template %}</div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
   </div>
 </div>
 

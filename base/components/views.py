@@ -34,7 +34,9 @@ class SiteView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SiteView, self).get_context_data(**kwargs)
+        correlations = Correlation.objects.exclude(identifier='idol')[:8]
         context['happenings'] = self.get_happenings()
+        context['onthisday'] = Correlation.objects.today()
         context['counts'] = self.get_counts()
         return context
 

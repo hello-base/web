@@ -2,7 +2,7 @@
 
 // .landing-home
 // Set of classes that style the Hello! Base home page.
-// ---------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 .landing-home {
   .header-tagline { color: rgba(#FFF, 0.75); }
   .masthead.container {
@@ -16,7 +16,6 @@
 
 .hero {
   @include position(relative);
-  box-shadow: 0 3px 0 #00223A, 0 76px 0 #002D48, 0 77px 0 #F0F3F7;
   color: #FFF;
 
   a {
@@ -223,26 +222,23 @@
   }
 }
 
-// .correlations & .happenings
+// Correlations & Happenings
+// -----------------------------------------------------------------------------
 .correlations {
   @include position(relative);
   background-color: #F9FAFC;
   box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
 
-  // &:before {
-  //   @include position(absolute, 0px 0px 0 0px);
-  //   content: '';
-  //   background: linear-gradient(135deg, #1e5799 0%,#7db9e8 100%);
-  //   height: 3px;
-  // }
   .container {
     display: flex;
+    justify-content: space-between;
   }
 }
+
 .correlations-header {
   padding: 1.777rem 0 1.333rem;
   background-color: #FFF;
-  box-shadow: 0 1px 0 #D0EC6B;
+  box-shadow: 0 -1rem 2rem rgba(#000, 0.25), inset 0 -1px 0 #DFE3E8;
 
   h2 {
     margin: 0;
@@ -277,13 +273,15 @@
     font-size: 12px;
   }
 }
+
+// .correlation-happenings
 .correlation-happenings {
-  margin-right: gutter(12);
-  width: columns(8, 12);
+  flex: 2;
+  margin-right: gutter(6);
 
   .happening-date-list {
     @include position(relative);
-    padding: 1rem 0 0 1rem;
+    padding: 2rem 0 0 1rem;
     box-shadow: inset 3px 0 0 #DFE3E8;
 
     &:after {
@@ -312,30 +310,68 @@
   .happening-illustration { display: none; }
 }
 
+// .correlation-history
+.correlation-history {
+  flex: 1;
 
-.today-empty {
-  padding: 0.5rem 0;
+  h2 {
+    margin: 0;
+    margin-top: 2rem;
 
-  color: $brand-lightGrey;
-  font-size: 12px;
-  font-weight: bold;
+    color: #646D77;
+    font-family: $font-family-primary;
+    font-size: 1.777em;
+    font-weight: 400;
+    letter-spacing: -1px;
 
-  &:before {
-    @include position(relative, 9px 0 0 0);
-    content: '';
-    display: block;
-    z-index: 0;
-
-    border-top: 1px solid $brand-paleGrey;
+    i {
+      color: #CC82EE;
+      font-weight: 600;
+    }
   }
-  span {
-    @include position(relative);
-    padding-right: 0.5rem;
-    z-index: 5;
-    background-color: #FFF;
+  p {
+    margin-top: 0.422rem;
+    color: #A1ABB6;
+    font-size: 13px;
   }
 }
+.history-list {
+  @include reset-box-model;
+  @include reset-list-style;
+}
+.history-item {
+  margin-bottom: 1rem;
 
+  background: #FFF;
+  border-radius: 4px;
+  box-shadow: inset 0 4px 0 0 #CC82EE, inset 0 0 0 1px #DFE3E8, 0 1px 0 #F4F6F9;
+}
+.history-timestamp {
+  justify-content: space-between;
+  display: flex;
+  margin: 0 0.75rem;
+  padding-top: 0.75rem; padding-bottom: 0.563rem;
+
+  border-bottom: 1px solid #DFE3E8;
+  color: #454D57;
+  font-family: $font-family-secondary;
+  font-size: 13px;
+}
+.history-date { font-weight: bold; }
+.history-weekdate {
+  color: #828B96;
+  font-family: $font-family-primary;
+}
+.history-event {
+  align-items: center;
+  display: flex;
+  padding: 0.563rem 0.75rem 0.75rem;
+
+  font-size: 13px;
+
+  .happening-event, .happening-illustration { padding: 0; }
+  .happening-actors { display: none; }
+}
 
 // .image-*
 body[class^="path-image"] {
