@@ -235,10 +235,22 @@
   }
 }
 
+// .correlations-header & .correlations-explore-more
 .correlations-header {
   padding: 1.777rem 0 1.333rem;
   background-color: #FFF;
   box-shadow: 0 -1rem 2rem rgba(#000, 0.25), inset 0 -1px 0 #DFE3E8;
+
+  .container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.correlations-masthead {
+  align-items: center;
+  display: flex;
+  flex: 2;
 
   h2 {
     margin: 0;
@@ -260,17 +272,68 @@
     font-size: 1.333rem;
     font-style: normal;
   }
-  .container {
-    align-items: center;
-    display: flex;
-  }
   .correlations-explanation {
     margin: 0;
     margin-left: gutter(12);
-    width: columns(4, 12);
+    width: columns(6, 12);
 
     color: #A1ABB6;
     font-size: 12px;
+    line-height: 1.3;
+  }
+}
+.correlations-explore-more {
+  @include reset-box-model;
+  @include reset-list-style;
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+
+  li {
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+  li a {
+    display: block;
+    padding: 0.563rem 1rem;
+
+    border-radius: 4px;
+    color: #FFF;
+    font-family: $font-family-secondary;
+    font-weight: bold;
+
+    &:hover { background-color: #FFF; }
+  }
+  .explore-header {
+    color: #646D77;
+    padding-right: 8px;
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .explore-2011 {
+    background-color: #E7658B;
+
+    a:hover {
+      box-shadow: inset 0 0 0 2px #E7658B;
+      color: #E7658B;
+    }
+  }
+  .explore-2012 {
+    background-color: #F05127;
+
+    a:hover {
+      box-shadow: inset 0 0 0 2px #F05127;
+      color: #F05127;
+    }
+  }
+  .explore-2013 {
+    background-color: #00A68E;
+
+    a:hover {
+      box-shadow: inset 0 0 0 2px #00A68E;
+      color: #00A68E;
+    }
   }
 }
 
@@ -294,7 +357,9 @@
   }
   .happening-date-name {
     width: 3.157rem;
+
     color: #454D57;
+    box-shadow: inset 0 4px 0 0 #FF5B29, inset 0 0 0 1px #DFE3E8, 0 1px 0 #F4F6F9;
     font-size: 1rem;
 
     &:before { @include position(absolute, 1rem 0 0 -18px); }
