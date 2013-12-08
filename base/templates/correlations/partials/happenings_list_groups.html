@@ -19,10 +19,14 @@
 {% if event.date_field == "ended" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> disbands
+  <div class="happening-originals">with {% for member in object.final_members %}<a href="{{ member.get_absolute_url }}">{{ member }}</a>{% include "utilities/commaify.html" %}{% endfor %}</div>
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">
   <div class="happening-action"><span class="ss-icon ss-scaleup"></span></div>
+  <div class="happening-actors">
+    {% for participant in object.final_members %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endfor %}
+  </div>
 </div>
 {% endif %}
 {% endwith %}

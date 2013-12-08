@@ -227,6 +227,9 @@ class Group(ContributorMixin):
     def original_members(self):
         return self.members.filter(memberships__started=self.started)
 
+    def final_members(self):
+        return self.members.filter(memberships__ended=self.ended)
+
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
