@@ -61,18 +61,23 @@
       </ul>
       {% endcomment %}
 
-      {# {{ objects }} #}
-      <ul>
+      <ul class="happening-month-list">
       {% for month, days in objects.iteritems %}
-        <li>
-          {{ month|month_name }}
-          <ul>
+        <li class="happening-month" id="{{ month|month_name|lower }}">
+          <h2 class="happening-month-name">
+            {{ month|month_name }}
+            <small>{{ year|date:"Y" }}</small>
+          </h2>
+          <ul class="happening-date-list">
           {% for day, events in days.iteritems %}
-            <li>
-              {{ day }}
-              <ul>
+            <li class="happening-date">
+              <h3 class="happening-date-name">{{ day }}</h3>
+              <ul class="happening-event-list">
               {% for event in events %}
-                <li>{{ event }}</li>
+                <li>
+                  {% include event.get_include_template %}
+                  {# <strong><a href="{{ event.actor.get_absolute_url }}">{{ event.actor.romanized_name }}</a></strong> {{ event.identifier }} {{ event.date_field }} {{ event.content_object.group }} #}
+                </li>
               {% endfor %}
               </ul>
             </li>
