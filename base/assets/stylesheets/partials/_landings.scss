@@ -348,7 +348,7 @@
     box-shadow: inset 3px 0 0 #DFE3E8;
 
     &:after {
-      @include position(absolute, 0 0 -77px 0px);
+      @include position(absolute, 0 0 -96px 0px);
       content: '';
       width: 3px; height: 100px;
 
@@ -371,6 +371,24 @@
   }
   .happening-event-list {
     font-size: 13px;
+  }
+}
+.happening-explore-more {
+  text-align: right;
+
+  a {
+    padding: 0.422rem 0.563rem;
+
+    background: #FF773A;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+
+    &:hover { background: #FF5B29; }
+  }
+  .ss-icon {
+    @include position(relative, 2px 0 0 0);
   }
 }
 
