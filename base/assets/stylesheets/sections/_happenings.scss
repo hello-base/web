@@ -352,6 +352,12 @@
 
   .ss-icon { @include position(relative, 3px 0 0 0); }
 }
+.happening-action {
+  .ss-download, .ss-scaledown { color: #A8D742; }
+  .ss-upload, .ss-scaleup, .ss-ban { color: #E9173F; }
+  .ss-vinylrecord, .ss-disc { color: #454D57; }
+}
+
 .happening-image {
   min-width: 50px;
 }
