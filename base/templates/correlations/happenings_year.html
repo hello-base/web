@@ -74,7 +74,7 @@
               <h3 class="happening-date-name">{{ day }}</h3>
               <ul class="happening-event-list">
               {% for event in events %}
-                <li>
+                <li class="happening-events">
                   {% include event.get_include_template %}
                   {# <strong><a href="{{ event.actor.get_absolute_url }}">{{ event.actor.romanized_name }}</a></strong> {{ event.identifier }} {{ event.date_field }} {{ event.content_object.group }} #}
                 </li>

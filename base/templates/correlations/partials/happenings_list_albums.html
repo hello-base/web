@@ -2,7 +2,9 @@
 
 {% with event.content_object as object %}
 <div class="happening-event">
-  {% for participant in object.participants %}<a href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}{% endfor %} releases <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+  {% for participant in object.participants %}
+    <a class="actor" href="{{ participant.get_absolute_url }}">{{ participant }}</a>
+  {% include "utilities/commaify.html" %}{% endfor %} releas{{ object.participants|length|pluralize:"es,e" }} <a class="subject" href="{{ object.get_absolute_url }}">"{{ object }}"</a>
 </div>
 <div class="happening-illustration">
   <div class="happening-actors">
