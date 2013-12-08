@@ -2,11 +2,8 @@
 import datetime
 import pytest
 
-from django.contrib.contenttypes.models import ContentType
-
 from components.correlations.models import Correlation
-from components.people.factories import (GroupFactory, IdolFactory,
-    MembershipFactory)
+from components.people.factories import GroupFactory, IdolFactory
 
 pytestmark = pytest.mark.django_db
 
