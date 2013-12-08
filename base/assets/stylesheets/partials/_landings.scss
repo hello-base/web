@@ -223,56 +223,93 @@
   }
 }
 
-// .correlations
+// .correlations & .happenings
 .correlations {
+  @include position(relative);
   background-color: #F9FAFC;
   box-shadow: 0 76px 0 #F9FAFC, 0 77px 0 #F0F3F7;
+
+  // &:before {
+  //   @include position(absolute, 0px 0px 0 0px);
+  //   content: '';
+  //   background: linear-gradient(135deg, #1e5799 0%,#7db9e8 100%);
+  //   height: 3px;
+  // }
+  .container {
+    display: flex;
+  }
 }
-.correlations .container {
-  align-content: stretch;
-  display: flex;
-  justify-content: space-between;
-}
-.correlation-happenings,
-.correlation-history {
-  @include position(relative);
-  display: flex;
-  flex-direction: column;
-  width: columns(6, 12);
+.correlations-header {
+  padding: 1.777rem 0 1.333rem;
+  background-color: #FFF;
+  box-shadow: 0 1px 0 #D0EC6B;
 
   h2 {
+    margin: 0;
+
+    color: #FF5B29;
     font-family: $font-family-primary;
-    font-size: 1.777em;
-    font-weight: 400;
-    letter-spacing: -1px;
+    font-size: 2.369rem;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: -2px;
+  }
+  h2 span {
+    @include position(relative);
+    margin-right: -0.317rem;
+    vertical-align: 0.5rem;
 
-    i {
-      color: #272E37;
-      font-weight: 600;
-    }
+    color: #FF773A;
+    font-family: $font-family-secondary;
+    font-size: 1.333rem;
+    font-style: normal;
   }
-  ul {
-    @include reset-box-model;
-    @include reset-list-style;
+  .container {
+    align-items: center;
+    display: flex;
   }
-  li {
-    @include clearfix;
-  }
-  .profile-image {
-    @include span-columns(1, 6);
-  }
-}
-.correlation-happenings { margin-right: gutter(12); }
-.correlation-list { flex: 1; }
-.correlation-footer {
-  border-top: 1px solid $brand-paleGrey;
-  align-self: flex-end;
+  .correlations-explanation {
+    margin: 0;
+    margin-left: gutter(12);
+    width: columns(4, 12);
 
-  p {
-    margin-bottom: 0;
+    color: #A1ABB6;
     font-size: 12px;
   }
+}
+.correlation-happenings {
+  margin-right: gutter(12);
+  width: columns(8, 12);
 
+  .happening-date-list {
+    @include position(relative);
+    padding: 1rem 0 0 1rem;
+    box-shadow: inset 3px 0 0 #DFE3E8;
+
+    &:after {
+      @include position(absolute, 0 0 -77px 0px);
+      content: '';
+      width: 3px; height: 100px;
+
+      background: #DFE3E8;
+    }
+  }
+  .happening-date-name {
+    width: 3.157rem;
+    color: #454D57;
+    font-size: 1rem;
+
+    &:before { @include position(absolute, 1rem 0 0 -18px); }
+    .month-name {
+      padding-right: 1px;
+      vertical-align: 6px;
+      font-size: 12px;
+    }
+  }
+  .happening-event-list {
+    font-size: 13px;
+  }
+  .happening-illustration { display: none; }
 }
 
 

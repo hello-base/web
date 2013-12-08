@@ -30,47 +30,37 @@
   <div class="hero-image"><img src="{% static 'images/hero.jpg' %}"></div>
 </div>
 
-{% comment %}
 <div class="correlations">
+  <header class="correlations-header">
+    <div class="container">
+      <h2><span>H!P</span> Happenings</h2>
+      <p class="correlations-explanation"><b><i>Happenings</i></b> are more than just release dates. Everything with a date is a <i>happening</i> on Hello! Base.</p>
+    </div>
+  </header>
   <div class="container">
     <div class="correlation-happenings">
-      <h2>Hello! Project <i>Happenings</i></h2>
-      <ul class="correlation-list">
-      {% for correlation in correlations.upcoming %}
-        {% include "correlations/partials/happenings_list_item.html" with correlation=correlation %}
+      <ul class="happening-date-list">
+      {% for month, days in happenings.iteritems %}
+      {% for day, events in days.iteritems %}
+      <li class="happening-date">
+        <h3 class="happening-date-name"><span class="month-name">{{ month }}/</span>{{ day }}</h3>
+        <ul class="happening-event-list">
+        {% for event in events %}
+          <li class="happening-events">
+            {% include event.get_include_template %}
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
       {% endfor %}
-      {# {% if today %}{% else %}<li class="today today-empty"><span>Today, {% now "SHORT_DATE_FORMAT" %}</span></li>{% endif %} #}
-      {% for correlation in correlations.recent %}
-        {% include "correlations/partials/happenings_list_item.html" with correlation=correlation %}
-      {% endfor %}
-      </ul>
-      <footer class="correlation-footer">
-        <p>
-          <i>Happenings</i> are more than just release dates. Everything with a date is a <i>happening</i> on Hello! Base.
-          <a href="{% url 'happenings-by-year' 2013 %}"><strong>Explore all of our Hello! Project Happenings.</strong></a>
-        </p>
-      </footer>
-    </div>
-    <div class="correlation-history">
-      <h2><i>This day</i> in Hello! Project.</h2>
-      <ul class="correlation-list">
-      {% for correlation in correlations.onthisday %}
-        <li>
-          <span class="correlation-timestamp">{{ correlation.timestamp|date:"SHORT_DATE_FORMAT" }}</span>
-          <span class="correlation">{% render_correlation correlation %}</span>
-        </li>
       {% endfor %}
       </ul>
-      <footer class="correlation-footer">
-        <p>
-          Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year. If a date looks off, that year was <a href="http://en.wikipedia.org/wiki/Leap_year">a leap year</a>.
-          We know, dates are silly things.
-        </p>
-      </footer>
     </div>
+
   </div>
 </div>
-{% endcomment %}
+
+
 
 {% filter typogrify %}
 <div class="reasonings">
