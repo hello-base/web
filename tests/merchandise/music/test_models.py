@@ -125,14 +125,6 @@ class TestAlbums:
         edition = EditionFactory(album=album, kind=edition_type.regular)
         assert album.primary_edition == edition
 
-    def test_regular_edition_failure(self):
-        # Test that calling `regular_edition` will not fail loudly if the
-        # proper edition is not found.
-        album = AlbumFactory()
-        edition = EditionFactory(album=album, kind=edition_type.limited)
-        assert edition in album.editions.all()
-        assert not album.regular_edition
-
     def test_get_previous_and_next(self):
         album1 = AlbumFactory(romanized_name='album#1', released=datetime.date.today() - datetime.timedelta(days=14), number='1')
         album2 = AlbumFactory(romanized_name='album#2', released=datetime.date.today() - datetime.timedelta(days=7), number='2')
