@@ -345,7 +345,6 @@
   .happening-date-list {
     @include position(relative);
     padding: 2rem 0 0 1rem;
-    box-shadow: inset 3px 0 0 #DFE3E8;
 
     &:after {
       @include position(absolute, 0 0 -96px 0px);
@@ -362,7 +361,6 @@
     box-shadow: inset 0 4px 0 0 #FF5B29, inset 0 0 0 1px #DFE3E8, 0 1px 0 #F4F6F9;
     font-size: 1rem;
 
-    &:before { @include position(absolute, 1rem 0 0 -18px); }
     .month-name {
       padding-right: 1px;
       vertical-align: 6px;
