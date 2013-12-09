@@ -102,7 +102,8 @@ class StaffAdmin(ContributorMixin):
     fieldsets = (
         (None, {'fields': (('romanized_family_name', 'romanized_given_name'), ('family_name', 'given_name'), ('romanized_alias', 'alias'), 'nicknames', 'slug')}),
     )
-    list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'romanized_alias', 'alias']
+    list_display = ['romanized_family_name', 'romanized_given_name', 'romanized_alias', 'family_name', 'given_name', 'alias']
+    list_display_links = ['romanized_family_name', 'romanized_given_name', 'romanized_alias']
     prepopulated_fields = {'slug': ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name']}
     search_fields = ['romanized_family_name', 'romanized_given_name']
 admin.site.register(Staff, StaffAdmin)
