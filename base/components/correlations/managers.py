@@ -32,5 +32,6 @@ class CorrelationManager(models.Manager):
         return qs
 
     def today(self):
+        today = date.today()
         qs = self.get_query_set()
-        return qs.filter(julian=date.today().timetuple().tm_yday)
+        return qs.filter(month=today.month, day=today.day)
