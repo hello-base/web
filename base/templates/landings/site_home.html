@@ -73,7 +73,6 @@
     {% cache 3600 home.thisdayin %}
     <div class="correlation-history">
       <h2><i>This day</i> in Hello! Project.</h2>
-      <p>(Today is the <strong>{% filter ordinal %}{% now "z" %}{% endfilter %}</strong> day of the year.)</p>
       <ul class="history-list">
       {% for event in onthisday %}
         <li class="history-item">

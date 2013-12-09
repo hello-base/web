@@ -397,8 +397,8 @@
   flex: 1;
 
   h2 {
-    margin: 0;
     margin-top: 2rem;
+    margin-bottom: 1rem;
 
     color: #646D77;
     font-family: $font-family-primary;
@@ -410,11 +410,6 @@
       color: #CC82EE;
       font-weight: 600;
     }
-  }
-  p {
-    margin-top: 0.422rem;
-    color: #A1ABB6;
-    font-size: 13px;
   }
 }
 .history-list {
