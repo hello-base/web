@@ -30,6 +30,7 @@
   <div class="hero-image"><img src="{% static 'images/hero.jpg' %}"></div>
 </div>
 
+{% if request.user.is_authenticated %}
 <header class="correlations-header">
   <div class="container">
     <div class="correlations-masthead">
@@ -88,8 +89,7 @@
     {% endcache %}
   </div>
 </div>
-
-
+{% endif %}
 
 {% filter typogrify %}
 <div class="reasonings">
