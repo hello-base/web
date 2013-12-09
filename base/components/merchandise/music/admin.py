@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
@@ -193,7 +196,10 @@ class TrackAdmin(admin.ModelAdmin):
             'fields': ('participating_idols', 'participating_groups')
         }),
         ('Alternates', {'fields': ('original_track', 'is_cover', 'is_alternate', ('romanized_name_alternate', 'name_alternate'))}),
-        ('Staff Involved', {'fields': ('lyricists', 'composers', 'arrangers')}),
+        ('Staff Involved', {
+            'description': 'For reference: lyricist = <b>作詞</b>, composer = <b>作曲</b>, arranger = <b>編曲</b>.',
+            'fields': ('lyricists', 'composers', 'arrangers')
+        }),
         ('Lyrics', {
             'classes': ('grp-collapse grp-closed',),
             'fields': ('translated_name', 'lyrics', 'romanized_lyrics', 'translated_lyrics', 'translation_notes')
