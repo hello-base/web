@@ -53,10 +53,9 @@ class Base(Merchandise):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
-        if self.editions.exists() and (self.regular_edition or self.digital_edition):
-            edition = filter(None, [self.regular_edition, self.digital_edition])[0]
-            self.art = edition.art
-            self.released = edition.released
+        if self.editions.exists() and self.primary_edition:
+            self.art = self.primary_edition.art
+            self.released = self.primary_edition.released
         super(Base, self).save(*args, **kwargs)
 
     @staticmethod
@@ -76,12 +75,8 @@ class Base(Merchandise):
         return list(chain(self.participating_idols.all(), self.participating_groups.all()))
 
     @cached_property
-    def digital_edition(self):
-        return self.editions.digital_edition(release=self)
-
-    @cached_property
-    def regular_edition(self):
-        return self.editions.regular_edition(release=self)
+    def primary_edition(self):
+        return self.editions.primary_edition(release=self)
 
 
 class Album(Base):
@@ -195,13 +190,13 @@ class Edition(models.Model):
             self.parent.art = self.art
             self.parent.save()
 
-    def _get_regular_edition(self):
-        return self._default_manager.regular_edition(edition=self)
+    def _get_primary_edition(self):
+        return self._default_manager.primary_edition(edition=self)
 
     def _render_tracklist(self):
         order = self.order
         if self.kind != self.EDITIONS.regular and not self.order.exists():
-            order = self._get_regular_edition().order
+            order = self._get_primary_edition().order
         return order.select_related('track').prefetch_related('track__participating_idols')
 
     def _render_videolist(self):

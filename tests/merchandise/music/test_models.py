@@ -89,7 +89,7 @@ class TestAlbums:
             released=datetime.date.today()
         )
         factory.save()
-        assert factory.regular_edition == regular_edition
+        assert factory.primary_edition == regular_edition
         assert factory.art == regular_edition.art
         assert factory.released == regular_edition.released
 
@@ -102,7 +102,7 @@ class TestAlbums:
             released=datetime.date.today()
         )
         factory.save()
-        assert factory.digital_edition == digital_edition
+        assert factory.primary_edition == digital_edition
         assert factory.art == digital_edition.art
         assert factory.released == digital_edition.released
 
@@ -118,12 +118,12 @@ class TestAlbums:
     def test_digital_edition(self):
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=edition_type.digital)
-        assert album.digital_edition == edition
+        assert album.primary_edition == edition
 
-    def test_regular_edition(self):
+    def test_primary_edition(self):
         album = AlbumFactory()
         edition = EditionFactory(album=album, kind=edition_type.regular)
-        assert album.regular_edition == edition
+        assert album.primary_edition == edition
 
     def test_regular_edition_failure(self):
         # Test that calling `regular_edition` will not fail loudly if the
@@ -213,11 +213,11 @@ class TestEditions:
         edition = EditionFactory(single=single)
         assert edition.parent == single
 
-    def test_get_regular_edition(self):
+    def test_get_primary_edition(self):
         single = SingleFactory()
         edition1 = EditionFactory(single=single, kind=edition_type.regular)
         edition2 = EditionFactory(single=single, kind=edition_type.limited)
-        assert edition2._get_regular_edition() == edition1
+        assert edition2._get_primary_edition() == edition1
 
     def test_participants(self):
         single = SingleFactory()

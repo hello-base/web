@@ -17,6 +17,15 @@ class EditionManager(models.Manager):
         except IndexError:
             return qs.none()
 
+    def primary_edition(self, release=None, edition=None):
+        editions = [self.model.EDITIONS.regular, self.model.EDITIONS.limited, self.model.EDITIONS.digital]
+        for kind in editions:
+            edition = self.find_edition(release, edition, kind=kind)
+            if edition:
+                return edition
+            else:
+                continue
+
     def digital_edition(self, release=None, edition=None):
         kwargs = {'kind': self.model.EDITIONS.digital}
         return self.find_edition(release, edition, **kwargs)
