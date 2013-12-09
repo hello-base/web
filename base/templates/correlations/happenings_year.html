@@ -1,7 +1,14 @@
 {% extends "layouts/site_base.html" %}
-{% load correlation_tags static %}
+{% load correlation_tags %}
+{% load static from staticfiles %}
 
 {% block title %}{{ year|date:"Y" }} Happenings{% endblock %}
+{% block meta %}
+<meta property="og:description" content="Hello! Base's Happenings: Find out what happened in Hello! Project during {{ year|date:'Y' }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{% static 'images/facebook-happenings.png' %}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
 {% block body-class %}override{% endblock %}
 {% block content %}
 <section class="happenings happening-decade-{{ year|date:'Y'|slice:':3' }}0">
