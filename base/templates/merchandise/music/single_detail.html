@@ -92,7 +92,7 @@
                     <a href="{{ position.track.get_absolute_url }}">
                       <span class="romanized-name" itemprop="name">
                         {{ position.track.romanized_name }}
-                        {% if position.track.is_alternate %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
+                        {% if position.track.is_alternate or position.track.is_cover %}<span class="">{{ position.track.romanized_name_alternate }}</span>{% endif %}
                         {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                       </span>
                     </a>
