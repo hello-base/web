@@ -36,25 +36,16 @@
   }
 }
 
-.happening-decade-1970 {
-  .override-header { background-color: #027298; }
-  .happening-navigation { background-color: #015279; }
-}
-.happening-decade-1980 {
-  .override-header { background-color: #BA88A5; }
-  .happening-navigation { background-color: #A06887; }
-}
-.happening-decade-1990 {
-  .override-header { background-color: #A9B35D; }
-  .happening-navigation { background-color: #8C983F; }
-}
-.happening-decade-2000 {
-  .override-header { background-color: #9BC0DD; }
-  .happening-navigation { background-color: #7CA8CE; }
-}
-.happening-decade-2010 {
-  .override-header { background-color: #00A68E; }
-  .happening-navigation { background-color: #00886E; }
+// .happening-decade-*
+$decades: 1970, 1980, 1990, 2000, 2010;
+$decade-headers: #027298, #BA88A5, #A9B35D, #9BC0DD, #00A68E;
+$decade-navigations: #015279, #A06887, #8C983F, #7CA8CE, #00886E;
+
+@each $decade, $header, $navigation in zip($decades, $decade-headers, $decade-navigations) {
+  .happening-decade-#{$decade} {
+    .override-header { background-color: $header; }
+    .happening-navigation { background-color: $navigation; }
+  }
 }
 
 .happening-navigation {
