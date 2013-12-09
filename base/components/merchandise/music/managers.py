@@ -23,16 +23,7 @@ class EditionManager(models.Manager):
             edition = self.find_edition(release, edition, kind=kind)
             if edition:
                 return edition
-            else:
-                continue
-
-    def digital_edition(self, release=None, edition=None):
-        kwargs = {'kind': self.model.EDITIONS.digital}
-        return self.find_edition(release, edition, **kwargs)
-
-    def regular_edition(self, release=None, edition=None):
-        kwargs = {'kind': self.model.EDITIONS.regular}
-        return self.find_edition(release, edition, **kwargs)
+        return None
 
 
 class TrackQuerySet(QuerySet):
