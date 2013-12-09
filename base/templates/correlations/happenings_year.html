@@ -11,7 +11,7 @@
 {% endblock %}
 {% block body-class %}override{% endblock %}
 {% block content %}
-<section class="happenings happening-decade-{{ year|date:'Y'|slice:':3' }}0">
+<section class="happenings happening-decade-{{ year|date:'Y'|slice:':3' }}0 happening-year-{{ year|date:'Y' }}">
   <header class="override-header">
     <div class="container">
       <h1 class="happening-header"><span class="year">{{ year|date:"Y" }}</span> Happenings</h1>
