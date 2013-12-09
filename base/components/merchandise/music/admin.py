@@ -179,7 +179,10 @@ admin.site.register(Edition, EditionAdmin)
 class TrackAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': (('romanized_name', 'name'), 'slug',)}),
-        ('Relations', {'fields': ('album', 'single')}),
+        ('Relations', {
+            'description': 'Only enter the release which this track <b>first appeared on</b>.',
+            'fields': ('album', 'single')
+        }),
         ('Participants', {
             'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
             'fields': ('idols', 'groups')
