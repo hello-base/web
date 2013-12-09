@@ -3,36 +3,33 @@
     border-color: rgba(#FFF, 0.1);
     border-bottom-color: rgba(#000, 0.1);
   }
-}
-
-.happenings {
   .override-header {
     background: #0B1C2D;
     color: #FFF;
     padding: 6rem 0 0;
+  }
+}
 
-    h1 {
-      // margin: 0 0 2.763rem;
-      margin: 0 0 calc(6rem - 41px);
+.happening-header {
+  margin: 0 0 calc(6rem - 41px);
 
-      color: #FFF;
-      font-family: $font-family-primary;
-      font-size: 5.61rem;
-      font-style: italic;
-      font-weight: 800;
-      letter-spacing: -4px;
-    }
-    .year {
-      @include position(relative);
-      margin-right: -0.875rem;
-      vertical-align: 1rem;
+  color: #FFF;
+  font-family: $font-family-primary;
+  font-size: 5.61rem;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -4px;
 
-      font-family: $font-family-secondary;
-      font-size: 3.157rem;
-      font-style: normal;
-      font-weight: 200;
-      letter-spacing: -3px;
-    }
+  .year {
+    @include position(relative);
+    margin-right: -0.875rem;
+    vertical-align: 1rem;
+
+    font-family: $font-family-secondary;
+    font-size: 3.157rem;
+    font-style: normal;
+    font-weight: 200;
+    letter-spacing: -3px;
   }
 }
 
@@ -97,21 +94,20 @@
   transition: all 250ms ease;
 
   &.visible { height: 96px; }
-  > li {
-    margin-right: gutter(12);
-    width: 20%;
+}
+.happening-decade {
+  margin-right: gutter(12);
+  width: 20%;
 
+  &:last-child { margin-right: 0; }
+  & strong {
+    display: block;
+    margin-bottom: 0.369rem;
+    padding-bottom: 0.369rem;
 
-    &:last-child { margin-right: 0; }
-    & strong {
-      display: block;
-      margin-bottom: 0.369rem;
-      padding-bottom: 0.369rem;
-
-      border-bottom: 1px solid rgba(#FFF, 0.25);
-      color: rgba(#FFF, 0.75);
-      font-size: 12px;
-    }
+    border-bottom: 1px solid rgba(#FFF, 0.25);
+    color: rgba(#FFF, 0.75);
+    font-size: 12px;
   }
 }
 
@@ -119,7 +115,7 @@
   display: inline-block;
   font-size: 12px;
 }
-.happening-year-list li {
+.happening-year {
   display: inline-block;
   margin-right: 5px;
   font-size: 12px;
@@ -193,9 +189,9 @@
 .statistic-change {
   font-size: 12px;
 
-  &.negative { color: #E9173F; }
+  &.positive { color: rgba(#00D8AE, 0.8); }
+  &.negative { color: rgba(#E9173F, 0.8); }
   &.no-change { color: #454D57; }
-  &.positive { color: #00D8AE; }
 
   .ss-directup { @include position(relative, 2px 0 0 0); }
   .ss-directdown { @include position(relative, 1px 0 0 0); }

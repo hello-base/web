@@ -34,11 +34,11 @@
           </header>
           <ul class="happening-decade-list">
           {% for decade, values in years.items reversed %}
-            <li class="{{ decade }}">
+            <li class="happening-decade {{ decade }}">
               <strong>{{ decade }}</strong>
               <ul class="happening-year-list">
               {% for value in values %}
-                <li {% if year == value %}class="selected"{% endif %}>
+                <li class="happening-year {% if year == value %}selected{% endif %}">
                   <a href="{% url 'happenings-by-year' value|date:'Y' %}">{{ value|date:"Y" }}</a>
                 </li>
               {% endfor %}
