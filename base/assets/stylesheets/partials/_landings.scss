@@ -14,14 +14,9 @@
   }
 }
 
-.hero {
-  @include position(relative);
-  color: #FFF;
-
-  a {
-    @include link-colors(#FFF);
-    font-weight: 600;
-  }
+.hero a {
+  @include link-colors(#FFF);
+  font-weight: 600;
 }
 .hero-image {
   @include position(absolute, 0px 0px 0px 0px);
@@ -114,15 +109,15 @@
 // Set of classes that style the value propositions living below the
 // homepage's masthead.
 .reasonings {
-  padding-top: 48px; padding-bottom: 24px;
+  padding-top: 48px; padding-bottom: 1.777rem;
   text-align: center;
 
   h2 {
-    padding: 0 24px;
+    padding: 0 1.777rem;
 
     color: #454D57;
     font-family: $font-family-primary;
-    font-size: 1.777em;
+    font-size: 1.333rem;
     font-weight: 400;
     letter-spacing: -1px;
 
@@ -131,21 +126,22 @@
       font-weight: 600;
     }
   }
-  .reasoning-icon {
-    text-align: center;
+}
+.reasoning-icon {
+  text-align: center;
 
-    .ss-icon {
-      display: inline-block;
-      padding: 13px 0px 7px;
-      width: 54px;
+  .ss-icon {
+    display: inline-block;
+    padding: 13px 0px 7px;
+    width: 54px;
 
-      background: #333;
-      border-radius: 8px;
-      color: #FFF;
-      font-size: 24px;
-    }
+    background: #333;
+    border-radius: 8px;
+    color: #FFF;
+    font-size: 24px;
   }
 }
+
 .reasoning-list {
   @include reset-list-style;
   margin-top: 0; margin-bottom: 0;
@@ -154,13 +150,12 @@
   @include span-columns(4, $total-columns);
   @include nth-omega(3n);
   position: relative;
-  font-size: 13px;
 
   a {
     font-weight: 600;
     &:link, &:visited { color: $headings-font-color; }
   }
-  p { padding: 0 12px; }
+  p { padding: 0 1rem; }
 
   .reasoning-icon {
     .ss-books { background: linear-gradient(#CC82EE, #B563E5); }
@@ -170,7 +165,7 @@
 }
 
 // .counts
-.counts { padding-bottom: 48px; }
+.counts { padding-bottom: 2.369rem; }
 .count-header {
   text-align: center;
 
@@ -182,7 +177,7 @@
   }
   h2 {
     font-family: $font-family-primary;
-    font-size: 1.777em;
+    font-size: 1.333rem;
     font-weight: 400;
     letter-spacing: -1px;
 
@@ -197,11 +192,8 @@
       background-color: #FFF;
     }
   }
-  p { margin: 0.5rem 0 1.5rem; }
-  .ss-icon {
-    @include position(relative, 3px 0 0 0);
-    padding-right: 4px;
-  }
+  p { margin: 0.563rem 0 1.333rem; }
+  .ss-icon { @include position(relative, 3px 0 0 0); }
 }
 .count-list {
   @include reset-box-model;
