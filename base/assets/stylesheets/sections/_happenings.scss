@@ -214,7 +214,18 @@
     .happening-month-name,
     .happening-date-list { padding-top: 2.369rem; }
   }
-  &:last-child .happening-date-list { padding-bottom: 0; }
+  &:last-child {
+    .happening-date-list {
+      @include position(relative);
+      padding-bottom: 0;
+    }
+    .happening-date-list:after {
+      @include position(absolute, 0 0 -33px 0px);
+      content: '';
+      width: 3px; height: 88px;
+      background: #dfe3e8;
+    }
+  }
 }
 
 .happening-month-name {
