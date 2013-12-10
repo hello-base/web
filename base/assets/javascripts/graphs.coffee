@@ -12,7 +12,7 @@ $ ->
   console.log line
 
   area = d3.svg.area()
-    .interpolate('basis')
+    .interpolate('cardinal')
     .x((d) -> x(d.index))
     .y0(h)
     .y1((d) -> y(d.identifier))
