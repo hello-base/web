@@ -3,7 +3,7 @@
 {% with event.content_object as object %}
 {% if event.date_field == "birthdate" %}
 <div class="happening-event">
-  <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> is born
+  <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> <small>({{ object.age }})</small> is born
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">
