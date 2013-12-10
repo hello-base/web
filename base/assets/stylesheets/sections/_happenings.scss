@@ -210,11 +210,11 @@
   display: flex;
   justify-content: space-between;
 
+  &:first-child {
+    .happening-month-name,
+    .happening-date-list { padding-top: 2.369rem; }
+  }
   &:last-child .happening-date-list { padding-bottom: 0; }
-}
-.happening-month:first-child {
-  .happening-month-name,
-  .happening-date-list { padding-top: 2.369rem; }
 }
 
 .happening-month-name {
