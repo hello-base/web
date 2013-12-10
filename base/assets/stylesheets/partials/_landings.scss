@@ -110,6 +110,7 @@
 // homepage's masthead.
 .reasonings {
   padding-top: 48px; padding-bottom: 1.777rem;
+  background-color: #FFF;
   text-align: center;
 
   h2 {
@@ -165,7 +166,10 @@
 }
 
 // .counts
-.counts { padding-bottom: 2.369rem; }
+.counts {
+  padding-bottom: 2.369rem;
+  background-color: #FFF;
+}
 .count-header {
   text-align: center;
 

@@ -107,21 +107,23 @@
     </li>
   </ul>
 </div>
-<div class="counts container">
-  <header class="count-header">
-    <h2><span class="heading"><span class="ss-icon ss-calculator"></span> By the <i>numbers</i>.</span></h2>
-    <p><strong>We have a lot of data.</strong> Here’s a quick overview of what’s in there.</p>
-  </header>
-  <ul class="count-list">
-    {% cache 3600 counts %}
-    <li class="count"><span>{{ counts.idols }}</span> <strong>idols</strong></li>
-    <li class="count"><span>{{ counts.groups }}</span> <strong>groups</strong></li>
-    <li class="count"><span>{{ counts.albums }}</span> <strong>albums</strong></li>
-    <li class="count"><span>{{ counts.singles }}</span> <strong>singles</strong></li>
-    <li class="count"><span>{{ counts.editions|intcomma }}</span> <strong>editions</strong></li>
-    <li class="count"><span>{{ counts.tracks|intcomma }}</span> <strong>music tracks</strong></li>
-    {% endcache %}
-  </ul>
+<div class="counts">
+  <div class="container">
+    <header class="count-header">
+      <h2><span class="heading"><span class="ss-icon ss-calculator"></span> By the <i>numbers</i>.</span></h2>
+      <p><strong>We have a lot of data.</strong> Here’s a quick overview of what’s in there.</p>
+    </header>
+    <ul class="count-list">
+      {% cache 3600 counts %}
+      <li class="count"><span>{{ counts.idols }}</span> <strong>idols</strong></li>
+      <li class="count"><span>{{ counts.groups }}</span> <strong>groups</strong></li>
+      <li class="count"><span>{{ counts.albums }}</span> <strong>albums</strong></li>
+      <li class="count"><span>{{ counts.singles }}</span> <strong>singles</strong></li>
+      <li class="count"><span>{{ counts.editions|intcomma }}</span> <strong>editions</strong></li>
+      <li class="count"><span>{{ counts.tracks|intcomma }}</span> <strong>music tracks</strong></li>
+      {% endcache %}
+    </ul>
+  </div>
 </div>
 {% endfilter %}
 
