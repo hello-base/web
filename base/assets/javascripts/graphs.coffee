@@ -9,14 +9,12 @@ $ ->
     .interpolate('basis')
     .x((d) -> x(d.index))
     .y((d) -> y(d.identifier))
-  console.log line
 
   area = d3.svg.area()
     .interpolate('cardinal')
     .x((d) -> x(d.index))
     .y0(h)
     .y1((d) -> y(d.identifier))
-  console.log area
 
   svg = d3.select('.js-correlations-header-graph').append('svg')
     .attr('id', 'svg-chart')
@@ -24,10 +22,8 @@ $ ->
     .attr('preserveAspectRatio', 'xMinYMid')
     .attr('width', w)
     .attr('height', h)
-  console.log svg
 
   d3.json ($ '.js-correlations-header-graph').attr('data-url'), (data) ->
-    console.log data
     x.domain(d3.extent(data, (d) -> d.index))
     y.domain([0, d3.max(data, (d) -> d.identifier)])
 
@@ -46,7 +42,7 @@ $ ->
       .attr('d', line)
 
 aspect = ($ '.js-correlations-header-graph').width() / h
-chart = ($ 'svg-chart')
+chart = ($ '#svg-chart')
 
 ($ window).on 'resize', ->
   targetWidth = ($ '.js-correlations-header-graph').width()
