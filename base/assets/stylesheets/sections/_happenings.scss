@@ -222,7 +222,7 @@
     .happening-date-list:after {
       @include position(absolute, 0 0 -33px 0px);
       content: '';
-      width: 3px; height: 88px;
+      width: 3px; height: 86px;
       background: #dfe3e8;
     }
   }
