@@ -237,14 +237,30 @@
 
 // .correlations-header & .correlations-explore-more
 .correlations-header {
-  padding: 1.777rem 0;
+  @include position(relative);
+  overflow: hidden;
+  padding: 1.777rem 0 3.157rem;
   background-color: #FFF;
-  box-shadow: 0 -1rem 2rem rgba(#000, 0.25), inset 0 -1px 0 #DFE3E8;
+  border-bottom: 1px solid #F0F3F7;
+  box-shadow: 0 -1rem 2rem rgba(#000, 0.25);
 
   .container {
+    @include position(relative);
     align-items: center;
     display: flex;
     justify-content: space-between;
+    z-index: 10;
+  }
+}
+.correlations-header-graph {
+  @include position(absolute, 0 0 0px 0);
+  width: 100%;
+
+  .area { fill: #FEFEFE; }
+  .line {
+    fill: none;
+    stroke: #F0F3F7;
+    stroke-width: 2px;
   }
 }
 .correlations-masthead {

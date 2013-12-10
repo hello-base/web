@@ -3,6 +3,10 @@ from collections import defaultdict, OrderedDict
 from itertools import groupby
 
 from django.views.generic.dates import YearArchiveView
+from django.views.generic import DetailView
+
+from braces.views import JSONResponseMixin
+from pandas import DataFrame
 
 from .constants import SUBJECTS
 from .models import Correlation
@@ -52,5 +56,11 @@ class HappeningsByYearView(YearArchiveView):
             statistics[i[0]][i[1]][i[2]] = (statistic, statistic - previous)
         return OrderedDict(sorted(dictify(statistics).iteritems(), key=lambda t: t[0], reverse=True))
 
-    def get_average_statistics(self):
-        pass
+
+class AggregateJulianCorrelationView(JSONResponseMixin, DetailView):
+    def get(self, request, *args, **kwargs):
+        correlations = Correlation.objects.all().values('identifier', 'julian').reverse()
+        frame = DataFrame.from_records(correlations, index='julian')
+        frame = frame.groupby(lambda x: x).aggregate(lambda x: len(x))
+        context = frame.reset_index().T.to_dict().values()
+        return self.render_json_response(context)
