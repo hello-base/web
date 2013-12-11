@@ -44,15 +44,9 @@ def deploy(verbose=False, migrate=False, **kwargs):
 
 
 @invoke.task(name='collect')
-def collect(verbose=False, **kwargs):
+def asset_collect(verbose=False, **kwargs):
     out = functools.partial(_out, 'project.collect')
     hide = 'out' if not verbose else None
-
-    # Pre-compile all of our assets.
-    out('Compiling Handlebars templates.')
-    invoke.run('handlebars base/templates/partials/handlebars -f base/static/javascripts/application/templates.js', hide=hide)
-    out('Compiling stylesheets using production environment settings.')
-    invoke.run('compass compile -e production --force', hide=hide)
 
     # Build and send it off.
     out('Using `buildstatic` to concatenate assets.')
@@ -64,10 +58,16 @@ def collect(verbose=False, **kwargs):
 
 
 @invoke.task(name='compile')
-def development_compile(verbose=False, **kwargs):
+def asset_compile(verbose=False, **kwargs):
     out = functools.partial(_out, 'development.compile')
     hide = 'out' if not verbose else None
     STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base', 'static')
+
+    # Pre-compile all of our assets.
+    out('Compiling Handlebars templates.')
+    invoke.run('handlebars base/templates/partials/handlebars -f base/static/javascripts/application/templates.js', hide=hide)
+    out('Compiling stylesheets using production environment settings.')
+    invoke.run('compass compile -e production --force', hide=hide)
 
     # Compile the application-specific Javascript.
     invoke.run('yuglify {input} --type js --combine {output}'.format(
@@ -88,7 +88,7 @@ def development_compile(verbose=False, **kwargs):
     out('stylesheets/production.min.css created and minified.')
 
     invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/production.min.css', hide=hide)
-    out('stylesheets/application.css auto-prefixed.')
+    out('stylesheets/production.min.css auto-prefixed.')
 
 
 @invoke.task(name='server')
@@ -157,7 +157,7 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    collect, deploy, development_compile, development_server, development_test,
+    asset_collect, asset_compile, deploy, development_server, development_test,
     heroku=invoke.Collection(
         heroku_capture, heroku_imagekit, heroku_migrate, heroku_pull, heroku_syncdb,
     )
