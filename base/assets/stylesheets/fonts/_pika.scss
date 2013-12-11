@@ -12,11 +12,11 @@
 
 @font-face {
   font-family: "SSPika";
-  src: font-url('ss-pika.eot');
-  src: font-url('ss-pika.eot?#iefix') format('embedded-opentype'),
-       font-url('ss-pika.woff') format('woff'),
-       font-url('ss-pika.ttf')  format('truetype'),
-       font-url('ss-pika.svg#SSPika') format('svg');
+  src: url('/static/fonts/ss-pika.eot');
+  src: url('/static/fonts/ss-pika.eot?#iefix') format('embedded-opentype'),
+       url('/static/fonts/ss-pika.woff') format('woff'),
+       url('/static/fonts/ss-pika.ttf')  format('truetype'),
+       url('/static/fonts/ss-pika.svg#SSPika') format('svg');
   font-weight: normal;
   font-style: normal;
 }
