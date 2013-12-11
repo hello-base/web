@@ -195,6 +195,7 @@ class Production(Settings):
     # django-ecstatic / django-staticbuilder
     # --------------------------------------------------------------------------
     ECSTATIC_MANIFEST_CACHE = 'staticfiles'
+    STATICBUILDER_BUILD_COMMANDS = ['inv compile']
 
     # django-imagekit.
     # --------------------------------------------------------------------------
