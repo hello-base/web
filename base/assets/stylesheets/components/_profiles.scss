@@ -7,7 +7,7 @@
   background-color: #FFF;
 }
 .profile-metadata {
-  @include clearfix;
+  @extend %clearfix;
   padding-bottom: 1rem;
 }
 .profile-image {

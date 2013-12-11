@@ -38,7 +38,7 @@
 }
 
 .edition {
-  @include clearfix;
+  @extend %clearfix;
   margin-bottom: 36px;
 }
 .edition-contents {
@@ -84,7 +84,7 @@
   .empty-image { @include intrinsic(100%, 1); }
 }
 .edition-meta {
-  @include clearfix;
+  @extend %clearfix;
   background-color: #F9FAFC;
   color: $brand-medGrey;
 }

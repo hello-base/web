@@ -6,3 +6,12 @@
   margin: auto;
   overflow: hidden;
 }
+
+// Our beloved clearfix.
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

@@ -43,7 +43,7 @@
   }
 }
 .result-item {
-  @include clearfix;
+  @extend %clearfix;
   display: flex;
   align-items: center;
 }
@@ -102,7 +102,7 @@
     }
   }
   .search-container {
-    @include clearfix;
+    @extend %clearfix;
     padding: 4px;
 
     background-color: #FEFEFE;

@@ -17,7 +17,7 @@
 }
 
 .latest-releases {
-  @include clearfix;
+  @extend %clearfix;
   @include span-columns(9, 12);
   padding: 1rem 0;
 
@@ -65,7 +65,7 @@
   }
 
   .membership {
-    @include clearfix;
+    @extend %clearfix;
 
     .membership-meta .ss-icon { @include position(relative, 1px 0 0 0); }
   }
@@ -83,7 +83,7 @@
     .empty-image { @include intrinsic(100%, 16/9); }
   }
   .membership-list {
-    @include clearfix;
+    @extend %clearfix;
     // @include span-columns(10, 12);
   }
   .membership,
@@ -200,7 +200,7 @@
   .profile-image { @include span-columns(2, 12); }
 
   .membership-list,
-  .release-list { @include clearfix; }
+  .release-list { @extend %clearfix; }
 
   .memberships {
     .actives { margin: 1rem 0; }
@@ -291,7 +291,7 @@
 }
 
 .active-members {
-  @include clearfix;
+  @extend %clearfix;
 
   // .membership-list { @include span-columns(10, 12); }
   .membership {
@@ -307,11 +307,11 @@
 // than one).
 // ---------------------------------------------------------------------
 .inactive-leaders {
-  @include clearfix;
+  @extend %clearfix;
   margin: 24px 0;
 
   .membership { position: relative; }
-  .membership-header { @include clearfix; }
+  .membership-header { @extend %clearfix; }
   .membership-header .membership-graph { @include squish(3, 2); }
   .membership-names { @include span-columns(3, 12); }
   .membership-numbers { @include span-columns(2 omega, 12); }
@@ -373,7 +373,7 @@
 }
 
 .inactive-members {
-  @include clearfix;
+  @extend %clearfix;
 
   // .membership-list { @include span-columns(10, 12); }
   .membership {
@@ -388,7 +388,7 @@
 .profile-releases { background-color: #FFF; }
 .releases-singles,
 .releases-albums {
-  @include clearfix;
+  @extend %clearfix;
   // padding-top: 24px; padding-bottom: 24px;
 
   .release-data {
@@ -607,7 +607,7 @@
   padding-top: 2px;
 }
 .profile-subgroups {
-  @include clearfix;
+  @extend %clearfix;
 
   .subgroup {
     @include span-columns(6, 12);

@@ -44,7 +44,7 @@
   line-height: 1;
 }
 .hero-search .search-container {
-  @include clearfix;
+  @extend %clearfix;
   padding: 4px;
   border-radius: 4px;
   background-color: #FFF;
@@ -74,7 +74,7 @@
   }
 }
 .form-container {
-  @include clearfix;
+  @extend %clearfix;
   margin: -4px;
   padding: 4px;
 
