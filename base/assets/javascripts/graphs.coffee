@@ -41,7 +41,7 @@ $ ->
       .attr('class', 'line')
       .attr('d', line)
 
-aspect = ($ '.js-correlations-header-graph').width() / h
+aspect = ($ '.js-correlations-header-graph').width() / 108
 chart = ($ '#svg-chart')
 
 ($ window).on 'resize', ->
