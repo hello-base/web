@@ -28,7 +28,6 @@
   }
 
   .links {
-    @include reset-box-model;
     display: inline-block;
     flex: 1;
 

@@ -200,11 +200,7 @@
   .profile-image { @include span-columns(2, 12); }
 
   .membership-list,
-  .release-list {
-    @include clearfix;
-    @include reset-box-model;
-    @include reset-list-style;
-  }
+  .release-list { @include clearfix; }
 
   .memberships {
     .actives { margin: 1rem 0; }

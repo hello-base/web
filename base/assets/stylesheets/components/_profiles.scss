@@ -1,11 +1,4 @@
-.profile {
-  background-color: #F9FAFC;
-
-  ul {
-    @include reset-box-model;
-    @include reset-list-style;
-  }
-}
+.profile { background-color: #F9FAFC; }
 
 // .profile-header (*)
 // Classes tasked with styling the header section of a profile page.

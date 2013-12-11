@@ -30,6 +30,17 @@ a {
   text-decoration: none;
 }
 
+// We almost never use the default styles for unorderd lists. Instead of
+// peppering mixins everywhere, we'll just heavy-handedly reset it here.
+ul, ol {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+
+  ul, ol { margin-bottom: 0; }
+}
+
 .container { @include container; }
 .content { }
 

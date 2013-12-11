@@ -81,11 +81,6 @@
   }
 }
 
-.happening-decade-list,
-.happening-year-list {
-  @include reset-list-style;
-  @include reset-box-model;
-}
 .happening-decade-list {
   display: flex;
   height: 0;
@@ -135,11 +130,7 @@
 .happening-statistics { background-color: #272E37; }
 .happening-statistic-list,
 .happening-model-list,
-.happening-field-list {
-  @include reset-list-style;
-  @include reset-box-model;
-  display: flex;
-}
+.happening-field-list { display: flex; }
 .happening-app {
   align-items: center;
   display: flex;
@@ -200,12 +191,6 @@
 
 // .happenings-list
 // -----------------------------------------------------------------------------
-.happening-month-list,
-.happening-event-list,
-.happening-date-list {
-  @include reset-list-style;
-  @include reset-box-model;
-}
 .happening-month {
   display: flex;
   justify-content: space-between;

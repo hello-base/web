@@ -32,10 +32,6 @@
 // .result-*
 // Shared set of standard classes that set the basic styles
 // for any and all search results.
-.results {
-  @include reset-box-model;
-  @include reset-list-style;
-}
 .result {
   padding: 11px 12px 9px;
   border-bottom: 1px solid $brand-paleGrey;
@@ -56,10 +52,6 @@
 // .facet(s)
 // Standard classes for displaying facets (or simple statistics) around
 // the makeup of the search results; usually type or model, etc.
-.facets {
-  @include reset-box-model;
-  @include reset-list-style;
-}
 .facet {
   padding-top: 5px;
   margin-bottom: 8px;
