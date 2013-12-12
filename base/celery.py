@@ -13,7 +13,12 @@ os.environ.setdefault('DJANGO_CONFIGURATION', 'Development')
 
 # Read our `.env` for development purposes (which is now a directory up),
 # then initialize django-configurations.
-read_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+try:
+    env = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+    with open(env):
+    read_dotenv(env)
+except IOError:
+    pass
 importer.install()
 
 # Initialize Celery and tell it we have some apps.
