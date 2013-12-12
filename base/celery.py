@@ -16,7 +16,7 @@ os.environ.setdefault('DJANGO_CONFIGURATION', 'Development')
 try:
     env = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
     with open(env):
-    read_dotenv(env)
+        read_dotenv(env)
 except IOError:
     pass
 importer.install()
