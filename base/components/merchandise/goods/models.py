@@ -57,7 +57,7 @@ class Base(base.Merchandise):
         if self.event:
             return u'%s from %s' % (self.romanized_name, self.event.nickname)
         if self.shop:
-            return u'%s from %s' % (self.romanized_name, self.shop)
+            return u'%s from %s' % (self.romanized_name, self.shop.romanized_name)
         return u'%s' % self.romanized_name
 
     def clean(self, *args, **kwargs):
