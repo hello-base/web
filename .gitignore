@@ -35,6 +35,7 @@ nosetests.xml
 .pydevproject
 
 # Project specific
+.cache
 .env
 .sass-cache
 .venv
