@@ -10,10 +10,7 @@
     font-size: 11px;
   }
 
-  .container {
-    color: #FFF;
-  }
-
+  .container { color: #FFF; }
   .upper-footer {
     align-items: center;
     display: flex;
@@ -26,19 +23,16 @@
   }
 
   .links {
-    display: inline-block;
+    display: flex;
     flex: 1;
 
     .link {
-      display: inline-block;
       margin-right: 1rem;
-
       font-size: 12px;
       font-weight: bold;
     }
     .ss-icon { @include position(relative, 1px 0 0 0); }
   }
-
   .social-links {
     height: 20px;
 
@@ -56,7 +50,7 @@
     }
   }
 
-  .byline { flex: 1; }
+  .byline { flex: 2; }
   .hicon-logo-hello,
   .hicon-logo-base {
     @include position(relative, 2px 0 0 0);
@@ -65,7 +59,8 @@
   .copyright { margin: 0.15rem 0; }
   .description,
   .disclaimer {
+    flex: 1;
     margin: 0;
-    width: columns(3, $total_columns);
+    margin-left: 1rem;
   }
 }
