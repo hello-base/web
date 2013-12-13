@@ -12,11 +12,11 @@
 {% endif %}
 <header class="header" role="banner">
   <div class="container">
-    <a href="{% url "site-home" %}" class="logo-wordmark header-logo-wordmark">
+    <a href="{% url 'site-home' %}" class="logo-wordmark header-logo-wordmark">
       <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
     </a>
 
-    <form action="{% url "search" %}" class="header-search searchbar" method="get" accept-charset="utf-8">
+    <form action="{% url 'search' %}" class="header-search searchbar" method="get" accept-charset="utf-8">
       <div class="search-container">
         <span class="ss-icon ss-search"></span>
         <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="search js-search" data-hotkey="/" id="id_q" name="q" placeholder="What are you looking for?" value="{{ request.GET.q }}">
