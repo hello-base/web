@@ -20,8 +20,8 @@
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
-          {% if object.translated_title %}
-          <span class="translated-title">{{ object.translated_title }}</span>
+          {% if object.translated_name %}
+          <p class="translated-name standing">{{ object.translated_name }}</p>
           {% endif %}
         </h1>
       </div>
@@ -176,9 +176,9 @@
       <h1 class="section-title">Translated Lyrics</h1>
     {% endif %}
 
-    {% if object.translated_title %}
+    {% if object.translated_name %}
       <p>
-        {{ object.translated_title|markdown }}
+        {{ object.translated_name|markdown }}
       </p>
     {% endif %}
 
