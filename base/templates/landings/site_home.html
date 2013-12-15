@@ -47,7 +47,6 @@
 </header>
 <div class="correlations">
   <div class="container">
-    {% cache 3600 home.happenings %}
     <div class="correlation-happenings">
       <ul class="happening-date-list">
       {% for month, days in happenings.iteritems %}
@@ -69,7 +68,6 @@
         <a href="{% url 'happenings-by-year' 2013 %}">Discover More Happenings <span class="ss-icon ss-navigateright"></span></a>
       </div>
     </div>
-    {% endcache %}
     <div class="correlation-history">
       <h2><i>This day</i> in Hello! Project.</h2>
       <ul class="history-list">
