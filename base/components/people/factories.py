@@ -59,7 +59,3 @@ class HeadshotFactory(factory.django.DjangoModelFactory):
 
     idol = factory.SubFactory(IdolFactory)
     taken = datetime.date.today()
-
-
-class FactFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Fact

@@ -2,11 +2,11 @@
 import datetime
 import pytest
 
-from components.people.models import (Fact, Group, Groupshot, Headshot, Idol,
+from components.people.models import (Group, Groupshot, Headshot, Idol,
     Membership, Staff)
-from components.people.factories import (FactFactory, GroupFactory,
-    GroupshotFactory, HeadshotFactory, IdolFactory, LeadershipFactory,
-    MembershipFactory, StaffFactory)
+from components.people.factories import (GroupFactory, GroupshotFactory,
+    HeadshotFactory, IdolFactory, LeadershipFactory, MembershipFactory,
+    StaffFactory)
 
 today = datetime.date.today()
 delta = datetime.timedelta(days=1)
@@ -227,20 +227,3 @@ class TestHeadshots:
         assert isinstance(factory, Headshot)
         assert isinstance(factory.idol, Idol)
         assert 'Photo of' and 'family' in repr(factory)
-
-
-class TestFacts:
-    def test_factory(self):
-        group = GroupFactory()
-        factory = FactFactory(group=group)
-        assert isinstance(factory, Fact)
-        assert 'group' in repr(factory)
-
-    def test_factory_parent(self):
-        group = GroupFactory()
-        group_fact = FactFactory(group=group)
-        assert group_fact.parent == group
-
-        idol = IdolFactory()
-        idol_fact = FactFactory(idol=idol)
-        assert idol_fact.parent == idol
