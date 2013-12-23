@@ -39,6 +39,7 @@ class Base(Configuration):
         'components.appearances',
         'components.correlations',
         'components.events',
+        'components.facts',
         'components.history',
         'components.merchandise',
         'components.merchandise.goods',
