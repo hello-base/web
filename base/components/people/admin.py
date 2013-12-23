@@ -1,8 +1,9 @@
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
+from components.facts.models import Fact
 
-from .models import Fact, Group, Groupshot, Headshot, Idol, Membership, Staff
+from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
 
 
 class GroupshotInline(admin.TabularInline):
