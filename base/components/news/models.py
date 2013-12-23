@@ -1,30 +1,40 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
-from components.accounts.models import Editor
+from model_utils import Choices
 
-class News(models.Model)
+from components.events.models import Event
+from components.people.models import Group, Idol
+from components.merchandise.music.models import Album, Single
+
+User = get_user_model()
+
+
+class News(models.Model):
     CATEGORIES = Choices(
-            ('announcement', 'Announcement'),
-            ('appearance', 'Appearance'),
-            ('audition', 'Audition'),
-            ('event', 'Event'),
-            ('goods', 'Goods'),
-            ('graduation', 'Graduation'),
-            ('musicvideo', 'Preview'),
-            ('release', 'Release'),
-            ('other', 'Other'),
-        )
+        ('announcement', 'Announcement'),
+        ('appearance', 'Appearance'),
+        ('audition', 'Audition'),
+        ('event', 'Event'),
+        ('goods', 'Goods'),
+        ('graduation', 'Graduation'),
+        ('musicvideo', 'Preview'),
+        ('release', 'Release'),
+        ('other', 'Other'),
+    )
+
     category = models.CharField(choices=CATEGORIES, max_length=16)
     title = models.CharField(max_length=500)
     date = models.DateField(auto_now_add=True)
     body = models.TextField(blank=True)
-    author = models.ForeignKey(Editor, blank=True, null=True, related_name='%(class)s_submissions')
+    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
 
     # Involvement.
-    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
-    release = models.ManyToManyField(Merchandise, blank=True, null=True, related_name='%ses')
+    albums = models.ManyToManyField(Album, blank=True, null=True, related_name='%(class)ss')
     events = models.ManyToManyField(Event, blank=True, null=True, related_name='%(class)ss')
+    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
+    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
+    singles = models.ManyToManyField(Single, blank=True, null=True, related_name='%(class)ss')
 
     # Sources.
     source = models.CharField(max_length=200)
@@ -36,11 +46,12 @@ class News(models.Model)
         return u'%s (%s)' % (self.title, self.date)
 
 
-class Update(models.Model)
+class Update(models.Model):
+    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
+
     parent = models.ForeignKey(News, related_name='updates')
     date = models.DateField(auto_now_add=True)
     body = models.TextField(blank=True)
-    author = models.ForeignKey(Editor, blank=True, null=True, related_name='%(class)s_submissions')
 
     # Sources.
     source = models.CharField(max_length=200)
