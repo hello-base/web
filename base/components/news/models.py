@@ -10,7 +10,7 @@ from components.merchandise.music.models import Album, Single
 User = get_user_model()
 
 
-class News(models.Model):
+class Item(models.Model):
     CATEGORIES = Choices(
         ('announcement', 'Announcement'),
         ('appearance', 'Appearance'),
@@ -49,7 +49,7 @@ class News(models.Model):
 class Update(models.Model):
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
 
-    parent = models.ForeignKey(News, related_name='updates')
+    parent = models.ForeignKey(Item, related_name='updates')
     date = models.DateField(auto_now_add=True)
     body = models.TextField(blank=True)
 
