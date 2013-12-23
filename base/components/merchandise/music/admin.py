@@ -91,7 +91,8 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
-        ('Alternates', {'fields': ('is_compilation',)})
+        ('Alternates', {'fields': ('is_compilation',)}),
+        ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [AlbumEditionInline]
     list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
@@ -131,7 +132,8 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         ('Alternates', {
             'classes': ('collapse closed',),
             'fields': ('is_indie', ('has_8cm', 'has_lp', 'has_cassette'))
-        })
+        }),
+        ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [SingleEditionInline]
     list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
