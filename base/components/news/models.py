@@ -47,9 +47,8 @@ class Item(models.Model):
 
 
 class Update(models.Model):
-    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-
     parent = models.ForeignKey(Item, related_name='updates')
+    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
     date = models.DateField(auto_now_add=True)
     body = models.TextField(blank=True)
 
