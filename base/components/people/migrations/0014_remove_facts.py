@@ -7,20 +7,17 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ('facts', '0002_add_facts'),
+    )
+
+
     def forwards(self, orm):
-        # Deleting model 'Fact'
-        db.delete_table(u'people_fact')
+        pass
 
 
     def backwards(self, orm):
-        # Adding model 'Fact'
-        db.create_table(u'people_fact', (
-            ('body', self.gf('django.db.models.fields.TextField')()),
-            ('group', self.gf('django.db.models.fields.related.ForeignKey')(related_name='facts', null=True, to=orm['people.Group'], blank=True)),
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('idol', self.gf('django.db.models.fields.related.ForeignKey')(related_name='facts', null=True, to=orm['people.Idol'], blank=True)),
-        ))
-        db.send_create_signal(u'people', ['Fact'])
+        pass
 
 
     models = {

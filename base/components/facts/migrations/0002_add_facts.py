@@ -8,19 +8,17 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Fact'
-        db.create_table(u'facts_fact', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('idol', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='facts', null=True, to=orm['people.Idol'])),
-            ('group', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='facts', null=True, to=orm['people.Group'])),
-            ('body', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal(u'facts', ['Fact'])
+        # Renaming model 'Fact'
+        db.rename_table(u'people_fact', u'facts_fact')
+
+        if not db.dry_run:
+            # For permissions to work properly after migrating.
+            orm['contenttypes.contenttype'].objects.filter(app_label='people', model='fact').update(app_label='facts')
 
 
     def backwards(self, orm):
-        # Deleting model 'Fact'
-        db.delete_table(u'facts_fact')
+        # Renaming model 'Fact'
+        db.rename_table(u'facts_fact', 'people_fact')
 
 
     models = {
