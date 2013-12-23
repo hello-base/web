@@ -44,6 +44,7 @@ class Base(Configuration):
         'components.merchandise.goods',
         'components.merchandise.media',
         'components.merchandise.music',
+        'components.news',
         'components.people',
         'components.social.twitter',
         'components.social.youtube',
