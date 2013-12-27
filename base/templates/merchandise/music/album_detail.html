@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load humanize typogrify_tags people_tags static %}
+{% load humanize markdown_deux_tags typogrify_tags people_tags static %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Albums{% endblock %}
 {% block meta %}
@@ -21,6 +21,12 @@
           <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
         </h1>
       </div>
+      {% if fact %}
+      <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
+        <h4>{# <span class="ss-icon ss-notepad"></span> #} Random Fact</h4>
+        {{ fact.body|markdown|typogrify }}
+      </div>
+      {% endif %}
     </div>
   </header>
 

@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load music_tags static typogrify_tags %}
+{% load markdown_deux_tags music_tags static typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Idols{% endblock %}
 {% block meta %}
@@ -32,6 +32,12 @@
           {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>
+      {% if fact %}
+      <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
+        <h4>{# <span class="ss-icon ss-notepad"></span> #} Random Fact</h4>
+        {{ fact.body|markdown|typogrify }}
+      </div>
+      {% endif %}
     </div>
   </header>
 

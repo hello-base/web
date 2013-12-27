@@ -11,6 +11,7 @@ class AlbumDetailView(QuicklinksMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(AlbumDetailView, self).get_context_data(**kwargs)
         context['editions'] = self.object.editions.prefetch_related('order', 'videos')
+        context['fact'] = self.object.facts.order_by('?').first()
         context['idols'] = self.object.idols.order_by('birthdate')
         return context
 
@@ -22,6 +23,7 @@ class SingleDetailView(QuicklinksMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(SingleDetailView, self).get_context_data(**kwargs)
         context['editions'] = self.object.editions.prefetch_related('order', 'videos')
+        context['fact'] = self.object.facts.order_by('?').first()
         context['idols'] = self.object.idols.order_by('birthdate')
         return context
 
