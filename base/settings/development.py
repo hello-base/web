@@ -5,6 +5,8 @@ from .base import Base as Settings
 
 
 class Development(Settings):
+    MIDDLEWARE_CLASSES = Settings.MIDDLEWARE_CLASSES
+
     # Installed Applications.
     # --------------------------------------------------------------------------
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
@@ -38,7 +40,7 @@ class Development(Settings):
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['debug_toolbar']
     INTERNAL_IPS = ('127.0.0.1',)
-    MIDDLEWARE_CLASSES = Settings.MIDDLEWARE_CLASSES + ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
         'SHOW_TEMPLATE_CONTEXT': True,
