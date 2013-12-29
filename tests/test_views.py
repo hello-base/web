@@ -16,6 +16,11 @@ def test_plain_text_view(client):
     assert 'humans.txt' in [template.name for template in response.templates]
 
 
+def test_wiki_redirect_view(client):
+    response = client.get('/wiki/Morning_Musume')
+    assert response.status_code == 301
+
+
 def test_xml_view(client):
     response = client.get(reverse('opensearch'))
     assert response.status_code == 200
