@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django import http
+from django.core.urlresolvers import resolve, Resolver404
 from django.views.generic import TemplateView, View
 
 from braces.views import AjaxResponseMixin, JSONResponseMixin
@@ -59,6 +61,28 @@ class ImageDetailView(TemplateView):
 class PlainTextView(TemplateView):
     def render_to_response(self, context, **kwargs):
         return super(TemplateView, self).render_to_response(context, content_type='text/plain', **kwargs)
+
+
+class WikiRedirectView(View):
+    def get_redirect_path(self, *args, **kwargs):
+        # A very naive redirect, based on the known URL paths from J-Ongaku
+        # (and other Mediawiki-based sites). Underscores are replaced by
+        # hyphens and the URL is passed to the main site.
+        wiki_url = self.request.get_full_path().split('/')
+        new_slug = wiki_url[2].replace('_', '-').lower()
+        new_path = '/%s/' % new_slug
+        return new_path
+
+    def get(self, request, *args, **kwargs):
+        path = self.get_redirect_path(*args, **kwargs)
+
+        # Try to resolve the path. If we can't, then just bail and raise
+        # a 404. If so, build an absolute URL and redirect.
+        try:
+            resolve(path)
+            return http.HttpResponsePermanentRedirect(request.build_absolute_uri(path))
+        except Resolver404:
+            raise http.Http404
 
 
 class XMLView(TemplateView):

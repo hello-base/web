@@ -13,7 +13,7 @@ from haystack.views import FacetedSearchView
 from components.sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
     SingleSitemap, TrackSitemap)
 from components.views import (AutocompleteView, ImageDetailView, PlainTextView,
-    SiteView, XMLView)
+    SiteView, WikiRedirectView, XMLView)
 
 
 # Administration system auto-discovery.
@@ -48,6 +48,9 @@ urlpatterns = patterns('',
     url(r'^about/$', name='about', view=TemplateView.as_view(template_name='landings/about.html')),
     url(r'^privacy/$', name='privacy', view=TemplateView.as_view(template_name='landings/privacy.html')),
     url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
+
+    # J-Ongaku URL Override.
+    url(r'^wiki/.*$', name='wiki-override', view=WikiRedirectView.as_view()),
 
     # Administration Modules.
     url(r'^grappelli/', include('grappelli.urls')),
