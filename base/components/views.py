@@ -80,9 +80,9 @@ class WikiRedirectView(View):
         # a 404. If so, build an absolute URL and redirect.
         try:
             resolve(path)
-            return http.HttpResponsePermanentRedirect(request.build_absolute_uri(path))
         except Resolver404:
             raise http.Http404
+        return http.HttpResponsePermanentRedirect(request.build_absolute_uri(path))
 
 
 class XMLView(TemplateView):
