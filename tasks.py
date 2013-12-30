@@ -82,13 +82,13 @@ def asset_compile(verbose=False, **kwargs):
     out('javascripts/components.min.js created and minified.')
 
     # Compile the stylesheets.
+    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" {input}'.format(
+        input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css')), hide=hide)
+    out('stylesheets/application.css auto-prefixed.')
     invoke.run('yuglify {input} --type css --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
         output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')), hide=hide)
     out('stylesheets/production.min.css created and minified.')
-
-    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" base/static/stylesheets/production.min.css', hide=hide)
-    out('stylesheets/production.min.css auto-prefixed.')
 
 
 @invoke.task(name='server')
