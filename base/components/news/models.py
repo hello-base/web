@@ -30,11 +30,11 @@ class Item(models.Model):
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
 
     # Involvement.
+    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
+    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
+    singles = models.ManyToManyField(Single, blank=True, null=True, related_name='%(class)ss')
     albums = models.ManyToManyField(Album, blank=True, null=True, related_name='%(class)ss')
     events = models.ManyToManyField(Event, blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
-    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
-    singles = models.ManyToManyField(Single, blank=True, null=True, related_name='%(class)ss')
 
     # Sources.
     source = models.CharField(max_length=200, blank=True)

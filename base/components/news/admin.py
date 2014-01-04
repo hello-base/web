@@ -16,7 +16,9 @@ class ItemAdmin(ContributorMixin, admin.ModelAdmin):
     fieldsets = (
         ('Basics', {'fields': ('category', 'title', 'date', 'author')}),
         ('Body', {'fields': ('body',)}),
-        ('Involvement', {'fields': ('idols', 'groups', 'singles', 'albums', 'events')}),
+        ('Involvement', {
+            'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
+            'fields': ('idols', 'groups', 'singles', 'albums', 'events')}),
         ('Sources', {'fields': (('source', 'source_url'), ('via', 'via_url'))}),
     )
     inlines = [UpdateInline]
