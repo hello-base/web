@@ -25,7 +25,7 @@ class Item(models.Model):
 
     category = models.CharField(choices=CATEGORIES, max_length=16)
     title = models.CharField(max_length=500)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     body = models.TextField(blank=True)
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
 
@@ -37,7 +37,7 @@ class Item(models.Model):
     singles = models.ManyToManyField(Single, blank=True, null=True, related_name='%(class)ss')
 
     # Sources.
-    source = models.CharField(max_length=200)
+    source = models.CharField(max_length=200, blank=True)
     source_url = models.URLField(blank=True)
     via = models.CharField(max_length=200, blank=True)
     via_url = models.URLField(blank=True)
@@ -49,7 +49,7 @@ class Item(models.Model):
 class Update(models.Model):
     parent = models.ForeignKey(Item, related_name='updates')
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     body = models.TextField(blank=True)
 
     # Sources.
