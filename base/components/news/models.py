@@ -47,10 +47,10 @@ class Item(models.Model):
     # Sources.
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
-    source_url = models.URLField(blank=True,
+    source_url = models.URLField('source URL', blank=True,
         help_text='Seperate multile URLs with comma (must have accompanying Source).')
     via = models.CharField(blank=True, max_length=200)
-    via_url = models.URLField(blank=True)
+    via_url = models.URLField('via URL', blank=True)
 
     class Meta:
         ordering = ('-published',)
@@ -79,10 +79,10 @@ class Update(models.Model):
     # Sources.
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
-    source_url = models.URLField(blank=True,
+    source_url = models.URLField('source URL', blank=True,
         help_text='Seperate multile URLs with comma (must have accompanying Source).')
     via = models.CharField(blank=True, max_length=200)
-    via_url = models.URLField(blank=True)
+    via_url = models.URLField('via URL', blank=True)
 
     class Meta:
         ordering = ('parent', 'published')
