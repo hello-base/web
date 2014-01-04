@@ -12,14 +12,15 @@ class ItemImageInline(admin.TabularInline):
 
 class UpdateInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('published', 'author', 'body', ('source', 'source_url'), ('via', 'via_url'))}),)
+    fieldsets = ((None, {'fields': ('author', 'published', 'body', ('source', 'source_url'), ('via', 'via_url'))}),)
     model = Update
 
 
 class ItemAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'published'
     fieldsets = (
-        ('Basics', {'fields': ('category', 'title', 'published', 'author', 'slug')}),
+        (None, {'fields': ('author',)}),
+        ('Basics', {'fields': ('title', ('category', 'published', 'slug'))}),
         ('Body', {'fields': ('body',)}),
         ('Involvement', {
             'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
