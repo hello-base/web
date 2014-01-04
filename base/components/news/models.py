@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import date
+
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -31,7 +33,7 @@ class Item(models.Model):
 
     category = models.CharField(choices=CATEGORIES, max_length=16)
     title = models.CharField(max_length=500)
-    published = models.DateField()
+    published = models.DateField(default=date.today())
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
     body = models.TextField(blank=True)
 
@@ -71,7 +73,7 @@ class ItemImage(models.Model):
 class Update(models.Model):
     parent = models.ForeignKey(Item, related_name='updates')
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-    published = models.DateField()
+    published = models.DateField(default=date.today())
     body = models.TextField(blank=True)
 
     # Sources.
