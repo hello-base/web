@@ -48,6 +48,9 @@ class Item(models.Model):
     via = models.CharField(max_length=200, blank=True)
     via_url = models.URLField(blank=True)
 
+    class Meta:
+        ordering = ('-published',)
+
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.published)
 
