@@ -26,7 +26,7 @@ class ItemAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'published'
     fieldsets = (
         (None, {'fields': ('author',)}),
-        ('Basics', {'fields': ('title', ('published', 'category'))}),
+        ('Basics', {'fields': ('title', 'slug', ('published', 'category'))}),
         ('Body', {'fields': ('body',)}),
         ('Involvement', {
             'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
@@ -35,6 +35,7 @@ class ItemAdmin(ContributorMixin, admin.ModelAdmin):
     )
     inlines = [ItemImageInline, UpdateInline]
     list_display = ['title', 'published', 'category', 'author', 'via']
+    prepopulated_fields = {'slug': ['title']}
     search_fields = ['title', 'author']
 
     raw_id_fields = ('idols', 'groups', 'singles', 'albums', 'events')

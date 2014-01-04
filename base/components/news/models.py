@@ -36,6 +36,7 @@ class Item(models.Model):
     published = models.DateField(default=date.today())
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
     body = models.TextField(blank=True)
+    slug = models.SlugField(max_length=200)
 
     # Involvement.
     idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
