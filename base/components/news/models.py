@@ -27,8 +27,8 @@ class Item(models.Model):
     category = models.CharField(choices=CATEGORIES, max_length=16)
     title = models.CharField(max_length=500)
     date = models.DateField()
-    body = models.TextField(blank=True)
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
+    body = models.TextField(blank=True)
 
     # Involvement.
     idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
@@ -38,13 +38,21 @@ class Item(models.Model):
     events = models.ManyToManyField(Event, blank=True, null=True, related_name='%(class)ss')
 
     # Sources.
-    source = models.CharField(max_length=200, blank=True)
-    source_url = models.URLField(blank=True)
+    source = models.CharField(max_length=200, blank=True, help_text='Separate multiple sources by comma (must have accompanying URL).')
+    source_url = models.URLField(blank=True, help_text='Seperate multile URLs with comma (must have accompanying Source).')
     via = models.CharField(max_length=200, blank=True)
     via_url = models.URLField(blank=True)
 
     def __unicode__(self):
         return u'%s (%s)' % (self.title, self.date)
+
+
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, related_name='images')
+
+    image = models.ImageField(blank=True, upload_to='news/')
+    caption = models.TextField(blank=True)
+    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
 
 class Update(models.Model):
