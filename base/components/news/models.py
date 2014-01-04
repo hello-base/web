@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -44,7 +47,7 @@ class Item(models.Model):
     via_url = models.URLField(blank=True)
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.title, self.date)
+        return '%s (%s)' % (self.title, self.published)
 
 
 class ItemImage(models.Model):
@@ -68,4 +71,4 @@ class Update(models.Model):
     via_url = models.URLField(blank=True)
 
     def __unicode__(self):
-        return u'%s Update of "%s"' % (self.date, self.parent.title)
+        return '%s Update of "%s"' % (self.date, self.parent.title)
