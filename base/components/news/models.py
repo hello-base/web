@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 from model_utils import Choices
 
 from components.events.models import Event
@@ -51,11 +53,14 @@ class Item(models.Model):
 
 
 class ItemImage(models.Model):
-    item = models.ForeignKey(Item, related_name='images')
+    parent = models.ForeignKey(Item, related_name='images')
 
     image = models.ImageField(blank=True, upload_to='news/')
-    caption = models.TextField(blank=True)
-    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+    caption = models.CharField(blank=True, max_length=500)
+    thumbnail = ImageSpecField(source='image', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
+
+    def __unicode__(self):
+        return '%s' % (self.image)
 
 
 class Update(models.Model):

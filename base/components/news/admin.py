@@ -2,7 +2,12 @@ from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
 
-from .models import Item, Update
+from .models import Item, ItemImage, Update
+
+
+class ItemImageInline(admin.TabularInline):
+    extra = 1
+    model = ItemImage
 
 
 class UpdateInline(admin.StackedInline):
