@@ -26,7 +26,7 @@ class ItemAdmin(ContributorMixin, admin.ModelAdmin):
             'fields': ('idols', 'groups', 'singles', 'albums', 'events')}),
         ('Sources', {'fields': (('source', 'source_url'), ('via', 'via_url'))}),
     )
-    inlines = [UpdateInline]
+    inlines = [ItemImageInline, UpdateInline]
     list_display = ['title', 'published', 'category', 'author', 'via']
     search_fields = ['title', 'author']
 
