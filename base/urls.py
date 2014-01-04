@@ -68,6 +68,7 @@ urlpatterns = patterns('',
     url(r'^', include('components.merchandise.goods.urls')),
     url(r'^', include('components.merchandise.media.urls')),
     url(r'^', include('components.merchandise.music.urls')),
+    url(r'^', include('components.news.urls')),
     url(r'^', include('components.people.urls')),
 
     # Sitemaps, Favicons, Robots, and Humans.

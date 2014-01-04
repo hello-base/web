@@ -25,9 +25,6 @@ a {
   transition: all 0.2s ease;
   text-decoration: none;
 }
-
-// We almost never use the default styles for unorderd lists. Instead of
-// peppering mixins everywhere, we'll just heavy-handedly reset it here.
 ul, ol {
   margin: 0;
   padding: 0;
