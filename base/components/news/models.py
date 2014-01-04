@@ -20,6 +20,7 @@ class Item(models.Model):
         ('graduation', 'Graduation'),
         ('musicvideo', 'Preview'),
         ('release', 'Release'),
+        ('rumor', 'Rumor'),
         ('other', 'Other'),
     )
 
