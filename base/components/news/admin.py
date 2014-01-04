@@ -12,15 +12,21 @@ class ItemImageInline(admin.TabularInline):
 
 class UpdateInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('author', 'published', 'body', ('source', 'source_url'), ('via', 'via_url'))}),)
+    fieldsets = ((None, {'fields': (('author', 'published'), 'body', ('source', 'source_url'), ('via', 'via_url'))}),)
     model = Update
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'author':
+            kwargs['initial'] = request.user.id
+            return db_field.formfield(**kwargs)
+        return super(UpdateInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class ItemAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'published'
     fieldsets = (
         (None, {'fields': ('author',)}),
-        ('Basics', {'fields': ('title', ('category', 'published', 'slug'))}),
+        ('Basics', {'fields': ('title', ('published', 'category'))}),
         ('Body', {'fields': ('body',)}),
         ('Involvement', {
             'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
@@ -33,4 +39,10 @@ class ItemAdmin(ContributorMixin, admin.ModelAdmin):
 
     raw_id_fields = ('idols', 'groups', 'singles', 'albums', 'events')
     autocomplete_lookup_fields = {'m2m': ['idols', 'groups', 'singles', 'albums', 'events']}
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'author':
+            kwargs['initial'] = request.user.id
+            return db_field.formfield(**kwargs)
+        return super(ItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 admin.site.register(Item, ItemAdmin)
