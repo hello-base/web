@@ -53,7 +53,7 @@ class Update(models.Model):
     body = models.TextField(blank=True)
 
     # Sources.
-    source = models.CharField(max_length=200)
+    source = models.CharField(max_length=200, blank=True)
     source_url = models.URLField(blank=True)
     via = models.CharField(max_length=200, blank=True)
     via_url = models.URLField(blank=True)
