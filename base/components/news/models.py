@@ -43,9 +43,11 @@ class Item(models.Model):
     events = models.ManyToManyField(Event, blank=True, null=True, related_name='%(class)ss')
 
     # Sources.
-    source = models.CharField(max_length=200, blank=True, help_text='Separate multiple sources by comma (must have accompanying URL).')
-    source_url = models.URLField(blank=True, help_text='Seperate multile URLs with comma (must have accompanying Source).')
-    via = models.CharField(max_length=200, blank=True)
+    source = models.CharField(blank=True, max_length=200,
+        help_text='Separate multiple sources by comma (must have accompanying URL).')
+    source_url = models.URLField(blank=True,
+        help_text='Seperate multile URLs with comma (must have accompanying Source).')
+    via = models.CharField(blank=True, max_length=200)
     via_url = models.URLField(blank=True)
 
     class Meta:
@@ -73,9 +75,11 @@ class Update(models.Model):
     body = models.TextField(blank=True)
 
     # Sources.
-    source = models.CharField(max_length=200, blank=True)
-    source_url = models.URLField(blank=True)
-    via = models.CharField(max_length=200, blank=True)
+    source = models.CharField(blank=True, max_length=200,
+        help_text='Separate multiple sources by comma (must have accompanying URL).')
+    source_url = models.URLField(blank=True,
+        help_text='Seperate multile URLs with comma (must have accompanying Source).')
+    via = models.CharField(blank=True, max_length=200)
     via_url = models.URLField(blank=True)
 
     class Meta:
