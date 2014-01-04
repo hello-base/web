@@ -26,7 +26,7 @@ class Item(models.Model):
 
     category = models.CharField(choices=CATEGORIES, max_length=16)
     title = models.CharField(max_length=500)
-    date = models.DateField()
+    published = models.DateField()
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
     body = models.TextField(blank=True)
 
@@ -58,7 +58,7 @@ class ItemImage(models.Model):
 class Update(models.Model):
     parent = models.ForeignKey(Item, related_name='updates')
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-    date = models.DateField()
+    published = models.DateField()
     body = models.TextField(blank=True)
 
     # Sources.
