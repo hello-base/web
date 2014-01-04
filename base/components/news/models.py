@@ -78,5 +78,8 @@ class Update(models.Model):
     via = models.CharField(max_length=200, blank=True)
     via_url = models.URLField(blank=True)
 
+    class Meta:
+        ordering = ('parent', 'published')
+
     def __unicode__(self):
         return '%s Update of "%s"' % (self.date, self.parent.title)
