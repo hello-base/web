@@ -26,7 +26,7 @@ class ItemAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'published'
     fieldsets = (
         (None, {'fields': ('author',)}),
-        ('Basics', {'fields': ('title', 'slug', ('published', 'category'))}),
+        ('Basics', {'fields': ('title', 'slug', ('published', 'category', 'classification'))}),
         ('Body', {'fields': ('body',)}),
         ('Involvement', {
             'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
