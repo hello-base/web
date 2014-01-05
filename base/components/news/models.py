@@ -30,8 +30,15 @@ class Item(models.Model):
         ('rumor', 'Rumor'),
         ('other', 'Other'),
     )
+    CLASSIFICATION = Choices(
+        ('major', 'Major'),
+        ('important', 'Important'),
+        ('normal', 'Normal'),
+        ('minor', 'Minor'),
+    )
 
     category = models.CharField(choices=CATEGORIES, max_length=16)
+    classification = models.CharField(choices=CLASSIFICATION, default=CLASSIFICATION.normal, max_length=16)
     title = models.CharField(max_length=500)
     published = models.DateField(default=date.today())
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
