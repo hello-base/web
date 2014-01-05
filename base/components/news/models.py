@@ -37,13 +37,14 @@ class Item(models.Model):
         ('minor', 'Minor'),
     )
 
+    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
     category = models.CharField(choices=CATEGORIES, max_length=16)
     classification = models.CharField(choices=CLASSIFICATION, default=CLASSIFICATION.normal, max_length=16)
+
     title = models.CharField(max_length=500)
-    published = models.DateField(default=date.today())
-    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-    body = models.TextField(blank=True)
     slug = models.SlugField(max_length=200)
+    body = models.TextField(blank=True)
+    published = models.DateField(default=date.today())
 
     # Involvement.
     idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
@@ -81,8 +82,8 @@ class ItemImage(models.Model):
 class Update(models.Model):
     parent = models.ForeignKey(Item, related_name='updates')
     author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-    published = models.DateField(default=date.today())
     body = models.TextField(blank=True)
+    published = models.DateField(default=date.today())
 
     # Sources.
     source = models.CharField(blank=True, max_length=200,
