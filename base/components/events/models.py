@@ -39,6 +39,7 @@ class Performance(ContributorMixin):
     day = models.DateField()
     romanized_name = models.CharField(max_length=200, blank=True)
     name = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
     start_time = models.TimeField(blank=True, null=True)
     event = models.ForeignKey(Event, related_name='schedule')
     venue = models.ForeignKey('Venue', blank=True, null=True, related_name='performances')

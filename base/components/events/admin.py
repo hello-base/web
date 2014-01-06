@@ -48,7 +48,7 @@ class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('event', 'venue', 'venue_known_as')}),
         ('Dates', {'fields': (('day', 'start_time'),)}),
-        ('Names', {'fields': (('romanized_name', 'name'),)}),
+        ('Details', {'fields': (('romanized_name', 'name'), 'description')}),
     )
     list_display = ['romanized_name', 'name', 'day', 'start_time', 'event', 'venue']
     list_display_links = ['romanized_name', 'name']
