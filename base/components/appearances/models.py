@@ -171,5 +171,8 @@ class Summary(models.Model):
     # Model Managers.
     tracker = FieldTracker()
 
+    class Meta:
+        verbose_name_plural = 'summaries'
+
     def __unicode__(self):
         return '%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)
