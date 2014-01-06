@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from model_utils import FieldTracker
 
 from components.people.models import Idol, Group
+
+User = get_user_model()
 
 
 class Show(models.Model):
@@ -18,7 +23,7 @@ class Show(models.Model):
     aired_until = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
-        return u'%s' % self.romanized_name
+        return '%s' % self.romanized_name
 
 
 class TimeSlot(models.Model):
@@ -29,7 +34,7 @@ class TimeSlot(models.Model):
     end_time = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
-        return u'%s~%s %s' % (self.start_time, self.end_time, self.show.romanized_name)
+        return '%s~%s %s' % (self.start_time, self.end_time, self.show.romanized_name)
 
 
 class Episode(models.Model):
@@ -53,20 +58,7 @@ class Episode(models.Model):
     tracker = FieldTracker()
 
     def __unicode__(self):
-        return u'%s %s' % (self.air_date, self.show.romanized_name)
-
-
-class Synopsis(models.Model):
-    # Multiple synopsese will be submitted by users.
-    episode = models.ForeignKey(Episode)
-    body = models.TextField(blank=True)
-
-    # Model Managers
-    tracker = FieldTracker()
-
-    def __unicode__(self):
-        return u'%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)
-    # Missing a 'submitted by' type field to identify the synopsis?
+        return '%s %s' % (self.air_date, self.show.romanized_name)
 
 
 class Magazine(models.Model):
@@ -77,7 +69,7 @@ class Magazine(models.Model):
     # If prices change in the course of a magazine we may need to move this to Issue or make a Price model.
 
     def __unicode__(self):
-        return u'%s' % self.romanized_name
+        return '%s' % self.romanized_name
 
 
 class Issue(models.Model):
@@ -89,7 +81,7 @@ class Issue(models.Model):
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
-        return u'%s #%s' % (self.magazine.romanized_name, self.volume_number)
+        return '%s #%s' % (self.magazine.romanized_name, self.volume_number)
 
 
 class IssueImage(models.Model):
@@ -98,7 +90,7 @@ class IssueImage(models.Model):
     # Gallery will allow multiple images to be uploaded by users.
 
     def __unicode__(self):
-        return u'Image of %s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
+        return 'Image of %s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
 
 
 class CardSet(models.Model):
@@ -109,7 +101,7 @@ class CardSet(models.Model):
     image = models.ImageField(blank=True, upload_to='appearances/cards/')
 
     def __unicode__(self):
-        return u'%s %s' % (self.magazine.romanized_name, self.romanized_name)
+        return '%s %s' % (self.magazine.romanized_name, self.romanized_name)
 
 
 class Card(models.Model):
@@ -133,10 +125,10 @@ class Card(models.Model):
 
     def __unicode__(self):
         if self.number:
-            return u'%s card no. %s' % (self.issue, self.number)
+            return '%s card no. %s' % (self.issue, self.number)
         if self.group or self.other_group_romanized_name:
-            return u'%s card feat. %s' % (self.issue, self.group_romanized_name)
-        return u'%s card feat. %s' % (self.issue, self.model_romanized_name)
+            return '%s card feat. %s' % (self.issue, self.group_romanized_name)
+        return '%s card feat. %s' % (self.issue, self.model_romanized_name)
 
     @property
     def group_name(self):
@@ -165,3 +157,19 @@ class Card(models.Model):
             self.other_model_romanized_name,
             getattr(self.hp_model, 'romanized_name', '')
         ])[0]
+
+
+class Summary(models.Model):
+    body = models.TextField(blank=True)
+    submitted_by = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
+
+    # Multiple summaries can be submitted by users.
+    # Summaries can be connected to either episodes or magazine issues.
+    episode = models.ForeignKey(Episode, blank=True, null=True, related_name='summaries')
+    issue = models.ForeignKey(Issue, blank=True, null=True, related_name='summaries')
+
+    # Model Managers.
+    tracker = FieldTracker()
+
+    def __unicode__(self):
+        return '%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)
