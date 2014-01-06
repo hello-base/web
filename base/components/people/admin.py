@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
 from components.facts.admin import FactInline
-from components.facts.models import Fact
 
 from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
 

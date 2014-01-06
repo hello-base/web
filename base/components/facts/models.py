@@ -14,6 +14,7 @@ SUBJECTS = [
     Event, Performance  # events
 ]
 
+
 class Fact(models.Model):
     body = models.TextField()
 

@@ -5,7 +5,6 @@ from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
 from components.facts.admin import FactInline
-from components.facts.models import Fact
 
 from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
 
