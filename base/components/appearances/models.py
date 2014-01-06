@@ -110,19 +110,19 @@ class CardSet(models.Model):
 class Card(models.Model):
     issue = models.ForeignKey(Issue, related_name='cards')
     cardset = models.ForeignKey(CardSet, blank=True, null=True)
-    hp_model = models.ForeignKey(Idol, blank=True, null=True, related_name='cards')
+    hp_model = models.ForeignKey(Idol, blank=True, null=True, related_name='cards', verbose_name='H!P model')
     member_of = models.ForeignKey(Group, blank=True, null=True, related_name='idol')
     group = models.ForeignKey(Group, blank=True, null=True, related_name='cards')
     number = models.IntegerField(blank=True, null=True)
     image = models.ImageField(blank=True, upload_to='appearances/cards/')
 
     # Non-H!P Model Information
-    other_model_romanized_name = models.CharField(blank=True, max_length=200)
-    other_model_name = models.CharField(blank=True, max_length=200)
-    other_member_of_romanized_name = models.CharField(blank=True, max_length=200)
-    other_member_of_name = models.CharField(blank=True, max_length=200)
-    other_group_romanized_name = models.CharField(blank=True, max_length=200)
-    other_group_name = models.CharField(blank=True, max_length=200)
+    other_model_romanized_name = models.CharField('model (romanized name)', blank=True, max_length=200)
+    other_model_name = models.CharField('model (name)', blank=True, max_length=200)
+    other_member_of_romanized_name = models.CharField('member of (romanized name)', blank=True, max_length=200)
+    other_member_of_name = models.CharField('member of (name)', blank=True, max_length=200)
+    other_group_romanized_name = models.CharField('group (romanized name)', blank=True, max_length=200)
+    other_group_name = models.CharField('group (name)', blank=True, max_length=200)
     # Models must always be named, even if card features a group.
     # When the model is not a H!B idol, CharField to input name/romanized_name/group name/group romanized name.
 
