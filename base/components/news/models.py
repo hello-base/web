@@ -17,10 +17,10 @@ from components.merchandise.music.models import Album, Single
 
 User = get_user_model()
 SUBJECTS = [
-    Show, Magazine, # appearances
-    Event,          # events
-    Album, Single,  # merchandise.music
     Idol, Group,    # people
+    Album, Single,  # merchandise.music
+    Event,          # events
+    Show, Magazine, # appearances
 ]
 
 
