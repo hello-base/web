@@ -40,7 +40,7 @@ class VideodiscFormat(models.Model):
 
     # Metadata
     kind = models.IntegerField(choices=FORMAT_TYPES, default=FORMAT_TYPES.dvd)
-    released = models.DateField(blank=True, db_index=True, default=date.min, null=True)
+    released = models.DateField(blank=True, db_index=True, null=True)
     catalog_number = models.CharField(blank=True, max_length=25)
 
     # Content

@@ -12,7 +12,7 @@ class Merchandise(ContributorMixin, ParticipationMixin):
     # Shared metadata.
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    released = models.DateField(blank=True, db_index=True, default=date.min, null=True)
+    released = models.DateField(blank=True, db_index=True, null=True)
     price = models.IntegerField(blank=True, null=True)
 
     # Secondary identifier.
