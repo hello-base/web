@@ -57,6 +57,9 @@ class Episode(models.Model):
     # Model Managers
     tracker = FieldTracker()
 
+    class Meta:
+        ordering = ('show', 'air_date')
+
     def __unicode__(self):
         return '%s %s' % (self.air_date, self.show.romanized_name)
 
