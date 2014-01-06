@@ -6,4 +6,5 @@ from .models import Fact
 
 class FactInline(admin.StackedInline):
     extra = 1
+    fields = ['body']
     model = Fact
