@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
+from components.facts.admin import FactInline
 
 from .models import Event, Performance, Venue
 
@@ -31,7 +32,7 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
         ('Links', {'fields': ('info_link', 'secondary_info_link')}),
         ('Imagery', {'fields': ('logo', 'poster', 'stage')}),
     )
-    inlines = [PerformanceInline]
+    inlines = [PerformanceInline, FactInline]
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
@@ -50,6 +51,7 @@ class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
         ('Dates', {'fields': (('day', 'start_time'),)}),
         ('Details', {'fields': (('romanized_name', 'name'),)}),
     )
+    inlines = [FactInline]
     list_display = ['romanized_name', 'name', 'day', 'start_time', 'event', 'venue']
     list_display_links = ['romanized_name', 'name']
     list_select_related = True

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
+from components.facts.admin import FactInline
 from components.facts.models import Fact
 
 from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
@@ -14,11 +15,6 @@ class AlbumEditionInline(admin.StackedInline):
     extra = 1
     fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), ('catalog_number', 'price'), 'art')}),)
     model = Edition
-
-
-class FactInline(admin.StackedInline):
-    extra = 1
-    model = Fact
 
 
 class SingleEditionInline(admin.StackedInline):

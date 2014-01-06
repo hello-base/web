@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
+from components.facts.admin import FactInline
 from components.facts.models import Fact
 
 from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
@@ -14,19 +15,6 @@ class GroupshotInline(admin.TabularInline):
 class HeadshotInline(admin.TabularInline):
     extra = 1
     model = Headshot
-
-
-class FactInline(admin.StackedInline):
-    extra = 1
-    model = Fact
-
-
-class GroupFactInline(FactInline):
-    exclude = ['idol']
-
-
-class IdolFactInline(FactInline):
-    exclude = ['group']
 
 
 class MembershipInline(admin.TabularInline):
@@ -63,7 +51,7 @@ class GroupAdmin(ContributorMixin):
         ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [GroupMembershipInline, GroupshotInline, GroupFactInline]
+    inlines = [GroupMembershipInline, GroupshotInline, FactInline]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     list_filter = ['classification', 'status', 'scope']
@@ -88,7 +76,7 @@ class IdolAdmin(ContributorMixin):
         ('Details & Options', {'fields': ('color', ('height', 'bloodtype'), ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [IdolMembershipInline, HeadshotInline, IdolFactInline]
+    inlines = [IdolMembershipInline, HeadshotInline, FactInline]
     list_display = ['romanized_family_name', 'romanized_given_name', 'family_name', 'given_name', 'birthdate', 'status', 'scope', 'started', 'graduated', 'retired']
     list_display_links = ['romanized_family_name', 'romanized_given_name']
     list_editable = ['status', 'scope']
