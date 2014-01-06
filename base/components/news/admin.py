@@ -1,6 +1,5 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
-
-from components.accounts.admin import ContributorMixin
 
 from .models import Item, ItemImage, Update
 
@@ -22,7 +21,7 @@ class UpdateInline(admin.StackedInline):
         return super(UpdateInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class ItemAdmin(ContributorMixin, admin.ModelAdmin):
+class ItemAdmin(admin.ModelAdmin):
     date_hierarchy = 'published'
     fieldsets = (
         (None, {'fields': ('author',)}),
