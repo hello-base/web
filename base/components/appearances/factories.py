@@ -16,10 +16,6 @@ class EpisodeFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Episode
 
 
-class SynopsisFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Synopsis
-
-
 class MagazineFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Magazine
 
@@ -42,3 +38,7 @@ class CardFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Card
 
     issue = factory.SubFactory(IssueFactory)
+
+
+class SummaryFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = models.Summary
