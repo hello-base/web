@@ -53,8 +53,8 @@ class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
         ('Details', {'fields': (('romanized_name', 'name'),)}),
     )
     inlines = [FactInline]
-    list_display = ['romanized_name', 'name', 'day', 'start_time', 'event', 'venue']
-    list_display_links = ['romanized_name', 'name']
+    list_display = ['event', 'day', 'start_time', 'romanized_name', 'name', 'venue']
+    list_display_links = ['event', 'day']
     list_select_related = True
     search_fields = ['day', 'start_time', 'event', 'venue']
 
