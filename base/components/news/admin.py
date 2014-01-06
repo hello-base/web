@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Item, ItemImage, Update
+from .models import Item, ItemImage, SUBJECTS, Update
+
+subject_fields = ['%ss' % subject._meta.model_name for subject in SUBJECTS]
 
 
 class ItemImageInline(admin.TabularInline):
@@ -29,7 +31,7 @@ class ItemAdmin(admin.ModelAdmin):
         ('Body', {'fields': ('body',)}),
         ('Involvement', {
             'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
-            'fields': ('idols', 'groups', 'singles', 'albums', 'events')}),
+            'fields': tuple(subject_fields)}),
         ('Sources', {'fields': (('source', 'source_url'), ('via', 'via_url'))}),
     )
     inlines = [ItemImageInline, UpdateInline]
@@ -37,8 +39,8 @@ class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['title']}
     search_fields = ['title', 'author']
 
-    raw_id_fields = ('idols', 'groups', 'singles', 'albums', 'events')
-    autocomplete_lookup_fields = {'m2m': ['idols', 'groups', 'singles', 'albums', 'events']}
+    raw_id_fields = subject_fields
+    autocomplete_lookup_fields = {'m2m': subject_fields}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'author':

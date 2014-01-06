@@ -7,7 +7,6 @@ from components.events.models import Event, Performance
 from components.merchandise.music.models import Album, Single
 from components.people.models import Idol, Group
 
-
 SUBJECTS = [
     Idol, Group,        # people
     Album, Single,      # merchandise.music

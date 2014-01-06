@@ -10,11 +10,18 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 
+from components.appearances.models import Show, Magazine
 from components.events.models import Event
 from components.people.models import Group, Idol
 from components.merchandise.music.models import Album, Single
 
 User = get_user_model()
+SUBJECTS = [
+    Show, Magazine, # appearances
+    Event,          # events
+    Album, Single,  # merchandise.music
+    Idol, Group,    # people
+]
 
 
 class Item(models.Model):
@@ -46,13 +53,6 @@ class Item(models.Model):
     body = models.TextField(blank=True)
     published = models.DateField(default=date.today())
 
-    # Involvement.
-    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
-    singles = models.ManyToManyField(Single, blank=True, null=True, related_name='%(class)ss')
-    albums = models.ManyToManyField(Album, blank=True, null=True, related_name='%(class)ss')
-    events = models.ManyToManyField(Event, blank=True, null=True, related_name='%(class)ss')
-
     # Sources.
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
@@ -66,6 +66,16 @@ class Item(models.Model):
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.published)
+
+# Involvement.
+# In an everlasting effort to not repeat thyself, we create the subject
+# foreign keys dynamically. In order to do that, we have to do it outside
+# of the initial model specification.
+for subject in SUBJECTS:
+    Item.add_to_class(
+        '%ss' % subject._meta.model_name,
+        models.ManyToManyField(subject, blank=True, null=True, related_name='%(class)ss')
+    )
 
 
 class ItemImage(models.Model):
