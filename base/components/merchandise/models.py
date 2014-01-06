@@ -1,5 +1,4 @@
-from datetime import date
-
+# -*- coding: utf-8 -*-
 from django.db import models
 
 from django_extensions.db import fields as extensions
