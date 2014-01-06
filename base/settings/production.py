@@ -174,7 +174,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     BROKER_URL = values.Value(environ_prefix='', environ_name='OPENREDIS_URL')
     CELERY_RESULT_BACKEND = BROKER_URL
-    CELERY_TIMEZONE = 'UTC'
+    CELERY_TIMEZONE = 'Asia/Tokyo'
     CELERYBEAT_SCHEDULE = {
         'fetch_latest_youtube_videos': {
             'task': 'tasks.fetch_latest_videos',
