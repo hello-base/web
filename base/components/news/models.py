@@ -10,7 +10,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 
-from components.appearances.models import Show, Magazine
+from components.appearances.models import Magazine, Show
 from components.events.models import Event
 from components.people.models import Group, Idol
 from components.merchandise.music.models import Album, Single
