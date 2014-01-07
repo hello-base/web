@@ -107,4 +107,4 @@ class Update(models.Model):
         ordering = ('parent', 'published')
 
     def __unicode__(self):
-        return '%s Update of "%s"' % (self.date, self.parent.title)
+        return '%s Update of "%s"' % (self.published, self.parent.title)
