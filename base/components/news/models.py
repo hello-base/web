@@ -57,7 +57,7 @@ class Item(models.Model):
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
     source_url = models.URLField('source URL', blank=True,
-        help_text='Seperate multile URLs with comma (must have accompanying Source).')
+        help_text='Seperate multiple URLs with comma (must have accompanying Source).')
     via = models.CharField(blank=True, max_length=200)
     via_url = models.URLField('via URL', blank=True)
 
@@ -99,7 +99,7 @@ class Update(models.Model):
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
     source_url = models.URLField('source URL', blank=True,
-        help_text='Seperate multile URLs with comma (must have accompanying Source).')
+        help_text='Seperate multiple URLs with comma (must have accompanying Source).')
     via = models.CharField(blank=True, max_length=200)
     via_url = models.URLField('via URL', blank=True)
 
