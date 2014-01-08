@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load markdown_deux_tags people_tags typogrify_tags static %}
+{% load people_tags typogrify_tags static %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Tracks{% endblock %}
 {% block meta %}
@@ -161,14 +161,14 @@
     {% if object.romanized_lyrics %}
       <h1 class="section-title">Romanized Lyrics</h1>
       <p>
-        {{ object.romanized_lyrics|markdown }}
+        {{ object.processed_romanized_lyrics|safe }}
       </p>
     {% endif %}
 
     {% if object.lyrics %}
       <h1 class="section-title">Lyrics</h1>
       <p>
-        {{ object.lyrics|markdown }}
+        {{ object.processed_lyrics|safe }}
       </p>
     {% endif %}
 
@@ -178,20 +178,20 @@
 
     {% if object.translated_name %}
       <p>
-        <b>{{ object.translated_name|markdown }}</b>
+        <b>{{ object.translated_name }}</b>
       </p>
     {% endif %}
 
     {% if object.translated_lyrics %}
       <p>
-        {{ object.translated_lyrics|markdown }}
+        {{ object.processed_translated_lyrics }}
       </p>
     {% endif %}
 
     {% if object.translation_notes %}
       <h1 class="section-title">Translation Notes</h1>
       <p>
-        {{ object.translation_notes|markdown }}
+        {{ object.translation_notes }}
       </p>
     {% endif %}
     </div>

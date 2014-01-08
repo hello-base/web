@@ -17,7 +17,6 @@ django-heroku-postgresify == 0.3
 django-heroku-redisify == 0.2.1
 django-htmlmin == 0.6.3
 django-imagekit >= 3.0.4, < 4.0.0
-django-markdown-deux == 1.0.4
 django-model-utils >= 1.5.0, < 2.0.0
 django-multiurl == 1.0.1
 django-secure == 1.0
