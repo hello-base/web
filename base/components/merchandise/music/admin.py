@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from markdown import markdown
+
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
@@ -227,6 +229,13 @@ class TrackAdmin(admin.ModelAdmin):
         'fk': ['album', 'single', 'original_track'],
         'm2m': ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     }
+
+    def save_model(self, request, obj, form, change):
+        extensions = ['nl2br', 'components.extensions.markdown.lyriccoding']
+        obj.processed_lyrics = markdown(obj.lyrics, extensions)
+        obj.processed_romanized_lyrics = markdown(obj.romanized_lyrics, extensions)
+        obj.processed_translated_lyrics = markdown(obj.translated_lyrics, extensions)
+        obj.save()
 
     def participant_list(self, obj):
         return ', '.join([p.romanized_name for p in obj.participants])
