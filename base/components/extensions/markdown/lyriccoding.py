@@ -34,7 +34,7 @@ class LyricCodingPattern(Pattern):
         element.attrib['href'] = reverse('idol-detail', kwargs={'slug': match.group(1)})
         etree.SubElement(element, 'img')
         element[0].attrib['class'] = 'lyric-idol-img'
-        element[0].attrib['src'] = idol.optimized_thumbnail.url
+        element[0].attrib['src'] = idol.optimized_square.url
         element[0].attrib['title'] = idol.romanized_name
         return element
 
