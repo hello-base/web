@@ -1,0 +1,14 @@
+{% extends "layouts/site_base.html" %}
+{% load markdown_deux_tags %}
+
+{% block content %}
+
+{{ object.title }}
+{{ object.body|markdown }}
+{{ object.published }}
+---
+{{ object.author }}
+{{ object.source }} {{ object.source_url }}
+{{ object.via }} {{ object.via_url }}
+
+{% endblock content %}
