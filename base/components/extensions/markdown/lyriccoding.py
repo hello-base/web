@@ -45,10 +45,13 @@ class LyricCodingPattern(Pattern):
         lyric.text = match.group(2)
 
         # Take the second match...
+        etree.SubElement(lyric, 'span')
+        wrapper = lyric[0]
+        wrapper.attrib['class'] = 'lyric-idols'
         idols = match.group(3).split(',')
         for i, idol in enumerate(idols):
-            etree.SubElement(lyric, 'a')
-            lyric[i] = self.handleIdol(lyric[i], idol)
+            etree.SubElement(wrapper, 'a')
+            wrapper[i] = self.handleIdol(wrapper[i], idol)
         return lyric
 
 
