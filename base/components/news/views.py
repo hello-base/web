@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.views.generic.dates import ArchiveIndexView, DateDetailView
+from django.views.generic import DetailView
+from django.views.generic.dates import ArchiveIndexView
 
 from .models import Item
 
@@ -9,6 +10,6 @@ class NewsIndexView(ArchiveIndexView):
     date_field = 'published'
 
 
-class ItemDetailView(DateDetailView):
+class ItemDetailView(DetailView):
     model = Item
     date_field = 'published'

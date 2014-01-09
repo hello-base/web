@@ -5,6 +5,7 @@ from datetime import date
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse
 
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
@@ -66,6 +67,13 @@ class Item(models.Model):
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.published)
+
+    def get_absolute_url(self):
+        return reverse('item-detail', kwargs={
+            'year': self.published.year,
+            'month': self.published.strftime('%b').lower(),
+            'slug': self.slug
+        })
 
 # Involvement.
 # In an everlasting effort to not repeat thyself, we create the subject
