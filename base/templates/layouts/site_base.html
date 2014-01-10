@@ -14,6 +14,7 @@
   <div class="container">
     <a href="{% url 'site-home' %}" class="logo-wordmark header-logo-wordmark">
       <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
+      <span class="property">{% block property %}{% endblock %}</span>
     </a>
 
     <form action="{% url 'search' %}" class="header-search searchbar" method="get" accept-charset="utf-8">
