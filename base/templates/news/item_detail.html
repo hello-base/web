@@ -1,14 +1,26 @@
 {% extends "layouts/site_base.html" %}
 {% load markdown_deux_tags %}
 
+{% block title %}{{ object.title }} ({{ object.published|date:"DATE_FORMAT" }}) &middot; News{% endblock %}
 {% block content %}
 
-{{ object.title }}
-{{ object.body|markdown }}
-{{ object.published }}
----
-{{ object.author }}
-{{ object.source }} {{ object.source_url }}
-{{ object.via }} {{ object.via_url }}
+<article>
+  <div class="container">
+    <h1>{{ object.title }}</h1>
+    <div class="item-author">{{ object.author }}</div>
+    <time class="item-published" datetime="{{ object.published|date:'c' }}">{{ object.published|date:"DATE_FORMAT" }}</time>
+
+    <div class="item-body">
+    {{ object.body|markdown }}
+    </div>
+
+    <div class="item-attribution">
+      <h3>Source</h3>
+      <a href="{{ object.source_url }}">{{ object.source }} ({{ object.source_url }})</a>
+      <h3>Via</h3>
+      <a href="{{ object.via_url }}">{{ object.via }} ({{ object.via_url }})</a>
+    </div>
+  </div>
+</article>
 
 {% endblock content %}
