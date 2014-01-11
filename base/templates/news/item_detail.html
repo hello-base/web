@@ -56,12 +56,20 @@
       <ul class="item-juke">
       {% if object.get_previous_by_published %}
         <li class="juke juke-previous">
-          <a href="{{ object.get_previous_by_published.get_absolute_url }}">{{ object.get_previous_by_published }}</a>
+          <span class="ss-icon ss-navigateleft"></span>
+          <span class="juke-link">
+            <a href="{{ object.get_previous_by_published.get_absolute_url }}">{{ object.get_previous_by_published.title }}</a>
+            <small>{{ object.get_previous_by_published.published|date:"DATE_FORMAT" }}</small>
+          </span>
         </li>
       {% endif %}
       {% if object.get_next_by_published %}
         <li class="juke juke-next">
-          <a href="{{ object.get_next_by_published.get_absolute_url }}">{{ object.get_next_by_published }}</a>
+          <span class="ss-icon ss-navigateright"></span>
+          <span class="juke-link">
+            <a href="{{ object.get_next_by_published.get_absolute_url }}">{{ object.get_next_by_published.title }}</a>
+            <small>{{ object.get_next_by_published.published|date:"DATE_FORMAT" }}</small>
+          </span>
         </li>
       {% endif %}
       </ul>

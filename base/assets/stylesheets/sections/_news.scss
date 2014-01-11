@@ -35,9 +35,8 @@
 
 .subjects {
   margin: 1.333rem 0;
-}
-.subject {
-  display: inline-block;
+
+  .subject { display: inline-block; }
 }
 .subject-link {
   display: inline-block;
@@ -120,6 +119,22 @@
 
 .item-juke {
   display: flex;
+  margin-top: 1.777rem;
   padding: 1.333rem 0;
+
+  small {
+    display: block;
+    color: #B6BEC7;
+  }
 }
-.juke { flex: 1; }
+.juke {
+  align-items: center;
+  display: flex;
+  flex: 1;
+}
+.juke-previous {  text-align: left; }
+.juke-next { text-align: right; }
+.juke-link {
+  flex: 1;
+  padding: 0 6px;
+}
