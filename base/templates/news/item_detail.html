@@ -25,20 +25,23 @@
       </ul>
 
       <div class="item">
-        <header class="item-header">
-          <h1 class="item-title">{{ object.title|typogrify }}</h1>
+        <div class="item-body">
+          <header class="item-header">
+            <h1 class="item-title">{{ object.title|typogrify }}</h1>
+          </header>
           <div class="item-metadata">
             <time class="item-published" datetime="{{ object.published|date:'c' }}">{{ object.published|date:"DATE_FORMAT" }}</time> / <span class="item-author">Reported by {{ object.author }}</span>
-        </header>
+          </div>
 
-        <div class="item-body">
           {{ object.body|markdown|typogrify }}
 
+          {% if object.updates.all %}
           <ul class="item-updates">
           {% for update in object.updates.all %}
             <li class="item-update">{{ update }}</li>
           {% endfor %}
           </ul>
+          {% endif %}
 
           <div class="item-attribution">
             <table class="attribution-table">
@@ -58,6 +61,7 @@
           </div>
         </div>
 
+        {% if object.images.all %}
         <ul class="item-images">
         {% for image in object.images.all %}
           <li class="item-image">
@@ -68,6 +72,7 @@
           </li>
         {% endfor %}
         </ul>
+        {% endif %}
       </div>
 
       <ul class="item-juke">
