@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from datetime import date
+from itertools import chain
 
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -63,6 +64,7 @@ class Item(models.Model):
     via_url = models.URLField('via URL', blank=True)
 
     class Meta:
+        get_latest_by = 'published'
         ordering = ('-published',)
 
     def __unicode__(self):
@@ -74,6 +76,11 @@ class Item(models.Model):
             'month': self.published.strftime('%b').lower(),
             'slug': self.slug
         })
+
+    def subjects(self):
+        subjects = list(chain((getattr(self, '%ss' % subject._meta.model_name).all() for subject in SUBJECTS)))
+        return [subject for sublist in subjects for subject in sublist]
+
 
 # Involvement.
 # In an everlasting effort to not repeat thyself, we create the subject
