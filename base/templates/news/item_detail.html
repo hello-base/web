@@ -34,6 +34,12 @@
         <div class="item-body">
           {{ object.body|markdown|typogrify }}
 
+          <ul class="item-updates">
+          {% for update in object.updates.all %}
+            <li class="item-update">{{ update }}</li>
+          {% endfor %}
+          </ul>
+
           <div class="item-attribution">
             <table class="attribution-table">
               {% if object.source_url %}
@@ -51,6 +57,15 @@
             </table>
           </div>
         </div>
+
+        <ul class="item-images">
+        {% for image in object.images.all %}
+          <li class="item-image">
+            <img src="{{ image.thumbnail.url }}">
+            {{ image.caption }}
+          </li>
+        {% endfor %}
+        </ul>
       </div>
 
       <ul class="item-juke">
