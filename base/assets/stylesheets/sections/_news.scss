@@ -133,7 +133,11 @@
   flex: 1;
 }
 .juke-previous {  text-align: left; }
-.juke-next { text-align: right; }
+.juke-next {
+  text-align: right;
+
+  .ss-navigateright { order: 1; }
+}
 .juke-link {
   flex: 1;
   padding: 0 6px;
