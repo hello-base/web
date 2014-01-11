@@ -61,8 +61,10 @@
         <ul class="item-images">
         {% for image in object.images.all %}
           <li class="item-image">
-            <img src="{{ image.thumbnail.url }}">
-            {{ image.caption }}
+            <figure>
+              <img src="{{ image.thumbnail.url }}">
+              <figcaption>{{ image.caption }}</figcaption>
+            </figure>
           </li>
         {% endfor %}
         </ul>

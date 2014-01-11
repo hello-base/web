@@ -87,6 +87,22 @@
   p:first-child { margin-top: 0; }
 }
 
+.item-images {
+  flex: 1;
+  margin-left: gutter(12);
+}
+.item-image {
+  margin-bottom: 1rem;
+
+  figure {}
+  figcaption {
+    margin: 0.422rem 0;
+    font-size: 11px;
+    font-style: italic;
+  }
+  img { width: 100%; }
+}
+
 .news-item {
   margin-top: 1.777rem;
 
