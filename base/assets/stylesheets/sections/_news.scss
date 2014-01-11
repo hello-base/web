@@ -74,11 +74,13 @@
   font-size: 1.777rem;
   font-weight: 700;
 }
-.item-published, .item-author {
-  font-family: $font-family-secondary;
+.item-metadata {
+  color: #646D77;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-style: italic;
 }
+.item-published { font-weight: 700; }
+.item-author { font-weight: 500; }
 
 .item-body {
   flex: 2;
@@ -91,3 +93,33 @@
 
   .item { display: flex; }
 }
+
+.item-attribution {
+  margin-top: 1.777rem;
+  padding: 1rem 0;
+  width: 100%;
+
+  border-top: 1px solid #EBEFF5;
+  font-size: 12px;
+
+  th, td {
+    padding: 6px 0;
+    vertical-align: top;
+  }
+  th {
+    width: columns(2);
+    color: #646D77;
+    font-weight: bold;
+    text-align: left;
+  }
+  small {
+    display: block;
+    color: #B6BEC7;
+  }
+}
+
+.item-juke {
+  display: flex;
+  padding: 1.333rem 0;
+}
+.juke { flex: 1; }

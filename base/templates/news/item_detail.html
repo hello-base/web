@@ -1,26 +1,72 @@
 {% extends "layouts/site_base.html" %}
-{% load markdown_deux_tags %}
+{% load markdown_deux_tags typogrify_tags %}
 
 {% block title %}{{ object.title }} ({{ object.published|date:"DATE_FORMAT" }}) &middot; News{% endblock %}
+{% block body-class %}override{% endblock %}
 {% block content %}
-
-<article>
-  <div class="container">
-    <h1>{{ object.title }}</h1>
-    <div class="item-author">{{ object.author }}</div>
-    <time class="item-published" datetime="{{ object.published|date:'c' }}">{{ object.published|date:"DATE_FORMAT" }}</time>
-
-    <div class="item-body">
-    {{ object.body|markdown }}
+<section class="news">
+  <header class="override-header">
+    <div class="container">
+      <h1 class="news-header"><span class="year">H!P</span> News</h1>
     </div>
+  </header>
 
-    <div class="item-attribution">
-      <h3>Source</h3>
-      <a href="{{ object.source_url }}">{{ object.source }} ({{ object.source_url }})</a>
-      <h3>Via</h3>
-      <a href="{{ object.via_url }}">{{ object.via }} ({{ object.via_url }})</a>
+  <article class="news-item">
+    <div class="container">
+      <ul class="subjects">
+      {% for subject in object.subjects %}
+        <li class="subject">
+          <a class="subject-link" href="{{ subject.get_absolute_url }}">
+            {# <img class="subject-image" src="{{ subject.image.url }}"> #}
+            <span class="subject-name">{{ subject }}</span>
+          </a>
+        </li>
+      {% endfor %}
+      </ul>
+
+      <div class="item">
+        <header class="item-header">
+          <h1 class="item-title">{{ object.title|typogrify }}</h1>
+          <div class="item-metadata">
+            <time class="item-published" datetime="{{ object.published|date:'c' }}">{{ object.published|date:"DATE_FORMAT" }}</time> / <span class="item-author">Reported by {{ object.author }}</span>
+        </header>
+
+        <div class="item-body">
+          {{ object.body|markdown|typogrify }}
+
+          <div class="item-attribution">
+            <table class="attribution-table">
+              {% if object.source_url %}
+              <tr>
+                <th>Source</th>
+                <td><a href="{{ object.source_url }}">{{ object.source }} <small>({{ object.source_url }})</small></a></td>
+              </tr>
+              {% endif %}
+              {% if object.via_url %}
+              <tr>
+                <th>Via</th>
+                <td><a href="{{ object.via_url }}">{{ object.via }} <small>({{ object.via_url }})</small></a></td>
+              </tr>
+              {% endif %}
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <ul class="item-juke">
+      {% if object.get_previous_by_published %}
+        <li class="juke juke-previous">
+          <a href="{{ object.get_previous_by_published.get_absolute_url }}">{{ object.get_previous_by_published }}</a>
+        </li>
+      {% endif %}
+      {% if object.get_next_by_published %}
+        <li class="juke juke-next">
+          <a href="{{ object.get_next_by_published.get_absolute_url }}">{{ object.get_next_by_published }}</a>
+        </li>
+      {% endif %}
+      </ul>
     </div>
-  </div>
-</article>
+  </article>
+</section>
 
 {% endblock content %}
