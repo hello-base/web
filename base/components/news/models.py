@@ -13,9 +13,10 @@ from imagekit.processors import ResizeToFit
 from model_utils import Choices
 
 from components.appearances.models import Magazine, Show
+from components.correlations.models import Correlation
 from components.events.models import Event
-from components.people.models import Group, Idol
 from components.merchandise.music.models import Album, Single
+from components.people.models import Group, Idol
 
 User = get_user_model()
 SUBJECTS = [
@@ -54,6 +55,9 @@ class Item(models.Model):
     slug = models.SlugField(max_length=200)
     body = models.TextField(blank=True)
     published = models.DateField(default=date.today())
+
+    # Happenings.
+    correlations = models.ManyToManyField(Correlation, blank=True, null=True, related_name='%(class)ss')
 
     # Sources.
     source = models.CharField(blank=True, max_length=200,
