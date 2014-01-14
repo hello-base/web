@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from .models import Item, ItemImage, SUBJECTS, Update
 
-subject_fields = ['%ss' % subject._meta.model_name for subject in SUBJECTS]
+subject_fields = ['correlations'] + ['%ss' % subject._meta.model_name for subject in SUBJECTS]
 
 
 class ItemImageInline(admin.TabularInline):
