@@ -7,6 +7,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from model_utils import Choices
+
 from .constants import FIELDS, MODELS
 from .managers import CorrelationManager
 
@@ -19,6 +21,12 @@ class Correlation(models.Model):
     day in Hello! Project history?"
 
     """
+    CLASSIFICATION = Choices(
+        (0, 'major', 'Major'),
+        (1, 'normal', 'Normal'),
+        (2, 'minor', 'Minor'),
+    )
+
     # Model Managers.
     objects = CorrelationManager()
 
@@ -32,6 +40,7 @@ class Correlation(models.Model):
     identifier = models.CharField(max_length=25)
     date_field = models.CharField(max_length=25)
     description = models.TextField(blank=True)
+    classification = models.IntegerField(choices=CLASSIFICATION, default=CLASSIFICATION.normal)
 
     # Date Details.
     julian = models.PositiveSmallIntegerField('julian date', max_length=3,
