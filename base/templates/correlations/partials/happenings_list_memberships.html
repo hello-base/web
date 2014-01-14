@@ -5,6 +5,7 @@
   {% if object.group.romanized_name == "Soloist" %}
   <div class="happening-event">
     <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes a <span class="subject">soloist</span>
+    {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
   </div>
   <div class="happening-illustration">
     <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -16,6 +17,7 @@
   {% elif object.started != object.group.started %}
   <div class="happening-event">
     <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> joins <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
   </div>
   <div class="happening-illustration">
     <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -28,6 +30,7 @@
   {% if object.group.romanized_name == "Soloist" %}
   <div class="happening-event">
     <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> discontinues <span class="subject">soloist work</span>
+    {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
   </div>
   <div class="happening-illustration">
     <div class="happening-actor"><img src="{% get_media_prefix %}{{ object.idol.image }}"></div>
@@ -39,6 +42,7 @@
   {% else %}
   <div class="happening-event">
     <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> leaves <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+    {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
   </div>
   <div class="happening-illustration">
     <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -50,6 +54,7 @@
 {% if event.date_field == "leadership_started" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.idol.image }}">
@@ -60,6 +65,7 @@
 {% if event.date_field == "leadership_ended" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.idol.image }}">

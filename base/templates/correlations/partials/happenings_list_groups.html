@@ -7,6 +7,7 @@
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> is formed
   <div class="happening-originals">with {% for member in object.original_members %}<a href="{{ member.get_absolute_url }}">{{ member }}</a>{% include "utilities/commaify.html" %}{% endfor %}</div>
   {% endfilter %}
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <div class="happening-actors">
@@ -20,6 +21,7 @@
 <div class="happening-event">
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> disbands
   {% if object.final_members %}<div class="happening-originals">with {% for member in object.final_members %}<a href="{{ member.get_absolute_url }}">{{ member }}</a>{% include "utilities/commaify.html" %}{% endfor %}</div>{% endif %}
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">

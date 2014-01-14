@@ -7,6 +7,7 @@
     <a class="actor" href="{{ participant.get_absolute_url }}">{{ participant }}</a>{% include "utilities/commaify.html" %}
   {% endfor %} releas{{ object.participants|length|pluralize:"es,e" }} <a class="subject" href="{{ object.get_absolute_url }}">"{{ object }}"</a>
   {% endfilter %}
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <div class="happening-actors">

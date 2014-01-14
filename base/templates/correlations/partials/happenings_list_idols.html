@@ -4,6 +4,7 @@
 {% if event.date_field == "birthdate" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> <small>({{ object.age }})</small> is born
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">
@@ -12,6 +13,7 @@
 {% if event.date_field == "started" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> joins <span class="subject">Hello! Project</span>
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">
@@ -22,6 +24,7 @@
 {% if event.date_field == "graduated" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> leaves <span class="subject">Hello! Project</span>
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">
@@ -32,6 +35,7 @@
 {% if event.date_field == "retired" %}
 <div class="happening-event">
   <a class="actor" href="{{ object.get_absolute_url }}">{{ object }}</a> retires from <span class="subject">show business</span>
+  {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
   <img src="{% get_media_prefix %}{{ object.image }}">

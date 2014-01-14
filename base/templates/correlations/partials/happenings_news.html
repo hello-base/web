@@ -1,0 +1,12 @@
+<div class="happening-news">
+  <h4 class="happening-news-header">Related News</h4>
+  <ul class="happening-news-items">
+  {% for item in event.items.all %}
+    <li class="happening-news-item">
+      <span class="ss-icon ss-megaphone"></span>
+      <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+      <time datetime="{{ item.published|date:'c' }}">{{ item.published|date:"DATE_FORMAT" }}</time>
+    </li>
+  {% endfor %}
+  </ul>
+</div>
