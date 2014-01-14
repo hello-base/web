@@ -7,6 +7,7 @@ from .models import Correlation
 class CorrelationAdmin(admin.ModelAdmin):
     date_hierarchy = 'timestamp'
     fieldsets = (
+        (None, {'fields': ('classification',)}),
         ('Subject', {'fields': (('content_type', 'identifier'), 'object_id')}),
         ('Correlation Details', {'fields': ('timestamp', 'description')}),
         ('Derived Data', {
