@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 from datetime import date
 from itertools import chain
 
-from django.db import models
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.db import models
 
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
@@ -18,7 +18,6 @@ from components.events.models import Event
 from components.merchandise.music.models import Album, Single
 from components.people.models import Group, Idol
 
-User = get_user_model()
 SUBJECTS = [
     Idol, Group,     # people
     Album, Single,   # merchandise.music
@@ -47,7 +46,7 @@ class Item(models.Model):
         ('minor', 'Minor'),
     )
 
-    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
     category = models.CharField(choices=CATEGORIES, max_length=16)
     classification = models.CharField(choices=CLASSIFICATION, default=CLASSIFICATION.normal, max_length=16)
 
@@ -110,7 +109,7 @@ class ItemImage(models.Model):
 
 class Update(models.Model):
     parent = models.ForeignKey(Item, related_name='updates')
-    author = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
     body = models.TextField(blank=True)
     published = models.DateField(default=date.today())
 

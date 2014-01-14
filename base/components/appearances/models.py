@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models
 
 from model_utils import FieldTracker
 
 from components.people.models import Idol, Group
-
-User = get_user_model()
 
 
 class Show(models.Model):
@@ -164,7 +162,7 @@ class Card(models.Model):
 
 class Summary(models.Model):
     body = models.TextField(blank=True)
-    submitted_by = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
+    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
 
     # Multiple summaries can be submitted by users.
     # Summaries can be connected to either episodes or magazine issues.
