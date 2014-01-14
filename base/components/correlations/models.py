@@ -56,11 +56,18 @@ class Correlation(models.Model):
     def __unicode__(self):
         return '%s [%s:%s]' % (self.timestamp, self.content_type_id, self.object_id)
 
+    def related_label(self):
+        return '%s [%s %s]' % (self.content_object, self.date_field, self.timestamp)
+
     def get_include_template(self):
         return 'correlations/partials/happenings_list_%ss.html' % (self.identifier)
 
     def actor(self):
         return self.content_object.idol if self.identifier == 'membership' else self.content_object
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__exact',)
 
 
 @receiver(post_save)
