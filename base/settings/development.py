@@ -31,8 +31,6 @@ class Development(Settings):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['kombu.transport.django']
-    BROKER_URL = 'django://'
     CELERY_ALWAYS_EAGER = True  # http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
     CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # http://docs.celeryproject.org/en/latest/configuration.html#celery-eager-propagates-exceptions
 
