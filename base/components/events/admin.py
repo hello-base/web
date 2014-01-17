@@ -43,8 +43,8 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
-        ('Links', {'fields': ('info_link', 'secondary_info_link')}),
         ('Imagery', {'fields': ('logo', 'poster', 'stage')}),
+        ('Links', {'fields': ('info_link_name', 'info_link')}),
     )
     inlines = [PerformanceInline, FactInline, SummaryInline]
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
