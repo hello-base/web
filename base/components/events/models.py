@@ -52,6 +52,26 @@ class Event(ContributorMixin, ParticipationMixin):
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
+class Activity(ContributorMixin):
+    day = models.DateField()
+    romanized_name = models.CharField(max_length=200, blank=True)
+    name = models.CharField(max_length=200, blank=True)
+    start_time = models.TimeField(blank=True, null=True)
+    description = models.TextField(blank=True, 
+        help_text='If multiple activities took place on the same day/event, it can be specified here.')
+    event = models.ForeignKey(Event, related_name='schedule')
+    venue = models.ForeignKey('Venue', blank=True, null=True, related_name='activities')
+    venue_known_as = models.CharField(max_length=200, blank=True,
+        help_text='Did the venue go by another name at the time of this activity?')
+
+    class Meta:
+    get_latest_by = 'day'
+    ordering = ('day', 'start_time')
+
+    def __unicode__(self):
+        if self.romanized_name:
+            return u'%s %s: %s' % (self.day, self.event.nickname, self.romanized_name)
+        return u'%s %s' % (self.day, self.event.nickname)
 
 class Performance(ContributorMixin):
     day = models.DateField()
