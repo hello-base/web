@@ -25,8 +25,9 @@ class IdolSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'family_name', 'given_name', 'romanized_name',
             'romanized_family_name', 'romanized_given_name', 'alias',
             'romanized_alias', 'nicknames', 'photo', 'photo_thumbnail', 'slug',
-            'birthdate', 'birthdate_dayofyear', 'bloodtype', 'height',
-            'primary_membership', 'status', 'scope', 'note')
+            'started', 'graduated', 'retired', 'birthdate',
+            'birthdate_dayofyear', 'bloodtype', 'height', 'primary_membership',
+            'status', 'scope', 'note')
 
     def photo_url(self, obj):
         return obj.photo.url if obj.photo else ''
