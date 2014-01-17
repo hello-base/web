@@ -29,7 +29,6 @@ class Event(ContributorMixin, ParticipationMixin):
     name = models.CharField(max_length=200)
     nickname = models.CharField(max_length=30, blank=True, null=True)
     info_link = models.URLField(blank=True, null=True)
-    secondary_info_link = models.URLField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     slug = models.SlugField()
