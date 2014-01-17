@@ -31,6 +31,7 @@ class SummaryInline(admin.StackedInline):
 class EventAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'start_date'
     fieldsets = (
+        ('Basics', {'fields': ('category', ('has_handshake', 'is_fanclub', 'is_international'),)}),
         ('Dates', {'fields': (('start_date', 'end_date'),)}),
         ('Names', {'fields': (('romanized_name', 'name'), 'nickname', 'slug')}),
         ('Participants', {

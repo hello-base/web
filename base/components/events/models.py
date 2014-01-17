@@ -28,7 +28,10 @@ class Event(ContributorMixin, ParticipationMixin):
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     nickname = models.CharField(max_length=30)
-    info_link = models.URLField(blank=True, null=True)
+    info_link_name = models.CharField(max_length=200, blank=True, 
+        help_text='Separate multiple link names by comma (must have accompanying info link).')
+    info_link = models.URLField(blank=True, null=True, 
+        help_text='Seperate multiple links with comma (must have accompanying link name).')
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     slug = models.SlugField()
