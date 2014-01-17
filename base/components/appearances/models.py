@@ -6,7 +6,7 @@ from django.db import models
 
 from model_utils import FieldTracker
 
-from components.people.models import Idol, Group
+from components.people.models import Idol, Group, ParticipationMixin
 
 
 class Show(models.Model):
@@ -35,7 +35,7 @@ class TimeSlot(models.Model):
         return '%s~%s %s' % (self.start_time, self.end_time, self.show.romanized_name)
 
 
-class Episode(models.Model):
+class Episode(ParticipationMixin, models.Model):
     show = models.ForeignKey(Show)
     air_date = models.DateField()
 
@@ -50,7 +50,6 @@ class Episode(models.Model):
 
     # Share
     video_link = models.URLField(blank=True)
-    # Embed video if possible. Multiple links will be submitted by users.
 
     # Model Managers
     tracker = FieldTracker()
@@ -73,7 +72,7 @@ class Magazine(models.Model):
         return '%s' % self.romanized_name
 
 
-class Issue(models.Model):
+class Issue(ParticipationMixin, models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
     volume_number = models.CharField(max_length=4)
     release_date = models.DateField(blank=True, null=True)

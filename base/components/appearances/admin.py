@@ -41,6 +41,15 @@ class EpisodeAdmin(admin.ModelAdmin):
             'description': 'If this is a continuation of another episode, enter that episode below.',
             'fields': ('episode',)
         }),
+        ('Participants', {
+            'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
+            'fields': ('idols', 'groups')
+        }),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
     )
     inlines = [SummaryInline]
     list_display = ['show', 'air_date', 'romanized_name', 'name']
@@ -74,6 +83,15 @@ admin.site.register(Magazine, MagazineAdmin)
 class IssueAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Basics', {'fields': ('magazine', 'release_date', 'volume_number', ('catalog_number', 'isbn_number'), 'cover')}),
+        ('Participants', {
+            'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
+            'fields': ('idols', 'groups')
+        }),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
     )
     inlines = [IssueImageInline, SummaryInline]
     list_display = ['magazine', 'volume_number', 'release_date', 'catalog_number', 'isbn_number']
