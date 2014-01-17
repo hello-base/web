@@ -53,9 +53,13 @@ class EpisodeAdmin(admin.ModelAdmin):
     )
     inlines = [SummaryInline]
     list_display = ['show', 'air_date', 'romanized_name', 'name']
+    readonly_fields = ['participating_groups', 'participating_idols']
 
-    raw_id_fields = ['show', 'episode']
-    autocomplete_lookup_fields = {'fk': ['show', 'episode']}
+    raw_id_fields = ['show', 'episode', 'idols', 'groups']
+    autocomplete_lookup_fields = {
+        'fk': ['show', 'episode'], 
+        'm2m': ['idols', 'groups']
+    }
 admin.site.register(Episode, EpisodeAdmin)
 
 
@@ -96,9 +100,13 @@ class IssueAdmin(admin.ModelAdmin):
     inlines = [IssueImageInline, SummaryInline]
     list_display = ['magazine', 'volume_number', 'release_date', 'catalog_number', 'isbn_number']
     list_display_links = ['magazine', 'volume_number']
+    readonly_fields = ['participating_groups', 'participating_idols']
 
-    raw_id_fields = ['magazine']
-    autocomplete_lookup_fields = {'fk': ['magazine']}
+    raw_id_fields = ['magazine', 'idols', 'groups']
+    autocomplete_lookup_fields = {
+        'fk': ['magazine'], 
+        'm2m': ['idols', 'groups']
+    }
 admin.site.register(Issue, IssueAdmin)
 
 
