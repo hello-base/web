@@ -36,7 +36,7 @@ class Event(ContributorMixin, ParticipationMixin):
 
     # Imagery.
     logo = models.ImageField(blank=True, null=True, upload_to='events/events/')
-    poster = models.ImageField(blank=True, null=True, upload_to='events/events/')
+    promotional_image = models.ImageField(blank=True, null=True, upload_to='events/events/')
     stage = models.ImageField(blank=True, null=True, upload_to='events/events/')
 
     class Meta:
