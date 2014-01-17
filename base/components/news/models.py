@@ -34,7 +34,6 @@ class Item(models.Model):
         ('event', 'Event'),
         ('goods', 'Goods'),
         ('graduation', 'Graduation'),
-        ('preview', 'Preview'),
         ('promo', 'Promo'),
         ('release', 'Release'),
         ('rumor', 'Rumor'),
