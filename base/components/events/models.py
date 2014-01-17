@@ -8,6 +8,23 @@ from components.people.models import ParticipationMixin
 
 class Event(ContributorMixin, ParticipationMixin):
     # Details.
+    CATEGORIES = Choices(
+        ('birthday', 'Birthday'),
+        ('bustour', 'Bus Tour'),
+        ('concert', 'Concert'),
+        ('convention', 'Convention'),
+        ('dinnershow', 'Dinner Show'),
+        ('general', 'General'),
+        ('hawaii', 'Hawaii'),
+        ('live', 'Live'),
+        ('release', 'Release'),
+        ('promotional', 'Promotional'),
+        ('other', 'Other'),
+    )
+    category = models.CharField(choices=CATEGORIES, max_length=16)
+    has_handshake = models.BooleanField('has handshake?', default=False)
+    is_fanclub = models.BooleanField('fanclub?', default=False)
+    is_international = models.BooleanField('international?', default=False)
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     nickname = models.CharField(max_length=30, blank=True, null=True)
