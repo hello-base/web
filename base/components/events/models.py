@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from model_utils import Choices, FieldTracker
+from model_utils import Choices
 
 from components.accounts.models import ContributorMixin
 from components.people.models import ParticipationMixin
@@ -131,28 +130,3 @@ class Venue(ContributorMixin):
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
-
-
-class Summary(models.Model):
-    body = models.TextField(blank=True)
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
-
-    # Multiple summaries can be submitted by users.
-    # Summaries can be connected to either events, performances (for MC's, etc.) or activities.
-    event = models.ForeignKey(Event, blank=True, null=True, related_name='summaries')
-    activity = models.ForeignKey(Activity, blank=True, null=True, related_name='summaries')
-    performance = models.ForeignKey(Performance, blank=True, null=True, related_name='summaries')
-
-    # Model Managers.
-    tracker = FieldTracker()
-
-    class Meta:
-        verbose_name_plural = 'summaries'
-
-    def __unicode__(self):
-        if self.event:
-            return '%s summary' % (self.event.nickname)
-        if self.activity:
-            return '%s %s activity summary' % (self.activity.day, self.activity.event.nickname)
-        if self.performance:
-            return '%s %s at %s summary' % (self.performance.day, self.performance.event.nickname, self.performance.start_time)

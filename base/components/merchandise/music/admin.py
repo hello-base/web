@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
-from components.facts.admin import FactInline
+from components.prose.admin import FactInline
 
 from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
 

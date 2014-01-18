@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.db import models
 
 from model_utils import FieldTracker
@@ -157,22 +156,3 @@ class Card(models.Model):
             self.other_model_romanized_name,
             getattr(self.hp_model, 'romanized_name', '')
         ])[0]
-
-
-class Summary(models.Model):
-    body = models.TextField(blank=True)
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
-
-    # Multiple summaries can be submitted by users.
-    # Summaries can be connected to either episodes or magazine issues.
-    episode = models.ForeignKey(Episode, blank=True, null=True, related_name='summaries')
-    issue = models.ForeignKey(Issue, blank=True, null=True, related_name='summaries')
-
-    # Model Managers.
-    tracker = FieldTracker()
-
-    class Meta:
-        verbose_name_plural = 'summaries'
-
-    def __unicode__(self):
-        return '%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)
