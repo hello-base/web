@@ -57,7 +57,7 @@ class EpisodeAdmin(admin.ModelAdmin):
 
     raw_id_fields = ['show', 'episode', 'idols', 'groups']
     autocomplete_lookup_fields = {
-        'fk': ['show', 'episode'], 
+        'fk': ['show', 'episode'],
         'm2m': ['idols', 'groups']
     }
 admin.site.register(Episode, EpisodeAdmin)
@@ -104,7 +104,7 @@ class IssueAdmin(admin.ModelAdmin):
 
     raw_id_fields = ['magazine', 'idols', 'groups']
     autocomplete_lookup_fields = {
-        'fk': ['magazine'], 
+        'fk': ['magazine'],
         'm2m': ['idols', 'groups']
     }
 admin.site.register(Issue, IssueAdmin)

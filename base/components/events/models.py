@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+
+from model_utils import Choices, FieldTracker
 
 from components.accounts.models import ContributorMixin
 from components.people.models import ParticipationMixin
 
 
 class Event(ContributorMixin, ParticipationMixin):
-    # Details.
     CATEGORIES = Choices(
         ('birthday', 'Birthday'),
         ('bustour', 'Bus Tour'),
@@ -21,25 +23,31 @@ class Event(ContributorMixin, ParticipationMixin):
         ('promotional', 'Promotional'),
         ('other', 'Other'),
     )
+
+    # Details.
     category = models.CharField(choices=CATEGORIES, max_length=16)
-    has_handshake = models.BooleanField('has handshake?', default=False)
-    is_fanclub = models.BooleanField('fanclub?', default=False)
-    is_international = models.BooleanField('international?', default=False)
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     nickname = models.CharField(max_length=30)
-    info_link_name = models.CharField(max_length=200, blank=True, 
-        help_text='Separate multiple link names by comma (must have accompanying info link).')
-    info_link = models.URLField(blank=True, null=True, 
-        help_text='Seperate multiple links with comma (must have accompanying link name).')
+    slug = models.SlugField()
+
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    slug = models.SlugField()
+
+    info_link_name = models.CharField(max_length=200, blank=True,
+        help_text='Separate multiple link names by comma (must have accompanying info link).')
+    info_link = models.URLField(blank=True, null=True,
+        help_text='Seperate multiple links with comma (must have accompanying link name).')
 
     # Imagery.
     logo = models.ImageField(blank=True, null=True, upload_to='events/events/')
     promotional_image = models.ImageField(blank=True, null=True, upload_to='events/events/')
     stage = models.ImageField(blank=True, null=True, upload_to='events/events/')
+
+    # Booleans.
+    has_handshake = models.BooleanField('has handshake?', default=False)
+    is_fanclub = models.BooleanField('fanclub?', default=False)
+    is_international = models.BooleanField('international?', default=False)
 
     class Meta:
         get_latest_by = 'start_date'
@@ -54,12 +62,13 @@ class Event(ContributorMixin, ParticipationMixin):
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
+
 class Activity(ContributorMixin):
     day = models.DateField()
     romanized_name = models.CharField(max_length=200, blank=True)
     name = models.CharField(max_length=200, blank=True)
     start_time = models.TimeField(blank=True, null=True)
-    description = models.TextField(blank=True, 
+    description = models.TextField(blank=True,
         help_text='If multiple activities took place on the same day/event, it can be specified here.')
     event = models.ForeignKey(Event, related_name='schedule')
     venue = models.ForeignKey('Venue', blank=True, null=True, related_name='activities')
@@ -67,13 +76,14 @@ class Activity(ContributorMixin):
         help_text='Did the venue go by another name at the time of this activity?')
 
     class Meta:
-    get_latest_by = 'day'
-    ordering = ('day', 'start_time')
+        get_latest_by = 'day'
+        ordering = ('day', 'start_time')
 
     def __unicode__(self):
         if self.romanized_name:
             return u'%s %s: %s' % (self.day, self.event.nickname, self.romanized_name)
         return u'%s %s' % (self.day, self.event.nickname)
+
 
 class Performance(ContributorMixin):
     day = models.DateField()
@@ -121,6 +131,7 @@ class Venue(ContributorMixin):
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
 
 class Summary(models.Model):
     body = models.TextField(blank=True)

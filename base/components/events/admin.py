@@ -4,7 +4,7 @@ from django.contrib import admin
 from components.accounts.admin import ContributorMixin
 from components.facts.admin import FactInline
 
-from .models import Event, Performance, Venue
+from .models import Event, Summary, Performance, Venue
 
 
 class PerformanceInline(admin.StackedInline):
