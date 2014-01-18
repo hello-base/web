@@ -7,9 +7,9 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    depends_on = (
-        ('facts', '0002_add_facts'),
-    )
+    # depends_on = (
+    #     ('facts', '0002_add_facts'),
+    # )
 
 
     def forwards(self, orm):
