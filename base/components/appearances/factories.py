@@ -38,7 +38,3 @@ class CardFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Card
 
     issue = factory.SubFactory(IssueFactory)
-
-
-class SummaryFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Summary

@@ -14,6 +14,7 @@ class Migration(SchemaMigration):
         if not db.dry_run:
             # For permissions to work properly after migrating.
             orm['contenttypes.contenttype'].objects.filter(app_label='facts', model='fact').update(app_label='prose')
+            orm['contenttypes.contenttype'].objects.filter(app_label='appearances', model='summary').update(app_label='prose')
 
         # Adding model 'Summary'
         db.create_table(u'prose_summary', (
@@ -55,6 +56,13 @@ class Migration(SchemaMigration):
             'started': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'token_expiration': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'username': ('ohashi.db.models.fields.CharField', [], {'db_index': 'True', 'blank': 'True'})
+        },
+        u'contenttypes.contenttype': {
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
+            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'appearances.episode': {
             'Meta': {'ordering': "(u'show', u'air_date')", 'object_name': 'Episode'},
