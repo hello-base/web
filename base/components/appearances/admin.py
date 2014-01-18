@@ -1,20 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
+from components.prose.admin import SummaryInline
+
 from .models import (Card, CardSet, Episode, Issue, IssueImage, Magazine,
-    Show, Summary, TimeSlot)
-
-
-class SummaryInline(admin.StackedInline):
-    extra = 1
-    fields = ['body', 'submitted_by']
-    model = Summary
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == 'submitted_by':
-            kwargs['initial'] = request.user.id
-            return db_field.formfield(**kwargs)
-        return super(SummaryInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    Show, TimeSlot)
 
 
 class TimeSlotInline(admin.TabularInline):
