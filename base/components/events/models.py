@@ -24,7 +24,7 @@ class Event(ContributorMixin, ParticipationMixin):
     )
 
     # Details.
-    category = models.CharField(choices=CATEGORIES, max_length=16)
+    category = models.CharField(choices=CATEGORIES, default=CATEGORIES.general, max_length=16)
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     nickname = models.CharField(max_length=30)
