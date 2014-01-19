@@ -55,7 +55,7 @@ admin.site.register(Episode, EpisodeAdmin)
 
 class IssueInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('release_date', ('volume_number', 'price'), ('catalog_number', 'isbn_number'), 'cover')}),)
+    fieldsets = ((None, {'fields': ('release_date', ('volume', 'price'), ('catalog_number', 'isbn_number'), 'cover')}),)
     model = Issue
 
 
@@ -76,7 +76,7 @@ admin.site.register(Magazine, MagazineAdmin)
 
 class IssueAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Basics', {'fields': ('magazine', 'release_date', 'volume_number', ('catalog_number', 'isbn_number'), 'cover')}),
+        ('Basics', {'fields': ('magazine', 'release_date', 'volume', ('catalog_number', 'isbn_number'), 'cover')}),
         ('Participants', {
             'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
             'fields': ('idols', 'groups')
@@ -88,8 +88,8 @@ class IssueAdmin(admin.ModelAdmin):
         }),
     )
     inlines = [IssueImageInline, SummaryInline]
-    list_display = ['magazine', 'volume_number', 'release_date', 'catalog_number', 'isbn_number']
-    list_display_links = ['magazine', 'volume_number']
+    list_display = ['magazine', 'volume', 'release_date', 'catalog_number', 'isbn_number']
+    list_display_links = ['magazine', 'volume']
     readonly_fields = ['participating_groups', 'participating_idols']
 
     raw_id_fields = ['magazine', 'idols', 'groups']
