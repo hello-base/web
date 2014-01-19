@@ -76,8 +76,10 @@ class Issue(ParticipationMixin, models.Model):
     price = models.IntegerField(blank=True, null=True, 
         help_text='If different from magazine price')
     release_date = models.DateField(blank=True, null=True)
-    catalog_number = models.CharField(blank=True, max_length=30)
-    isbn_number = models.CharField(max_length=19)  # ?
+    catalog_number = models.CharField(blank=True, max_length=30, 
+        help_text='Most magazines dont have this, NEOBK is just a Neowing ID.')
+    isbn_number = models.CharField(max_length=20, 
+        help_text='JAN number works too, its like a Japanese ISBN.')
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
