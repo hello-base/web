@@ -55,7 +55,7 @@ admin.site.register(Episode, EpisodeAdmin)
 
 class IssueInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('release_date', 'volume_number', ('catalog_number', 'isbn_number'), 'cover')}),)
+    fieldsets = ((None, {'fields': ('release_date', ('volume_number', 'price'), ('catalog_number', 'isbn_number'), 'cover')}),)
     model = Issue
 
 

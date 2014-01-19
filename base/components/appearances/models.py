@@ -65,7 +65,7 @@ class Magazine(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
     slug = models.SlugField()
-    # If prices change in the course of a magazine we may need to move this to Issue or make a Price model.
+    f a magazine we may need to move this to Issue or make a Price model.
 
     def __unicode__(self):
         return '%s' % self.romanized_name
@@ -74,6 +74,8 @@ class Magazine(models.Model):
 class Issue(ParticipationMixin, models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
     volume_number = models.CharField(max_length=4)
+    price = models.IntegerField(blank=True, null=True, 
+        help_text='If different from magazine price')
     release_date = models.DateField(blank=True, null=True)
     catalog_number = models.CharField(blank=True, max_length=30)
     isbn_number = models.CharField(max_length=19)  # ?
@@ -81,6 +83,11 @@ class Issue(ParticipationMixin, models.Model):
 
     def __unicode__(self):
         return '%s #%s' % (self.magazine.romanized_name, self.volume_number)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and self.magazine.price:
+            self.price = self.magazine.price
+        return super(Issue, self).save(*args, **kwargs)
 
 
 class IssueImage(models.Model):
