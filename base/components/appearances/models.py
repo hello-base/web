@@ -65,7 +65,6 @@ class Magazine(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
     slug = models.SlugField()
-    f a magazine we may need to move this to Issue or make a Price model.
 
     def __unicode__(self):
         return '%s' % self.romanized_name
