@@ -72,11 +72,14 @@ class Magazine(models.Model):
 
 class Issue(ParticipationMixin, models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
-    volume = models.CharField(max_length=10)
-    published = models.DateField(null=True,
-        help_text='Choose 1st day of the corresponding month.')
-    price = models.IntegerField(blank=True, null=True,
-        help_text='If different from magazine price')
+    price = models.IntegerField(blank=True, null=True, 
+        help_text='If different from magazine price.')
+    volume = models.CharField(blank=True, max_length=10, 
+        help_text='Leave blank if no volume number (but fill out month or week).')
+    volume_month = models.DateField(blank=True, null=True, 
+        help_text='1st day of the month. Leave blank for weekly magazines.')
+    volume_week = models.DateField(blank=True, null=True, 
+        help_text='Leave blank for monthly magazines.')
     release_date = models.DateField(blank=True, null=True)
     catalog_number = models.CharField(blank=True, max_length=30,
         help_text='Most magazines dont have this, NEOBK is just a Neowing ID.')
@@ -85,7 +88,13 @@ class Issue(ParticipationMixin, models.Model):
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
-        return '%s #%s' % (self.magazine.romanized_name, self.volume)
+        if self.volume
+            return '%s Vol. %s' % (self.magazine.romanized_name, self.volume)
+        if self.volume_month
+            return '%s Vol. %s' % (self.magazine.romanized_name, self.volume_month)
+        if self.volume_week
+            return '%s Vol. %s' % (self.magazine.romanized_name, self.volume_week)
+        return '%s released %s' % (self.magazine.romanized_name, self.release_date)
 
     def save(self, *args, **kwargs):
         if not self.pk and self.magazine.price:
@@ -99,12 +108,13 @@ class IssueImage(models.Model):
     # Gallery will allow multiple images to be uploaded by users.
 
     def __unicode__(self):
-        return 'Image of %s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
+        return 'Image of %s' % (self.magazine.romanized_name)
 
 
 class CardSet(models.Model):
     issue = models.ForeignKey(Issue, related_name='sets')
     romanized_name = models.CharField(max_length=200)
+    name = models.CharField(blank=True, max_length=200)
 
     # Gallery
     image = models.ImageField(blank=True, upload_to='appearances/cards/')
