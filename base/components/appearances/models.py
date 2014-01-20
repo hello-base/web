@@ -73,7 +73,8 @@ class Magazine(models.Model):
 class Issue(ParticipationMixin, models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
     volume = models.CharField(max_length=10)
-    published = models.DateField(help_text='Choose 1st day of the corresponding month.')
+    published = models.DateField(null=True,
+        help_text='Choose 1st day of the corresponding month.')
     price = models.IntegerField(blank=True, null=True,
         help_text='If different from magazine price')
     release_date = models.DateField(blank=True, null=True)
