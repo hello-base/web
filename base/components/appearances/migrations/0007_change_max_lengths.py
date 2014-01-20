@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # Changing field 'Issue.volume'
-        db.alter_column(u'appearances_issue', 'volume', self.gf('django.db.models.fields.CharField')(max_length=10))
+        db.alter_column(u'appearances_issue', 'volume', self.gf('django.db.models.fields.CharField')(max_length=20))
 
         # Changing field 'Issue.isbn_number'
         db.alter_column(u'appearances_issue', 'isbn_number', self.gf('django.db.models.fields.CharField')(max_length=20))
@@ -18,7 +18,7 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
 
         # Changing field 'Issue.volume'
-        db.alter_column(u'appearances_issue', 'volume', self.gf('django.db.models.fields.CharField')(max_length=20))
+        db.alter_column(u'appearances_issue', 'volume', self.gf('django.db.models.fields.CharField')(max_length=10))
 
         # Changing field 'Issue.isbn_number'
         db.alter_column(u'appearances_issue', 'isbn_number', self.gf('django.db.models.fields.CharField')(max_length=19))
