@@ -72,13 +72,14 @@ class Magazine(models.Model):
 
 class Issue(ParticipationMixin, models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
-    volume = models.CharField(max_length=20)
+    volume = models.CharField(max_length=10)
+    month = models.DateField(help_text='Choose 1st day of the month.')
     price = models.IntegerField(blank=True, null=True, 
         help_text='If different from magazine price')
     release_date = models.DateField(blank=True, null=True)
     catalog_number = models.CharField(blank=True, max_length=30, 
         help_text='Most magazines dont have this, NEOBK is just a Neowing ID.')
-    isbn_number = models.CharField(max_length=20, 
+    isbn_number = models.CharField(max_length=20, blank=True, 
         help_text='JAN number works too, its like a Japanese ISBN.')
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
