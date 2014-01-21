@@ -26,7 +26,7 @@ admin.site.register(Show, ShowAdmin)
 
 class EpisodeAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Basics', {'fields': ('show', ('romanized_name', 'name'), ('air_date', 'record_date', 'number'), 'video_link')}),
+        ('Basics', {'fields': (('show', 'number'), ('romanized_name', 'name'), ('air_date', 'record_date', 'is_coverage'), 'video_link')}),
         (None, {
             'description': 'If this is a continuation of another episode, enter that episode below.',
             'fields': ('episode',)

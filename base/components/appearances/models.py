@@ -42,6 +42,7 @@ class Episode(ParticipationMixin, models.Model):
     episode = models.ForeignKey('self', blank=True, null=True, related_name='continuation')
 
     # Optional Information
+    is_coverage = models.BooleanField('is coverage?', default=False)
     record_date = models.DateField(blank=True, null=True)
     romanized_name = models.CharField(blank=True, max_length=200)
     name = models.CharField(blank=True, max_length=200)
