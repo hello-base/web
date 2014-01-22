@@ -49,7 +49,7 @@ class Episode(ParticipationMixin, models.Model):
     number = models.IntegerField(blank=True, null=True)
 
     # Share
-    video_link = models.URLField(blank=True)
+    video_link = models.URLField(blank=True, max_length=500)
 
     # Model Managers
     tracker = FieldTracker()

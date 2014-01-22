@@ -35,7 +35,7 @@ class Event(ContributorMixin, ParticipationMixin):
 
     info_link_name = models.CharField(max_length=200, blank=True,
         help_text='Separate multiple link names by comma (must have accompanying info link).')
-    info_link = models.URLField(blank=True, null=True,
+    info_link = models.URLField(blank=True, max_length=500, 
         help_text='Seperate multiple links with comma (must have accompanying link name).')
 
     # Imagery.

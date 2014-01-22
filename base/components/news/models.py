@@ -61,10 +61,10 @@ class Item(models.Model):
     # Sources.
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
-    source_url = models.URLField('source URL', blank=True,
+    source_url = models.URLField('source URL', blank=True, max_length=500, 
         help_text='Seperate multiple URLs with comma (must have accompanying Source).')
     via = models.CharField(blank=True, max_length=200)
-    via_url = models.URLField('via URL', blank=True)
+    via_url = models.URLField('via URL', blank=True, max_length=500)
 
     class Meta:
         get_latest_by = 'published'
