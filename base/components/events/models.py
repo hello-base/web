@@ -27,7 +27,7 @@ class Event(ContributorMixin, ParticipationMixin):
     category = models.CharField(choices=CATEGORIES, default=CATEGORIES.general, max_length=16)
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    nickname = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=200)
     slug = models.SlugField()
 
     start_date = models.DateField(blank=True, null=True)
