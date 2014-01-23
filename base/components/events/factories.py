@@ -10,6 +10,8 @@ class EventFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Event
 
     romanized_name = factory.Sequence(lambda i: 'event#%s' % i)
+    name = factory.Sequence(lambda i: 'event#%s' % i)
+    nickname = factory.Sequence(lambda i: 'nickname#%s' % i)
     slug = factory.LazyAttribute(lambda f: slugify(f.romanized_name))
 
 

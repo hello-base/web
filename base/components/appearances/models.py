@@ -89,9 +89,10 @@ class Issue(ParticipationMixin, models.Model):
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
-        if self.get_volume():
+        try:
             return '%s Vol. %s' % (self.magazine.romanized_name, self.get_volume())
-        return '%s released %s' % (self.magazine.romanized_name, self.release_date)
+        except IndexError:
+            return '%s released %s' % (self.magazine.romanized_name, self.release_date)
 
     def save(self, *args, **kwargs):
         if not self.pk and self.magazine.price:
