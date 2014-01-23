@@ -89,7 +89,7 @@ class Issue(ParticipationMixin, models.Model):
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
-        if any(self.volume, self.volume_month, self.volume_week):
+        if any([self.volume, self.volume_month, self.volume_week]):
             return '%s Vol. %s' % (self.magazine.romanized_name, self.get_volume())
         return '%s released %s' % (self.magazine.romanized_name, self.release_date)
 
