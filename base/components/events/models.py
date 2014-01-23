@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -35,7 +36,7 @@ class Event(ContributorMixin, ParticipationMixin):
 
     info_link_name = models.CharField(max_length=200, blank=True,
         help_text='Separate multiple link names by comma (must have accompanying info link).')
-    info_link = models.URLField(blank=True, max_length=500, 
+    info_link = models.URLField(blank=True, max_length=500,
         help_text='Seperate multiple links with comma (must have accompanying link name).')
 
     # Imagery.
@@ -56,6 +57,23 @@ class Event(ContributorMixin, ParticipationMixin):
 
     def get_absolute_url(self):
         return reverse('event-detail', kwargs={'slug': self.slug})
+
+    def clean(self, *args, **kwargs):
+        # Make sure that we have an equal number of info links and info link
+        # names, so that we can zip() them properly.
+        if (len(self.info_link.split(',')) != len(self.info_link_name.split(','))):
+            message = u'There need to be the same number of info links and info link names.'
+            raise ValidationError(message)
+        super(Event, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Event, self).save(*args, **kwargs)
+
+    def get_info_links(self):
+        info_links = self.info_link.split(',')
+        info_link_names = self.info_link_name.split(',')
+        return zip(info_links, info_link_names)
 
     @staticmethod
     def autocomplete_search_fields():
