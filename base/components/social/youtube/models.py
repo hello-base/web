@@ -5,8 +5,6 @@ from django.db import models
 
 from components.people.models import Group, Idol
 
-from .api import Api
-
 
 class Channel(models.Model):
     username = models.CharField(max_length=60)
@@ -20,6 +18,8 @@ class Channel(models.Model):
         return u'%s' % (self.username)
 
     def save(self, *args, **kwargs):
+        from .api import Api
+
         if not self.ytid:
             api = Api()
             self.ytid = api.get_ytid(self.username)
@@ -45,6 +45,8 @@ class Video(models.Model):
         return 'http://youtu.be/%s' % (self.ytid)
 
     def save(self, *args, **kwargs):
+        from .api import Api
+
         # Connect to API and get the details.
         entry = self.entry()
 
