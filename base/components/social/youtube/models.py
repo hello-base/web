@@ -45,7 +45,6 @@ class Video(models.Model):
         return 'http://youtu.be/%s' % (self.ytid)
 
     def save(self, *args, **kwargs):
-        from .api import Api
 
         # Connect to API and get the details.
         entry = self.entry()
@@ -64,6 +63,8 @@ class Video(models.Model):
             t.save()
 
     def entry(self):
+        from .api import Api
+
         api = Api()
         return api.get_video(self.ytid)
 
