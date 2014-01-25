@@ -100,6 +100,7 @@ class Activity(ContributorMixin):
     class Meta:
         get_latest_by = 'day'
         ordering = ('day', 'start_time')
+        verbose_name_plural = 'activities'
 
     def __unicode__(self):
         if self.start_time:
