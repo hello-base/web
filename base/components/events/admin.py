@@ -9,7 +9,7 @@ from .models import Activity, Event, Venue
 
 class ActivityInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', 'venue_known_as', ('day', 'start_time'))}),)
+    fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', 'venue_known_as', ('day', 'start_time'), 'is_performance')}),)
     model = Activity
 
     raw_id_fields = ('venue',)
@@ -51,7 +51,7 @@ class ActivityAdmin(ContributorMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('event', 'venue', 'venue_known_as')}),
         ('Dates', {'fields': (('day', 'start_time'),)}),
-        ('Details', {'fields': (('romanized_name', 'name'),)}),
+        ('Details', {'fields': (('romanized_name', 'name'), 'is_performance')}),
     )
     inlines = [FactInline]
     list_display = ['event', 'day', 'start_time', 'romanized_name', 'name', 'venue']

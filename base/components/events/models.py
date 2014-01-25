@@ -90,6 +90,7 @@ class Activity(ContributorMixin):
     start_time = models.TimeField(blank=True, null=True)
     description = models.TextField(blank=True,
         help_text='If multiple activities took place on the same day/event, it can be specified here.')
+    is_performance = models.BooleanField('is a performance?', default=False)
 
     # Venue.
     venue = models.ForeignKey('Venue', blank=True, null=True, related_name='activities')
