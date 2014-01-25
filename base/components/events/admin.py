@@ -53,7 +53,7 @@ class ActivityAdmin(ContributorMixin, admin.ModelAdmin):
         ('Dates', {'fields': (('day', 'start_time'),)}),
         ('Details', {'fields': (('romanized_name', 'name'), 'is_performance')}),
     )
-    inlines = [FactInline]
+    inlines = [FactInline, SummaryInline]
     list_display = ['event', 'day', 'start_time', 'romanized_name', 'name', 'venue']
     list_display_links = ['event', 'day']
     list_select_related = True
