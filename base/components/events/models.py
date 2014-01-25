@@ -81,7 +81,7 @@ class Event(ContributorMixin, ParticipationMixin):
 
 
 class Activity(ContributorMixin):
-    event = models.ForeignKey(Event, related_name='performance_schedule')
+    event = models.ForeignKey(Event, related_name='activities')
 
     # Details.
     day = models.DateField()
@@ -92,9 +92,9 @@ class Activity(ContributorMixin):
         help_text='If multiple activities took place on the same day/event, it can be specified here.')
 
     # Venue.
-    venue = models.ForeignKey('Venue', blank=True, null=True, related_name='performances')
+    venue = models.ForeignKey('Venue', blank=True, null=True, related_name='activities')
     venue_known_as = models.CharField(max_length=200, blank=True,
-        help_text='Did the venue go by another name at the time of this performance?')
+        help_text='Did the venue go by another name at the time of this activity?')
     # Add 'set list' field with convoluted ordering and everything...
 
     class Meta:
