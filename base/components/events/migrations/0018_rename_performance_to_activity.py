@@ -17,7 +17,7 @@ class Migration(SchemaMigration):
         # Renaming field 'performance'
         m2m_table_name = db.shorten_name(u'events_activity_edited_by')
         db.delete_unique(m2m_table_name, ['performance_id', 'editor_id'])
-        db.rename_column(m2m_table_name, u'performance', u'activity')
+        db.rename_column(m2m_table_name, 'performance_id', 'activity_id')
         db.create_unique(m2m_table_name, ['activity_id', 'editor_id'])
 
 
@@ -31,7 +31,7 @@ class Migration(SchemaMigration):
         # Renaming field 'activity'
         m2m_table_name = db.shorten_name(u'events_performance_edited_by')
         db.delete_unique(m2m_table_name, ['activity_id', 'editor_id'])
-        db.rename_column(m2m_table_name, u'activity', u'performance')
+        db.rename_column(m2m_table_name, 'activity_id', 'performance_id')
         db.create_unique(m2m_table_name, ['performance_id', 'editor_id'])
 
 
