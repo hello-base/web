@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from components.events.models import Event, Performance, Venue
-from components.events.factories import (EventFactory, PerformanceFactory,
+from components.events.models import Activity, Event, Venue
+from components.events.factories import (ActivityFactory, EventFactory,
     VenueFactory)
 
 pytestmark = pytest.mark.django_db
@@ -20,11 +20,11 @@ class TestEvents:
         assert response.status_code == 200
 
 
-class TestPerformances:
+class TestActivities:
     def test_factory(self):
-        factory = PerformanceFactory()
-        assert isinstance(factory, Performance)
-        assert 'performance' in factory.romanized_name
+        factory = ActivityFactory()
+        assert isinstance(factory, Activity)
+        assert 'activity' in factory.romanized_name
 
 
 class TestVenues:

@@ -81,33 +81,17 @@ class Event(ContributorMixin, ParticipationMixin):
 
 
 class Activity(ContributorMixin):
+    event = models.ForeignKey(Event, related_name='performance_schedule')
+
+    # Details.
     day = models.DateField()
     romanized_name = models.CharField(max_length=200, blank=True)
     name = models.CharField(max_length=200, blank=True)
     start_time = models.TimeField(blank=True, null=True)
     description = models.TextField(blank=True,
         help_text='If multiple activities took place on the same day/event, it can be specified here.')
-    event = models.ForeignKey(Event, related_name='activity_schedule')
-    venue = models.ForeignKey('Venue', blank=True, null=True, related_name='activities')
-    venue_known_as = models.CharField(max_length=200, blank=True,
-        help_text='Did the venue go by another name at the time of this activity?')
 
-    class Meta:
-        get_latest_by = 'day'
-        ordering = ('day', 'start_time')
-
-    def __unicode__(self):
-        if self.romanized_name:
-            return u'%s %s: %s' % (self.day, self.event.nickname, self.romanized_name)
-        return u'%s %s' % (self.day, self.event.nickname)
-
-
-class Performance(ContributorMixin):
-    day = models.DateField()
-    romanized_name = models.CharField(max_length=200, blank=True)
-    name = models.CharField(max_length=200, blank=True)
-    start_time = models.TimeField(blank=True, null=True)
-    event = models.ForeignKey(Event, related_name='performance_schedule')
+    # Venue.
     venue = models.ForeignKey('Venue', blank=True, null=True, related_name='performances')
     venue_known_as = models.CharField(max_length=200, blank=True,
         help_text='Did the venue go by another name at the time of this performance?')

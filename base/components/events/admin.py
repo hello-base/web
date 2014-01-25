@@ -4,13 +4,13 @@ from django.contrib import admin
 from components.accounts.admin import ContributorMixin
 from components.prose.admin import FactInline, SummaryInline
 
-from .models import Event, Performance, Venue
+from .models import Activity, Event, Venue
 
 
-class PerformanceInline(admin.StackedInline):
+class ActivityInline(admin.StackedInline):
     extra = 1
     fieldsets = ((None, {'fields': (('romanized_name', 'name'), 'venue', 'venue_known_as', ('day', 'start_time'))}),)
-    model = Performance
+    model = Activity
 
     raw_id_fields = ('venue',)
     autocomplete_lookup_fields = {'fk': ['venue']}
@@ -34,7 +34,7 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
         ('Links', {'fields': ('info_link_name', 'info_link')}),
         ('Imagery', {'fields': ('logo', 'promotional_image', 'stage')}),
     )
-    inlines = [PerformanceInline, FactInline, SummaryInline]
+    inlines = [ActivityInline, FactInline, SummaryInline]
     list_display = ['romanized_name', 'name', 'nickname', 'start_date', 'end_date']
     list_display_links = ['romanized_name', 'name']
     prepopulated_fields = {'slug': ['romanized_name']}
@@ -46,7 +46,7 @@ class EventAdmin(ContributorMixin, admin.ModelAdmin):
 admin.site.register(Event, EventAdmin)
 
 
-class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
+class ActivityAdmin(ContributorMixin, admin.ModelAdmin):
     date_hierarchy = 'day'
     fieldsets = (
         (None, {'fields': ('event', 'venue', 'venue_known_as')}),
@@ -61,7 +61,7 @@ class PerformanceAdmin(ContributorMixin, admin.ModelAdmin):
 
     raw_id_fields = ('event', 'venue')
     autocomplete_lookup_fields = {'fk': ['event', 'venue']}
-admin.site.register(Performance, PerformanceAdmin)
+admin.site.register(Activity, ActivityAdmin)
 
 
 class VenueAdmin(ContributorMixin, admin.ModelAdmin):

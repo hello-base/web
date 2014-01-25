@@ -7,18 +7,18 @@ from django.db import models
 from model_utils import FieldTracker
 
 from components.appearances.models import Episode, Issue
-from components.events.models import Activity, Event, Performance
+from components.events.models import Activity, Event
 from components.merchandise.music.models import Album, Single
 from components.people.models import Idol, Group
 
 FACT_SUBJECTS = [
     Idol, Group,        # people
     Album, Single,      # merchandise.music
-    Event, Performance  # events
+    Activity, Event     # events
 ]
 SUMMARY_SUBJECTS = [
-    Activity, Event, Performance,   # events
-    Episode, Issue                  # appearances
+    Activity, Event,    # events
+    Episode, Issue      # appearances
 ]
 
 
