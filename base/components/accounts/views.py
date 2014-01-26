@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django import http
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model, login
