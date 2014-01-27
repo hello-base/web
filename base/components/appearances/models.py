@@ -90,8 +90,8 @@ class Issue(ParticipationMixin, models.Model):
 
     def __unicode__(self):
         if any([self.volume, self.volume_month, self.volume_week]):
-            return '%s Vol. %s' % (self.magazine.romanized_name, self.get_volume())
-        return '%s released %s' % (self.magazine.romanized_name, self.release_date)
+            return '%s: Vol. %s' % (self.magazine.romanized_name, self.get_volume())
+        return '%s: %s' % (self.magazine.romanized_name, self.release_date)
 
     def save(self, *args, **kwargs):
         if not self.pk and self.magazine.price:
@@ -99,8 +99,12 @@ class Issue(ParticipationMixin, models.Model):
         return super(Issue, self).save(*args, **kwargs)
 
     def get_volume(self):
-        volume_fields = [self.volume, self.volume_month, self.volume_week]
-        return ' '.join([str(field) for field in volume_fields if field])
+        volume_fields = [
+            self.volume if self.volume else None,
+            '(%s)' % self.volume_month.strftime('%B') if self.volume_month else None,
+            '(Week of %s)' % self.volume_week.strftime('%B %d') if self.volume_week else None
+        ]
+        return ' '.join([field for field in volume_fields if field])
 
 
 class IssueImage(models.Model):
