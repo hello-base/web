@@ -100,7 +100,7 @@ class Issue(ParticipationMixin, models.Model):
 
     def get_volume(self):
         volume_fields = [self.volume, self.volume_month, self.volume_week]
-        return [field for field in volume_fields if field]
+        return ' '.join([str(field) for field in volume_fields if field])
 
 
 class IssueImage(models.Model):
