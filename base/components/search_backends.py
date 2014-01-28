@@ -52,7 +52,7 @@ class KuromojiElasticsearchBackend(ElasticsearchSearchBackend):
                         },
                         'haystack_edgengram': {
                             'type': 'edgeNGram',
-                            'min_gram': 5,
+                            'min_gram': 2,
                             'max_gram': 15,
                         },
                         'kuromoji_rf': {
