@@ -17,9 +17,10 @@ User = get_user_model()
 
 class PreAuthorizationView(RedirectView):
     def get_authorization_url(self, request):
-        # Redirect the user to Hello! Base ID using the appropriate URL with a few
-        #  key OAuth paramters built in. We throw in `request.META['HTTP_REFERER']`
-        # as a way to redirect back to the referring page when we're done.
+        # Redirect the user to Hello! Base ID using the appropriate URL with
+        # a few key OAuth paramters built in. We throw in
+        # `request.META['HTTP_REFERER']` as a way to redirect back to the
+        # referring page when we're done.
         oauth = auth_session(request)
         authorization_url, state = auth_url(oauth)
 

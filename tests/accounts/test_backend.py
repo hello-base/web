@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 
 from django.contrib.auth import get_user_model, get_user
