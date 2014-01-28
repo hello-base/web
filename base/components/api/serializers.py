@@ -4,12 +4,9 @@ from components.people.models import Group, Idol, Membership
 
 
 class MembershipSerializer(serializers.ModelSerializer):
-    # This reeks of ickyness, since this is supposed to serve as a base class.
-    group = serializers.HyperlinkedRelatedField(read_only=True, view_name='api:group-detail')
-
     class Meta:
         model = Membership
-        fields = ('id', 'group', 'is_primary', 'started', 'ended', 'generation',
+        fields = ('id', 'group', 'idol', 'is_primary', 'started', 'ended', 'generation',
             'is_leader', 'leadership_started', 'leadership_ended')
 
 

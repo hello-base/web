@@ -3,7 +3,7 @@ from rest_framework import generics
 from components.people.models import Membership, Group, Idol
 
 from .serializers import (GroupSerializer, IdolSerializer,
-    IdolMembershipSerializer)
+    IdolMembershipSerializer, MembershipSerializer)
 
 
 class GroupMixin(object):
@@ -47,3 +47,8 @@ class IdolDetail(generics.RetrieveAPIView):
     model = Idol
     serializer_class = IdolSerializer
     lookup_field = 'slug'
+
+
+class MembershipList(generics.ListAPIView):
+    model = Membership
+    serializer_class = MembershipSerializer
