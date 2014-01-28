@@ -92,8 +92,8 @@ class Album(Base):
     def get_previous(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.albums.order_by('-released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.albums.order_by('-released').exclude(number='')
                 return qs.filter(released__lt=self.released)[0]
             except IndexError:
                 return None
@@ -102,8 +102,8 @@ class Album(Base):
     def get_next(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.albums.order_by('released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.albums.order_by('released').exclude(number='')
                 return qs.filter(released__gt=self.released)[0]
             except IndexError:
                 return None
@@ -126,8 +126,8 @@ class Single(Base):
     def get_previous(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.singles.order_by('-released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.singles.order_by('-released').exclude(number='')
                 return qs.filter(released__lt=self.released)[0]
             except IndexError:
                 return None
@@ -136,8 +136,8 @@ class Single(Base):
     def get_next(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.singles.order_by('released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.singles.order_by('released').exclude(number='')
                 return qs.filter(released__gt=self.released)[0]
             except IndexError:
                 return None
