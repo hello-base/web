@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+from django.conf import settings
 from django.contrib.auth import get_user_model, get_user
 from django.http import HttpRequest
 
 from components.accounts.factories import EditorFactory
 
 pytestmark = pytest.mark.django_db
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 def test_authentication(client):

@@ -9,7 +9,6 @@ from django.dispatch import receiver
 
 from model_utils import Choices
 
-from .constants import FIELDS, MODELS
 from .managers import CorrelationManager
 
 
@@ -72,6 +71,8 @@ class Correlation(models.Model):
 
 @receiver(post_save)
 def record_correlation(sender, instance, **kwargs):
+    from .constants import FIELDS, MODELS
+
     # Being a signal without a sender, we need to make sure models are the ones
     # we're looking for before we continue.
     if not type(instance) in MODELS:
