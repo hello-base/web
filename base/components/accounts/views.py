@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django import http
 from django.conf import settings
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, get_user_model, login
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views.generic import RedirectView, View
@@ -12,7 +12,7 @@ from oauthlib.oauth2.rfc6749.errors import InvalidGrantError
 
 from .api import auth_session, auth_url, auth_token
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 class PreAuthorizationView(RedirectView):
