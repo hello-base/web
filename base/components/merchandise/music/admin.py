@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
+from components.merchandise.admin import PurchaseLinkInline
 from components.prose.admin import FactInline
 
 from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
@@ -95,7 +96,7 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         ('Alternates', {'fields': ('is_compilation',)}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [AlbumEditionInline, FactInline]
+    inlines = [AlbumEditionInline, FactInline, PurchaseLinkInline]
     list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
     list_editable = ['released', 'label']
     list_select_related = True
@@ -136,7 +137,7 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         }),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [SingleEditionInline, FactInline]
+    inlines = [SingleEditionInline, FactInline, PurchaseLinkInline]
     list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
     list_editable = ['released', 'label']
     list_select_related = True

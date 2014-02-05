@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
+from components.merchandise.admin import PurchaseLinkInline
 from components.prose.admin import SummaryInline
 
 from .models import (Card, CardSet, Episode, Issue, IssueImage, Magazine,
@@ -87,7 +88,7 @@ class IssueAdmin(admin.ModelAdmin):
             'fields': ('participating_idols', 'participating_groups')
         }),
     )
-    inlines = [IssueImageInline, SummaryInline]
+    inlines = [IssueImageInline, SummaryInline, PurchaseLinkInline]
     list_display = ['magazine', 'volume', 'volume_month', 'volume_week', 'release_date', 'catalog_number', 'isbn_number']
     list_display_links = ['magazine', 'volume', 'volume_month']
     readonly_fields = ['participating_groups', 'participating_idols']
