@@ -87,7 +87,7 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art')
         }),
-        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': (('romanized_released_as', 'released_as'), 'idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
             'description': 'This is calculated by the values inputted in "Participants."',
@@ -97,7 +97,7 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [AlbumEditionInline, FactInline, PurchaseLinkInline]
-    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
     list_editable = ['released', 'label']
     list_select_related = True
 
@@ -125,7 +125,7 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art'),
         }),
-        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': (('romanized_released_as', 'released_as'), 'idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
             'description': 'This is calculated by the values inputted in "Participants."',
@@ -138,7 +138,7 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [SingleEditionInline, FactInline, PurchaseLinkInline]
-    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
     list_editable = ['released', 'label']
     list_select_related = True
 
