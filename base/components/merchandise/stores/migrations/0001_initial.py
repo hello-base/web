@@ -8,33 +8,33 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'PurchaseLink'
-        db.create_table(u'merchandise_purchaselink', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('store', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['merchandise.Store'])),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
-            ('issue', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='purchase_links', null=True, to=orm['appearances.Issue'])),
-            ('album', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='purchase_links', null=True, to=orm['music.Album'])),
-            ('single', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='purchase_links', null=True, to=orm['music.Single'])),
-        ))
-        db.send_create_signal(u'merchandise', ['PurchaseLink'])
-
         # Adding model 'Store'
-        db.create_table(u'merchandise_store', (
+        db.create_table(u'stores_store', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('romanized_name', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
         ))
-        db.send_create_signal(u'merchandise', ['Store'])
+        db.send_create_signal(u'stores', ['Store'])
+
+        # Adding model 'PurchaseLink'
+        db.create_table(u'stores_purchaselink', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('store', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['stores.Store'])),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
+            ('issue', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='purchase_links', null=True, to=orm['appearances.Issue'])),
+            ('album', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='purchase_links', null=True, to=orm['music.Album'])),
+            ('single', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='purchase_links', null=True, to=orm['music.Single'])),
+        ))
+        db.send_create_signal(u'stores', ['PurchaseLink'])
 
 
     def backwards(self, orm):
-        # Deleting model 'PurchaseLink'
-        db.delete_table(u'merchandise_purchaselink')
-
         # Deleting model 'Store'
-        db.delete_table(u'merchandise_store')
+        db.delete_table(u'stores_store')
+
+        # Deleting model 'PurchaseLink'
+        db.delete_table(u'stores_purchaselink')
 
 
     models = {
@@ -80,22 +80,6 @@ class Migration(SchemaMigration):
             'price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'romanized_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
-        },
-        u'merchandise.purchaselink': {
-            'Meta': {'object_name': 'PurchaseLink'},
-            'album': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'purchase_links'", 'null': 'True', 'to': u"orm['music.Album']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'issue': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'purchase_links'", 'null': 'True', 'to': u"orm['appearances.Issue']"}),
-            'single': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'purchase_links'", 'null': 'True', 'to': u"orm['music.Single']"}),
-            'store': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['merchandise.Store']"}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
-        },
-        u'merchandise.store': {
-            'Meta': {'object_name': 'Store'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'romanized_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
         },
         u'music.album': {
             'Meta': {'ordering': "('-released',)", 'object_name': 'Album'},
@@ -225,7 +209,23 @@ class Migration(SchemaMigration):
             'leadership_ended': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'leadership_started': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'started': ('django.db.models.fields.DateField', [], {'db_index': 'True'})
+        },
+        u'stores.purchaselink': {
+            'Meta': {'object_name': 'PurchaseLink'},
+            'album': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'purchase_links'", 'null': 'True', 'to': u"orm['music.Album']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'issue': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'purchase_links'", 'null': 'True', 'to': u"orm['appearances.Issue']"}),
+            'single': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'purchase_links'", 'null': 'True', 'to': u"orm['music.Single']"}),
+            'store': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['stores.Store']"}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
+        },
+        u'stores.store': {
+            'Meta': {'object_name': 'Store'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'romanized_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
         }
     }
 
-    complete_apps = ['merchandise']
+    complete_apps = ['stores']
