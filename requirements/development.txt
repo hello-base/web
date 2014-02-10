@@ -5,5 +5,5 @@ django-debugtools >= 1.1.1, < 2.0.0
 django-devserver == 0.7.0
 django-shortcuts == 1.5
 django-sslserver == 0.11
-invoke >= 0.5.1, < 1.0.0
+invoke == 0.7.0
 ipython >= 1.1.0, < 2.0.0
