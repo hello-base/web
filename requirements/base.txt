@@ -16,23 +16,23 @@ django-haystack == 2.1.0
 django-heroku-postgresify == 0.3
 django-heroku-redisify == 0.2.1
 django-htmlmin == 0.6.3
-django-imagekit >= 3.0.4, < 4.0.0
+django-imagekit == 3.2
 django-markdown-deux == 1.0.4
 django-model-utils >= 2.0, < 3.0
 django-multiurl == 1.0.1
 django-secure == 1.0
-django-staticbuilder >= 0.5.0, < 1.0.0
+django-staticbuilder == 0.6.1
 djangorestframework == 2.3.10
 google-api-python-client >= 1.2, < 2.0
 Markdown == 2.3.1
 ohashi == 0.2.6
-pandas >= 0.12.0, < 1.0.0
+pandas == 0.13.1
 Pillow == 2.3.0
 psycopg2 == 2.5.2
 pyelasticsearch == 0.6.1
 pytz == 2013.9
-requests == 2.1.0
+requests == 2.2.1
 requests-oauthlib == 0.4.0
-South >= 0.8.4, < 1.0.0
-twitter >= 1.10.2, < 2.0.0
+South == 0.8.4
+twitter == 1.12.1
 typogrify == 2.0.0
