@@ -56,7 +56,7 @@
         <h3 class="happening-date-name"><span class="month-name">{{ month }}/</span>{{ day }}</h3>
         <ul class="happening-event-list">
         {% for event in events %}
-          <li class="happening-events">
+          <li class="happening-events event-{{ event.identifier }}-{{ event.date_field }}">
             {% include event.get_include_template %}
           </li>
         {% endfor %}
@@ -79,7 +79,7 @@
             <span class="history-date">{{ event.timestamp|date:"SHORT_DATE_FORMAT" }}</span>
             <span class="history-weekdate">{{ event.timestamp|date:"l" }}</span>
           </div>
-          <div class="history-event">{% include event.get_include_template %}</div>
+          <div class="history-event event-{{ event.identifier }}-{{ event.date_field }}">{% include event.get_include_template %}</div>
         </li>
       {% endfor %}
       </ul>
