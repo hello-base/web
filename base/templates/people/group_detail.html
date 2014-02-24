@@ -13,12 +13,12 @@
   <meta content="{{ object.get_absolute_url }}" itemprop="url">
 
   <div class="profile-masthead"></div>
-  <header class="profile-header">
+  <header class="profile-header" data-adaptive-parent="1">
     <div class="container">
       <div class="profile-metadata">
         <div class="profile-image object-image">
           {% url 'image-detail' object.photo|urlencode as image_detail_url %}
-          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
+          {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ object.photo_thumbnail }}" data-adaptive-background="1" cross-origin="anonymous"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
         </div>
         <h1 class="profile-name">
           <span class="name">{{ object.name }}</span>

@@ -34,3 +34,22 @@ ready = ->
 
 $(document).ready ready
 $(document).on 'page:load', ready
+
+defaults =
+  parent: '[data-adaptive-parent="1"]'
+  normalizeTextColor: true
+  normalizedTextColors:
+    light: '#fff'
+    dark: '#000'
+#   lumaClasses:
+#     light: "ab-light"
+#     dark: "ab-dark"
+
+$ ->
+  $.adaptiveBackground.run(defaults)
+
+  $('[data-adaptive-parent="1"]').on 'ab-color-found', (ev, payload) ->
+    console.log payload.color # The dominant color in the image.
+    console.log payload.palette # The color palette found in the image.
+    console.log ev # The jQuery.Event object
+    return
