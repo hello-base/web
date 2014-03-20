@@ -85,7 +85,7 @@ class Idol(Person):
         help_text='An idol\'s color. Use a hex value (i.e. #000000).')
 
     # Dates.
-    started = models.DateField(db_index=True, null=True,
+    started = models.DateField(blank=True, db_index=True, null=True,
         help_text='The date this idol joined Hello! Project/became an idol.')
     graduated = models.DateField(blank=True, db_index=True, null=True,
         help_text='The date this idol graduated from Hello! Project.')
