@@ -93,7 +93,7 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
-        ('Alternates', {'fields': ('is_compilation',)}),
+        ('Alternates', {'fields': ('is_indie', 'is_compilation')}),
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [AlbumEditionInline, FactInline, PurchaseLinkInline]

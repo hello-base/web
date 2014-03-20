@@ -42,6 +42,7 @@ class Base(Merchandise):
     number = models.CharField(blank=True, max_length=10)
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
+    is_indie = models.BooleanField('indie release?', default=False)
 
     # Options & Extra Information.
     note = models.TextField(blank=True)
@@ -120,7 +121,6 @@ class Album(Base):
 
 
 class Single(Base):
-    is_indie = models.BooleanField('indie single?', default=False)
     has_8cm = models.BooleanField('8cm version?', default=False)
     has_lp = models.BooleanField('LP version?', default=False)
     has_cassette = models.BooleanField('cassette version?', default=False)
