@@ -108,6 +108,9 @@
                       {% if position.track.is_alternate %}<span class="">{{ position.track.name_alternate }}</span>{% endif %}
                       {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                     </span>
+                    {% if position.track.romanized_released_as and object.romanized_released_as != position.track.romanized_released_as %}
+                    <div class="track-participants">as {{ position.track.romanized_released_as }} ({{ position.track.released_as }})</div>
+                    {% endif %}
                     {% with position.track.participating_idols.all as participating_idols %}
                     {% if participating_idols and object.participating_groups.exists %}
                     <div class="track-participants">
