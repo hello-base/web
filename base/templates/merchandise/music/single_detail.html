@@ -49,11 +49,12 @@
             <div class="vital-participants">
             {% for participant in object.participants %}
               <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
-                <span itemprop="name">{% if object.romanized_released_as %}{{ object.romanized_released_as }}{% else %}{{ participant }}{% endif %}</span>{% if object.number %}'s{% endif %}
+                <span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}
               </a>
               {% include "utilities/commaify.html" %}
             {% endfor %}
             {% if object.number %}<span class="number"><b>{{ object.number|ordinal }} {{ object.identifier }}</b></span>{% endif %}
+            {% if object.romanized_released_as %}<div class="released-as">released as <em>{{ object.romanized_released_as }} ({{ object.released_as }})</em></div>{% endif %}
             </div>
           </li>
           <li class="vital vital-released"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
