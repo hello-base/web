@@ -19,3 +19,13 @@ class Merchandise(ContributorMixin, ParticipationMixin):
 
     class Meta:
         abstract = True
+
+
+class AlternateAttributionMixin(models.Model):
+    released_as = models.CharField(blank=True, max_length=200,
+        help_text='Used for temporary name changes (i.e., むてん娘。).')
+    romanized_released_as = models.CharField(blank=True, max_length=200,
+        help_text='Used for temporary name changes (i.e., Muten Musume).')
+
+    class Meta:
+        abstract = True

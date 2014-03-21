@@ -192,7 +192,7 @@ class TrackAdmin(admin.ModelAdmin):
         }),
         ('Participants', {
             'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
-            'fields': ('idols', 'groups')
+            'fields': (('romanized_released_as', 'released_as'), 'idols', 'groups')
         }),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),

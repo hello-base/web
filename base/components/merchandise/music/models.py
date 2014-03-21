@@ -15,7 +15,7 @@ from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
 
-from components.merchandise.models import Merchandise
+from components.merchandise.models import AlternateAttributionMixin, Merchandise
 from components.people.models import ParticipationMixin
 
 from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
@@ -31,13 +31,7 @@ class Label(models.Model):
         return u'%s' % (self.romanized_name)
 
 
-class Base(Merchandise):
-    # Attribution override.
-    released_as = models.CharField(blank=True, max_length=200,
-        help_text='Used for temporary name changes (i.e., むてん娘。).')
-    romanized_released_as = models.CharField(blank=True, max_length=200,
-        help_text='Used for temporary name changes (i.e., Muten Musume).')
-
+class Base(Merchandise, AlternateAttributionMixin):
     # Music-specific shared metadata.
     number = models.CharField(blank=True, max_length=10)
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
@@ -231,7 +225,7 @@ class Edition(models.Model):
         return videolist
 
 
-class Track(ParticipationMixin):
+class Track(ParticipationMixin, AlternateAttributionMixin):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(TrackQuerySet)()
 
