@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
 import os
@@ -9,7 +10,7 @@ from dotenv import read_dotenv
 from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'base.settings')
-os.environ.setdefault('DJANGO_CONFIGURATION', 'Development')
+os.environ.setdefault('DJANGO_CONFIGURATION', 'Production')
 
 # Read our `.env` for development purposes (which is now a directory up),
 # then initialize django-configurations.

@@ -31,8 +31,6 @@ class Development(Settings):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['kombu.transport.django']
-    BROKER_URL = 'django://'
     CELERY_ALWAYS_EAGER = True  # http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
     CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # http://docs.celeryproject.org/en/latest/configuration.html#celery-eager-propagates-exceptions
 
@@ -87,7 +85,6 @@ class Development(Settings):
     HAYSTACK_CONNECTIONS = {
         'default': {
             'ENGINE': 'components.search_backends.KuromojiElastcisearchEngine',
-            # 'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
             'URL': 'http://127.0.0.1:9200/',
             'INDEX_NAME': 'haystack',
         },

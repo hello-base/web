@@ -91,6 +91,11 @@ def asset_compile(verbose=False, **kwargs):
     out('stylesheets/production.min.css created and minified.')
 
 
+@invoke.task(name='flake')
+def development_flake(**kwargs):
+    invoke.run('flake8 --max-complexity 6 > flake8.txt')
+
+
 @invoke.task(name='server')
 def development_server(**kwargs):
     # Use Foreman to start all the development processes.
@@ -157,7 +162,7 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    asset_collect, asset_compile, deploy, development_server, development_test,
+    asset_collect, asset_compile, deploy, development_flake, development_server, development_test,
     heroku=invoke.Collection(
         heroku_capture, heroku_imagekit, heroku_migrate, heroku_pull, heroku_syncdb,
     )

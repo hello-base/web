@@ -119,7 +119,7 @@ class Production(Settings):
     # Authentication Configuration.
     # --------------------------------------------------------------------------
     MEISHI_ENDPOINT = 'https://id.hello-base.com/api/'
-    OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/oauth/authorize/'
+    OAUTH_AUTHORIZATION_URL = 'https://id.hello-base.com/oauth/authorize/?approval_prompt=auto'
     OAUTH_TOKEN_URL = 'https://id.hello-base.com/oauth/token/'
     OAUTH_REDIRECT_URL = 'https://hello-base.com/accounts/authenticated/'
 
@@ -186,7 +186,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'ENGINE': 'components.search_backends.KuromojiElastcisearchEngine',
             'URL': os.environ.get('BONSAI_URL', ''),
             'INDEX_NAME': 'haystack',
         },

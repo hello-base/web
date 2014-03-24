@@ -15,7 +15,7 @@ from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
 
-from components.merchandise.models import Merchandise
+from components.merchandise.models import AlternateAttributionMixin, Merchandise
 from components.people.models import ParticipationMixin
 
 from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
@@ -31,11 +31,12 @@ class Label(models.Model):
         return u'%s' % (self.romanized_name)
 
 
-class Base(Merchandise):
+class Base(Merchandise, AlternateAttributionMixin):
     # Music-specific shared metadata.
     number = models.CharField(blank=True, max_length=10)
     label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
+    is_indie = models.BooleanField('indie release?', default=False)
 
     # Options & Extra Information.
     note = models.TextField(blank=True)
@@ -92,8 +93,8 @@ class Album(Base):
     def get_previous(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.albums.order_by('-released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.albums.order_by('-released').exclude(number='')
                 return qs.filter(released__lt=self.released)[0]
             except IndexError:
                 return None
@@ -102,8 +103,8 @@ class Album(Base):
     def get_next(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.albums.order_by('released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.albums.order_by('released').exclude(number='')
                 return qs.filter(released__gt=self.released)[0]
             except IndexError:
                 return None
@@ -114,7 +115,6 @@ class Album(Base):
 
 
 class Single(Base):
-    is_indie = models.BooleanField('indie single?', default=False)
     has_8cm = models.BooleanField('8cm version?', default=False)
     has_lp = models.BooleanField('LP version?', default=False)
     has_cassette = models.BooleanField('cassette version?', default=False)
@@ -126,8 +126,8 @@ class Single(Base):
     def get_previous(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.singles.order_by('-released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.singles.order_by('-released').exclude(number='')
                 return qs.filter(released__lt=self.released)[0]
             except IndexError:
                 return None
@@ -136,8 +136,8 @@ class Single(Base):
     def get_next(self):
         if self.number:
             try:
-                group = self.groups.get()
-                qs = group.singles.order_by('released').exclude(number='')
+                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
+                qs = obj.singles.order_by('released').exclude(number='')
                 return qs.filter(released__gt=self.released)[0]
             except IndexError:
                 return None
@@ -225,7 +225,7 @@ class Edition(models.Model):
         return videolist
 
 
-class Track(ParticipationMixin):
+class Track(ParticipationMixin, AlternateAttributionMixin):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(TrackQuerySet)()
 

@@ -29,9 +29,14 @@ class ItemAdmin(admin.ModelAdmin):
         (None, {'fields': ('author',)}),
         ('Basics', {'fields': ('title', 'slug', ('published', 'category', 'classification'))}),
         ('Body', {'fields': ('body',)}),
+        ('Correlations', {
+            'description': 'Selecting a correlation will display this news item wherever happenings are displayed.',
+            'fields': ('correlations',)
+        }),
         ('Involvement', {
             'description': 'Only add idols if news specifically relates to them, i.e. not if the news is about their group.',
-            'fields': tuple(subject_fields)}),
+            'fields': tuple(subject_fields)
+        }),
         ('Sources', {'fields': (('source', 'source_url'), ('via', 'via_url'))}),
     )
     inlines = [ItemImageInline, UpdateInline]
@@ -39,8 +44,8 @@ class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['title']}
     search_fields = ['title', 'author']
 
-    raw_id_fields = subject_fields
-    autocomplete_lookup_fields = {'m2m': subject_fields}
+    raw_id_fields = ['correlations'] + subject_fields
+    autocomplete_lookup_fields = {'m2m': ['correlations'] + subject_fields}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'author':

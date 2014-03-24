@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 from django.utils import timezone

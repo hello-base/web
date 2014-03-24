@@ -300,6 +300,37 @@
   img:last-child { margin-right: 0; }
 }
 
+.happening-news {
+  font-size: 12px;
+}
+.happening-news-header {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+
+  border-top: 1px solid #F4F6F9;
+  color: #CBD1D8;
+  font-size: 11px;
+  font-weight: bold;
+}
+.happening-news-item {
+  display: flex;
+  padding-bottom: 0.238rem;
+
+  &:last-child { padding-bottom: 0; }
+  a {
+    flex: 1;
+    padding-right: 1rem;
+  }
+  time {
+    color: #B6BEC7;
+  }
+  .ss-icon {
+    @include position(relative, 1px 0 0 0);
+    padding-right: 0.5rem;
+    color: #B6BEC7;
+  }
+}
+
 .happening-illustration {
   align-items: center;
   display: flex;

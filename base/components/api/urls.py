@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url, include
 from .views import (GroupList, GroupDetail, GroupMembershipsList,
     GroupActiveMembershipsList, GroupInactiveMembershipsList)
 from .views import IdolList, IdolDetail
+from .views import MembershipList
 
 
 group_urls = patterns('',
@@ -18,7 +19,12 @@ idol_urls = patterns('',
     url(r'^$', name='idol-list', view=IdolList.as_view()),
 )
 
+membership_urls = patterns('',
+    url(r'^$', name='membership-list', view=MembershipList.as_view()),
+)
+
 urlpatterns = patterns('',
     url(r'^groups', include(group_urls)),
     url(r'^idols', include(idol_urls)),
+    url(r'^memberships', include(membership_urls)),
 )

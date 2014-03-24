@@ -84,7 +84,7 @@
               <h3 class="happening-date-name">{{ day }}</h3>
               <ul class="happening-event-list">
               {% for event in events %}
-                <li class="happening-events">{% include event.get_include_template %}</li>
+                <li class="happening-events event-{{ event.identifier }}-{{ event.date_field }}">{% include event.get_include_template %}</li>
               {% endfor %}
               </ul>
             </li>

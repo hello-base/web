@@ -54,6 +54,7 @@
               {% include "utilities/commaify.html" %}
             {% endfor %}
             {% if object.number %}<span class="number"><b>{{ object.number|ordinal }} {{ object.identifier }}</b></span>{% endif %}
+            {% if object.romanized_released_as %}<div class="released-as">released as <em>{{ object.romanized_released_as }} ({{ object.released_as }})</em></div>{% endif %}
             </div>
           </li>
           <li class="vital vital-released"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
@@ -107,6 +108,9 @@
                       {% if position.track.is_alternate %}<span class="">{{ position.track.name_alternate }}</span>{% endif %}
                       {% if position.is_instrumental %}<span class="">(Instrumental)</span>{% endif %}
                     </span>
+                    {% if position.track.romanized_released_as and object.romanized_released_as != position.track.romanized_released_as %}
+                    <div class="track-participants">as {{ position.track.romanized_released_as }} ({{ position.track.released_as }})</div>
+                    {% endif %}
                     {% with position.track.participating_idols.all as participating_idols %}
                     {% if participating_idols and not position.track.participating_groups.exists %}
                     <div class="track-participants">

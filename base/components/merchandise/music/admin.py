@@ -6,7 +6,8 @@ from markdown import markdown
 from django.contrib import admin
 
 from components.accounts.admin import ContributorMixin
-from components.facts.admin import FactInline
+from components.merchandise.stores.admin import PurchaseLinkInline
+from components.prose.admin import FactInline
 
 from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
 
@@ -88,17 +89,17 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art')
         }),
-        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': (('romanized_released_as', 'released_as'), 'idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
             'description': 'This is calculated by the values inputted in "Participants."',
             'fields': ('participating_idols', 'participating_groups')
         }),
-        ('Alternates', {'fields': ('is_compilation',)}),
+        ('Alternates', {'fields': ('is_indie', 'is_compilation')}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [AlbumEditionInline, FactInline]
-    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    inlines = [AlbumEditionInline, FactInline, PurchaseLinkInline]
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
     list_editable = ['released', 'label']
     list_select_related = True
 
@@ -126,7 +127,7 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
             'description': 'These are derived from this release\'s regular edition. Please change those fields to change this one.',
             'fields': ('released', 'art'),
         }),
-        ('Participants', {'fields': ('idols', 'groups')}),
+        ('Participants', {'fields': (('romanized_released_as', 'released_as'), 'idols', 'groups')}),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),
             'description': 'This is calculated by the values inputted in "Participants."',
@@ -138,8 +139,8 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         }),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [SingleEditionInline, FactInline]
-    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number']
+    inlines = [SingleEditionInline, FactInline, PurchaseLinkInline]
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
     list_editable = ['released', 'label']
     list_select_related = True
 
@@ -193,7 +194,7 @@ class TrackAdmin(admin.ModelAdmin):
         }),
         ('Participants', {
             'description': 'Enter all the idols and groups that participated. Only add a group if <b>all</b> of its members participated.',
-            'fields': ('idols', 'groups')
+            'fields': (('romanized_released_as', 'released_as'), 'idols', 'groups')
         }),
         ('Participants (Rendered)', {
             'classes': ('grp-collapse grp-closed',),

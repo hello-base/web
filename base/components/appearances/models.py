@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth import get_user_model
 from django.db import models
 
 from model_utils import FieldTracker
 
-from components.people.models import Idol, Group
-
-User = get_user_model()
+from components.people.models import Idol, Group, ParticipationMixin
 
 
 class Show(models.Model):
@@ -37,7 +34,7 @@ class TimeSlot(models.Model):
         return '%s~%s %s' % (self.start_time, self.end_time, self.show.romanized_name)
 
 
-class Episode(models.Model):
+class Episode(ParticipationMixin, models.Model):
     show = models.ForeignKey(Show)
     air_date = models.DateField()
 
@@ -45,14 +42,14 @@ class Episode(models.Model):
     episode = models.ForeignKey('self', blank=True, null=True, related_name='continuation')
 
     # Optional Information
+    is_coverage = models.BooleanField('is coverage?', default=False)
     record_date = models.DateField(blank=True, null=True)
     romanized_name = models.CharField(blank=True, max_length=200)
     name = models.CharField(blank=True, max_length=200)
     number = models.IntegerField(blank=True, null=True)
 
     # Share
-    video_link = models.URLField(blank=True)
-    # Embed video if possible. Multiple links will be submitted by users.
+    video_link = models.URLField(blank=True, max_length=500)
 
     # Model Managers
     tracker = FieldTracker()
@@ -69,22 +66,45 @@ class Magazine(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(blank=True, null=True)
     slug = models.SlugField()
-    # If prices change in the course of a magazine we may need to move this to Issue or make a Price model.
 
     def __unicode__(self):
         return '%s' % self.romanized_name
 
 
-class Issue(models.Model):
+class Issue(ParticipationMixin, models.Model):
     magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
-    volume_number = models.CharField(max_length=4)
+    price = models.IntegerField(blank=True, null=True,
+        help_text='If different from magazine price.')
+    volume = models.CharField(blank=True, max_length=10,
+        help_text='Leave blank if no volume number (but fill out month or week).')
+    volume_month = models.DateField(blank=True, null=True,
+        help_text='1st day of the month. Leave blank for weekly magazines.')
+    volume_week = models.DateField(blank=True, null=True,
+        help_text='Leave blank for monthly magazines.')
     release_date = models.DateField(blank=True, null=True)
-    catalog_number = models.CharField(blank=True, max_length=30)
-    isbn_number = models.CharField(max_length=19)  # ?
+    catalog_number = models.CharField(blank=True, max_length=30,
+        help_text='Most magazines dont have this, NEOBK is just a Neowing ID.')
+    isbn_number = models.CharField(max_length=20, blank=True,
+        help_text='JAN number works too, its like a Japanese ISBN.')
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
     def __unicode__(self):
-        return '%s #%s' % (self.magazine.romanized_name, self.volume_number)
+        if any([self.volume, self.volume_month, self.volume_week]):
+            return '%s: Vol. %s' % (self.magazine.romanized_name, self.get_volume())
+        return '%s: %s' % (self.magazine.romanized_name, self.release_date)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and self.magazine.price:
+            self.price = self.magazine.price
+        return super(Issue, self).save(*args, **kwargs)
+
+    def get_volume(self):
+        volume_fields = [
+            self.volume if self.volume else None,
+            '(%s)' % self.volume_month.strftime('%B') if self.volume_month else None,
+            '(Week of %s)' % self.volume_week.strftime('%B %d') if self.volume_week else None
+        ]
+        return ' '.join([field for field in volume_fields if field])
 
 
 class IssueImage(models.Model):
@@ -93,12 +113,13 @@ class IssueImage(models.Model):
     # Gallery will allow multiple images to be uploaded by users.
 
     def __unicode__(self):
-        return 'Image of %s #%s' % (self.magazine.romanized_name, self.issue.volume_number)
+        return 'Image of %s' % (self.magazine.romanized_name)
 
 
 class CardSet(models.Model):
     issue = models.ForeignKey(Issue, related_name='sets')
     romanized_name = models.CharField(max_length=200)
+    name = models.CharField(blank=True, max_length=200)
 
     # Gallery
     image = models.ImageField(blank=True, upload_to='appearances/cards/')
@@ -160,22 +181,3 @@ class Card(models.Model):
             self.other_model_romanized_name,
             getattr(self.hp_model, 'romanized_name', '')
         ])[0]
-
-
-class Summary(models.Model):
-    body = models.TextField(blank=True)
-    submitted_by = models.ForeignKey(User, blank=True, null=True, related_name='%(class)s_submissions')
-
-    # Multiple summaries can be submitted by users.
-    # Summaries can be connected to either episodes or magazine issues.
-    episode = models.ForeignKey(Episode, blank=True, null=True, related_name='summaries')
-    issue = models.ForeignKey(Issue, blank=True, null=True, related_name='summaries')
-
-    # Model Managers.
-    tracker = FieldTracker()
-
-    class Meta:
-        verbose_name_plural = 'summaries'
-
-    def __unicode__(self):
-        return '%s %s synopsis' % (self.episode.air_date, self.episode.romanized_name)

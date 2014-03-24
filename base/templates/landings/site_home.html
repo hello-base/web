@@ -37,10 +37,10 @@
       <p class="correlations-explanation"><b><i>Happenings</i></b> are more than just release dates. Everything with a date is a <i>happening</i> on Hello! Base.</p>
     </div>
     <ul class="correlations-explore-more">
-      <li class="explore-header">Discover more<br><b><i>Happenings</i></b></li>
+      <li class="explore-header">Discover<br> <b><i>Happenings</i></b></li>
+      <li class="explore-2014"><a href="{% url 'happenings-by-year' 2014 %}">2014</a></li>
       <li class="explore-2013"><a href="{% url 'happenings-by-year' 2013 %}">2013</a></li>
       <li class="explore-2012"><a href="{% url 'happenings-by-year' 2012 %}">2012</a></li>
-      <li class="explore-2011"><a href="{% url 'happenings-by-year' 2011 %}">2011</a></li>
     </ul>
   </div>
   <div class="correlations-header-graph js-correlations-header-graph" data-url="{% url 'correlations-aggregate-julian' %}"></div>
@@ -56,7 +56,7 @@
         <h3 class="happening-date-name"><span class="month-name">{{ month }}/</span>{{ day }}</h3>
         <ul class="happening-event-list">
         {% for event in events %}
-          <li class="happening-events">
+          <li class="happening-events event-{{ event.identifier }}-{{ event.date_field }}">
             {% include event.get_include_template %}
           </li>
         {% endfor %}
@@ -67,7 +67,7 @@
       {% endfor %}
       </ul>
       <div class="happening-explore-more">
-        <a href="{% url 'happenings-by-year' 2013 %}">Discover More Happenings <span class="ss-icon ss-navigateright"></span></a>
+        <a href="{% url 'happenings-by-year' 2014 %}">Discover More Happenings <span class="ss-icon ss-navigateright"></span></a>
       </div>
     </div>
     <div class="correlation-history">
@@ -79,7 +79,7 @@
             <span class="history-date">{{ event.timestamp|date:"SHORT_DATE_FORMAT" }}</span>
             <span class="history-weekdate">{{ event.timestamp|date:"l" }}</span>
           </div>
-          <div class="history-event">{% include event.get_include_template %}</div>
+          <div class="history-event event-{{ event.identifier }}-{{ event.date_field }}">{% include event.get_include_template %}</div>
         </li>
       {% endfor %}
       </ul>

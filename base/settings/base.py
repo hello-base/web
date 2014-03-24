@@ -7,7 +7,6 @@ from sys import path
 from django.core.urlresolvers import reverse_lazy
 
 from configurations import Configuration, values
-from djcelery import setup_loader
 from postgresify import postgresify
 
 
@@ -39,12 +38,13 @@ class Base(Configuration):
         'components.appearances',
         'components.correlations',
         'components.events',
-        'components.facts',
+        'components.prose',
         'components.history',
         'components.merchandise',
         'components.merchandise.goods',
         'components.merchandise.media',
         'components.merchandise.music',
+        'components.merchandise.stores',
         'components.news',
         'components.people',
         'components.social.twitter',
@@ -206,9 +206,11 @@ class Base(Configuration):
 
     # django-celery.
     # --------------------------------------------------------------------------
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
     CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
     CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
-    setup_loader()
 
     # django-ecstatic / django-staticbuilder.
     # --------------------------------------------------------------------------

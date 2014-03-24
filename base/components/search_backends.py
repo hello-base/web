@@ -6,6 +6,12 @@ from haystack.backends.elasticsearch_backend import (ElasticsearchSearchBackend,
 class KuromojiElasticsearchBackend(ElasticsearchSearchBackend):
     DEFAULT_ANALYZER = 'kuromoji_analyzer'
 
+    # This can be removed after Haystack 2.1.1 hits.
+    RESERVED_CHARACTERS = (
+        '\\', '+', '-', '&&', '||', '!', '(', ')', '{', '}',
+        '[', ']', '^', '"', '~', '*', '?', ':', '/',
+    )
+
     def __init__(self, connection_alias, **connection_options):
         super(KuromojiElasticsearchBackend, self).__init__(connection_alias, **connection_options)
 
@@ -52,7 +58,7 @@ class KuromojiElasticsearchBackend(ElasticsearchSearchBackend):
                         },
                         'haystack_edgengram': {
                             'type': 'edgeNGram',
-                            'min_gram': 5,
+                            'min_gram': 2,
                             'max_gram': 15,
                         },
                         'kuromoji_rf': {

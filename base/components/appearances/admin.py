@@ -1,20 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
+from components.merchandise.stores.admin import PurchaseLinkInline
+from components.prose.admin import SummaryInline
+
 from .models import (Card, CardSet, Episode, Issue, IssueImage, Magazine,
-    Show, Summary, TimeSlot)
-
-
-class SummaryInline(admin.StackedInline):
-    extra = 1
-    fields = ['body', 'submitted_by']
-    model = Summary
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == 'submitted_by':
-            kwargs['initial'] = request.user.id
-            return db_field.formfield(**kwargs)
-        return super(SummaryInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    Show, TimeSlot)
 
 
 class TimeSlotInline(admin.TabularInline):
@@ -36,23 +27,36 @@ admin.site.register(Show, ShowAdmin)
 
 class EpisodeAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Basics', {'fields': ('show', ('romanized_name', 'name'), ('air_date', 'record_date', 'number'), 'video_link')}),
+        ('Basics', {'fields': (('show', 'number'), ('romanized_name', 'name'), ('air_date', 'record_date', 'is_coverage'), 'video_link')}),
         (None, {
             'description': 'If this is a continuation of another episode, enter that episode below.',
             'fields': ('episode',)
         }),
+        ('Participants', {
+            'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
+            'fields': ('idols', 'groups')
+        }),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
     )
     inlines = [SummaryInline]
     list_display = ['show', 'air_date', 'romanized_name', 'name']
+    readonly_fields = ['participating_groups', 'participating_idols']
 
-    raw_id_fields = ['show', 'episode']
-    autocomplete_lookup_fields = {'fk': ['show', 'episode']}
+    raw_id_fields = ['show', 'episode', 'idols', 'groups']
+    autocomplete_lookup_fields = {
+        'fk': ['show', 'episode'],
+        'm2m': ['idols', 'groups']
+    }
 admin.site.register(Episode, EpisodeAdmin)
 
 
 class IssueInline(admin.StackedInline):
     extra = 1
-    fieldsets = ((None, {'fields': ('release_date', 'volume_number', ('catalog_number', 'isbn_number'), 'cover')}),)
+    fieldsets = ((None, {'fields': (('release_date', 'price'), ('volume', 'volume_month', 'volume_week'), ('catalog_number', 'isbn_number'), 'cover')}),)
     model = Issue
 
 
@@ -73,14 +77,27 @@ admin.site.register(Magazine, MagazineAdmin)
 
 class IssueAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Basics', {'fields': ('magazine', 'release_date', 'volume_number', ('catalog_number', 'isbn_number'), 'cover')}),
+        ('Basics', {'fields': ('magazine', 'release_date', ('volume', 'volume_month', 'volume_week'), ('catalog_number', 'isbn_number'), 'cover')}),
+        ('Participants', {
+            'description': 'Enter <i>every</i> idol and all groups that participated in this event.',
+            'fields': ('idols', 'groups')
+        }),
+        ('Participants (Rendered)', {
+            'classes': ('grp-collapse grp-closed',),
+            'description': 'This is calculated by the values inputted in "Participants."',
+            'fields': ('participating_idols', 'participating_groups')
+        }),
     )
-    inlines = [IssueImageInline, SummaryInline]
-    list_display = ['magazine', 'volume_number', 'release_date', 'catalog_number', 'isbn_number']
-    list_display_links = ['magazine', 'volume_number']
+    inlines = [IssueImageInline, SummaryInline, PurchaseLinkInline]
+    list_display = ['magazine', 'volume', 'volume_month', 'volume_week', 'release_date', 'catalog_number', 'isbn_number']
+    list_display_links = ['magazine', 'volume', 'volume_month']
+    readonly_fields = ['participating_groups', 'participating_idols']
 
-    raw_id_fields = ['magazine']
-    autocomplete_lookup_fields = {'fk': ['magazine']}
+    raw_id_fields = ['magazine', 'idols', 'groups']
+    autocomplete_lookup_fields = {
+        'fk': ['magazine'],
+        'm2m': ['idols', 'groups']
+    }
 admin.site.register(Issue, IssueAdmin)
 
 

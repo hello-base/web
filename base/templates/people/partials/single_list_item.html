@@ -11,6 +11,7 @@
       {% if release.is_indie %}<span class="pill indie">Indie</span>{% endif %}
       <a href="{{ release.get_absolute_url }}"><span class="romanized-name">{{ release.romanized_name }}</span></a>
       <span class="name">{{ release.name }}</span>
+      {% if release.romanized_released_as %}<div class="release-participants">Released as <em>{{ release.romanized_released_as }} ({{ release.released_as }})</em></div>{% endif %}
       {% contextual_participants release=release context=object %}
     </div>
     <div class="release-subtext">

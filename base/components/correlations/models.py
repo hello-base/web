@@ -7,7 +7,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .constants import FIELDS, MODELS
+from model_utils import Choices
+
 from .managers import CorrelationManager
 
 
@@ -19,6 +20,12 @@ class Correlation(models.Model):
     day in Hello! Project history?"
 
     """
+    CLASSIFICATION = Choices(
+        (0, 'major', 'Major'),
+        (1, 'normal', 'Normal'),
+        (2, 'minor', 'Minor'),
+    )
+
     # Model Managers.
     objects = CorrelationManager()
 
@@ -32,6 +39,7 @@ class Correlation(models.Model):
     identifier = models.CharField(max_length=25)
     date_field = models.CharField(max_length=25)
     description = models.TextField(blank=True)
+    classification = models.IntegerField(choices=CLASSIFICATION, default=CLASSIFICATION.normal)
 
     # Date Details.
     julian = models.PositiveSmallIntegerField('julian date', max_length=3,
@@ -47,15 +55,24 @@ class Correlation(models.Model):
     def __unicode__(self):
         return '%s [%s:%s]' % (self.timestamp, self.content_type_id, self.object_id)
 
+    def related_label(self):
+        return '%s [%s %s]' % (self.content_object, self.date_field, self.timestamp)
+
     def get_include_template(self):
         return 'correlations/partials/happenings_list_%ss.html' % (self.identifier)
 
     def actor(self):
         return self.content_object.idol if self.identifier == 'membership' else self.content_object
 
+    @staticmethod
+    def autocomplete_search_fields():
+        return ('id__exact',)
+
 
 @receiver(post_save)
 def record_correlation(sender, instance, **kwargs):
+    from .constants import FIELDS, MODELS
+
     # Being a signal without a sender, we need to make sure models are the ones
     # we're looking for before we continue.
     if not type(instance) in MODELS:

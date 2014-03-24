@@ -10,11 +10,19 @@
 
 .logo-wordmark {
   .hicon-logo-hello,
-  .hicon-logo-base {
+  .hicon-logo-base,
+  .property {
     @include position(relative, 2px 0 0 0);
     font-size: 22px;
   }
   .hicon-logo-base { margin-left: 2px; }
+  .property {
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 0;
+  }
 }
 .header-logo-wordmark {
   padding-right: 1rem;

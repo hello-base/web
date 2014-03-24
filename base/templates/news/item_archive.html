@@ -1,0 +1,12 @@
+{% extends "layouts/site_base.html" %}
+
+{% block content %}
+
+{{ latest }}
+{% for item in latest %}
+  <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+{% endfor %}
+
+{{ date_list }}
+
+{% endblock content %}

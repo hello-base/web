@@ -32,5 +32,5 @@ ready = ->
     ($ '.happening-decade-list').toggleClass 'visible'
     ($ '.happening-toggle .ss-icon:last-child').toggleClass 'ss-navigatedown ss-navigateup'
 
-$(document).ready ready
-$(document).on 'page:load', ready
+($ document).ready ready
+($ document).on 'page:load', ready

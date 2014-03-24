@@ -24,6 +24,7 @@ pip-log.txt
 # Unit test / coverage reports
 .coverage
 .tox
+flake8.txt
 nosetests.xml
 
 # Translations
@@ -48,3 +49,5 @@ base/javascripts
 base/media
 base/static
 htmlcov
+
+latest.dump
