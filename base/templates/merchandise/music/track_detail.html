@@ -184,7 +184,7 @@
 
     {% if object.translated_lyrics %}
       <p>
-        {{ object.processed_translated_lyrics }}
+        {{ object.processed_translated_lyrics|safe }}
       </p>
     {% endif %}
 
