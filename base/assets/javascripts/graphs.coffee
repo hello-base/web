@@ -28,8 +28,8 @@ $ ->
     y.domain([0, d3.max(data, (d) -> d.identifier)])
 
     data.forEach (d) ->
-      d.identifier = d.identifier;
-      d.index = d.index;
+      d.identifier = d.identifier
+      d.index = d.index
 
     svg.append('path')
       .datum(data)
