@@ -1,0 +1,37 @@
+// .lyrics
+.lyrics {
+  font-size: 13px;
+}
+.lyric-line {}
+.lyric-idol { margin-left: 2px; }
+.lyric-idol-img {
+  width: 16px;
+  border-radius: 2px;
+}
+
+// .lyrics
+.lyrics-header {
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+}
+.lyrics-list {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.lyrics { flex: 1; }
+.lyrics-list p:first-child { margin-top: 0; }
+
+// @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+//        only screen and (min-resolution: 144dpi),
+//        only screen and (max-width: 768px) {
+//   .lyrics-list { flex-direction: column; }
+// }
+//
+@media only screen and (min-width: 480px) {
+  .lyrics-list { flex-direction: column; }
+}
+
+@media only screen and (min-width: 768px) {
+  .lyrics-list { flex-direction: row; }
+}
