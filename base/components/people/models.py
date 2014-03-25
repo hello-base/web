@@ -10,7 +10,7 @@ from django.utils import timesince
 from django.utils.functional import cached_property
 
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFit
+from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
 from ohashi.db import models as ohashi
@@ -107,6 +107,7 @@ class Idol(Person):
     # sense as methods and 2) infrequently updated.
     photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    optimized_square = ImageSpecField(source='photo_thumbnail', processors=[SmartResize(width=300, height=300)], format='JPEG', options={'quality': 70})
     optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
 

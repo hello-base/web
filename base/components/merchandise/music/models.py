@@ -252,6 +252,11 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     translated_lyrics = models.TextField(blank=True)
     translation_notes = models.TextField(blank=True)
 
+    # Processed lyrics.
+    processed_lyrics = models.TextField(blank=True, editable=False)
+    processed_romanized_lyrics = models.TextField(blank=True, editable=False)
+    processed_translated_lyrics = models.TextField(blank=True, editable=False)
+
     # Staff.
     lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
