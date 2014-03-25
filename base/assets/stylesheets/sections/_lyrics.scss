@@ -22,12 +22,12 @@
 .lyrics { flex: 1; }
 .lyrics-list p:first-child { margin-top: 0; }
 
-// @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-//        only screen and (min-resolution: 144dpi),
-//        only screen and (max-width: 768px) {
-//   .lyrics-list { flex-direction: column; }
-// }
-//
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 144dpi),
+       only screen and (max-width: 768px) {
+  .lyrics-list { flex-direction: column; }
+}
+
 @media only screen and (min-width: 480px) {
   .lyrics-list { flex-direction: column; }
 }

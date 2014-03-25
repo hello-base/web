@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}Lyrics for {{ object.romanized_name }} ({{ object.name }}) &middot; Tracks{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="viewport" content="width=device-width, minimal-ui">
+{% endblock %}
 {% block page %}
 <header class="lyrics-header">
   <div class="lyrics-metadata">
