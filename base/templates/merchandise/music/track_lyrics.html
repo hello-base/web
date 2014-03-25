@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Lyrics for {{ object.romanized_name }} ({{ object.name }}) &middot; Tracks{% endblock %}
+{% block page %}
+<header class="lyrics-header">
+  <span class="name">{{ object.name }}</span>
+  <span class="romanized-name">{{ object.romanized_name }}</span>
+</header>
+<div class="lyrics-list">
+  {% if object.romanized_lyrics %}
+  <div class="lyrics lyrics-romanized">
+    {{ object.processed_romanized_lyrics|safe }}
+  </div>
+  {% endif %}
+  {% if object.lyrics %}
+  <div class="lyrics lyrics-orignal">
+    {{ object.processed_lyrics|safe }}
+  </div>
+  {% endif %}
+  {% if object.translated_lyrics %}
+  <div class="lyrics lyrics-translated">
+    {{ object.processed_translated_lyrics|safe }}
+  </div>
+  {% endif %}
+</div>
+{% endblock page %}

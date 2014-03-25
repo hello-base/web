@@ -3,7 +3,8 @@ from django.http import Http404
 
 from multiurl import ContinueResolving, multiurl
 
-from .views import AlbumDetailView, SingleDetailView, TrackDetailView
+from .views import (AlbumDetailView, SingleDetailView, TrackDetailView,
+    TrackLyricsView)
 
 
 urlpatterns = patterns('',
@@ -17,6 +18,7 @@ urlpatterns = patterns('',
     # url(r'^music/albums/$', name='album-browse', view=AlbumBrowseView.as_view()),
     # url(r'^music/singles/$', name='single-browse', view=SingleBrowseView.as_view()),
 
+    url(r'^music/tracks/(?P<slug>[-\w]+)/lyrics/$', name='track-lyrics-detail', view=TrackLyricsView.as_view()),
     url(r'^music/tracks/(?P<slug>[-\w]+)/$', name='track-detail', view=TrackDetailView.as_view()),
     # url(r'^music/tracks/$', name='track-browse', view=TrackBrowseView.as_view()),
 

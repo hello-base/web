@@ -259,7 +259,7 @@
 
 // .lyrics
 .lyrics {
-  font-size: 12px;
+  font-size: 13px;
 }
 .lyric-line {}
 .lyric-idol { margin-left: 2px; }
@@ -267,3 +267,15 @@
   width: 16px;
   border-radius: 2px;
 }
+
+// .lyrics
+.lyrics-header {
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+}
+.lyrics-list {
+  display: flex;
+  padding: 1rem;
+}
+.lyrics { flex: 1; }
+.lyrics-list p:first-child { margin-top: 0; }
