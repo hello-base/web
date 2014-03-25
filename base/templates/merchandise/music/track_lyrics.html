@@ -3,8 +3,13 @@
 {% block title %}Lyrics for {{ object.romanized_name }} ({{ object.name }}) &middot; Tracks{% endblock %}
 {% block page %}
 <header class="lyrics-header">
-  <span class="name">{{ object.name }}</span>
-  <span class="romanized-name">{{ object.romanized_name }}</span>
+  <div class="lyrics-metadata">
+    <span class="name">{{ object.name }}</span>
+    <span class="romanized-name">{{ object.romanized_name }}</span>
+  </div>
+  <nav>
+    <a href="{{ object.get_absolute_url }}">{{ object.romanized_name }} on Hello! Base &rarr;</a>
+  </nav>
 </header>
 <div class="lyrics-list">
   {% if object.romanized_lyrics %}
