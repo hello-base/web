@@ -18,16 +18,19 @@
 <div class="lyrics-list">
   {% if object.romanized_lyrics %}
   <div class="lyrics lyrics-romanized">
+    <h2>Romanized</h2>
     {{ object.processed_romanized_lyrics|safe }}
   </div>
   {% endif %}
   {% if object.lyrics %}
   <div class="lyrics lyrics-orignal">
+    <h2>Native</h2>
     {{ object.processed_lyrics|safe }}
   </div>
   {% endif %}
   {% if object.translated_lyrics %}
   <div class="lyrics lyrics-translated">
+    <h2>Translated</h2>
     {{ object.processed_translated_lyrics|safe }}
   </div>
   {% endif %}
