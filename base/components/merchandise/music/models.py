@@ -297,11 +297,18 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
         children = list(self.children.all())
         children.sort(key=attrgetter('parent.released'))
 
+        siblings = set()
+        for sibling in self.appears_on.original_only():
+            parent = sibling.edition._get_primary_edition().parent
+            if parent != self.parent:
+                siblings.update((parent, sibling.track))
+
         # Append all of the releases that this track appears on,
         # including looping through all of the tracks that this
         # track is an original of (if applicable).
         appearances['count'] = len(children) + 1
         appearances['debut'] = self.parent
+        appearances['siblings'] = siblings
         appearances['children'] = [(track.parent, track) for track in children]
         return appearances
 
