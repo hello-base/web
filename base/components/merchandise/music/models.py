@@ -302,6 +302,7 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
             parent = sibling.edition._get_primary_edition().parent
             if parent != self.parent:
                 siblings.add(parent)
+        sorted(siblings, key=attrgetter('released'))
 
         # Append all of the releases that this track appears on,
         # including looping through all of the tracks that this
