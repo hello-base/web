@@ -119,6 +119,39 @@
             </td>
           </tr>
           {% endwith %}
+          {% for release in object.appearances.siblings %}
+          <tr>
+            <td class="appearance-image" rowspan="2">
+              <div class="release-image">
+                {% if release.art %}<img src="{% get_media_prefix %}{{ release.art_thumbnail }}" width="71">{% else %}<div class="empty-image"><span class="ss-icon ss-disc"></span></div>{% endif %}
+              </div>
+            </td>
+            <td class="appearance-name">
+              <a href="{{ release.get_absolute_url }}">
+                <span class="romanized-name">{{ release.romanized_name }}</span>
+                <span class="name">{{ release.name }}</span>
+              </a>
+            </td>
+            <td class="appearance-alternate">
+            {% if object.romanized_name_alternate %}
+              as
+              <span class="romanized-name">{{ object.romanized_name }} {{ object.romanized_name_alternate }}</span>
+              <span class="name">{{ object.name }} {{ object.name_alternate }}</span>
+            {% endif %}
+            </td>
+            <td class="appearance-data">
+              <time datetime="{{ release.released|date:"c" }}">{{ release.released|date:"F j, Y" }}</time>
+              <time datetime="{{ release.released|date:"c" }}/{% now "c" %}" class="timesince">({{ release.released|timesince }} ago)</time>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="appearance-participants">
+              <div class="participants">
+                <span class="ss-icon ss-usergroup"></span> {% for idol in object.idols.all %}<a href="{{ idol.get_absolute_url }}">{{ idol }}</a>{% include "utilities/commaify.html" %}{% endfor %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
           {% for release, track in object.appearances.children %}
           <tr>
             <td class="appearance-image" rowspan="2">
