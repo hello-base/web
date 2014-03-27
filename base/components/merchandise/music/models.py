@@ -307,10 +307,10 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
         # Append all of the releases that this track appears on,
         # including looping through all of the tracks that this
         # track is an original of (if applicable).
-        appearances['count'] = len(children) + 1
+        appearances['count'] = len(children) + len(siblings) + 1
         appearances['debut'] = self.parent
-        appearances['siblings'] = siblings
         appearances['children'] = [(track.parent, track) for track in children]
+        appearances['siblings'] = siblings
         return appearances
 
     @property
