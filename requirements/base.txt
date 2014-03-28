@@ -18,7 +18,7 @@ django-heroku-redisify == 0.2.1
 django-htmlmin == 0.7.0
 django-imagekit == 3.2
 django-markdown-deux == 1.0.4
-django-model-utils >= 2.0, < 3.0
+django-model-utils == 2.0.3
 django-multiurl == 1.0.1
 django-secure == 1.0
 django-staticbuilder == 0.6.1
