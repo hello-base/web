@@ -34,5 +34,5 @@ pytz == 2013.9
 requests == 2.2.1
 requests-oauthlib == 0.4.0
 South == 0.8.4
-twitter == 1.12.1
+twitter == 1.14.2
 typogrify == 2.0.0
