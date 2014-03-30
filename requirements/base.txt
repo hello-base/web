@@ -1,7 +1,7 @@
 # Base Project Requirements
 
 analytics-python >= 0.4.3, < 1.0.0
-celery == 3.1.7
+celery == 3.1.10
 celery-haystack >= 0.7.2, < 1.0.0
 Django == 1.6.2
 django-braces == 1.4.0
