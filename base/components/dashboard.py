@@ -28,5 +28,5 @@ class CustomIndexDashboard(Dashboard):
         # Management modules.
         self.children.append(modules.AppList(
             title='Management', column=3, collapsible=False,
-            models=('components.accounts.*', 'django.contrib.*', 'djcelery.*'),
+            models=('components.accounts.*', 'django.contrib.*'),
         ))
