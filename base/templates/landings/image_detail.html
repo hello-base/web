@@ -9,9 +9,12 @@
         <span data-icon="hicon-logo-hello" class="hicon hicon-logo-hello"></span><span data-icon="hicon-logo-base" class="hicon hicon-logo-base"></span>
         <span class="header-tagline">Image Viewer</span>
     </a>
+    <div class="image-dimensions">
+      <span class="image-width"></span> &#x2715; <span class="image-height"></span>
+    </div>
   </header>
   <div class="image-viewer">
-    <img src="{% get_media_prefix %}{{ slug }}">
+    <img id="image" src="{% get_media_prefix %}{{ slug }}">
   </div>
 </section>
 
@@ -22,6 +25,13 @@ $(document).ready(function() {
     $('.image-header').toggleClass('zoomed');
     return false;
   });
+
+  var img = document.getElementById('image');
+  var width = img.clientWidth;
+  var height = img.clientHeight;
+
+  $('.image-width').html(width);
+  $('.image-height').html(height);
 });
 </script>
 {% endblock page %}
