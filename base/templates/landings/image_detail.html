@@ -26,12 +26,10 @@ $(document).ready(function() {
     return false;
   });
 
-  var img = document.getElementById('image');
-  var width = img.clientWidth;
-  var height = img.clientHeight;
-
-  $('.image-width').html(width);
-  $('.image-height').html(height);
+  $('.image-viewer img').bind('load', function(){
+    $('.image-width').html($(this).width());
+    $('.image-height').html($(this).height());
+  });
 });
 </script>
 {% endblock page %}
