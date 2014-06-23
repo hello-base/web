@@ -501,3 +501,27 @@ body[class^="path-image"] {
   h1 {}
   p {}
 }
+
+// Hello! Party & Other Announcements
+// ---------------------------------------------------------------------
+.hello-party {
+  display: block;
+  overflow: hidden;
+  padding: 1.777rem 0;
+
+  background-color: #111;
+  // background-image: url('/static/images/4.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  // background-size: 128px;
+  color: #fff;
+
+  &:hover, strong { color: #f473b2; }
+  &:hover { text-shadow: 0 0 2px #f473b2; }
+  .container {
+    font-size: 24px;
+    font-style: italic;
+    letter-spacing: -1px;
+    text-align: center;
+  }
+}
