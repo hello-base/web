@@ -9,6 +9,36 @@ def _out(name, message):
     print('[\033[1;37m{}\033[0m] {}'.format(name, message))
 
 
+@invoke.task(name='collect')
+def asset_collect(verbose=False, **kwargs):
+    out = functools.partial(_out, 'project.collect')
+    hide = 'out' if not verbose else None
+
+    # Build and send it off.
+    out('Using `buildstatic` to concatenate assets.')
+    invoke.run('python manage.py buildstatic --configuration=Production', hide=hide)
+    out('Updating `settings/manifest.json` with new asset hashes.')
+    invoke.run('python manage.py createstaticmanifest --configuration=Production', hide=hide)
+    out('Uploading and post-processing all of the assets.')
+    invoke.run('python manage.py eccollect --configuration=Production --noinput', hide=hide)
+
+
+@invoke.task(name='test')
+def development_test(verbose=True, coverage=False, **kwargs):
+    out = functools.partial(_out, 'development.test')
+    hide = 'out' if not verbose else None
+    pytest = 'py.test tests/'
+
+    if coverage:
+        out('Running tests (with Coverage report).')
+        invoke.run('coverage run --branch --source base -m %s' % pytest, pty=True, hide=hide)
+        invoke.run('coverage html', pty=True, hide=hide)
+        invoke.run('open htmlcov/index.html')
+    else:
+        out('Running tests.')
+        invoke.run('%s' % pytest, pty=True, hide=hide)
+
+
 @invoke.task(name='deploy', pre=['test', 'collect'])
 def deploy(verbose=False, migrate=False, **kwargs):
     out = functools.partial(_out, 'project.deploy')
@@ -41,20 +71,6 @@ def deploy(verbose=False, migrate=False, **kwargs):
 
     # Done!
     out('All done~!')
-
-
-@invoke.task(name='collect')
-def asset_collect(verbose=False, **kwargs):
-    out = functools.partial(_out, 'project.collect')
-    hide = 'out' if not verbose else None
-
-    # Build and send it off.
-    out('Using `buildstatic` to concatenate assets.')
-    invoke.run('python manage.py buildstatic --configuration=Production', hide=hide)
-    out('Updating `settings/manifest.json` with new asset hashes.')
-    invoke.run('python manage.py createstaticmanifest --configuration=Production', hide=hide)
-    out('Uploading and post-processing all of the assets.')
-    invoke.run('python manage.py eccollect --configuration=Production --noinput', hide=hide)
 
 
 @invoke.task(name='compile')
@@ -100,22 +116,6 @@ def development_flake(**kwargs):
 def development_server(**kwargs):
     # Use Foreman to start all the development processes.
     invoke.run('foreman start -f Procfile.dev', pty=True)
-
-
-@invoke.task(name='test')
-def development_test(verbose=True, coverage=False, **kwargs):
-    out = functools.partial(_out, 'development.test')
-    hide = 'out' if not verbose else None
-    pytest = 'py.test tests/'
-
-    if coverage:
-        out('Running tests (with Coverage report).')
-        invoke.run('coverage run --branch --source base -m %s' % pytest, pty=True, hide=hide)
-        invoke.run('coverage html', pty=True, hide=hide)
-        invoke.run('open htmlcov/index.html')
-    else:
-        out('Running tests.')
-        invoke.run('%s' % pytest, pty=True, hide=hide)
 
 
 @invoke.task(name='capture')
