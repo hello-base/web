@@ -40,8 +40,7 @@ class Development(Settings):
     INTERNAL_IPS = ('127.0.0.1',)
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     DEBUG_TOOLBAR_CONFIG = {
-        'INTERCEPT_REDIRECTS': False,
-        'SHOW_TEMPLATE_CONTEXT': True,
+        'SHOW_TEMPLATE_CONTEXT': True
     }
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
