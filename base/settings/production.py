@@ -21,7 +21,6 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     MIDDLEWARE_CLASSES = (
         'django.middleware.cache.UpdateCacheMiddleware',
-        # 'htmlmin.middleware.HtmlMinifyMiddleware',
         'django.middleware.common.CommonMiddleware',
         'djangosecure.middleware.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
