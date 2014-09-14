@@ -6,10 +6,10 @@ from django.views.generic import TemplateView, View
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 from haystack.query import SearchQuerySet
 
-from components.correlations.models import Correlation
-from components.correlations.utils import prefetch_relations, regroup_correlations
-from components.merchandise.music.models import Album, Edition, Single, Track
-from components.people.models import Group, Idol
+from base.apps.correlations.models import Correlation
+from base.apps.correlations.utils import prefetch_relations, regroup_correlations
+from base.apps.merchandise.music.models import Album, Edition, Single, Track
+from base.apps.people.models import Group, Idol
 
 
 class AutocompleteView(JSONResponseMixin, AjaxResponseMixin, View):

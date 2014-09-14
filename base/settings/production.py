@@ -83,8 +83,8 @@ class Production(Settings):
         's3_folder_storage',
         'storages',
     ]
-    DEFAULT_FILE_STORAGE = 'components.storage.MediaFilesStorage'
-    STATICFILES_STORAGE = 'components.storage.S3ManifestStorage'
+    DEFAULT_FILE_STORAGE = 'base.apps.storage.MediaFilesStorage'
+    STATICFILES_STORAGE = 'base.apps.storage.S3ManifestStorage'
 
     # Amazon Web Services
     AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='')
@@ -185,7 +185,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'components.search_backends.KuromojiElastcisearchEngine',
+            'ENGINE': 'base.apps.search_backends.KuromojiElastcisearchEngine',
             'URL': os.environ.get('BONSAI_URL', ''),
             'INDEX_NAME': 'haystack',
         },

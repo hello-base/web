@@ -4,8 +4,8 @@ import pytest
 
 from django.core.exceptions import ValidationError
 
-from components.merchandise.goods.factories import GoodFactory, ShopFactory
-from components.merchandise.goods.models import Good
+from base.apps.merchandise.goods.factories import GoodFactory, ShopFactory
+from base.apps.merchandise.goods.models import Good
 
 pytestmark = pytest.mark.django_db
 

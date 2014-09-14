@@ -6,15 +6,15 @@ class CustomIndexDashboard(Dashboard):
         # Hello! Base core modules.
         self.children.append(modules.ModelList(
             title='Idols & Staff', column=1, collapsible=False,
-            models=('components.people.*',),
+            models=('base.apps.people.*',),
         ))
         self.children.append(modules.ModelList(
             title='Events', column=1, collapsible=False,
-            models=('components.events.*',),
+            models=('base.apps.events.*',),
         ))
         self.children.append(modules.AppList(
             title='Merchandise', column=1, collapsible=False,
-            models=('components.merchandise.*',),
+            models=('base.apps.merchandise.*',),
         ))
 
         # Recent actions.
@@ -28,5 +28,5 @@ class CustomIndexDashboard(Dashboard):
         # Management modules.
         self.children.append(modules.AppList(
             title='Management', column=3, collapsible=False,
-            models=('components.accounts.*', 'django.contrib.*'),
+            models=('base.apps.accounts.*', 'django.contrib.*'),
         ))

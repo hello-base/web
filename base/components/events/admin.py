@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from components.accounts.admin import ContributorMixin
-from components.prose.admin import FactInline, SummaryInline
+from base.apps.accounts.admin import ContributorMixin
+from base.apps.prose.admin import FactInline, SummaryInline
 
 from .models import Activity, Event, Venue
 

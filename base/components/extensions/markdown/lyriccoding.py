@@ -9,7 +9,7 @@ from markdown import Extension
 from markdown.inlinepatterns import BRK, NOIMG, Pattern
 from markdown.util import etree
 
-from components.people.models import Idol
+from base.apps.people.models import Idol
 
 re_coding = r'\[([^\]]+)\]\{([^}]+)\}'
 re_name = re.compile('@([a-zA-Z+_-]+)')

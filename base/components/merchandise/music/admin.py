@@ -5,9 +5,9 @@ from markdown import markdown
 
 from django.contrib import admin
 
-from components.accounts.admin import ContributorMixin
-from components.merchandise.stores.admin import PurchaseLinkInline
-from components.prose.admin import FactInline
+from base.apps.accounts.admin import ContributorMixin
+from base.apps.merchandise.stores.admin import PurchaseLinkInline
+from base.apps.prose.admin import FactInline
 
 from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
 
@@ -232,7 +232,7 @@ class TrackAdmin(admin.ModelAdmin):
     }
 
     def save_model(self, request, obj, form, change):
-        extensions = ['nl2br', 'components.extensions.markdown.lyriccoding']
+        extensions = ['nl2br', 'base.apps.extensions.markdown.lyriccoding']
         obj.processed_lyrics = markdown(obj.lyrics, extensions)
         obj.processed_romanized_lyrics = markdown(obj.romanized_lyrics, extensions)
         obj.processed_translated_lyrics = markdown(obj.translated_lyrics, extensions)

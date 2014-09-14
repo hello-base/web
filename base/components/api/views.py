@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from components.people.models import Membership, Group, Idol
+from base.apps.people.models import Membership, Group, Idol
 
 from .serializers import (GroupSerializer, IdolSerializer,
     IdolMembershipSerializer, MembershipSerializer)

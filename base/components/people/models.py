@@ -15,7 +15,7 @@ from model_utils import FieldTracker
 from model_utils.managers import PassThroughManager
 from ohashi.db import models as ohashi
 
-from components.accounts.models import ContributorMixin
+from base.apps.accounts.models import ContributorMixin
 
 from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
@@ -344,7 +344,7 @@ class ParticipationMixin(models.Model):
         if not issubclass(instance.__class__, ParticipationMixin):
             return
 
-        from components.people.models import Membership
+        from base.apps.people.models import Membership
 
         # Do we have existing participants? Clear them out so we can
         # calculate them again.

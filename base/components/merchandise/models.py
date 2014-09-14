@@ -3,8 +3,8 @@ from django.db import models
 
 from django_extensions.db import fields as extensions
 
-from components.accounts.models import ContributorMixin
-from components.people.models import ParticipationMixin
+from base.apps.accounts.models import ContributorMixin
+from base.apps.people.models import ParticipationMixin
 
 
 class Merchandise(ContributorMixin, ParticipationMixin):

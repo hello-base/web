@@ -91,11 +91,11 @@ def asset_compile(verbose=False, **kwargs):
         output=os.path.join(STATIC_ROOT, 'javascripts', 'application')), hide=hide)
     out('javascripts/application.min.js created and minified.')
 
-    # Compile the 3rd-party Javascript components.
+    # Compile the 3rd-party Javascript base.apps.
     invoke.run('yuglify {input} --type js --combine {output}'.format(
         input=os.path.join(STATIC_ROOT, 'javascripts', 'components', '*.js'),
         output=os.path.join(STATIC_ROOT, 'javascripts', 'components')), hide=hide)
-    out('javascripts/components.min.js created and minified.')
+    out('javascripts/base.apps.min.js created and minified.')
 
     # Compile the stylesheets.
     invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" {input}'.format(

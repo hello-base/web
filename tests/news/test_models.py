@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from components.news.models import Item, ItemImage, Update
-from components.news.factories import (ItemFactory, ItemImageFactory,
+from base.apps.news.models import Item, ItemImage, Update
+from base.apps.news.factories import (ItemFactory, ItemImageFactory,
     UpdateFactory)
 
 pytestmark = pytest.mark.django_db

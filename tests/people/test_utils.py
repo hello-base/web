@@ -1,6 +1,6 @@
 import datetime
 
-from components.people.utils import calculate_age, calculate_average_age
+from base.apps.people.utils import calculate_age, calculate_average_age
 
 
 def test_calculate_age():

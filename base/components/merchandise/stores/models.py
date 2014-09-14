@@ -2,8 +2,8 @@
 from django.db import models
 from django.db.models import get_model
 
-from components.appearances.models import Issue
-from components.merchandise.music.models import Album, Single
+from base.apps.appearances.models import Issue
+from base.apps.merchandise.music.models import Album, Single
 
 PURCHASE_SUBJECTS = [
     Issue,         # appearances

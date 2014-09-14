@@ -1,6 +1,6 @@
 from django.views.generic import DetailView
 
-from components.accounts.views import QuicklinksMixin
+from base.apps.accounts.views import QuicklinksMixin
 from .models import Album, Single, Track
 
 

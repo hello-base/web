@@ -12,11 +12,11 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 
-from components.appearances.models import Magazine, Show
-from components.correlations.models import Correlation
-from components.events.models import Event
-from components.merchandise.music.models import Album, Single
-from components.people.models import Group, Idol
+from base.apps.appearances.models import Magazine, Show
+from base.apps.correlations.models import Correlation
+from base.apps.events.models import Event
+from base.apps.merchandise.music.models import Album, Single
+from base.apps.people.models import Group, Idol
 
 SUBJECTS = [
     Idol, Group,     # people
@@ -61,7 +61,7 @@ class Item(models.Model):
     # Sources.
     source = models.CharField(blank=True, max_length=200,
         help_text='Separate multiple sources by comma (must have accompanying URL).')
-    source_url = models.URLField('source URL', blank=True, max_length=500, 
+    source_url = models.URLField('source URL', blank=True, max_length=500,
         help_text='Seperate multiple URLs with comma (must have accompanying Source).')
     via = models.CharField(blank=True, max_length=200)
     via_url = models.URLField('via URL', blank=True, max_length=500)

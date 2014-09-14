@@ -4,7 +4,7 @@ from django.views.generic import DetailView
 
 from ohashi.shortcuts import get_object_or_none
 
-from components.accounts.views import QuicklinksMixin
+from base.apps.accounts.views import QuicklinksMixin
 from .models import Group, Idol, Membership, Staff
 
 

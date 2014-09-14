@@ -2,7 +2,7 @@ import pytest
 
 from django.core.urlresolvers import reverse
 
-from components.merchandise.music import factories
+from base.apps.merchandise.music import factories
 
 
 @pytest.mark.django_db

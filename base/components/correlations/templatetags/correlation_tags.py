@@ -4,7 +4,7 @@ import calendar
 from django import template
 register = template.Library()
 
-from components.correlations.constants import FIELD_MAPPING
+from base.apps.correlations.constants import FIELD_MAPPING
 
 
 @register.filter

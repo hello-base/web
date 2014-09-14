@@ -4,8 +4,8 @@ from django.db import models
 
 from model_utils import Choices
 
-from components.people.models import ParticipationMixin
-from components.merchandise.models import Merchandise
+from base.apps.people.models import ParticipationMixin
+from base.apps.merchandise.models import Merchandise
 
 
 class Videodisc(Merchandise):

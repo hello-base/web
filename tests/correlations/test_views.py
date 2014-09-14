@@ -4,7 +4,7 @@ import pytest
 
 from django.core.urlresolvers import reverse
 
-from components.people.factories import GroupFactory
+from base.apps.people.factories import GroupFactory
 
 
 @pytest.mark.django_db

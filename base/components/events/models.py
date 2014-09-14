@@ -5,8 +5,8 @@ from django.db import models
 
 from model_utils import Choices
 
-from components.accounts.models import ContributorMixin
-from components.people.models import ParticipationMixin
+from base.apps.accounts.models import ContributorMixin
+from base.apps.people.models import ParticipationMixin
 
 
 class Event(ContributorMixin, ParticipationMixin):

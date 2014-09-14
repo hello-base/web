@@ -4,7 +4,7 @@ import factory
 
 from django.template.defaultfilters import slugify
 
-from components.merchandise.factories import MerchandiseFactory
+from base.apps.merchandise.factories import MerchandiseFactory
 
 from . import models
 

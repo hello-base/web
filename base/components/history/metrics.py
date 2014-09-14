@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.contenttypes.models import ContentType
 
-from components.people.models import Group
+from base.apps.people.models import Group
 
 
 def total_group_count_over_time(datetime):

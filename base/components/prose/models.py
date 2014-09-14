@@ -6,10 +6,10 @@ from django.db import models
 
 from model_utils import FieldTracker
 
-from components.appearances.models import Episode, Issue
-from components.events.models import Activity, Event
-from components.merchandise.music.models import Album, Single
-from components.people.models import Idol, Group
+from base.apps.appearances.models import Episode, Issue
+from base.apps.events.models import Activity, Event
+from base.apps.merchandise.music.models import Album, Single
+from base.apps.people.models import Idol, Group
 
 FACT_SUBJECTS = [
     Idol, Group,        # people

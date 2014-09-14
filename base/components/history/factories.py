@@ -1,7 +1,7 @@
 import datetime
 import factory
 
-from components.people.factories import GroupFactory
+from base.apps.people.factories import GroupFactory
 
 from . import models
 

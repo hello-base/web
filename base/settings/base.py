@@ -34,21 +34,21 @@ class Base(Configuration):
         'django.contrib.staticfiles',
     ]
     COMPONENTS = [
-        'components.accounts',
-        'components.appearances',
-        'components.correlations',
-        'components.events',
-        'components.prose',
-        'components.history',
-        'components.merchandise',
-        'components.merchandise.goods',
-        'components.merchandise.media',
-        'components.merchandise.music',
-        'components.merchandise.stores',
-        'components.news',
-        'components.people',
-        'components.social.twitter',
-        'components.social.youtube',
+        'base.apps.accounts',
+        'base.apps.appearances',
+        'base.apps.correlations',
+        'base.apps.events',
+        'base.apps.prose',
+        'base.apps.history',
+        'base.apps.merchandise',
+        'base.apps.merchandise.goods',
+        'base.apps.merchandise.media',
+        'base.apps.merchandise.music',
+        'base.apps.merchandise.stores',
+        'base.apps.news',
+        'base.apps.people',
+        'base.apps.social.twitter',
+        'base.apps.social.youtube',
     ]
     PLUGINS = [
         'floppyforms',
@@ -161,7 +161,7 @@ class Base(Configuration):
     # Authentication Configuration.
     # --------------------------------------------------------------------------
     AUTHENTICATION_BACKENDS = (
-        'components.accounts.backends.HelloBaseIDBackend',
+        'base.apps.accounts.backends.HelloBaseIDBackend',
         'django.contrib.auth.backends.ModelBackend',
     )
     HELLO_BASE_CLIENT_ID = values.Value('', environ_prefix=None)
@@ -225,7 +225,7 @@ class Base(Configuration):
     # django-grappelli.
     # --------------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
-    # GRAPPELLI_INDEX_DASHBOARD = 'components.dashboard.CustomIndexDashboard'
+    # GRAPPELLI_INDEX_DASHBOARD = 'base.apps.dashboard.CustomIndexDashboard'
 
     # django-haystack.
     # --------------------------------------------------------------------------
@@ -247,7 +247,7 @@ class Base(Configuration):
     # --------------------------------------------------------------------------
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
 
-    # components.socialize.
+    # base.apps.socialize.
     # --------------------------------------------------------------------------
     TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
     TWITTER_CONSUMER_SECRET = values.SecretValue(environ_prefix=None)

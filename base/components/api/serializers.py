@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from components.people.models import Group, Idol, Membership
+from base.apps.people.models import Group, Idol, Membership
 
 
 class MembershipSerializer(serializers.ModelSerializer):

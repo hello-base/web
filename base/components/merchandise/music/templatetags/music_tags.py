@@ -1,7 +1,7 @@
 from django import template
 register = template.Library()
 
-from components.people.models import Group
+from base.apps.people.models import Group
 
 
 @register.inclusion_tag('people/partials/contexted_participants.html')
@@ -43,7 +43,7 @@ def parse_idols(participants, idol):
 
 
 def parse_groups(participants, group):
-    from components.people.constants import CLASSIFICATIONS
+    from base.apps.people.constants import CLASSIFICATIONS
 
     relationships = {'for': [], 'with': []}
     for participant in participants:

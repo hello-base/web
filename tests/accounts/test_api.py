@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from components.accounts import api
-from components.accounts.factories import EditorFactory
+from base.apps.accounts import api
+from base.apps.accounts.factories import EditorFactory
 
 
 @pytest.fixture

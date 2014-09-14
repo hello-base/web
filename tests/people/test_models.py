@@ -2,9 +2,9 @@
 import datetime
 import pytest
 
-from components.people.models import (Group, Groupshot, Headshot, Idol,
+from base.apps.people.models import (Group, Groupshot, Headshot, Idol,
     Membership, Staff)
-from components.people.factories import (GroupFactory, GroupshotFactory,
+from base.apps.people.factories import (GroupFactory, GroupshotFactory,
     HeadshotFactory, IdolFactory, LeadershipFactory, MembershipFactory,
     StaffFactory)
 

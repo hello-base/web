@@ -1,4 +1,4 @@
-from components.storage import (MediaFilesStorage, StaticFilesStorage,
+from base.apps.storage import (MediaFilesStorage, StaticFilesStorage,
     S3ManifestStorage)
 
 
