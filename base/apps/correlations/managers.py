@@ -27,11 +27,11 @@ class CorrelationManager(models.Manager):
         correlation.save()
         return
 
-    def get_query_set(self):
-        qs = super(CorrelationManager, self).get_query_set()
+    def get_queryset(self):
+        qs = super(CorrelationManager, self).get_queryset()
         return qs
 
     def today(self):
         today = date.today()
-        qs = self.get_query_set()
+        qs = self.get_queryset()
         return qs.filter(month=today.month, day=today.day)
