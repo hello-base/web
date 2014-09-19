@@ -28,7 +28,7 @@ class Editor(AbstractBaseUser):
     objects = EditorManager()
 
     base_id = models.IntegerField('Hello! Base ID', db_index=True, unique=True)
-    username = models.CharField(blank=True, db_index=True)
+    username = models.CharField(blank=True, db_index=True, unique=True)
     name = models.CharField(blank=True)
     email = models.EmailField(db_index=True, unique=True)
     started = models.DateTimeField(default=timezone.now)
