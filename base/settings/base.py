@@ -49,7 +49,6 @@ class Base(Configuration):
         'floppyforms',
         'imagekit',
         'markdown_deux',
-        'south',
         'typogrify',
     ]
     ADMINISTRATION = [
