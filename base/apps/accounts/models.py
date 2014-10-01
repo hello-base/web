@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
-from django.utils import timezone
 
 from model_utils.models import TimeStampedModel
 from ohashi.db import models
@@ -9,7 +10,7 @@ from ohashi.db import models
 
 class EditorManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
-        now = timezone.now()
+        now = datetime.now()
         if not username:
             raise ValueError('The given username must be set.')
         email = EditorManager.normalize_email(email)
@@ -31,8 +32,8 @@ class Editor(AbstractBaseUser):
     username = models.CharField(blank=True, db_index=True, unique=True)
     name = models.CharField(blank=True)
     email = models.EmailField(db_index=True, unique=True)
-    started = models.DateTimeField(default=timezone.now)
-    active_since = models.DateTimeField(blank=True, default=timezone.now())
+    started = models.DateTimeField(default=datetime.now)
+    active_since = models.DateTimeField(blank=True, default=datetime.now())
 
     # Authentication-/Authorization-related fields.
     access_token = models.CharField(blank=True)
