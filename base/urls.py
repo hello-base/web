@@ -16,9 +16,6 @@ from base.apps.views import (AutocompleteView, ImageDetailView, PlainTextView,
     SiteView, WikiRedirectView, XMLView)
 
 
-# Administration system auto-discovery.
-admin.autodiscover()
-
 # Sitemaps, because Google.
 sitemaps = {
     'albums': AlbumSitemap,
