@@ -1,8 +1,8 @@
 import urlparse
 
 from django.conf import settings
+from django.contrib.staticfiles.storage import ManifestFilesMixin
 
-from ecstatic.storage import CachedStaticFilesMixin, StaticManifestMixin
 from s3_folder_storage.s3 import DefaultStorage, StaticStorage
 
 
@@ -24,5 +24,5 @@ class StaticFilesStorage(StaticStorage):
         super(StaticFilesStorage, self).__init__(*args, **kwargs)
 
 
-class S3ManifestStorage(StaticManifestMixin, CachedStaticFilesMixin, StaticFilesStorage):
+class S3ManifestStorage(ManifestFilesMixin, StaticFilesStorage):
     pass
