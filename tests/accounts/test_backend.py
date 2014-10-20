@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model, get_user
 from django.http import HttpRequest
 
-from components.accounts.factories import EditorFactory
+from base.apps.accounts.factories import EditorFactory
 
 pytestmark = pytest.mark.django_db
 User = settings.AUTH_USER_MODEL

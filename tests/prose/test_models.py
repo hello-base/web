@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from components.prose.factories import FactFactory
-from components.prose.models import Fact
-from components.people.factories import GroupFactory, IdolFactory
+from base.apps.prose.factories import FactFactory
+from base.apps.prose.models import Fact
+from base.apps.people.factories import GroupFactory, IdolFactory
 
 pytestmark = pytest.mark.django_db
 

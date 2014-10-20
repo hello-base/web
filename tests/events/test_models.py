@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from components.events.models import Activity, Event, Venue
-from components.events.factories import (ActivityFactory, EventFactory,
+from base.apps.events.models import Activity, Event, Venue
+from base.apps.events.factories import (ActivityFactory, EventFactory,
     VenueFactory)
 
 pytestmark = pytest.mark.django_db

@@ -3,8 +3,8 @@ import pytest
 
 from django.core import mail
 
-from components.accounts.factories import EditorFactory
-from components.accounts.models import Editor
+from base.apps.accounts.factories import EditorFactory
+from base.apps.accounts.models import Editor
 
 pytestmark = pytest.mark.django_db
 

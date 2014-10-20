@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from base.components.merchandise.utils import uuid_encode
+from base.apps.merchandise.utils import uuid_encode
 
 
 def test_encoding():

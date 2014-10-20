@@ -3,9 +3,9 @@ import pytest
 
 from django.contrib.contenttypes.models import ContentType
 
-from components.history.metrics import (total_group_count_over_time,
+from base.apps.history.metrics import (total_group_count_over_time,
     total_idol_count_over_time)
-from components.people.factories import GroupFactory
+from base.apps.people.factories import GroupFactory
 
 pytestmark = pytest.mark.django_db
 

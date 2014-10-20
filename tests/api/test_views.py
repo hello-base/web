@@ -3,7 +3,7 @@ import pytest
 
 from django.core.urlresolvers import reverse
 
-from components.people import factories
+from base.apps.people import factories
 
 pytestmark = pytest.mark.django_db
 

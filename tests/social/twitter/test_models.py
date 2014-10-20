@@ -1,7 +1,7 @@
 import pytest
 
-from components.social.twitter.models import Tweet, TwitterUser
-from components.social.twitter.factories import TweetFactory, TwitterUserFactory
+from base.apps.social.twitter.models import Tweet, TwitterUser
+from base.apps.social.twitter.factories import TweetFactory, TwitterUserFactory
 
 pytestmark = pytest.mark.django_db
 
