@@ -7,7 +7,7 @@
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
-  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-image">{% if object.image %}<img src="{% get_media_prefix %}{{ object.image }}">{% endif %}</div>
 </div>
 {% endif %}
 {% if event.date_field == "started" %}
@@ -16,7 +16,7 @@
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
-  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-image">{% if object.image %}<img src="{% get_media_prefix %}{{ object.image }}">{% endif %}</div>
   <div class="happening-action"><span class="ss-icon ss-download"></span></div>
   <div class="happening-subject hp-subject"><span>H!P</span></div>
 </div>
@@ -27,7 +27,7 @@
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
-  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-image">{% if object.image %}<img src="{% get_media_prefix %}{{ object.image }}">{% endif %}</div>
   <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
   <div class="happening-subject hp-subject"><span>H!P</span></div>
 </div>
@@ -38,7 +38,7 @@
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
-  <img src="{% get_media_prefix %}{{ object.image }}">
+  <div class="happening-image">{% if object.image %}<img src="{% get_media_prefix %}{{ object.image }}">{% endif %}</div>
   <div class="happening-action"><span class="ss-icon ss-upload"></span></div>
   <div class="happening-subject icon-subject">
     <span class="ss-icon ss-luggage"></span>

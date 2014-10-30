@@ -11,9 +11,9 @@
 </div>
 <div class="happening-illustration">
   <div class="happening-actors">
-    {% for participant in object.participants %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endfor %}
+    {% for participant in object.participants %}<div class="happening-image">{% if participant.image %}<img src="{% get_media_prefix %}{{ participant.image }}">{% endif %}</div>{% endfor %}
   </div>
   <div class="happening-action"><span class="ss-icon ss-disc"></span></div>
-  <img src="{% get_media_prefix %}{{ object.art_square }}">
+  <div class="happening-image">{% if object.art_square %}<img src="{% get_media_prefix %}{{ object.art_square }}">{% endif %}</div>
 </div>
 {% endwith %}
