@@ -10,7 +10,8 @@ from pandas import DataFrame
 
 from .constants import SUBJECTS
 from .models import Correlation
-from .utils import dictify, prefetch_relations, regroup_correlations
+from .utils import (dictify, prefetch_relations, regroup_correlations,
+    regroup_yearly_correlations)
 
 
 class HappeningsByYearView(YearArchiveView):
