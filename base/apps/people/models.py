@@ -183,7 +183,7 @@ class Group(ContributorMixin):
         ordering = ('started',)
 
     def __unicode__(self):
-        return u'%s' % (self.designation)
+        return u'%s' % (self.romanized_name)
 
     def get_absolute_url(self):
         return reverse('group-detail', kwargs={'slug': self.slug})
