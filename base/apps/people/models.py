@@ -4,6 +4,7 @@ from datetime import date
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timesince
@@ -199,6 +200,17 @@ class Group(ContributorMixin):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
+    @property
+    def designation(self):
+        if self.designations.exists():
+            return self.designations.latest()
+        return self.romanized_name
+
+    def designation_for(self, target=None):
+        if target and self.designations.exists():
+            return self.designations.filter(started__lte=target).filter(Q(ended__gte=target) | Q(ended=None)).get()
+        return self
+
     def generations(self):
         generations = defaultdict(list)
         for membership in self.memberships.select_related('idol'):
@@ -234,6 +246,27 @@ class Group(ContributorMixin):
     @staticmethod
     def autocomplete_search_fields():
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
+
+
+class Designation(models.Model):
+    # A designation a date-based name given to a group, used to handle the
+    # complex nature around group name changes in Hello! Project.
+    group = models.ForeignKey(Group, related_name='designations')
+
+    # When was the name created/when was it retired?
+    started = models.DateField(db_index=True)
+    ended = models.DateField(blank=True, db_index=True, null=True)
+
+    # What was the name during that time?
+    name = models.CharField(max_length=60)
+    romanized_name = models.CharField(max_length=60)
+
+    class Meta:
+        get_latest_by = 'started'
+        order_with_respect_to = 'group'
+
+    def __unicode__(self):
+        return u'%s' % (self.romanized_name)
 
 
 class Membership(models.Model):

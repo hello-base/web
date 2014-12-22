@@ -21,8 +21,8 @@
           {% if object.photo_thumbnail %}<a href="{{ image_detail_url }}" target="_blank"><img src="{% get_media_prefix %}{{ object.photo_thumbnail }}"></a>{% else %}<div class="empty-image"><span class="ss-icon ss-usergroup"></span></div>{% endif %}
         </div>
         <h1 class="profile-name">
-          <span class="name">{{ object.name }}</span>
-          <span class="romanized-name" itemprop="name">{{ object.romanized_name }}</span>
+          <span class="name">{{ object.designation.name }}</span>
+          <span class="romanized-name" itemprop="name">{{ object.designation.romanized_name }}</span>
           {% if object.former_names %}<p class="formerly-known-as">Formerly known as <i>{{ object.former_names }}</i></p>{% endif %}
         </h1>
       </div>

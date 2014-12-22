@@ -49,7 +49,7 @@
             <div class="vital-participants">
             {% for participant in object.participants %}
               <a class="participant" href="{{ participant.get_absolute_url }}" itemprop="byArtist" itemscope itemtype="http://schema.org/MusicGroup">
-                <span itemprop="name">{{ participant }}</span>{% if object.number %}'s{% endif %}
+                <span itemprop="name">{% romanized_designation_for target=participant target_date=object.released %}</span>{% if object.number %}'s{% endif %}
               </a>
               {% include "utilities/commaify.html" %}
             {% endfor %}

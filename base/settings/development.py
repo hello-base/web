@@ -94,3 +94,9 @@ class Development(Settings):
     IMAGEKIT_CACHEFILE_DIR = 'cache'
     IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
     IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'
+
+    # django-s3-folder-storage
+    # --------------------------------------------------------------------------
+    DEFAULT_S3_PATH = 'media'
+    CDN_DOMAIN = 'dxglax8otc2dg.cloudfront.net'
+    MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)

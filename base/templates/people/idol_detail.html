@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load markdown_deux_tags music_tags static typogrify_tags %}
+{% load markdown_deux_tags music_tags people_tags static typogrify_tags %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Idols{% endblock %}
 {% block meta %}
@@ -29,7 +29,7 @@
             <b>{{ object.romanized_family_name }}</b> {{ object.romanized_given_name }}
           {% endif %}
           </span>
-          {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{{ primary.group }}</span>{% endif %}</p>{% endwith %}
+          {% with object.primary_membership as primary %}<p class="standing"><span itemprop="jobTitle">{{ primary.standing }}</span>{% if primary.group.romanized_name != "Soloist" %} of <span itemprop="affiliation">{% romanized_designation_for target=primary.group target_date=primary.ended %}</span>{% endif %}</p>{% endwith %}
         </h1>
       </div>
       {% if fact %}
@@ -69,7 +69,7 @@
             <div class="card-example">
             {% with object.primary_membership as primary %}
               <div class="example-heading"><span class="pill">Main Group</span></div>
-              <a href="{{ primary.group.get_absolute_url }}">{{ primary.group }}</a>
+              <a href="{{ primary.group.get_absolute_url }}">{% romanized_designation_for target=primary.group target_date=primary.ended %}</a>
               <div class="example-subtext">
                 <time datetime="{{ primary.started|date:"c" }}/{% if primary.ended %}{{ primary.ended|date:"c" }}{% else %}{% now "c" %}{% endif %}">
                   {% if primary.is_active %}
@@ -109,8 +109,8 @@
             </div>
             <div class="membership-meta">
               <div class="membership-header">
-                <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{{ membership.group }}</span></a>
-                <span class="name">{{ membership.group.name }}</span>
+                <a href="{{ membership.group.get_absolute_url }}"><span class="romanized-name">{% romanized_designation_for target=membership.group target_date=membership.group.ended %}</span></a>
+                <span class="name">{% designation_for target=membership.group target_date=membership.group.ended %}</span>
               </div>
               <div class="membership-subtext">
                 <span class="membership-data tenure">
