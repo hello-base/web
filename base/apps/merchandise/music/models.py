@@ -262,6 +262,9 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
     arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
 
+    # Options & Extra Information.
+    note = models.TextField(blank=True)
+
     # Secondary identifier.
     uuid = extensions.UUIDField(auto=True, blank=True, null=True)
     slug = models.SlugField(blank=True, max_length=200)

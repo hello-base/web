@@ -210,6 +210,7 @@ class TrackAdmin(admin.ModelAdmin):
             'classes': ('grp-collapse grp-closed',),
             'fields': ('translated_name', 'lyrics', 'romanized_lyrics', 'translated_lyrics', 'translation_notes')
         }),
+        ('Internal Notes', {'fields': ('note',)}),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
     list_display = ['__unicode__', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
