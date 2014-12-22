@@ -4,7 +4,13 @@ from django.contrib import admin
 from base.apps.accounts.admin import ContributorMixin
 from base.apps.prose.admin import FactInline
 
-from .models import Group, Groupshot, Headshot, Idol, Membership, Staff
+from .models import (Designation, Group, Groupshot, Headshot, Idol, Membership,
+    Staff)
+
+
+class DesignationInline(admin.TabularInline):
+    extra = 1
+    model = Designation
 
 
 class GroupshotInline(admin.TabularInline):
@@ -51,7 +57,12 @@ class GroupAdmin(ContributorMixin):
         ('Details & Options', {'fields': ('former_names', ('photo', 'photo_thumbnail',))}),
         ('Internal Notes', {'fields': ('note',)}),
     )
-    inlines = [GroupMembershipInline, GroupshotInline, FactInline]
+    inlines = [
+        DesignationInline,
+        GroupMembershipInline,
+        GroupshotInline,
+        FactInline
+    ]
     list_display = ['romanized_name', 'name', 'started', 'ended', 'classification', 'status', 'scope']
     list_editable = ['classification', 'status', 'scope']
     list_filter = ['classification', 'status', 'scope']

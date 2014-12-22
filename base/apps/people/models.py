@@ -240,12 +240,14 @@ class Designation(models.Model):
     # A designation a date-based name given to a group, used to handle the
     # complex nature around group name changes in Hello! Project.
     group = models.ForeignKey(Group, related_name='designations')
-    name = models.CharField(max_length=60)
-    romanized_name = models.CharField(max_length=60)
 
     # When was the name created/when was it retired?
     started = models.DateField(db_index=True)
     ended = models.DateField(blank=True, db_index=True, null=True)
+
+    # What was the name during that time?
+    name = models.CharField(max_length=60)
+    romanized_name = models.CharField(max_length=60)
 
     class Meta:
         get_latest_by = 'started'
