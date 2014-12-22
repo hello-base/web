@@ -32,7 +32,7 @@ class HappeningsByYearView(YearArchiveView):
 
     def get_objects(self):
         correlations = self.queryset.filter(year=self.get_year()).order_by('object_id')
-        return regroup_correlations(prefetch_relations(correlations))
+        return regroup_yearly_correlations(prefetch_relations(correlations))
 
     def get_years(self):
         decades = {}
