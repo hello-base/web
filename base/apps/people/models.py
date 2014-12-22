@@ -199,6 +199,9 @@ class Group(ContributorMixin):
             return (self.ended - self.started).days
         return (date.today() - self.started).days
 
+    def designation(self):
+        return self.designations.latest()
+
     def generations(self):
         generations = defaultdict(list)
         for membership in self.memberships.select_related('idol'):
