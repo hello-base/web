@@ -236,6 +236,25 @@ class Group(ContributorMixin):
         return ('id__iexact', 'name__icontains', 'romanized_name__icontains')
 
 
+class Designation(models.Model):
+    # A designation a date-based name given to a group, used to handle the
+    # complex nature around group name changes in Hello! Project.
+    group = models.ForeignKey(Group, related_name='designations')
+    name = models.CharField(max_length=60)
+    romanized_name = models.CharField(max_length=60)
+
+    # When was the name created/when was it retired?
+    started = models.DateField(db_index=True)
+    ended = models.DateField(blank=True, db_index=True, null=True)
+
+    class Meta:
+        get_latest_by = 'started'
+        order_with_respect_to = 'group'
+
+    def __unicode__(self):
+        return u'%s [%s to %s]' % (self.romanized_name, self.started, self.ended)
+
+
 class Membership(models.Model):
     # Model Managers.
     objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
