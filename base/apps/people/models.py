@@ -209,7 +209,7 @@ class Group(ContributorMixin):
     def designation_for(self, target=None):
         if target and self.designations.exists():
             return self.designations.filter(started__lte=target).filter(Q(ended__gte=target) | Q(ended=None)).get()
-        return self.romanized_name
+        return self
 
     def generations(self):
         generations = defaultdict(list)
