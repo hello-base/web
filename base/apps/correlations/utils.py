@@ -41,9 +41,9 @@ def prefetch_relations(queryset):
 
 
 def regroup_correlations(queryset):
-    objects = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    objects = defaultdict(lambda: defaultdict(list))
     for c in queryset:
-        objects[c.year][c.month][c.day].append(c)
+        objects[c.month][c.day].append(c)
 
     # Remove the defaultdict-ness from the objects. Then, sort the nested
     # dictionaries and then finally the main dictionary--all in reverse.

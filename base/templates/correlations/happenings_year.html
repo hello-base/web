@@ -69,8 +69,7 @@
       {% endcomment %}
 
       <ul class="happening-month-list">
-      {% for year, months in objects.iteritems %}
-      {% for month, days in months.iteritems %}
+      {% for month, days in objects.iteritems %}
         <li class="happening-month" id="{{ month|month_name|lower }}">
           <h2 class="happening-month-name">
             <span>
@@ -91,7 +90,6 @@
           {% endfor %}
           </ul>
         </li>
-      {% endfor %}
       {% endfor %}
       </ul>
     </div>
