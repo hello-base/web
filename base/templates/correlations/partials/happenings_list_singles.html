@@ -1,7 +1,7 @@
 {% load static people_tags typogrify_tags %}
 
 {% with event.content_object as object %}
-<div class="happening-event">
+<div class="happening-event" data-event="{{ object.released }}">
   {% filter typogrify %}
   {% for participant in object.participants %}
     <a class="actor" href="{{ participant.get_absolute_url }}">{% romanized_designation_for target=participant target_date=object.released %}</a>{% include "utilities/commaify.html" %}
