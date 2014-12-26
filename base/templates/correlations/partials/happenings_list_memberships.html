@@ -1,4 +1,4 @@
-{% load static %}
+{% load static people_tags %}
 
 {% with event.content_object as object %}
 {% if event.date_field == "started" %}
@@ -52,8 +52,8 @@
   {% endif %}
 {% endif %}
 {% if event.date_field == "leadership_started" %}
-<div class="happening-event">
-  <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+<div class="happening-event" data-event="{{ object.leadership_started }}">
+  <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> becomes leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{% romanized_designation_for target=object.group target_date=object.leadership_started %}</a>
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
@@ -63,8 +63,8 @@
 </div>
 {% endif %}
 {% if event.date_field == "leadership_ended" %}
-<div class="happening-event">
-  <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{{ object.group }}</a>
+<div class="happening-event" data-event="{{ object.leadership_ended }}">
+  <a class="actor" href="{{ object.idol.get_absolute_url }}">{{ object.idol }}</a> steps down as leader of <a class="subject" href="{{ object.group.get_absolute_url }}">{% romanized_designation_for target=object.group target_date=object.leadership_ended %}</a>
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">
