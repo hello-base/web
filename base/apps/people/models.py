@@ -204,7 +204,7 @@ class Group(ContributorMixin):
     def designation(self):
         if self.designations.exists():
             return self.designations.latest()
-        return self.romanized_name
+        return self
 
     def designation_for(self, target=None):
         if target and self.designations.exists():
