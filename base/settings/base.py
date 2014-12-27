@@ -87,6 +87,7 @@ class Base(Configuration):
     # Database Configuration.
     # --------------------------------------------------------------------------
     DATABASES = postgresify()
+    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
     # Caching Configuration.
     # --------------------------------------------------------------------------
