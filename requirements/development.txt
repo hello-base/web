@@ -6,4 +6,4 @@ django-devserver == 0.8.0
 django-shortcuts == 1.5
 django-sslserver == 0.12
 invoke == 0.7.0
-ipython == 2.0.0
+ipython == 2.3.1
