@@ -25,7 +25,7 @@ django-staticbuilder == 0.6.1
 djangorestframework == 2.3.13
 google-api-python-client >= 1.2, < 2.0
 Markdown == 2.5.2
-ohashi == 0.2.6
+ohashi == 0.2.7
 pandas == 0.15.2
 Pillow == 2.7.0
 psycopg2 == 2.5.4
