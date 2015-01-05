@@ -1,7 +1,7 @@
 # Base Project Requirements
 
 analytics-python >= 0.4.3, < 1.0.0
-celery == 3.1.11
+celery == 3.1.17
 celery-haystack >= 0.7.2, < 1.0.0
 Django == 1.7.2
 django-braces == 1.4.0
@@ -26,13 +26,13 @@ djangorestframework == 2.3.13
 google-api-python-client >= 1.2, < 2.0
 Markdown == 2.5.2
 ohashi == 0.2.6
-pandas == 0.13.1
+pandas == 0.15.2
 Pillow == 2.7.0
-psycopg2 == 2.5.2
-pyelasticsearch == 0.6.1
+psycopg2 == 2.5.4
+pyelasticsearch == 0.7.1
 pytz == 2013.9
-requests == 2.2.1
-requests-oauthlib == 0.4.0
-twitter == 1.14.3
-typogrify == 2.0.4
+requests == 2.5.1
+requests-oauthlib == 0.4.2
+twitter == 1.15.0
+typogrify == 2.0.7
 whitenoise == 1.0.6
