@@ -238,10 +238,6 @@ class Base(Configuration):
         'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
     }
 
-    # South.
-    # --------------------------------------------------------------------------
-    SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
-
     # base.apps.socialize.
     # --------------------------------------------------------------------------
     TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
