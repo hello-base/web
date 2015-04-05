@@ -75,3 +75,8 @@ urlpatterns = patterns('',
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Since this module will only be called at startup, initialize our
+# Segment.io analytics library here.
+import analytics
+analytics.write_key = 'qs70qk1'
