@@ -2,7 +2,6 @@
 -r base.txt
 
 boto == 2.37.0
-django-s3-folder-storage == 0.2
 django-storages >= 1.1.8, < 2.0.0
 hiredis == 0.2.0
 newrelic == 2.48.0.38

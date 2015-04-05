@@ -41,7 +41,7 @@ class Testing(Settings):
     # Amazon Web Services
     AWS_STORAGE_BUCKET_NAME = 'test-bucket'
 
-    # django-s3-folder-storage
+    # ...
     CDN_DOMAIN = 'cdn.example.net'
     MEDIA_URL = 'https://%s/media/' % (CDN_DOMAIN)
 
