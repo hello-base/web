@@ -14,7 +14,6 @@ class Base(Configuration):
     # Path Configuration.
     # --------------------------------------------------------------------------
     DJANGO_ROOT = dirname(dirname(abspath(__file__)))
-    PROJECT_ROOT = dirname(DJANGO_ROOT)
     SITE_NAME = basename(DJANGO_ROOT)
 
     # Installed Applications.
@@ -206,15 +205,6 @@ class Base(Configuration):
     CELERY_RESULT_SERIALIZER = 'json'
     CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
     CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
-
-    # django-ecstatic / django-staticbuilder.
-    # --------------------------------------------------------------------------
-    INSTALLED_APPS += [
-        'ecstatic',
-        'staticbuilder',
-    ]
-    ECSTATIC_MANIFEST_FILE = join(DJANGO_ROOT, 'settings', 'manifest.json')
-    STATICBUILDER_BUILD_ROOT = join(DJANGO_ROOT, 'build')
 
     # django-grappelli.
     # --------------------------------------------------------------------------
