@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from rest_framework import serializers
 
 from base.apps.people.models import Group, Idol, Membership
@@ -38,7 +39,7 @@ class GroupSerializer(serializers.ModelSerializer):
     members = serializers.HyperlinkedIdentityField(view_name='api:group-members')
     members_active = serializers.HyperlinkedIdentityField(view_name='api:group-members-active')
     members_inactive = serializers.HyperlinkedIdentityField(view_name='api:group-members-inactive')
-    parent = serializers.HyperlinkedRelatedField(view_name='api:group-detail')
+    parent = serializers.HyperlinkedRelatedField(read_only=True, view_name='api:group-detail')
     photo = serializers.SerializerMethodField('photo_url')
     photo_thumbnail = serializers.SerializerMethodField('photo_thumbnail_url')
     classification = serializers.CharField(source='get_classification_display')
