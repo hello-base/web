@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import raven
 import sys
 
 from celery.schedules import crontab
@@ -14,7 +15,7 @@ class Production(Settings):
     # Installed Applications (featuring Production).
     # --------------------------------------------------------------------------
     INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        'raven.contrib.django',
+        'raven.contrib.django.raven_compat',
     ]
 
     # Middleware Configuration.
@@ -120,10 +121,9 @@ class Production(Settings):
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
-        'filters': {
-            'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse'
-            }
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['sentry'],
         },
         'formatters': {
             'verbose': {
@@ -135,16 +135,15 @@ class Production(Settings):
             },
         },
         'handlers': {
+            'sentry': {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            },
             'console': {
                 'level': 'DEBUG',
                 'class': 'logging.StreamHandler',
                 'formatter': 'verbose',
                 'stream': sys.stdout
-            },
-            'sentry': {
-                'level': 'ERROR',
-                'class': 'raven.contrib.django.handlers.SentryHandler',
-                'filters': ['require_debug_false'],
             },
         },
         'loggers': {
@@ -190,3 +189,7 @@ class Production(Settings):
     IMAGEKIT_CACHEFILE_DIR = 'cache'
     IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
     IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'
+
+    # raven.
+    # --------------------------------------------------------------------------
+    RAVEN_CONFIG = {'release': raven.fetch_git_sha(os.path.dirname(Settings.DJANGO_ROOT))}
