@@ -9,20 +9,6 @@ def _out(name, message):
     print('[\033[1;37m{}\033[0m] {}'.format(name, message))
 
 
-@invoke.task(name='collect')
-def asset_collect(verbose=False, **kwargs):
-    out = functools.partial(_out, 'project.collect')
-    hide = 'out' if not verbose else None
-
-    # Build and send it off.
-    out('Using `buildstatic` to concatenate assets.')
-    invoke.run('python manage.py buildstatic --configuration=Production', hide=hide)
-    out('Updating `settings/manifest.json` with new asset hashes.')
-    invoke.run('python manage.py createstaticmanifest --configuration=Production', hide=hide)
-    out('Uploading and post-processing all of the assets.')
-    invoke.run('python manage.py eccollect --configuration=Production --noinput', hide=hide)
-
-
 @invoke.task(name='test')
 def development_test(verbose=True, coverage=False, **kwargs):
     out = functools.partial(_out, 'development.test')
@@ -39,7 +25,7 @@ def development_test(verbose=True, coverage=False, **kwargs):
         invoke.run('%s' % pytest, pty=True, hide=hide)
 
 
-@invoke.task(name='deploy', pre=[development_test, asset_collect])
+@invoke.task(name='deploy', pre=[development_test])
 def deploy(verbose=False, migrate=False, **kwargs):
     out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
@@ -153,7 +139,7 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    asset_collect, asset_compile, deploy, development_flake, development_server, development_test,
+    asset_compile, deploy, development_flake, development_server, development_test,
     heroku=invoke.Collection(
         heroku_capture, heroku_imagekit, heroku_migrate, heroku_pull, heroku_syncdb,
     )
