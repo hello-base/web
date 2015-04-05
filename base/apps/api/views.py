@@ -7,7 +7,7 @@ from .serializers import (GroupSerializer, IdolSerializer,
 
 
 class GroupMixin(object):
-    model = Group
+    queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
@@ -39,16 +39,16 @@ class GroupInactiveMembershipsList(GroupMembershipsList):
 
 
 class IdolList(generics.ListAPIView):
-    model = Idol
+    queryset = Idol.objects.all()
     serializer_class = IdolSerializer
 
 
 class IdolDetail(generics.RetrieveAPIView):
-    model = Idol
+    queryset = Idol.objects.all()
     serializer_class = IdolSerializer
     lookup_field = 'slug'
 
 
 class MembershipList(generics.ListAPIView):
-    model = Membership
+    queryset = Membership.objects.all()
     serializer_class = MembershipSerializer
