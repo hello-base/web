@@ -14,4 +14,4 @@ deploy:
   app:
     master: hello-base
   on:
-    repo: revyver/hello-base
+    repo: hello-base/hello-base
