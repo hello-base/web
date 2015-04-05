@@ -79,12 +79,8 @@ class Production(Settings):
 
     # Media Storage Configuration.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += [
-        's3_folder_storage',
-        'storages',
-    ]
-    DEFAULT_FILE_STORAGE = 'base.apps.storage.MediaFilesStorage'
-    STATICFILES_STORAGE = 'base.apps.storage.S3ManifestStorage'
+    INSTALLED_APPS += ['storages']
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
     # Amazon Web Services
     AWS_ACCESS_KEY_ID = values.SecretValue(environ_prefix='')
@@ -99,12 +95,9 @@ class Production(Settings):
     AWS_EXPIRY = 60 * 60 * 24 * 7
     AWS_HEADERS = {'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIRY, AWS_EXPIRY)}
 
-    # django-s3-folder-storage
-    DEFAULT_S3_PATH = 'media'
-    STATIC_S3_PATH = 'static'
+    # ...
     CDN_DOMAIN = 'dxglax8otc2dg.cloudfront.net'
-    MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
-    STATIC_URL = 'https://%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
+    MEDIA_URL = 'https://%s/media/' % (CDN_DOMAIN)
 
     # Template Configuration.
     # --------------------------------------------------------------------------
@@ -190,11 +183,6 @@ class Production(Settings):
             'INDEX_NAME': 'haystack',
         },
     }
-
-    # django-ecstatic / django-staticbuilder
-    # --------------------------------------------------------------------------
-    ECSTATIC_MANIFEST_CACHE = 'staticfiles'
-    STATICBUILDER_BUILD_COMMANDS = ['inv compile']
 
     # django-imagekit.
     # --------------------------------------------------------------------------

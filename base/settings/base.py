@@ -132,20 +132,18 @@ class Base(Configuration):
 
     # Static File Configuration.
     # --------------------------------------------------------------------------
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
-    STATICFILES_DIRS = (
-        normpath(join(DJANGO_ROOT, 'static')),
-    )
+    STATICFILES_DIRS = [normpath(join(DJANGO_ROOT, 'static'))]
     STATICFILES_FINDERS = (
-        'staticbuilder.finders.BuiltFileFinder',
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     )
 
     # Media Configuration.
     # --------------------------------------------------------------------------
-    MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
+    MEDIA_ROOT = 'media'
     MEDIA_URL = '/media/'
 
     # URL Configuration.

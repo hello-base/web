@@ -3,7 +3,7 @@
 {# Common Assets #}
 <link rel="stylesheet" href="//cloud.typography.com/7547452/745842/css/fonts.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-{% if debug %}
+{# {% if debug %} #}
 {# Development Assets #}
 <link rel="stylesheet" href="{% static 'stylesheets/application.css' %}" data-turbolinks-track>
 <script src="{% static 'javascripts/components/d3.v3.js' %}" data-turbolinks-track></script>
@@ -15,9 +15,11 @@
 <script src="{% static 'javascripts/application/graphs.js' %}" data-turbolinks-track></script>
 <script src="{% static 'javascripts/application/search.js' %}" data-turbolinks-track></script>
 <script src="{% static 'javascripts/application/templates.js' %}" data-turbolinks-track></script>
-{% else %}
+{# {% else %} #}
 {# Production Assets #}
+{% comment %}
 <link rel="stylesheet" href="{% static 'stylesheets/production.min.css' %}" data-turbolinks-track>
 <script src="{% static 'javascripts/components.min.js' %}" data-turbolinks-track></script>
 <script src="{% static 'javascripts/application.min.js' %}" data-turbolinks-track></script>
-{% endif %}
+{% endcomment %}
+{# {% endif %} #}

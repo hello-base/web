@@ -67,10 +67,6 @@ class Development(Settings):
         'devserver.modules.cache.CacheSummaryModule',
     )
 
-    # django-ecstatic / django-staticbuilder
-    # --------------------------------------------------------------------------
-    MIDDLEWARE_CLASSES += ('staticbuilder.middleware.BuildOnRequest',)
-
     # django-extensions
     # --------------------------------------------------------------------------
     GRAPH_MODELS = {
@@ -97,6 +93,5 @@ class Development(Settings):
 
     # django-s3-folder-storage
     # --------------------------------------------------------------------------
-    DEFAULT_S3_PATH = 'media'
     CDN_DOMAIN = 'dxglax8otc2dg.cloudfront.net'
-    MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
+    MEDIA_URL = 'https://%s/media/' % (CDN_DOMAIN)

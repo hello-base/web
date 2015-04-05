@@ -27,8 +27,7 @@ os.environ.setdefault('DJANGO_CONFIGURATION', 'Production')
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from configurations.wsgi import get_wsgi_application
-application = get_wsgi_application()
+from whitenoise.django import DjangoWhiteNoise
 
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
+application = get_wsgi_application()
+application = DjangoWhiteNoise(application)
