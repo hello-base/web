@@ -1,10 +1,10 @@
 # Package Requirements for Production
 -r base.txt
 
-boto == 2.34.0
+boto == 2.37.0
 django-s3-folder-storage == 0.2
 django-storages >= 1.1.8, < 2.0.0
-hiredis == 0.1.3
-newrelic == 2.40.0.34
-raven == 5.1.1
+hiredis == 0.2.0
+newrelic == 2.48.0.38
+raven == 5.2.0
 waitress == 0.8.9
