@@ -32,17 +32,18 @@ class Testing(Settings):
         },
     }
 
+    # Static File Configuration.
+    # --------------------------------------------------------------------------
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
     # Media Storage Configuration.
     # --------------------------------------------------------------------------
     # Amazon Web Services
     AWS_STORAGE_BUCKET_NAME = 'test-bucket'
 
     # django-s3-folder-storage
-    DEFAULT_S3_PATH = 'media'
-    STATIC_S3_PATH = 'static'
     CDN_DOMAIN = 'cdn.example.net'
-    MEDIA_URL = 'https://%s/%s/' % (CDN_DOMAIN, DEFAULT_S3_PATH)
-    STATIC_URL = 'https://%s/%s/' % (CDN_DOMAIN, STATIC_S3_PATH)
+    MEDIA_URL = 'https://%s/media/' % (CDN_DOMAIN)
 
     # Authentication Configuration.
     # --------------------------------------------------------------------------
