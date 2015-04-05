@@ -44,15 +44,6 @@ def deploy(verbose=False, migrate=False, **kwargs):
     out = functools.partial(_out, 'project.deploy')
     hide = 'out' if not verbose else None
 
-    # Before deploying, check if manifest.json has updated.
-    MANIFEST = 'base/settings/manifest.json'
-    out('Checking if manifest.json has been updated.')
-    if invoke.run('git diff --name-only {0}'.format(MANIFEST), hide=hide).stdout:
-        # manifest.json has been updated, let's commit it.
-        out('manifest.json has been updated. Committing.')
-        invoke.run('git add {0}'.format(MANIFEST), hide=hide)
-        invoke.run('git commit -m "Static manifest has updated; committing updated manifest.json."', hide=hide)
-
     # Ready? Let's go.
     if migrate:
         out('Snapshotting the production database.')
