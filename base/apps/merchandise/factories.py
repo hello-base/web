@@ -7,11 +7,12 @@ from . import models
 
 
 class MerchandiseFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Merchandise
-    ABSTRACT_FACTORY = True
-
     romanized_name = factory.Sequence(lambda i: 'merchandise#%s' % i)
     name = factory.Sequence(lambda i: 'merchandise#%s' % i)
     released = factory.LazyAttribute(lambda d: datetime.datetime.utcnow())
     price = 500
     uuid = uuid.uuid4()
+
+    class Meta:
+        model = models.Merchandise
+        abstract = True

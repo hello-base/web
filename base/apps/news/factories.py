@@ -5,12 +5,15 @@ from . import models
 
 
 class ItemFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Item
+    class Meta:
+        model = models.Item
 
 
 class ItemImageFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.ItemImage
+    class Meta:
+        model = models.ItemImage
 
 
 class UpdateFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Update
+    class Meta:
+        model = models.Update

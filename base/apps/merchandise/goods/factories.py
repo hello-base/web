@@ -5,8 +5,10 @@ from . import models
 
 
 class ShopFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Shop
+    class Meta:
+        model = models.Shop
 
 
 class GoodFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Good
+    class Meta:
+        model = models.Good

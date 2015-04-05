@@ -5,36 +5,44 @@ from . import models
 
 
 class ShowFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Show
+    class Meta:
+        model = models.Show
 
 
 class TimeSlotFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.TimeSlot
+    class Meta:
+        model = models.TimeSlot
 
 
 class EpisodeFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Episode
+    class Meta:
+        model = models.Episode
 
 
 class MagazineFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Magazine
+    class Meta:
+        model = models.Magazine
 
 
 class IssueFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Issue
-
     magazine = factory.SubFactory(MagazineFactory)
+
+    class Meta:
+        model = models.Issue
 
 
 class IssueImageFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.IssueImage
+    class Meta:
+        model = models.IssueImage
 
 
 class CardSetFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.CardSet
+    class Meta:
+        model = models.CardSet
 
 
 class CardFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Card
-
     issue = factory.SubFactory(IssueFactory)
+
+    class Meta:
+        model = models.Card
