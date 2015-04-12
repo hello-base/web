@@ -57,16 +57,6 @@ class Development(Settings):
         'debug_toolbar.panels.redirects.RedirectsPanel',
     ]
 
-    # django-devserver.
-    # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['devserver']
-    DEVSERVER_MODULES = (
-        'devserver.modules.sql.SQLSummaryModule',
-        'devserver.modules.profile.ProfileSummaryModule',
-        'devserver.modules.ajax.AjaxDumpModule',
-        'devserver.modules.cache.CacheSummaryModule',
-    )
-
     # django-extensions
     # --------------------------------------------------------------------------
     GRAPH_MODELS = {
