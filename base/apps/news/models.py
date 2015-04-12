@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import date
 from itertools import chain
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
@@ -53,10 +53,10 @@ class Item(models.Model):
     title = models.CharField(max_length=500)
     slug = models.SlugField(max_length=200)
     body = models.TextField(blank=True)
-    published = models.DateField(default=date.today())
+    published = models.DateField(default=timezone.now)
 
     # Happenings.
-    correlations = models.ManyToManyField(Correlation, blank=True, null=True, related_name='%(class)ss')
+    correlations = models.ManyToManyField(Correlation, blank=True, related_name='%(class)ss')
 
     # Sources.
     source = models.CharField(blank=True, max_length=200,
@@ -92,7 +92,7 @@ class Item(models.Model):
 for subject in SUBJECTS:
     Item.add_to_class(
         '%ss' % subject._meta.model_name,
-        models.ManyToManyField(subject, blank=True, null=True, related_name='%(class)ss')
+        models.ManyToManyField(subject, blank=True, related_name='%(class)ss')
     )
 
 
@@ -111,7 +111,7 @@ class Update(models.Model):
     parent = models.ForeignKey(Item, related_name='updates')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
     body = models.TextField(blank=True)
-    published = models.DateField(default=date.today())
+    published = models.DateField(default=timezone.now)
 
     # Sources.
     source = models.CharField(blank=True, max_length=200,

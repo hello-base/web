@@ -43,7 +43,7 @@ class VideodiscFormat(models.Model):
 
     # Content
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/media/videos/')
-    clips = models.ManyToManyField('music.Track', blank=True, null=True, related_name='videos', through='Clip')
+    clips = models.ManyToManyField('music.Track', blank=True, related_name='videos', through='Clip')
 
     class Meta:
         get_latest_by = 'released'

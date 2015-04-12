@@ -73,7 +73,7 @@ class Editor(AbstractBaseUser):
 
 class ContributorMixin(TimeStampedModel):
     submitted_by = models.ForeignKey(Editor, blank=True, null=True, related_name='%(class)s_submissions')
-    edited_by = models.ManyToManyField(Editor, blank=True, null=True, related_name='%(class)ss_edits')
+    edited_by = models.ManyToManyField(Editor, blank=True, related_name='%(class)ss_edits')
 
     class Meta:
         abstract = True

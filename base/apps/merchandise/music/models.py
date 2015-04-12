@@ -174,8 +174,8 @@ class Edition(models.Model):
     # Contents
     art = models.ImageField(blank=True, null=True, upload_to='merchandise/music/editions/')
     art_thumbnail = ImageSpecField(source='art', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
-    tracks = models.ManyToManyField('Track', blank=True, null=True, related_name='editions', through='TrackOrder')
-    videos = models.ManyToManyField('Video', blank=True, null=True, related_name='editions', through='VideoTrackOrder')
+    tracks = models.ManyToManyField('Track', blank=True, related_name='editions', through='TrackOrder')
+    videos = models.ManyToManyField('Video', blank=True, related_name='editions', through='VideoTrackOrder')
 
     class Meta:
         get_latest_by = 'released'
@@ -258,9 +258,9 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     processed_translated_lyrics = models.TextField(blank=True, editable=False)
 
     # Staff.
-    lyricists = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='wrote')
-    composers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='composed')
-    arrangers = models.ManyToManyField('people.Staff', blank=True, null=True, related_name='arranged')
+    lyricists = models.ManyToManyField('people.Staff', blank=True, related_name='wrote')
+    composers = models.ManyToManyField('people.Staff', blank=True, related_name='composed')
+    arrangers = models.ManyToManyField('people.Staff', blank=True, related_name='arranged')
 
     # Options & Extra Information.
     note = models.TextField(blank=True)

@@ -42,11 +42,11 @@ class Correlation(models.Model):
     classification = models.IntegerField(choices=CLASSIFICATION, default=CLASSIFICATION.normal)
 
     # Date Details.
-    julian = models.PositiveSmallIntegerField('julian date', max_length=3,
+    julian = models.PositiveSmallIntegerField('julian date',
         help_text='The day of the year (1 to 365).')
-    year = models.PositiveSmallIntegerField(max_length=4)
-    month = models.PositiveSmallIntegerField(max_length=2)
-    day = models.PositiveSmallIntegerField(max_length=2)
+    year = models.PositiveSmallIntegerField()
+    month = models.PositiveSmallIntegerField()
+    day = models.PositiveSmallIntegerField()
 
     class Meta:
         get_latest_by = 'timestamp'

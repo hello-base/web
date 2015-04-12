@@ -166,7 +166,7 @@ class Group(ContributorMixin):
 
     # Parents & Children.
     parent = models.ForeignKey('self', blank=True, null=True, related_name='subgroups')
-    groups = models.ManyToManyField('self', blank=True, null=True, related_name='supergroups', symmetrical=False)
+    groups = models.ManyToManyField('self', blank=True, related_name='supergroups', symmetrical=False)
 
     # Options & Extra Information.
     former_names = models.CharField(blank=True, max_length=200)
@@ -356,15 +356,15 @@ class Membership(models.Model):
 
 
 class ParticipationMixin(models.Model):
-    idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss')
-    groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss')
+    idols = models.ManyToManyField(Idol, blank=True, related_name='%(class)ss')
+    groups = models.ManyToManyField(Group, blank=True, related_name='%(class)ss')
 
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
-    participating_idols = models.ManyToManyField(Idol, blank=True, null=True, related_name='%(class)ss_attributed_to',
+    participating_idols = models.ManyToManyField(Idol, blank=True, related_name='%(class)ss_attributed_to',
         help_text='The remaining idols that are not a member of the given groups.')
-    participating_groups = models.ManyToManyField(Group, blank=True, null=True, related_name='%(class)ss_attributed_to')
+    participating_groups = models.ManyToManyField(Group, blank=True, related_name='%(class)ss_attributed_to')
 
     class Meta:
         abstract = True
