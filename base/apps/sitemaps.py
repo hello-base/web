@@ -5,60 +5,48 @@ from people.constants import STATUS
 from people.models import Group, Idol
 
 
-class AlbumSitemap(Sitemap):
+class BaseSitemap(Sitemap):
     changefreq = 'daily'
+
+    def lastmod(self, obj):
+        return obj.modified
+
+
+class AlbumSitemap(BaseSitemap):
     priority = 0.6
 
     def items(self):
         return Album.objects.all()
 
-    def lastmod(self, obj):
-        return obj.modified
 
-
-class GroupSitemap(Sitemap):
-    changefreq = 'daily'
-
+class GroupSitemap(BaseSitemap):
     def items(self):
         return Group.objects.all()
 
-    def lastmod(self, obj):
-        return obj.modified
-
     def priority(self, obj):
         if obj.status == STATUS.active:
             return 0.75
         return 0.5
 
 
-class IdolSitemap(Sitemap):
-    changefreq = 'daily'
-
+class IdolSitemap(BaseSitemap):
     def items(self):
         return Idol.objects.all()
 
-    def lastmod(self, obj):
-        return obj.modified
-
     def priority(self, obj):
         if obj.status == STATUS.active:
             return 0.75
         return 0.5
 
 
-class SingleSitemap(Sitemap):
-    changefreq = 'daily'
+class SingleSitemap(BaseSitemap):
     priority = 0.6
 
     def items(self):
         return Single.objects.all()
 
-    def lastmod(self, obj):
-        return obj.modified
 
-
-class TrackSitemap(Sitemap):
-    changefreq = 'daily'
+class TrackSitemap(BaseSitemap):
     priority = 0.5
 
     def items(self):
