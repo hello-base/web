@@ -1,4 +1,4 @@
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
@@ -14,7 +14,7 @@ class History(TimeStampedModel):
     datetime = models.DateTimeField()
     source_type = models.ForeignKey(ContentType)
     source_id = models.PositiveIntegerField(blank=True, null=True)
-    source_object = generic.GenericForeignKey('source_type', 'source_id')
+    source_object = GenericForeignKey('source_type', 'source_id')
 
     sum = models.IntegerField(default=0)
     delta = models.IntegerField(default=0)

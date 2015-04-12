@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.signals import post_save
@@ -32,7 +32,7 @@ class Correlation(models.Model):
     # Correlation Object.
     content_type = models.ForeignKey(ContentType)
     object_id = models.IntegerField('object ID')
-    content_object = generic.GenericForeignKey()
+    content_object = GenericForeignKey()
 
     # Correlation Details.
     timestamp = models.DateField(blank=True)
