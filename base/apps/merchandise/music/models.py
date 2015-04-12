@@ -19,6 +19,7 @@ from base.apps.merchandise.models import AlternateAttributionMixin, Merchandise
 from base.apps.people.models import ParticipationMixin
 
 from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
+from .utils import get_next_release, get_previous_release
 
 
 class Label(models.Model):
@@ -91,23 +92,11 @@ class Album(Base):
 
     @cached_property
     def get_previous(self):
-        if self.number:
-            try:
-                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
-                qs = obj.albums.order_by('-released').exclude(number='')
-                return qs.filter(released__lt=self.released)[0]
-            except IndexError:
-                return None
+        return get_previous_release(self, 'albums')
 
     @cached_property
     def get_next(self):
-        if self.number:
-            try:
-                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
-                qs = obj.albums.order_by('released').exclude(number='')
-                return qs.filter(released__gt=self.released)[0]
-            except IndexError:
-                return None
+        return get_next_release(self, 'albums')
 
     @property
     def kind(self):
@@ -124,23 +113,11 @@ class Single(Base):
 
     @cached_property
     def get_previous(self):
-        if self.number:
-            try:
-                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
-                qs = obj.singles.order_by('-released').exclude(number='')
-                return qs.filter(released__lt=self.released)[0]
-            except IndexError:
-                return None
+        return get_previous_release(self, 'singles')
 
     @cached_property
     def get_next(self):
-        if self.number:
-            try:
-                obj = filter(None, [self.groups.all(), self.idols.all()])[0].get()
-                qs = obj.singles.order_by('released').exclude(number='')
-                return qs.filter(released__gt=self.released)[0]
-            except IndexError:
-                return None
+        return get_next_release(self, 'singles')
 
     @property
     def kind(self):
