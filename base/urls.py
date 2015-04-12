@@ -53,7 +53,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # Authentication aliases.
-    url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'))),
+    url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'), permanent=True)),
 
     # Core Modules.
     url(r'^accounts/', include('base.apps.accounts.urls')),
@@ -68,7 +68,7 @@ urlpatterns = patterns('',
     url(r'^', include('base.apps.people.urls')),
 
     # Sitemaps, Favicons, Robots, and Humans.
-    url(r'^favicon.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
+    url(r'^favicon.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico', permanent=True)),
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
     url(r'^opensearch.xml$', name='opensearch', view=XMLView.as_view(template_name='opensearch.xml')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
