@@ -217,7 +217,7 @@ class TestGroupshots:
     def test_factory(self):
         factory = GroupshotFactory()
         assert isinstance(factory, Groupshot)
-        assert isinstance(factory.group, Group)
+        assert isinstance(factory.subject, Group)
         assert 'Photo of' and 'group' in repr(factory)
 
 
@@ -225,5 +225,5 @@ class TestHeadshots:
     def test_factory(self):
         factory = HeadshotFactory()
         assert isinstance(factory, Headshot)
-        assert isinstance(factory.idol, Idol)
+        assert isinstance(factory.subject, Idol)
         assert 'Photo of' and 'family' in repr(factory)

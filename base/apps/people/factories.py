@@ -53,7 +53,7 @@ class LeadershipFactory(MembershipFactory):
 
 
 class GroupshotFactory(factory.django.DjangoModelFactory):
-    group = factory.SubFactory(GroupFactory)
+    subject = factory.SubFactory(GroupFactory)
     taken = datetime.date.today()
 
     class Meta:
@@ -61,7 +61,7 @@ class GroupshotFactory(factory.django.DjangoModelFactory):
 
 
 class HeadshotFactory(factory.django.DjangoModelFactory):
-    idol = factory.SubFactory(IdolFactory)
+    subject = factory.SubFactory(IdolFactory)
     taken = datetime.date.today()
 
     class Meta:

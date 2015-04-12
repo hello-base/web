@@ -433,34 +433,24 @@ class Shot(models.Model):
         get_latest_by = 'taken'
         ordering = ('-taken',)
 
+    def __unicode__(self):
+        return u'Photo of %s (%s)' % (self.subject.romanized_name, self.taken)
+
+    def save(self, *args, **kwargs):
+        super(Shot, self).save(*args, **kwargs)
+        latest = self._default_manager.filter(subject=self.subject).latest()
+        self.subject.photo = latest.photo
+        self.subject.photo_thumbnail = latest.photo_thumbnail
+        self.subject.save()
+
 
 class Groupshot(Shot):
-    group = models.ForeignKey(Group, related_name='photos')
+    subject = models.ForeignKey(Group, related_name='photos')
     photo = models.ImageField(blank=True, upload_to='people/groups/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
 
-    def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.group.romanized_name, self.taken)
-
-    def save(self, *args, **kwargs):
-        super(Groupshot, self).save(*args, **kwargs)
-        latest = self._default_manager.filter(group=self.group).latest()
-        self.group.photo = latest.photo
-        self.group.photo_thumbnail = latest.photo_thumbnail
-        self.group.save()
-
 
 class Headshot(Shot):
-    idol = models.ForeignKey(Idol, related_name='photos')
+    subject = models.ForeignKey(Idol, related_name='photos')
     photo = models.ImageField(blank=True, upload_to='people/idols/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
-
-    def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.idol.romanized_name, self.taken)
-
-    def save(self, *args, **kwargs):
-        super(Headshot, self).save(*args, **kwargs)
-        latest = self._default_manager.filter(idol=self.idol).latest()
-        self.idol.photo = latest.photo
-        self.idol.photo_thumbnail = latest.photo_thumbnail
-        self.idol.save()
