@@ -46,7 +46,6 @@ class Base(Configuration):
         'base.apps.social.youtube',
     ]
     PLUGINS = [
-        'floppyforms',
         'imagekit',
         'markdown_deux',
         'typogrify',
