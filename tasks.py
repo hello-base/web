@@ -50,40 +50,6 @@ def deploy(verbose=False, migrate=False, **kwargs):
     out('All done~!')
 
 
-@invoke.task(name='compile')
-def asset_compile(verbose=False, **kwargs):
-    out = functools.partial(_out, 'development.compile')
-    hide = 'out' if not verbose else None
-    STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base', 'static')
-
-    # Pre-compile all of our assets.
-    out('Compiling Handlebars templates.')
-    invoke.run('handlebars base/templates/partials/handlebars -f base/static/javascripts/application/templates.js', hide=hide)
-    out('Compiling stylesheets using production environment settings.')
-    invoke.run('compass compile -e production --force', hide=hide)
-
-    # Compile the application-specific Javascript.
-    invoke.run('yuglify {input} --type js --combine {output}'.format(
-        input=os.path.join(STATIC_ROOT, 'javascripts', 'application', '*.js'),
-        output=os.path.join(STATIC_ROOT, 'javascripts', 'application')), hide=hide)
-    out('javascripts/application.min.js created and minified.')
-
-    # Compile the 3rd-party Javascript components.
-    invoke.run('yuglify {input} --type js --combine {output}'.format(
-        input=os.path.join(STATIC_ROOT, 'javascripts', 'components', '*.js'),
-        output=os.path.join(STATIC_ROOT, 'javascripts', 'components')), hide=hide)
-    out('javascripts/components.min.js created and minified.')
-
-    # Compile the stylesheets.
-    invoke.run('autoprefixer -b "> 1%, last 3 versions, ff 17, opera 12.1" {input}'.format(
-        input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css')), hide=hide)
-    out('stylesheets/application.css auto-prefixed.')
-    invoke.run('yuglify {input} --type css --combine {output}'.format(
-        input=os.path.join(STATIC_ROOT, 'stylesheets', 'application.css'),
-        output=os.path.join(STATIC_ROOT, 'stylesheets', 'production')), hide=hide)
-    out('stylesheets/production.min.css created and minified.')
-
-
 @invoke.task(name='flake')
 def development_flake(**kwargs):
     invoke.run('flake8 --max-complexity 6 > flake8.txt')
@@ -139,7 +105,7 @@ def heroku_syncdb(**kwargs):
 
 
 ns = invoke.Collection(
-    asset_compile, deploy, development_flake, development_server, development_test,
+    deploy, development_flake, development_server, development_test,
     heroku=invoke.Collection(
         heroku_capture, heroku_imagekit, heroku_migrate, heroku_pull, heroku_syncdb,
     )
