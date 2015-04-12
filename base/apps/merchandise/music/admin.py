@@ -9,10 +9,11 @@ from base.apps.accounts.admin import ContributorMixin
 from base.apps.merchandise.stores.admin import PurchaseLinkInline
 from base.apps.prose.admin import FactInline
 
-from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
+from .models import (Album, Edition, Label, Single, Track, TrackOrder, Video,
+    VideoTrackOrder)
 
 
-class ReleaseEditionInline(admin.StackedInline)
+class ReleaseEditionInline(admin.StackedInline):
     extra = 1
     fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), ('catalog_number', 'price'), 'art')}),)
     model = Edition
