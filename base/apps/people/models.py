@@ -423,18 +423,21 @@ class ParticipationMixin(models.Model):
                 return group
 
 
-class Groupshot(models.Model):
-    group = models.ForeignKey(Group, related_name='photos')
-
+class Shot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
-    photo = models.ImageField(blank=True, upload_to='people/groups/')
-    photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
     optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
+        abstract = True
         get_latest_by = 'taken'
         ordering = ('-taken',)
+
+
+class Groupshot(Shot):
+    group = models.ForeignKey(Group, related_name='photos')
+    photo = models.ImageField(blank=True, upload_to='people/groups/')
+    photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
 
     def __unicode__(self):
         return u'Photo of %s (%s)' % (self.group.romanized_name, self.taken)
@@ -447,18 +450,10 @@ class Groupshot(models.Model):
         self.group.save()
 
 
-class Headshot(models.Model):
+class Headshot(Shot):
     idol = models.ForeignKey(Idol, related_name='photos')
-
-    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
     photo = models.ImageField(blank=True, upload_to='people/idols/')
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
-    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
-    taken = models.DateField()
-
-    class Meta:
-        get_latest_by = 'taken'
-        ordering = ('-taken',)
 
     def __unicode__(self):
         return u'Photo of %s (%s)' % (self.idol.romanized_name, self.taken)
