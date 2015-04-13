@@ -423,8 +423,16 @@ class ParticipationMixin(models.Model):
                 return group
 
 
+upload_paths = {'groups': 'people/groups/', 'idols': 'people/idols/'}
+def get_directory(instance, filename):
+    category = instance.category
+    return upload_paths.get(category, '')
+
+
 class Shot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
+    photo = models.ImageField(blank=True, upload_to=get_directory)
+    photo_thumbnail = models.ImageField(blank=True, upload_to=get_directory)
     optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
@@ -445,12 +453,10 @@ class Shot(models.Model):
 
 
 class Groupshot(Shot):
+    category = 'groups'
     subject = models.ForeignKey(Group, related_name='photos')
-    photo = models.ImageField(blank=True, upload_to='people/groups/')
-    photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
 
 
 class Headshot(Shot):
+    category = 'idols'
     subject = models.ForeignKey(Idol, related_name='photos')
-    photo = models.ImageField(blank=True, upload_to='people/idols/')
-    photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
