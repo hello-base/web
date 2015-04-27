@@ -213,12 +213,8 @@ class Base(Configuration):
 
     # django-haystack.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += [
-        'haystack',
-        'celery_haystack',
-    ]
+    INSTALLED_APPS += ['haystack']
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
-    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
     # base.apps.socialize.
     # --------------------------------------------------------------------------
