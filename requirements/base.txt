@@ -2,7 +2,6 @@
 
 analytics-python == 1.0.3
 celery == 3.1.17
-celery-haystack >= 0.7.2, < 1.0.0
 Django == 1.7.7
 django-braces == 1.4.0
 django-configurations == 0.8
