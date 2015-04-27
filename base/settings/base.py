@@ -215,6 +215,7 @@ class Base(Configuration):
     # --------------------------------------------------------------------------
     INSTALLED_APPS += ['haystack']
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
     # base.apps.socialize.
     # --------------------------------------------------------------------------
