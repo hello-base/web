@@ -4,7 +4,7 @@ from haystack import indexes
 from .models import Album, Single
 
 
-class ReleaseIndex(indexes.SearchIndex, indexes.SearchIndex):
+class ReleaseIndex(indexes.SearchIndex):
     text = indexes.NgramField(document=True, use_template=True)
     model = indexes.CharField(model_attr='_meta__verbose_name_plural', faceted=True)
     romanized_name = indexes.CharField(model_attr='romanized_name')
