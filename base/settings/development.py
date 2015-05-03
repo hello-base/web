@@ -57,16 +57,6 @@ class Development(Settings):
         'debug_toolbar.panels.redirects.RedirectsPanel',
     ]
 
-    # django-devserver.
-    # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['devserver']
-    DEVSERVER_MODULES = (
-        'devserver.modules.sql.SQLSummaryModule',
-        'devserver.modules.profile.ProfileSummaryModule',
-        'devserver.modules.ajax.AjaxDumpModule',
-        'devserver.modules.cache.CacheSummaryModule',
-    )
-
     # django-extensions
     # --------------------------------------------------------------------------
     GRAPH_MODELS = {
@@ -79,7 +69,7 @@ class Development(Settings):
     ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'base.apps.search_backends.KuromojiElastcisearchEngine',
+            'ENGINE': 'apps.search_backends.KuromojiElastcisearchEngine',
             'URL': 'http://127.0.0.1:9200/',
             'INDEX_NAME': 'haystack',
         },

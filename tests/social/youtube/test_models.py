@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from base.apps.social.youtube.models import Channel, Thumbnail, Video
-from base.apps.social.youtube.factories import (ChannelFactory,
+from apps.social.youtube.models import Channel, Thumbnail, Video
+from apps.social.youtube.factories import (ChannelFactory,
     ThumbnailFactory, VideoFactory)
 
 pytestmark = pytest.mark.django_db

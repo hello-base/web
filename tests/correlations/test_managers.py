@@ -2,8 +2,8 @@
 import datetime
 import pytest
 
-from base.apps.correlations.models import Correlation
-from base.apps.merchandise.music.factories import SingleFactory
+from apps.correlations.models import Correlation
+from apps.merchandise.music.factories import SingleFactory
 
 pytestmark = pytest.mark.django_db
 

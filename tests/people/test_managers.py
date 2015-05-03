@@ -2,10 +2,10 @@
 import datetime
 import pytest
 
-from base.apps.people.constants import CLASSIFICATIONS, SCOPE, STATUS
-from base.apps.people.factories import (GroupFactory, IdolFactory,
+from apps.people.constants import CLASSIFICATIONS, SCOPE, STATUS
+from apps.people.factories import (GroupFactory, IdolFactory,
     MembershipFactory)
-from base.apps.people.models import Group, Idol, Membership
+from apps.people.models import Group, Idol, Membership
 
 pytestmark = pytest.mark.django_db
 

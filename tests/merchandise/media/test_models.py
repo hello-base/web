@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from base.apps.merchandise.media.factories import (VideodiscFactory,
+from apps.merchandise.media.factories import (VideodiscFactory,
     VideodiscFormatFactory)
-from base.apps.merchandise.media.models import Videodisc, VideodiscFormat
+from apps.merchandise.media.models import Videodisc, VideodiscFormat
 
 pytestmark = pytest.mark.django_db
 

@@ -2,7 +2,6 @@
 bpython == 0.14.1
 django-debug-toolbar == 1.3.0
 django-debugtools >= 1.1.1, < 2.0.0
-django-devserver == 0.8.0
 django-shortcuts == 1.5
 django-sslserver == 0.15
 invoke == 0.10.1

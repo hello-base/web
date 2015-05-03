@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 import pytest
 
-from base.apps.appearances.factories import CardFactory
-from base.apps.people.factories import GroupFactory, IdolFactory
+from apps.appearances.factories import CardFactory
+from apps.people.factories import GroupFactory, IdolFactory
 
 pytestmark = pytest.mark.django_db
 

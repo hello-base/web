@@ -14,7 +14,8 @@ class Base(Configuration):
     # Path Configuration.
     # --------------------------------------------------------------------------
     DJANGO_ROOT = dirname(dirname(abspath(__file__)))
-    SITE_NAME = basename(DJANGO_ROOT)
+    PROJECT_ROOT = dirname(DJANGO_ROOT)
+    PROJECT_NAME = basename(DJANGO_ROOT)
 
     # Installed Applications.
     # --------------------------------------------------------------------------
@@ -29,24 +30,23 @@ class Base(Configuration):
         'django.contrib.staticfiles',
     ]
     COMPONENTS = [
-        'base.apps.accounts',
-        'base.apps.appearances',
-        'base.apps.correlations',
-        'base.apps.events',
-        'base.apps.prose',
-        'base.apps.history',
-        'base.apps.merchandise',
-        'base.apps.merchandise.goods',
-        'base.apps.merchandise.media',
-        'base.apps.merchandise.music',
-        'base.apps.merchandise.stores',
-        'base.apps.news',
-        'base.apps.people',
-        'base.apps.social.twitter',
-        'base.apps.social.youtube',
+        'apps.accounts',
+        'apps.appearances',
+        'apps.correlations',
+        'apps.events',
+        'apps.prose',
+        'apps.history',
+        'apps.merchandise',
+        'apps.merchandise.goods',
+        'apps.merchandise.media',
+        'apps.merchandise.music',
+        'apps.merchandise.stores',
+        'apps.news',
+        'apps.people',
+        'apps.social.twitter',
+        'apps.social.youtube',
     ]
     PLUGINS = [
-        'floppyforms',
         'imagekit',
         'markdown_deux',
         'typogrify',
@@ -82,12 +82,11 @@ class Base(Configuration):
     # Manager Configuration.
     # --------------------------------------------------------------------------
     ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
-    MANAGERS = [('Jennifer Verduzco', 'jen@hello-base.com')]
+    MANAGERS = [('Jennifer Veloso', 'jen@hello-base.com')]
 
     # Database Configuration.
     # --------------------------------------------------------------------------
     DATABASES = postgresify()
-    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
     # Caching Configuration.
     # --------------------------------------------------------------------------
@@ -124,7 +123,7 @@ class Base(Configuration):
         'django.core.context_processors.tz',
         'django.contrib.messages.context_processors.messages',
     )
-    TEMPLATE_DIRS = (normpath(join(DJANGO_ROOT, 'templates')),)
+    TEMPLATE_DIRS = (normpath(join(PROJECT_ROOT, 'templates')),)
     TEMPLATE_LOADERS = (
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
@@ -135,7 +134,7 @@ class Base(Configuration):
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
-    STATICFILES_DIRS = [normpath(join(DJANGO_ROOT, 'static'))]
+    STATICFILES_DIRS = [normpath(join(PROJECT_ROOT, 'static'))]
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -148,13 +147,13 @@ class Base(Configuration):
 
     # URL Configuration.
     # --------------------------------------------------------------------------
-    ROOT_URLCONF = '%s.urls' % SITE_NAME
+    ROOT_URLCONF = '%s.urls' % PROJECT_NAME
     WSGI_APPLICATION = 'wsgi.application'
 
     # Authentication Configuration.
     # --------------------------------------------------------------------------
     AUTHENTICATION_BACKENDS = (
-        'base.apps.accounts.backends.HelloBaseIDBackend',
+        'apps.accounts.backends.HelloBaseIDBackend',
         'django.contrib.auth.backends.ModelBackend',
     )
     HELLO_BASE_CLIENT_ID = values.Value('', environ_prefix=None)
@@ -209,7 +208,7 @@ class Base(Configuration):
     # django-grappelli.
     # --------------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
-    # GRAPPELLI_INDEX_DASHBOARD = 'base.apps.dashboard.CustomIndexDashboard'
+    # GRAPPELLI_INDEX_DASHBOARD = 'apps.dashboard.CustomIndexDashboard'
 
     # django-haystack.
     # --------------------------------------------------------------------------
@@ -217,7 +216,7 @@ class Base(Configuration):
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
     HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-    # base.apps.socialize.
+    # apps.socialize.
     # --------------------------------------------------------------------------
     TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
     TWITTER_CONSUMER_SECRET = values.SecretValue(environ_prefix=None)

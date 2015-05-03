@@ -45,6 +45,7 @@ class Production(Settings):
     DATABASES = postgresify()
     if 'default' in DATABASES:  # pragma: no branch
         DATABASES['default']['CONN_MAX_AGE'] = 600
+        DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
     # Caching Configuration.
     # --------------------------------------------------------------------------
@@ -177,7 +178,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'base.apps.search_backends.KuromojiElastcisearchEngine',
+            'ENGINE': 'apps.search_backends.KuromojiElastcisearchEngine',
             'URL': os.environ.get('BONSAI_URL', ''),
             'INDEX_NAME': 'haystack',
         },

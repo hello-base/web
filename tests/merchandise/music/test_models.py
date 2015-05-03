@@ -3,13 +3,13 @@ import pytest
 
 from django.core.exceptions import ValidationError
 
-from base.apps.merchandise.music.models import (Album, Edition, Single, Track,
+from apps.merchandise.music.models import (Album, Edition, Single, Track,
     Video)
-from base.apps.merchandise.music.factories import (AlbumFactory,
+from apps.merchandise.music.factories import (AlbumFactory,
     EditionFactory, SingleFactory, TrackFactory, TrackOrderFactory,
     VideoFactory)
-from base.apps.people.constants import CLASSIFICATIONS
-from base.apps.people.factories import (GroupFactory, MembershipFactory,
+from apps.people.constants import CLASSIFICATIONS
+from apps.people.factories import (GroupFactory, MembershipFactory,
     IdolFactory)
 
 edition_type = Edition.EDITIONS
@@ -18,7 +18,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestParticipations:
-    # While this code lives in `base.apps.people.models,` it is tested here
+    # While this code lives in `apps.people.models,` it is tested here
     # because it is a mixin that nearly all of the music models use.
     @pytest.fixture
     def release(self):
