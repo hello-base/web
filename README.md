@@ -1,6 +1,6 @@
 # Hello! Base
 
-[![Build Status](https://travis-ci.org/hello-base/web.svg)](https://travis-ci.org/hello-base/web) [![Code Climate](https://codeclimate.com/repos/552826d7695680275000332d/badges/4e00cc975d3857f6837c/gpa.svg)](https://codeclimate.com/repos/552826d7695680275000332d/feed)
+[![Build Status](https://travis-ci.org/hello-base/web.svg)](https://travis-ci.org/hello-base/web) [![Code Climate](https://codeclimate.com/github/hello-base/web/badges/gpa.svg)](https://codeclimate.com/github/hello-base/web)
 
 ## What is Hello! Base?
 
