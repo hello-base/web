@@ -1,5 +1,7 @@
 # Hello! Base
 
+[![Code Climate](https://codeclimate.com/repos/552826d7695680275000332d/badges/4e00cc975d3857f6837c/gpa.svg)](https://codeclimate.com/repos/552826d7695680275000332d/feed)
+
 ## What is Hello! Base?
 
 Hello! Base is the central database unit for all of Hello! Project. We provide structure where there is none. If there's information out there that has something to do with our beloved idols, it's probably in here--or rather, it should be.

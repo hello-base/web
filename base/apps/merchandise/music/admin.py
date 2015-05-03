@@ -9,21 +9,22 @@ from base.apps.accounts.admin import ContributorMixin
 from base.apps.merchandise.stores.admin import PurchaseLinkInline
 from base.apps.prose.admin import FactInline
 
-from .models import Album, Edition, Label, Single, Track, TrackOrder, Video, VideoTrackOrder
+from .models import (Album, Edition, Label, Single, Track, TrackOrder, Video,
+    VideoTrackOrder)
 
 
-class AlbumEditionInline(admin.StackedInline):
+class ReleaseEditionInline(admin.StackedInline):
+    extra = 1
+    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), ('catalog_number', 'price'), 'art')}),)
+    model = Edition
+
+
+class AlbumEditionInline(ReleaseEditionInline):
     exclude = ['single']
-    extra = 1
-    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), ('catalog_number', 'price'), 'art')}),)
-    model = Edition
 
 
-class SingleEditionInline(admin.StackedInline):
+class SingleEditionInline(ReleaseEditionInline):
     exclude = ['album']
-    extra = 1
-    fieldsets = ((None, {'fields': ('kind', 'released', ('romanized_name', 'name'), ('catalog_number', 'price'), 'art')}),)
-    model = Edition
 
 
 class TrackOrderInline(admin.TabularInline):
@@ -68,6 +69,8 @@ admin.site.register(Label, LabelAdmin)
 class MusicBaseAdmin(admin.ModelAdmin):
     date_hierarchy = 'released'
     filter_horizontal = ['idols', 'groups']
+    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
+    list_editable = ['released', 'label']
     list_select_related = True
     ordering = ('-modified',)
     prepopulated_fields = {'slug': ['romanized_name']}
@@ -80,6 +83,21 @@ class MusicBaseAdmin(admin.ModelAdmin):
     def save_related(self, request, form, formsets, change):
         super(MusicBaseAdmin, self).save_related(request, form, formsets, change)
         form.instance.save()
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        request = kwargs['request']
+        formfield = super(MusicBaseAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'label':
+            label_choices_cache = getattr(request, 'label_choices_cache', None)
+            if label_choices_cache is not None:
+                formfield.choices = label_choices_cache
+            else:
+                request.label_choices_cache = formfield.choices
+        return formfield
+
+    def participant_list(self, obj):
+        return ', '.join([p.romanized_name for p in obj.participants])
+    participant_list.short_description = 'Participant List'
 
 
 class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
@@ -99,24 +117,6 @@ class AlbumAdmin(ContributorMixin, MusicBaseAdmin):
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [AlbumEditionInline, FactInline, PurchaseLinkInline]
-    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
-    list_editable = ['released', 'label']
-    list_select_related = True
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        request = kwargs['request']
-        formfield = super(AlbumAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'label':
-            label_choices_cache = getattr(request, 'label_choices_cache', None)
-            if label_choices_cache is not None:
-                formfield.choices = label_choices_cache
-            else:
-                request.label_choices_cache = formfield.choices
-        return formfield
-
-    def participant_list(self, obj):
-        return ', '.join([p.romanized_name for p in obj.participants])
-    participant_list.short_description = 'Participant List'
 admin.site.register(Album, AlbumAdmin)
 
 
@@ -140,24 +140,6 @@ class SingleAdmin(ContributorMixin, MusicBaseAdmin):
         ('Internal Notes', {'fields': ('note',)}),
     )
     inlines = [SingleEditionInline, FactInline, PurchaseLinkInline]
-    list_display = ['romanized_name', 'name', 'released', 'label', 'participant_list', 'number', 'romanized_released_as']
-    list_editable = ['released', 'label']
-    list_select_related = True
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        request = kwargs['request']
-        formfield = super(SingleAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'label':
-            label_choices_cache = getattr(request, 'label_choices_cache', None)
-            if label_choices_cache is not None:
-                formfield.choices = label_choices_cache
-            else:
-                request.label_choices_cache = formfield.choices
-        return formfield
-
-    def participant_list(self, obj):
-        return ', '.join([p.romanized_name for p in obj.participants])
-    participant_list.short_description = 'Participant List'
 admin.site.register(Single, SingleAdmin)
 
 

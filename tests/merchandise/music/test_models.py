@@ -77,7 +77,6 @@ class TestAlbums:
     def test_factory(self):
         factory = AlbumFactory()
         assert isinstance(factory, Album)
-        assert 'album' in factory.romanized_name
         assert factory.identifier == 'album'
 
     def test_save_with_regular_edition_data(self):
@@ -149,7 +148,6 @@ class TestSingles:
     def test_factory(self):
         factory = SingleFactory()
         assert isinstance(factory, Single)
-        assert 'single' in factory.romanized_name
         assert factory.identifier == 'single'
 
     def test_get_absolute_url(self, client):

@@ -57,7 +57,6 @@ urlpatterns = patterns('',
 
     # Core Modules.
     url(r'^accounts/', include('base.apps.accounts.urls')),
-    url(r'^api/', include('base.apps.api.urls', namespace='api')),
     url(r'^', include('base.apps.appearances.urls')),
     url(r'^', include('base.apps.correlations.urls')),
     url(r'^', include('base.apps.events.urls')),

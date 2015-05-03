@@ -423,49 +423,40 @@ class ParticipationMixin(models.Model):
                 return group
 
 
-class Groupshot(models.Model):
-    group = models.ForeignKey(Group, related_name='photos')
+upload_paths = {'groups': 'people/groups/', 'idols': 'people/idols/'}
+def get_directory(instance, filename):
+    category = instance.category
+    return upload_paths.get(category, '')
 
+
+class Shot(models.Model):
     kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
-    photo = models.ImageField(blank=True, upload_to='people/groups/')
-    photo_thumbnail = models.ImageField(blank=True, upload_to='people/groups/')
+    photo = models.ImageField(blank=True, upload_to=get_directory)
+    photo_thumbnail = models.ImageField(blank=True, upload_to=get_directory)
     optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
     taken = models.DateField()
 
     class Meta:
+        abstract = True
         get_latest_by = 'taken'
         ordering = ('-taken',)
 
     def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.group.romanized_name, self.taken)
+        return u'Photo of %s (%s)' % (self.subject.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):
-        super(Groupshot, self).save(*args, **kwargs)
-        latest = self._default_manager.filter(group=self.group).latest()
-        self.group.photo = latest.photo
-        self.group.photo_thumbnail = latest.photo_thumbnail
-        self.group.save()
+        super(Shot, self).save(*args, **kwargs)
+        latest = self._default_manager.filter(subject=self.subject).latest()
+        self.subject.photo = latest.photo
+        self.subject.photo_thumbnail = latest.photo_thumbnail
+        self.subject.save()
 
 
-class Headshot(models.Model):
-    idol = models.ForeignKey(Idol, related_name='photos')
+class Groupshot(Shot):
+    category = 'groups'
+    subject = models.ForeignKey(Group, related_name='photos')
 
-    kind = models.PositiveSmallIntegerField(choices=PHOTO_SOURCES, default=PHOTO_SOURCES.promotional)
-    photo = models.ImageField(blank=True, upload_to='people/idols/')
-    photo_thumbnail = models.ImageField(blank=True, upload_to='people/idols/')
-    optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
-    taken = models.DateField()
 
-    class Meta:
-        get_latest_by = 'taken'
-        ordering = ('-taken',)
-
-    def __unicode__(self):
-        return u'Photo of %s (%s)' % (self.idol.romanized_name, self.taken)
-
-    def save(self, *args, **kwargs):
-        super(Headshot, self).save(*args, **kwargs)
-        latest = self._default_manager.filter(idol=self.idol).latest()
-        self.idol.photo = latest.photo
-        self.idol.photo_thumbnail = latest.photo_thumbnail
-        self.idol.save()
+class Headshot(Shot):
+    category = 'idols'
+    subject = models.ForeignKey(Idol, related_name='photos')

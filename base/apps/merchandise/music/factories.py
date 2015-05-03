@@ -7,6 +7,10 @@ from . import models
 
 
 class BaseFactory(factory.django.DjangoModelFactory):
+    romanized_name = factory.Sequence(lambda i: 'release#%s' % i)
+    released = datetime.date.today()
+    slug = factory.LazyAttribute(lambda f: slugify(f.romanized_name))
+
     class Meta:
         model = models.Base
         abstract = True
@@ -14,19 +18,11 @@ class BaseFactory(factory.django.DjangoModelFactory):
 
 
 class AlbumFactory(BaseFactory):
-    romanized_name = factory.Sequence(lambda i: 'album#%s' % i)
-    released = datetime.date.today()
-    slug = factory.LazyAttribute(lambda f: slugify(f.romanized_name))
-
     class Meta:
         model = models.Album
 
 
 class SingleFactory(BaseFactory):
-    romanized_name = factory.Sequence(lambda i: 'single#%s' % i)
-    released = datetime.date.today()
-    slug = factory.LazyAttribute(lambda f: slugify(f.romanized_name))
-
     class Meta:
         model = models.Single
 

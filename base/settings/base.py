@@ -212,19 +212,9 @@ class Base(Configuration):
 
     # django-haystack.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += [
-        'haystack',
-        'celery_haystack',
-    ]
+    INSTALLED_APPS += ['haystack']
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
-    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
-
-    # django-rest-framework.
-    # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['rest_framework']
-    REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
-    }
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
     # base.apps.socialize.
     # --------------------------------------------------------------------------
