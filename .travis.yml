@@ -2,7 +2,7 @@ language: python
 sudo: false
 install:
   # Build development/test dependencies.
-  - pip install -r requirements-dev.txt --use-mirrors
+  - pip install -r requirements-dev.txt
 script:
   - py.test
 notifications:
