@@ -2,10 +2,10 @@
 require "susy"
 
 http_path = "/"
-css_dir = "base/static/stylesheets"
+css_dir = "static/stylesheets"
 sass_dir = "base/assets/stylesheets"
-images_dir = "base/static/images"
-javascripts_dir = "base/static/javascripts"
+images_dir = "static/images"
+javascripts_dir = "static/javascripts"
 fonts_dir = "static/fonts"
 
 # Output options.
