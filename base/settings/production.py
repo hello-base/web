@@ -45,6 +45,7 @@ class Production(Settings):
     DATABASES = postgresify()
     if 'default' in DATABASES:  # pragma: no branch
         DATABASES['default']['CONN_MAX_AGE'] = 600
+        DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
     # Caching Configuration.
     # --------------------------------------------------------------------------
