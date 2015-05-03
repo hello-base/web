@@ -12,11 +12,11 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from model_utils import Choices
 
-from base.apps.appearances.models import Magazine, Show
-from base.apps.correlations.models import Correlation
-from base.apps.events.models import Event
-from base.apps.merchandise.music.models import Album, Single
-from base.apps.people.models import Group, Idol
+from apps.appearances.models import Magazine, Show
+from apps.correlations.models import Correlation
+from apps.events.models import Event
+from apps.merchandise.music.models import Album, Single
+from apps.people.models import Group, Idol
 
 SUBJECTS = [
     Idol, Group,     # people

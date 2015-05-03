@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from base.apps.social.twitter.factories import TwitterUserFactory
-from base.apps.social.twitter.tasks import fetch_tweets
+from apps.social.twitter.factories import TwitterUserFactory
+from apps.social.twitter.tasks import fetch_tweets
 
 pytestmark = pytest.mark.django_db
 

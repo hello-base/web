@@ -2,7 +2,7 @@
 import datetime
 import pytest
 
-from base.apps.correlations.utils import call_attributes
+from apps.correlations.utils import call_attributes
 
 FIELDS = ['started']
 

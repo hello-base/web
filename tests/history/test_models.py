@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from base.apps.history.factories import HistoryFactory
-from base.apps.history.models import History
+from apps.history.factories import HistoryFactory
+from apps.history.models import History
 
 pytestmark = pytest.mark.django_db
 

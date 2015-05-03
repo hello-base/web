@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 
 from django.template import Template, Context
 
-from base.apps.merchandise.music.factories import SingleFactory
-from base.apps.people.constants import CLASSIFICATIONS
-from base.apps.people.factories import (GroupFactory, MembershipFactory,
+from apps.merchandise.music.factories import SingleFactory
+from apps.people.constants import CLASSIFICATIONS
+from apps.people.factories import (GroupFactory, MembershipFactory,
     IdolFactory)
 
 pytestmark = pytest.mark.django_db

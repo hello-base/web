@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from base.apps.accounts.admin import ContributorMixin
-from base.apps.prose.admin import FactInline
+from apps.accounts.admin import ContributorMixin
+from apps.prose.admin import FactInline
 
 from .models import (Designation, Group, Groupshot, Headshot, Idol, Membership,
     Staff)

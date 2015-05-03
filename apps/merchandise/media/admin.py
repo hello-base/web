@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from base.apps.accounts.admin import ContributorMixin
+from apps.accounts.admin import ContributorMixin
 
 from .models import Clip, Videodisc, VideodiscFormat
 

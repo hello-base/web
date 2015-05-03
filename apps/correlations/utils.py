@@ -3,8 +3,8 @@ from collections import defaultdict, OrderedDict
 
 from django.contrib.contenttypes.models import ContentType
 
-from base.apps.people.models import Membership
-from base.apps.merchandise.music.models import Album, Single
+from apps.people.models import Membership
+from apps.merchandise.music.models import Album, Single
 
 
 def call_attributes(instance, attribute_list):

@@ -1,5 +1,5 @@
-from base.apps.merchandise.music.models import Album, Single
-from base.apps.people.models import Group, Membership, Idol
+from apps.merchandise.music.models import Album, Single
+from apps.people.models import Group, Membership, Idol
 
 SUBJECTS = [
     # Positive dates.

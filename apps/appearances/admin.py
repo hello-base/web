@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from base.apps.merchandise.stores.admin import PurchaseLinkInline
-from base.apps.prose.admin import SummaryInline
+from apps.merchandise.stores.admin import PurchaseLinkInline
+from apps.prose.admin import SummaryInline
 
 from .models import (Card, CardSet, Episode, Issue, IssueImage, Magazine,
     Show, TimeSlot)

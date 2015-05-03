@@ -5,7 +5,7 @@ from django.db import models
 
 from model_utils import FieldTracker
 
-from base.apps.people.models import Idol, Group, ParticipationMixin
+from apps.people.models import Idol, Group, ParticipationMixin
 
 
 class Show(models.Model):

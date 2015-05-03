@@ -1,6 +1,6 @@
 from django.db import models
 
-from base.apps.people.models import Group, Idol
+from apps.people.models import Group, Idol
 
 
 class TwitterUser(models.Model):

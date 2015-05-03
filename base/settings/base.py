@@ -29,21 +29,21 @@ class Base(Configuration):
         'django.contrib.staticfiles',
     ]
     COMPONENTS = [
-        'base.apps.accounts',
-        'base.apps.appearances',
-        'base.apps.correlations',
-        'base.apps.events',
-        'base.apps.prose',
-        'base.apps.history',
-        'base.apps.merchandise',
-        'base.apps.merchandise.goods',
-        'base.apps.merchandise.media',
-        'base.apps.merchandise.music',
-        'base.apps.merchandise.stores',
-        'base.apps.news',
-        'base.apps.people',
-        'base.apps.social.twitter',
-        'base.apps.social.youtube',
+        'apps.accounts',
+        'apps.appearances',
+        'apps.correlations',
+        'apps.events',
+        'apps.prose',
+        'apps.history',
+        'apps.merchandise',
+        'apps.merchandise.goods',
+        'apps.merchandise.media',
+        'apps.merchandise.music',
+        'apps.merchandise.stores',
+        'apps.news',
+        'apps.people',
+        'apps.social.twitter',
+        'apps.social.youtube',
     ]
     PLUGINS = [
         'imagekit',
@@ -153,7 +153,7 @@ class Base(Configuration):
     # Authentication Configuration.
     # --------------------------------------------------------------------------
     AUTHENTICATION_BACKENDS = (
-        'base.apps.accounts.backends.HelloBaseIDBackend',
+        'apps.accounts.backends.HelloBaseIDBackend',
         'django.contrib.auth.backends.ModelBackend',
     )
     HELLO_BASE_CLIENT_ID = values.Value('', environ_prefix=None)
@@ -208,7 +208,7 @@ class Base(Configuration):
     # django-grappelli.
     # --------------------------------------------------------------------------
     GRAPPELLI_ADMIN_TITLE = 'Hello! Base Administration'
-    # GRAPPELLI_INDEX_DASHBOARD = 'base.apps.dashboard.CustomIndexDashboard'
+    # GRAPPELLI_INDEX_DASHBOARD = 'apps.dashboard.CustomIndexDashboard'
 
     # django-haystack.
     # --------------------------------------------------------------------------
@@ -216,7 +216,7 @@ class Base(Configuration):
     HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
     HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-    # base.apps.socialize.
+    # apps.socialize.
     # --------------------------------------------------------------------------
     TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
     TWITTER_CONSUMER_SECRET = values.SecretValue(environ_prefix=None)

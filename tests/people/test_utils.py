@@ -1,6 +1,6 @@
 import datetime
 
-from base.apps.people.utils import calculate_age, calculate_average_age
+from apps.people.utils import calculate_age, calculate_average_age
 
 
 def test_calculate_age():

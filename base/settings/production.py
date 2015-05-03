@@ -177,7 +177,7 @@ class Production(Settings):
     # --------------------------------------------------------------------------
     HAYSTACK_CONNECTIONS = {
         'default': {
-            'ENGINE': 'base.apps.search_backends.KuromojiElastcisearchEngine',
+            'ENGINE': 'apps.search_backends.KuromojiElastcisearchEngine',
             'URL': os.environ.get('BONSAI_URL', ''),
             'INDEX_NAME': 'haystack',
         },

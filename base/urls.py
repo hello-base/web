@@ -9,9 +9,9 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from base.apps.sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
+from apps.sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
     SingleSitemap, TrackSitemap)
-from base.apps.views import (AutocompleteView, ImageDetailView, PlainTextView,
+from apps.views import (AutocompleteView, ImageDetailView, PlainTextView,
     SiteView, WikiRedirectView, XMLView)
 
 
@@ -56,15 +56,15 @@ urlpatterns = patterns('',
     url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'), permanent=True)),
 
     # Core Modules.
-    url(r'^accounts/', include('base.apps.accounts.urls')),
-    url(r'^', include('base.apps.appearances.urls')),
-    url(r'^', include('base.apps.correlations.urls')),
-    url(r'^', include('base.apps.events.urls')),
-    url(r'^', include('base.apps.merchandise.goods.urls')),
-    url(r'^', include('base.apps.merchandise.media.urls')),
-    url(r'^', include('base.apps.merchandise.music.urls')),
-    url(r'^', include('base.apps.news.urls')),
-    url(r'^', include('base.apps.people.urls')),
+    url(r'^accounts/', include('apps.accounts.urls')),
+    url(r'^', include('apps.appearances.urls')),
+    url(r'^', include('apps.correlations.urls')),
+    url(r'^', include('apps.events.urls')),
+    url(r'^', include('apps.merchandise.goods.urls')),
+    url(r'^', include('apps.merchandise.media.urls')),
+    url(r'^', include('apps.merchandise.music.urls')),
+    url(r'^', include('apps.news.urls')),
+    url(r'^', include('apps.people.urls')),
 
     # Sitemaps, Favicons, Robots, and Humans.
     url(r'^favicon.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico', permanent=True)),

@@ -15,8 +15,8 @@ from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
 
-from base.apps.merchandise.models import AlternateAttributionMixin, Merchandise
-from base.apps.people.models import ParticipationMixin
+from apps.merchandise.models import AlternateAttributionMixin, Merchandise
+from apps.people.models import ParticipationMixin
 
 from .managers import EditionManager, TrackQuerySet, TrackOrderQuerySet
 from .utils import get_next_release, get_previous_release
