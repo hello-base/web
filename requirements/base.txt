@@ -32,4 +32,4 @@ typogrify == 2.0.7
 whitenoise == 1.0.6
 
 # Git requirements.
-git+https://github.com/jezdez/django-configurations.git
+-e git+https://github.com/jezdez/django-configurations.git
