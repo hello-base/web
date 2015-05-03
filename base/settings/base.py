@@ -14,7 +14,8 @@ class Base(Configuration):
     # Path Configuration.
     # --------------------------------------------------------------------------
     DJANGO_ROOT = dirname(dirname(abspath(__file__)))
-    SITE_NAME = basename(DJANGO_ROOT)
+    PROJECT_ROOT = dirname(DJANGO_ROOT)
+    PROJECT_NAME = basename(DJANGO_ROOT)
 
     # Installed Applications.
     # --------------------------------------------------------------------------
@@ -147,7 +148,7 @@ class Base(Configuration):
 
     # URL Configuration.
     # --------------------------------------------------------------------------
-    ROOT_URLCONF = '%s.urls' % SITE_NAME
+    ROOT_URLCONF = '%s.urls' % PROJECT_NAME
     WSGI_APPLICATION = 'wsgi.application'
 
     # Authentication Configuration.
