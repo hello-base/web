@@ -1,4 +1,4 @@
 coffee:    coffee -o base/static/javascripts/application -cw base/assets/javascripts
 compass:   compass watch
 search:    elasticsearch -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml > /dev/null
-web:       python ./manage.py runserver
+web:       python ./manage.py runserver 0.0.0.0:8001
