@@ -82,7 +82,7 @@ class Base(Configuration):
     # Manager Configuration.
     # --------------------------------------------------------------------------
     ADMINS = [('Bryan Veloso', 'bryan@hello-base.com')]
-    MANAGERS = [('Jennifer Verduzco', 'jen@hello-base.com')]
+    MANAGERS = [('Jennifer Veloso', 'jen@hello-base.com')]
 
     # Database Configuration.
     # --------------------------------------------------------------------------
