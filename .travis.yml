@@ -1,9 +1,12 @@
 language: python
 sudo: false
+cache:
+  directories:
+    - ~/.cache/pip
 install:
   # Build development/test dependencies.
+  - pip install -U pip wheel
   - pip install -r requirements-dev.txt
-script:
-  - py.test
+script: py.test
 notifications:
   email: false
