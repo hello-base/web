@@ -175,8 +175,8 @@ class Group(ContributorMixin):
     # Denormalized Fields.
     # Note: These fields should be 1) too frequently accessed to make
     # sense as methods and 2) infrequently updated.
-    photo = models.ImageField(blank=True, upload_to='people/%(class)ss/')
-    photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
+    photo = models.ImageField(blank=True, upload_to='media/people/%(class)ss/')
+    photo_thumbnail = models.ImageField(blank=True, upload_to='media/people/%(class)ss/')
     optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
     class Meta:
@@ -423,7 +423,7 @@ class ParticipationMixin(models.Model):
                 return group
 
 
-upload_paths = {'groups': 'people/groups/', 'idols': 'people/idols/'}
+upload_paths = {'groups': 'media/people/groups/', 'idols': 'media/people/idols/'}
 def get_directory(instance, filename):
     category = instance.category
     return upload_paths.get(category, '')
