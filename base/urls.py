@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView, TemplateView
 
@@ -71,7 +72,7 @@ urlpatterns = [
     url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
     url(r'^opensearch.xml$', name='opensearch', view=XMLView.as_view(template_name='opensearch.xml')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
-    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]
 
 # Since this module will only be called at startup, initialize our
