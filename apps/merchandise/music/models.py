@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import uuid
+
 from itertools import chain
 from operator import attrgetter
 
@@ -242,7 +244,7 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     note = models.TextField(blank=True)
 
     # Secondary identifier.
-    uuid = extensions.UUIDField(auto=True, blank=True, null=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     slug = models.SlugField(blank=True, max_length=200)
 
     def __unicode__(self):
