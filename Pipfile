@@ -1,0 +1,53 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+bpython = "*"
+django-debug-toolbar = "*"
+django-debugtools = "*"
+django-shortcuts = "*"
+django-sslserver = "*"
+invoke = "*"
+
+[packages]
+
+analytics-python = "*"
+celery = "*"
+django = "*"
+django-braces = "*"
+django-dotenv = "*"
+django-extensions = "*"
+django-grappelli = "*"
+django-haystack = "*"
+django-heroku-postgresify = "*"
+django-heroku-redisify = "*"
+django-imagekit = "*"
+django-markdown-deux = "*"
+django-model-utils = "*"
+django-multiurl = "*"
+django-postgrespool = "*"
+django-secure = "*"
+elasticsearch = "*"
+google-api-python-client = "*"
+markdown = "*"
+ohashi = "*"
+pandas = "*"
+pillow = "*"
+"psycopg2" = "*"
+pytz = "*"
+requests = "*"
+requests-oauthlib = "*"
+twitter = "*"
+typogrify = "*"
+whitenoise = "*"
+django-configurations = "*"
+boto = "*"
+django-storages-redux = "*"
+gunicorn = "*"
+hiredis = "*"
+raven = "*"
