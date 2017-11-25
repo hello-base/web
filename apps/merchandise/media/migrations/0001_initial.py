@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200)),
                 ('released', models.DateField(db_index=True, null=True, blank=True)),
                 ('price', models.IntegerField(null=True, blank=True)),
-                ('uuid', django_extensions.db.fields.UUIDField(max_length=36, editable=False, blank=True)),
+                ('uuid', models.UUIDField(max_length=36, editable=False, blank=True)),
                 ('kind', models.IntegerField(default=2, choices=[(b'Performances', [(1, b'Best Shot'), (2, b'Concert'), (3, b'Movie'), (4, b'Musical'), (5, b'Stage Play'), (6, b'Visual')]), (b'Compilations', [(11, b'PV Collections'), (12, b'Television Segments')]), (99, b'Other')])),
                 ('slug', models.SlugField(blank=True)),
                 ('edited_by', models.ManyToManyField(related_name=b'videodiscs_edits', null=True, to='accounts.Editor', blank=True)),

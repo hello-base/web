@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200)),
                 ('released', models.DateField(db_index=True, null=True, blank=True)),
                 ('price', models.IntegerField(null=True, blank=True)),
-                ('uuid', django_extensions.db.fields.UUIDField(max_length=36, editable=False, blank=True)),
+                ('uuid', models.UUIDField(max_length=36, editable=False, blank=True)),
                 ('is_graduation_good', models.BooleanField(default=False, verbose_name=b'graduation good?')),
                 ('is_birthday_good', models.BooleanField(default=False, verbose_name=b'birthday good?')),
                 ('is_online_exclusive', models.BooleanField(default=False, verbose_name=b'online exclusive?')),

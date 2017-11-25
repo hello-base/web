@@ -51,7 +51,7 @@ class Base(base.Merchandise):
     available_until = models.DateField(blank=True, null=True,
         help_text='When was the good taken off the market?')
     link = models.URLField(blank=True)
-    image = models.ImageField(blank=True, upload_to='/')
+    image = models.ImageField(blank=True, upload_to='')
 
     def __unicode__(self):
         if self.event:
