@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.http import Http404
 
 from multiurl import ContinueResolving, multiurl
@@ -7,7 +7,7 @@ from .views import (AlbumDetailView, SingleDetailView, TrackDetailView,
     TrackLyricsView)
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     # MultiURL allows us to unite all of the music under a simpler URL.
     multiurl(
         url(r'^music/(?P<slug>[-\w]+)/$', name='single-detail', view=SingleDetailView.as_view()),
@@ -23,4 +23,4 @@ urlpatterns = patterns('',
     # url(r'^music/tracks/$', name='track-browse', view=TrackBrowseView.as_view()),
 
     # url(r'^music/$', name='music-browse', view=MusicBrowseView.as_view()),
-)
+]

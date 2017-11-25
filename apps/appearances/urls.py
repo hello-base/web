@@ -1,11 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from .views import (ShowListView, ShowDetailView, EpisodeDetailView,
     MagazineListView, MagazineDetailView, IssueDetailView)
 
 
-urlpatterns = patterns('',
-
+urlpatterns = [
     url(r'^show/(?P<slug>[-\w]+)/$', name='show-detail', view=ShowDetailView.as_view()),
     url(r'^show/$', name='show-list', view=ShowListView.as_view()),
 
@@ -15,4 +14,4 @@ urlpatterns = patterns('',
     url(r'^magazine/$', name='magazine-list', view=MagazineListView.as_view()),
 
     url(r'^magazine/issue/(?P<volume_number>[\d\+]+)/$', name='issue-detail', view=IssueDetailView.as_view()),
-)
+]

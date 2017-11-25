@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView, TemplateView
@@ -29,7 +29,7 @@ sitemaps = {
 # displayed on the search results page.
 sqs = SearchQuerySet().facet('model')
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Home and Search.
     url(r'^$', name='site-home', view=SiteView.as_view()),
     url(r'^search/autocomplete/$', name='autocomplete', view=AutocompleteView.as_view()),
@@ -72,7 +72,7 @@ urlpatterns = patterns('',
     url(r'^opensearch.xml$', name='opensearch', view=XMLView.as_view(template_name='opensearch.xml')),
     url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-)
+]
 
 # Since this module will only be called at startup, initialize our
 # Segment.io analytics library here.
