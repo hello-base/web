@@ -13,7 +13,6 @@ from django_extensions.db import fields as extensions
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import Choices
-from model_utils.managers import PassThroughManager
 
 from apps.merchandise.models import AlternateAttributionMixin, Merchandise
 from apps.people.models import ParticipationMixin
@@ -204,7 +203,7 @@ class Edition(models.Model):
 
 class Track(ParticipationMixin, AlternateAttributionMixin):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(TrackQuerySet)()
+    objects = TrackQuerySet.as_manager()
 
     album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks')
     single = models.ForeignKey(Single, blank=True, null=True, related_name='tracks')
@@ -308,7 +307,7 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
 
 class TrackOrder(models.Model):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(TrackOrderQuerySet)()
+    objects = TrackOrderQuerySet.as_manager()
 
     edition = models.ForeignKey(Edition, related_name='order')
     track = models.ForeignKey(Track, related_name='appears_on')

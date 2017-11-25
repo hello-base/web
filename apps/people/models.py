@@ -13,7 +13,6 @@ from django.utils.functional import cached_property
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import FieldTracker
-from model_utils.managers import PassThroughManager
 from ohashi.db import models as ohashi
 
 from apps.accounts.models import ContributorMixin
@@ -71,7 +70,7 @@ class Person(ContributorMixin):
 
 class Idol(Person):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
+    objects = IdolQuerySet.as_manager()
     birthdays = ohashi.BirthdayManager()
     tracker = FieldTracker()
 
@@ -147,7 +146,7 @@ class Staff(Person):
 
 class Group(ContributorMixin):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
+    objects = GroupQuerySet.as_manager()
     tracker = FieldTracker()
 
     name = models.CharField(max_length=60)
@@ -271,7 +270,7 @@ class Designation(models.Model):
 
 class Membership(models.Model):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
+    objects = MembershipQuerySet.as_manager()
     tracker = FieldTracker()
 
     idol = models.ForeignKey(Idol, related_name='memberships')
