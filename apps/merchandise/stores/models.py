@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.db.models import get_model
 
 from apps.appearances.models import Issue
 from apps.merchandise.music.models import Album, Single
