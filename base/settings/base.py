@@ -148,7 +148,7 @@ class Base(Configuration):
     # URL Configuration.
     # --------------------------------------------------------------------------
     ROOT_URLCONF = '%s.urls' % PROJECT_NAME
-    WSGI_APPLICATION = 'wsgi.application'
+    WSGI_APPLICATION = 'base.wsgi.application'
 
     # Authentication Configuration.
     # --------------------------------------------------------------------------
