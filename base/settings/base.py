@@ -73,7 +73,6 @@ class Base(Configuration):
     # Debug Settings.
     # --------------------------------------------------------------------------
     DEBUG = values.BooleanValue(True)
-    TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
 
     # Secret Key Configuration.
     # --------------------------------------------------------------------------
@@ -113,21 +112,24 @@ class Base(Configuration):
 
     # Template Configuration.
     # --------------------------------------------------------------------------
-    TEMPLATE_CONTEXT_PROCESSORS = (
-        'django.contrib.auth.context_processors.auth',
-        'django.core.context_processors.debug',
-        'django.core.context_processors.i18n',
-        'django.core.context_processors.media',
-        'django.core.context_processors.static',
-        'django.core.context_processors.request',
-        'django.core.context_processors.tz',
-        'django.contrib.messages.context_processors.messages',
-    )
     TEMPLATES = [{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [normpath(join(PROJECT_ROOT, 'templates'))],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
+                'django.core.context_processors.request',
+                'django.core.context_processors.tz',
+                'django.contrib.messages.context_processors.messages'
+            ],
+            'debug': values.BooleanValue(DEBUG)
+        }
     }]
-    
+
     # Static File Configuration.
     # --------------------------------------------------------------------------
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
