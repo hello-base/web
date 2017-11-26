@@ -4,11 +4,10 @@ from django.views.generic import DetailView
 
 from ohashi.shortcuts import get_object_or_none
 
-from apps.accounts.views import QuicklinksMixin
 from .models import Group, Idol, Membership, Staff
 
 
-class GroupDetailView(QuicklinksMixin, DetailView):
+class GroupDetailView(DetailView):
     queryset = Group.objects.all()
     template_name = 'people/group_detail.html'
 
@@ -41,7 +40,7 @@ class GroupDetailView(QuicklinksMixin, DetailView):
         return context
 
 
-class IdolDetailView(QuicklinksMixin, DetailView):
+class IdolDetailView(DetailView):
     model = Idol
     template_name = 'people/idol_detail.html'
 

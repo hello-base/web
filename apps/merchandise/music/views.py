@@ -1,10 +1,9 @@
 from django.views.generic import DetailView
 
-from apps.accounts.views import QuicklinksMixin
 from .models import Album, Single, Track
 
 
-class AlbumDetailView(QuicklinksMixin, DetailView):
+class AlbumDetailView(DetailView):
     queryset = Album.objects.all()
     template_name = 'merchandise/music/album_detail.html'
 
@@ -16,7 +15,7 @@ class AlbumDetailView(QuicklinksMixin, DetailView):
         return context
 
 
-class SingleDetailView(QuicklinksMixin, DetailView):
+class SingleDetailView(DetailView):
     model = Single
     template_name = 'merchandise/music/single_detail.html'
 
@@ -28,7 +27,7 @@ class SingleDetailView(QuicklinksMixin, DetailView):
         return context
 
 
-class TrackDetailView(QuicklinksMixin, DetailView):
+class TrackDetailView(DetailView):
     queryset = Track.objects.originals()
     template_name = 'merchandise/music/track_detail.html'
 

@@ -57,7 +57,6 @@ urlpatterns = [
     url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'), permanent=True)),
 
     # Core Modules.
-    url(r'^accounts/', include('apps.accounts.urls')),
     url(r'^', include('apps.appearances.urls')),
     url(r'^', include('apps.correlations.urls')),
     url(r'^', include('apps.events.urls')),
