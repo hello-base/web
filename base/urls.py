@@ -53,9 +53,6 @@ urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    # Authentication aliases.
-    url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'), permanent=True)),
-
     # Core Modules.
     url(r'^', include('apps.appearances.urls')),
     url(r'^', include('apps.correlations.urls')),

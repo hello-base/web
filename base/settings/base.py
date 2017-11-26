@@ -153,12 +153,6 @@ class Base(Configuration):
     ROOT_URLCONF = '%s.urls' % PROJECT_NAME
     WSGI_APPLICATION = 'base.wsgi.application'
 
-    # Authentication Configuration.
-    # --------------------------------------------------------------------------
-    AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
-    LOGIN_URL = reverse_lazy('oauth-authorize')
-    # LOGOUT_URL = 'oauth-deauthorize'
-
     # Custom User Application Defaults.
     # --------------------------------------------------------------------------
     AUTH_USER_MODEL = 'accounts.editor'
