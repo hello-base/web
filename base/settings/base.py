@@ -48,8 +48,7 @@ class Base(Configuration):
     ]
     PLUGINS = [
         'imagekit',
-        'markdown_deux',
-        'typogrify',
+        'markdown_deux'
     ]
     ADMINISTRATION = [
         # 'grappelli.dashboard',

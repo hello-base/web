@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load humanize markdown_deux_tags typogrify_tags people_tags static %}
+{% load humanize markdown_deux_tags people_tags static %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Singles{% endblock %}
 {% block meta %}
@@ -24,7 +24,7 @@
       {% if fact %}
       <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
         <h4>{# <span class="ss-icon ss-notepad"></span> #} Random Fact</h4>
-        {{ fact.body|markdown|typogrify }}
+        {{ fact.body|markdown }}
       </div>
       {% endif %}
     </div>
@@ -43,7 +43,6 @@
     <aside class="profile-vitals">
       <div class="container">
         <ul class="vitals-list">
-          {% filter typogrify %}
           <li class="vital vital-by">
             <span class="vital-label"><span class="ss-icon ss-users"></span>{% if not object.number %} by{% endif %}</span>&nbsp;
             <div class="vital-participants">
@@ -59,7 +58,6 @@
           </li>
           <li class="vital vital-released"><span class="vital-label"><span class="ss-icon ss-calendar"></span> Released</span> <time datetime="{{ object.released|date:"c" }}" itemprop="dateCreated">{{ object.released | date:"F j, Y" }}</time></li>
           <li class="vital vital-editions"><span class="vital-label"><span class="ss-icon ss-disc"></span> Editions</span> {{ editions|length }}</li>
-          {% endfilter %}
         </ul>
       </div>
     </aside>

@@ -1,9 +1,7 @@
 {% extends "layouts/site_base.html" %}
-{% load typogrify_tags %}
 
 {% block title %}About Us{% endblock %}
 {% block content %}
-{% filter typogrify %}
 <section class="flatpage about">
   <header>
     <div class="container">
@@ -90,5 +88,4 @@
   </div>
   {% endcomment %}
 </section>
-{% endfilter %}
 {% endblock content %}

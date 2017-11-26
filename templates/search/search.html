@@ -1,5 +1,4 @@
 {% extends "layouts/site_base.html" %}
-{% load typogrify_tags %}
 
 {% block title %}{% if query %}Search results for "{{ query }}"{% else %}Search the Base{% endif %}{% endblock %}
 {% block body-class %}{% if query %}with-query{% else %}no-query{% endif %} {% if page.object_list %}with-results{% else %}no-results{% endif %}{% endblock %}
@@ -20,13 +19,11 @@
     <div class="empty">
       <h2>OTZ</h2>
       <p>
-      {% filter typogrify %}
       {% if query|length < 3 %}
         Ack, your search term needs to be <em>at least</em> three characters.
       {% else %}
         Sorry, we couldn't find anything for the term "{{ query }}".
       {% endif %}
-      {% endfilter %}
       </p>
     </div>
   {% else %}

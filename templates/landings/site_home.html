@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load cache correlation_tags humanize typogrify_tags %}
+{% load cache correlation_tags humanize %}
 {% load static from staticfiles %}
 
 {% block title_override %}Discover everything about Hello! Project &middot; Welcome to Hello! Base, the Hello! Project Database{% endblock %}
@@ -87,7 +87,6 @@
   </div>
 </div>
 
-{% filter typogrify %}
 <div class="reasonings">
   <ul class="reasoning-list container">
     <li class="reasoning">
@@ -125,7 +124,6 @@
     </ul>
   </div>
 </div>
-{% endfilter %}
 
 {% include "partials/footer.html" %}
 {% endblock page %}

@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load markdown_deux_tags typogrify_tags %}
+{% load markdown_deux_tags %}
 
 {% block title %}{{ object.title }} ({{ object.published|date:"DATE_FORMAT" }}) &middot; News{% endblock %}
 {% block body-class %}override{% endblock %}
@@ -27,13 +27,13 @@
       <div class="item">
         <div class="item-body">
           <header class="item-header">
-            <h1 class="item-title">{{ object.title|typogrify }}</h1>
+            <h1 class="item-title">{{ object.title }}</h1>
           </header>
           <div class="item-metadata">
             <time class="item-published" datetime="{{ object.published|date:'c' }}">{{ object.published|date:"DATE_FORMAT" }}</time> / <span class="item-author">Reported by {{ object.author }}</span>
           </div>
 
-          {{ object.body|markdown|typogrify }}
+          {{ object.body|markdown }}
 
           {% if object.updates.all %}
           <ul class="item-updates">

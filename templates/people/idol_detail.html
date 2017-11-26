@@ -1,5 +1,5 @@
 {% extends "layouts/site_base.html" %}
-{% load markdown_deux_tags music_tags people_tags static typogrify_tags %}
+{% load markdown_deux_tags music_tags people_tags static %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Idols{% endblock %}
 {% block meta %}
@@ -35,7 +35,7 @@
       {% if fact %}
       <div class="profile-note profile-status-{{ object.get_status_display|lower }}">
         <h4>{# <span class="ss-icon ss-notepad"></span> #} Random Fact</h4>
-        {{ fact.body|markdown|typogrify }}
+        {{ fact.body|markdown }}
       </div>
       {% endif %}
     </div>
