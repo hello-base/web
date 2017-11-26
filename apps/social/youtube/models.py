@@ -15,7 +15,7 @@ class Channel(models.Model):
     group = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
 
     def __str__(self):
-        return u'%s' % (self.username)
+        return '%s' % (self.username)
 
     def save(self, *args, **kwargs):
         from .api import Api
@@ -39,7 +39,7 @@ class Video(models.Model):
     duration = models.CharField(blank=True, max_length=10, null=True)
 
     def __str__(self):
-        return u'%s' % (self.title)
+        return '%s' % (self.title)
 
     def get_absolute_url(self):
         return 'http://youtu.be/%s' % (self.ytid)
@@ -75,7 +75,7 @@ class Thumbnail(models.Model):
     url = models.URLField('URL')
 
     def __str__(self):
-        return u'%s (for %s)' % (self.url, self.video.title)
+        return '%s (for %s)' % (self.url, self.video.title)
 
     def get_absolute_url(self):
         return self.url

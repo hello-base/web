@@ -25,7 +25,7 @@ class Shop(models.Model):
     # Campaign goods (freebies) may also be defined as a source?
 
     def __str__(self):
-        return u'%s' % self.romanized_name
+        return '%s' % self.romanized_name
 
 
 class Base(base.Merchandise):
@@ -55,10 +55,10 @@ class Base(base.Merchandise):
 
     def __str__(self):
         if self.event:
-            return u'%s from %s' % (self.romanized_name, self.event.nickname)
+            return '%s from %s' % (self.romanized_name, self.event.nickname)
         if self.shop:
-            return u'%s from %s' % (self.romanized_name, self.shop.romanized_name)
-        return u'%s' % self.romanized_name
+            return '%s from %s' % (self.romanized_name, self.shop.romanized_name)
+        return '%s' % self.romanized_name
 
     def clean(self, *args, **kwargs):
         # Of course the date a good is available until cannot be earlier than

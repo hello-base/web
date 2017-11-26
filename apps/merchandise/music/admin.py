@@ -151,8 +151,8 @@ class EditionAdmin(admin.ModelAdmin):
         ('Content', {'fields': ('romanized_name', 'released', 'catalog_number', 'price', 'art')})
     )
     inlines = [TrackOrderInline, VideoTrackOrderInline]
-    list_display = ['__unicode__', 'kind', 'romanized_name', 'name', 'released', 'catalog_number']
-    list_display_links = ['__unicode__', 'kind']
+    list_display = ['__str__', 'kind', 'romanized_name', 'name', 'released', 'catalog_number']
+    list_display_links = ['__str__', 'kind']
     list_filter = ['kind']
     list_select_related = True
     ordering = ('-released',)
@@ -195,8 +195,8 @@ class TrackAdmin(admin.ModelAdmin):
         ('Internal Notes', {'fields': ('note',)}),
     )
     filter_horizontal = ['idols', 'groups', 'arrangers', 'composers', 'lyricists']
-    list_display = ['__unicode__', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
-    list_display_links = ['__unicode__', 'name']
+    list_display = ['__str__', 'name', 'is_cover', 'is_alternate', 'original_track', 'romanized_name_alternate', 'name_alternate', 'participant_list']
+    list_display_links = ['__str__', 'name']
     list_filter = ['is_cover', 'is_alternate']
     list_select_related = True
     ordering = ('-id',)

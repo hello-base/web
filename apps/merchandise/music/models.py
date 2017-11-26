@@ -30,7 +30,7 @@ class Label(models.Model):
     slug = models.SlugField()
 
     def __str__(self):
-        return u'%s' % (self.romanized_name)
+        return '%s' % (self.romanized_name)
 
 
 class Base(Merchandise, AlternateAttributionMixin):
@@ -56,7 +56,7 @@ class Base(Merchandise, AlternateAttributionMixin):
         ordering = ('-released',)
 
     def __str__(self):
-        return u'%s' % (self.romanized_name)
+        return '%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
         if self.editions.exists() and self.primary_edition:
@@ -101,7 +101,7 @@ class Album(Base):
 
     @property
     def kind(self):
-        return u'compilation' if self.is_compilation else None
+        return 'compilation' if self.is_compilation else None
 
 
 class Single(Base):
@@ -122,7 +122,7 @@ class Single(Base):
 
     @property
     def kind(self):
-        return u'indie' if self.is_indie else None
+        return 'indie' if self.is_indie else None
 
 
 class Edition(models.Model):
@@ -160,7 +160,7 @@ class Edition(models.Model):
         ordering = ('kind', 'romanized_name')
 
     def __str__(self):
-        return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
+        return '%s [%s]' % (self.parent.romanized_name, self.romanized_name)
 
     def get_absolute_url(self):
         return self.parent.get_absolute_url()
@@ -250,11 +250,11 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     def __str__(self):
         if self.is_alternate:
             if self.is_cover:
-                return u'%s %s [Cover]' % (self.romanized_name, self.romanized_name_alternate)
-            return u'%s %s' % (self.romanized_name, self.romanized_name_alternate)
+                return '%s %s [Cover]' % (self.romanized_name, self.romanized_name_alternate)
+            return '%s %s' % (self.romanized_name, self.romanized_name_alternate)
         if self.is_cover and not self.is_alternate:
-            return u'%s [Cover]' % (self.romanized_name)
-        return u'%s [Original]' % (self.romanized_name)
+            return '%s [Cover]' % (self.romanized_name)
+        return '%s [Original]' % (self.romanized_name)
 
     def get_absolute_url(self):
         if self.original_track:
@@ -328,8 +328,8 @@ class TrackOrder(models.Model):
 
     def __str__(self):
         if self.is_instrumental:
-            return u'%s (Instrumental) on %s' % (self.track, self.edition)
-        return u'%s on %s' % (self.track, self.edition)
+            return '%s (Instrumental) on %s' % (self.track, self.edition)
+        return '%s on %s' % (self.track, self.edition)
 
 
 class Video(models.Model):
@@ -374,7 +374,7 @@ class Video(models.Model):
         get_latest_by = 'released'
 
     def __str__(self):
-        return u'%s' % (self.romanized_name)
+        return '%s' % (self.romanized_name)
 
     @property
     def parent(self):
@@ -407,7 +407,7 @@ class VideoTrackOrder(models.Model):
         verbose_name = 'video track'
 
     def __str__(self):
-        return u'%s on %s' % (self.video, self.edition)
+        return '%s on %s' % (self.video, self.edition)
 
 
 @receiver(post_save, sender=Track)

@@ -11,6 +11,6 @@ omit =
 [report]
 exclude_lines =
     pragma: no cover
-    def __unicode__
+    def __str__
     def autocomplete_search_fields
 precision = 2

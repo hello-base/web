@@ -51,7 +51,7 @@ class VideodiscFormat(models.Model):
         verbose_name = 'format'
 
     def __str__(self):
-        return u'%s' % (self.parent.romanized_name)
+        return '%s' % (self.parent.romanized_name)
 
 
 class Clip(ParticipationMixin):
@@ -68,5 +68,5 @@ class Clip(ParticipationMixin):
 
     def __str__(self):
         if self.romanized_name:
-            return u'%s on %s' % (self.romanized_name, self.format)
-        return u'%s on %s' % (self.track, self.format)
+            return '%s on %s' % (self.romanized_name, self.format)
+        return '%s on %s' % (self.track, self.format)

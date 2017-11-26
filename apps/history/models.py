@@ -24,7 +24,7 @@ class History(TimeStampedModel):
         verbose_name_plural = 'histories'
 
     def __str__(self):
-        return u'%s' % (self.tag)
+        return '%s' % (self.tag)
 
     def save(self, *args, **kwargs):
         try:

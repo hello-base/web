@@ -40,7 +40,7 @@ class Person(ContributorMixin):
         abstract = True
 
     def __str__(self):
-        return u'%s' % (self.romanized_name)
+        return '%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
         self.name = self._render_name()
@@ -49,15 +49,15 @@ class Person(ContributorMixin):
 
     def _render_name(self):
         if self.alias:
-            return u'%s' % (self.alias)
-        return u'%s%s' % (self.family_name, self.given_name)
+            return '%s' % (self.alias)
+        return '%s%s' % (self.family_name, self.given_name)
 
     def _render_romanized_name(self):
         if self.romanized_alias:
-            return u'%s' % (self.romanized_alias)
+            return '%s' % (self.romanized_alias)
         elif hasattr(self, 'is_gaijin') and self.is_gaijin():
-            return u'%s %s' % (self.romanized_given_name, self.romanized_family_name)
-        return u'%s %s' % (self.romanized_family_name, self.romanized_given_name)
+            return '%s %s' % (self.romanized_given_name, self.romanized_family_name)
+        return '%s %s' % (self.romanized_family_name, self.romanized_given_name)
 
     @property
     def identifier(self):
@@ -182,7 +182,7 @@ class Group(ContributorMixin):
         ordering = ('started',)
 
     def __str__(self):
-        return u'%s' % (self.romanized_name)
+        return '%s' % (self.romanized_name)
 
     def get_absolute_url(self):
         return reverse('group-detail', kwargs={'slug': self.slug})
@@ -265,7 +265,7 @@ class Designation(models.Model):
         order_with_respect_to = 'group'
 
     def __str__(self):
-        return u'%s' % (self.romanized_name)
+        return '%s' % (self.romanized_name)
 
 
 class Membership(models.Model):
@@ -441,7 +441,7 @@ class Shot(models.Model):
         ordering = ('-taken',)
 
     def __str__(self):
-        return u'Photo of %s (%s)' % (self.subject.romanized_name, self.taken)
+        return 'Photo of %s (%s)' % (self.subject.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):
         super(Shot, self).save(*args, **kwargs)
