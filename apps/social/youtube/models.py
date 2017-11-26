@@ -58,7 +58,7 @@ class Video(models.Model):
 
         # Save the thumbnails.
         thumbnails = entry['snippet']['thumbnails']
-        for key, value in thumbnails.iteritems():
+        for key, value in thumbnails.items():
             t, created = Thumbnail.objects.get_or_create(video=self, quality=key, url=value['url'])
             t.save()
 

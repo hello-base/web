@@ -61,7 +61,7 @@ class TestGroups:
 
         generations = group.generations()
         assert len(generations) == 3
-        for k, v in generations.iteritems():
+        for k, v in generations.items():
             assert isinstance(k, int)
             assert len(v) == 1
 

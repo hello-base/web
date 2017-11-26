@@ -49,9 +49,9 @@
   <div class="container">
     <div class="correlation-happenings">
       <ul class="happening-date-list">
-      {% for year, months in happenings.iteritems %}
-      {% for month, days in months.iteritems %}
-      {% for day, events in days.iteritems %}
+      {% for year, months in happenings.items %}
+      {% for month, days in months.items %}
+      {% for day, events in days.items %}
       <li class="happening-date">
         <h3 class="happening-date-name"><span class="month-name">{{ month }}/</span>{{ day }}</h3>
         <ul class="happening-event-list">

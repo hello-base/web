@@ -41,7 +41,7 @@ class HappeningsByYearView(YearArchiveView):
         for key, group in groupby(dqs, lambda y: str(y.year)[:3]):
             key = '%s0s' % key
             decades[key] = list(year for year in group)
-        return OrderedDict(sorted(decades.iteritems(), key=lambda t: t[0]))
+        return OrderedDict(sorted(decades.items(), key=lambda t: t[0]))
 
     def get_statistics(self):
         statistics = defaultdict(lambda: defaultdict(dict))
@@ -55,7 +55,7 @@ class HappeningsByYearView(YearArchiveView):
             statistic = len([c for c in correlations if c.identifier == i[1] and c.date_field == i[2]])
             previous = len([c for c in previous_correlations if c.identifier == i[1] and c.date_field == i[2]])
             statistics[i[0]][i[1]][i[2]] = (statistic, statistic - previous)
-        return OrderedDict(sorted(dictify(statistics).iteritems(), key=lambda t: t[0], reverse=True))
+        return OrderedDict(sorted(dictify(statistics).items(), key=lambda t: t[0], reverse=True))
 
 
 class AggregateJulianCorrelationView(JSONResponseMixin, DetailView):
