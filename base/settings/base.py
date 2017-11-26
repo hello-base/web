@@ -123,12 +123,11 @@ class Base(Configuration):
         'django.core.context_processors.tz',
         'django.contrib.messages.context_processors.messages',
     )
-    TEMPLATE_DIRS = (normpath(join(PROJECT_ROOT, 'templates')),)
-    TEMPLATE_LOADERS = (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )
-
+    TEMPLATES = [{
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [normpath(join(PROJECT_ROOT, 'templates'))],
+    }]
+    
     # Static File Configuration.
     # --------------------------------------------------------------------------
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
