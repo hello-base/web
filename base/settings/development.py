@@ -9,10 +9,7 @@ class Development(Settings):
 
     # Installed Applications.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS = Settings.INSTALLED_APPS + [
-        'debugtools',
-        'django_extensions',
-    ]
+    INSTALLED_APPS = Settings.INSTALLED_APPS + []
 
     # Site Configuration.
     # --------------------------------------------------------------------------
@@ -33,29 +30,6 @@ class Development(Settings):
     # --------------------------------------------------------------------------
     CELERY_ALWAYS_EAGER = True  # http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
     CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # http://docs.celeryproject.org/en/latest/configuration.html#celery-eager-propagates-exceptions
-
-    # django-debugtoolbar.
-    # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['debug_toolbar']
-    INTERNAL_IPS = ('127.0.0.1',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TEMPLATE_CONTEXT': True
-    }
-    DEBUG_TOOLBAR_PANELS = [
-        'debug_toolbar.panels.versions.VersionsPanel',
-        'debug_toolbar.panels.timer.TimerPanel',
-        'debug_toolbar.panels.settings.SettingsPanel',
-        'debug_toolbar.panels.headers.HeadersPanel',
-        'debug_toolbar.panels.request.RequestPanel',
-        'debug_toolbar.panels.sql.SQLPanel',
-        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-        'debug_toolbar.panels.templates.TemplatesPanel',
-        'debug_toolbar.panels.cache.CachePanel',
-        'debug_toolbar.panels.signals.SignalsPanel',
-        'debug_toolbar.panels.logging.LoggingPanel',
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-    ]
 
     # django-extensions
     # --------------------------------------------------------------------------
