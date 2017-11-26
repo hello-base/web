@@ -116,6 +116,7 @@ class Base(Configuration):
     TEMPLATES = [{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [normpath(join(PROJECT_ROOT, 'templates'))],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
