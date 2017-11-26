@@ -28,7 +28,7 @@ class Fact(models.Model):
     # Model Managers.
     tracker = FieldTracker()
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s: %s...' % (self.parent.romanized_name, self.body[:40])
 
     @property
@@ -54,7 +54,7 @@ class Summary(models.Model):
     class Meta:
         verbose_name_plural = 'summaries'
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s summary' % (self.parent)
 
     @property

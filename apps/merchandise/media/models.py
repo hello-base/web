@@ -50,7 +50,7 @@ class VideodiscFormat(models.Model):
         ordering = ('-released',)
         verbose_name = 'format'
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.parent.romanized_name)
 
 
@@ -66,7 +66,7 @@ class Clip(ParticipationMixin):
     class Meta:
         ordering = ('format', 'disc', 'position')
 
-    def __unicode__(self):
+    def __str__(self):
         if self.romanized_name:
             return u'%s on %s' % (self.romanized_name, self.format)
         return u'%s on %s' % (self.track, self.format)

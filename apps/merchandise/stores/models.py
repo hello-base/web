@@ -15,7 +15,7 @@ class Store(models.Model):
     name = models.CharField(blank=True, max_length=200)
     url = models.URLField(blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s' % (self.romanized_name)
 
 
@@ -23,7 +23,7 @@ class PurchaseLink(models.Model):
     store = models.ForeignKey(Store)
     url = models.URLField(blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s' % (self.url)
 
 

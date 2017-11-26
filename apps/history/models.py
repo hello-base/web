@@ -23,7 +23,7 @@ class History(TimeStampedModel):
         get_latest_by = 'datetime'
         verbose_name_plural = 'histories'
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.tag)
 
     def save(self, *args, **kwargs):

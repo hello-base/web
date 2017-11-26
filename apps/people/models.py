@@ -39,7 +39,7 @@ class Person(ContributorMixin):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
@@ -181,7 +181,7 @@ class Group(ContributorMixin):
     class Meta:
         ordering = ('started',)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
     def get_absolute_url(self):
@@ -264,7 +264,7 @@ class Designation(models.Model):
         get_latest_by = 'started'
         order_with_respect_to = 'group'
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
 
@@ -292,7 +292,7 @@ class Membership(models.Model):
         ordering = ('-is_primary', '-started', '-idol__birthdate')
         unique_together = ('idol', 'group')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (%s)' % (self.idol, self.group.romanized_name)
 
     def save(self, *args, **kwargs):
@@ -440,7 +440,7 @@ class Shot(models.Model):
         get_latest_by = 'taken'
         ordering = ('-taken',)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Photo of %s (%s)' % (self.subject.romanized_name, self.taken)
 
     def save(self, *args, **kwargs):

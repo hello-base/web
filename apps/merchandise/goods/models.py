@@ -24,7 +24,7 @@ class Shop(models.Model):
 
     # Campaign goods (freebies) may also be defined as a source?
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % self.romanized_name
 
 
@@ -53,7 +53,7 @@ class Base(base.Merchandise):
     link = models.URLField(blank=True)
     image = models.ImageField(blank=True, upload_to='')
 
-    def __unicode__(self):
+    def __str__(self):
         if self.event:
             return u'%s from %s' % (self.romanized_name, self.event.nickname)
         if self.shop:

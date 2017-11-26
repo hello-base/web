@@ -52,7 +52,7 @@ class Event(ContributorMixin, ParticipationMixin):
     class Meta:
         get_latest_by = 'start_date'
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
     def get_absolute_url(self):
@@ -103,7 +103,7 @@ class Activity(ContributorMixin):
         ordering = ('day', 'start_time')
         verbose_name_plural = 'activities'
 
-    def __unicode__(self):
+    def __str__(self):
         if self.start_time:
             return u'%s %s at %s' % (self.day, self.event.nickname, self.start_time)
         return u'%s %s' % (self.day, self.event.nickname)
@@ -125,7 +125,7 @@ class Venue(ContributorMixin):
     # Imagery.
     photo = models.ImageField(blank=True, null=True, upload_to='events/venues/')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
     def get_absolute_url(self):

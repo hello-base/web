@@ -48,7 +48,7 @@ class Editor(AbstractBaseUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELS = ['email']
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.username)
 
     def get_full_name(self):

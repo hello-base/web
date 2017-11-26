@@ -70,7 +70,7 @@ class Item(models.Model):
         get_latest_by = 'published'
         ordering = ('-published',)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (%s)' % (self.title, self.published)
 
     def get_absolute_url(self):
@@ -103,7 +103,7 @@ class ItemImage(models.Model):
     caption = models.CharField(blank=True, max_length=500)
     thumbnail = ImageSpecField(source='image', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s' % (self.image)
 
 
@@ -124,5 +124,5 @@ class Update(models.Model):
     class Meta:
         ordering = ('parent', 'published')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s Update of "%s"' % (self.published, self.parent.title)

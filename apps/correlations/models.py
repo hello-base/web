@@ -52,7 +52,7 @@ class Correlation(models.Model):
         get_latest_by = 'timestamp'
         ordering = ('-timestamp',)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s [%s:%s]' % (self.timestamp, self.content_type_id, self.object_id)
 
     def related_label(self):

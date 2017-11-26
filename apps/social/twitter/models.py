@@ -16,7 +16,7 @@ class TwitterUser(models.Model):
     idols = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
     groups = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.screen_name)
 
     def get_absolute_url(self):
@@ -49,7 +49,7 @@ class Tweet(models.Model):
     retweeted_status_text = models.TextField(blank=True)
     retweeted_status_source = models.CharField(blank=True, max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s: %s' % (self.user.screen_name, self.text)
 
     def get_absolute_url(self):

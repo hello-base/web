@@ -14,7 +14,7 @@ class Channel(models.Model):
     idol = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
     group = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.username)
 
     def save(self, *args, **kwargs):
@@ -38,7 +38,7 @@ class Video(models.Model):
     published = models.DateTimeField(blank=True, null=True)
     duration = models.CharField(blank=True, max_length=10, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.title)
 
     def get_absolute_url(self):
@@ -74,7 +74,7 @@ class Thumbnail(models.Model):
     quality = models.CharField(default='default', max_length=10)
     url = models.URLField('URL')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s (for %s)' % (self.url, self.video.title)
 
     def get_absolute_url(self):

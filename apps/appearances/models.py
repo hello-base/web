@@ -19,7 +19,7 @@ class Show(models.Model):
     aired_from = models.DateField(blank=True, null=True)
     aired_until = models.DateField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s' % self.romanized_name
 
 
@@ -30,7 +30,7 @@ class TimeSlot(models.Model):
     start_time = models.DateTimeField(blank=True, null=True)
     end_time = models.DateTimeField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s~%s %s' % (self.start_time, self.end_time, self.show.romanized_name)
 
 
@@ -57,7 +57,7 @@ class Episode(ParticipationMixin, models.Model):
     class Meta:
         ordering = ('show', 'air_date')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s %s' % (self.air_date, self.show.romanized_name)
 
 
@@ -67,7 +67,7 @@ class Magazine(models.Model):
     price = models.IntegerField(blank=True, null=True)
     slug = models.SlugField()
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s' % self.romanized_name
 
 
@@ -88,7 +88,7 @@ class Issue(ParticipationMixin, models.Model):
         help_text='JAN number works too, its like a Japanese ISBN.')
     cover = models.ImageField(blank=True, upload_to='appearances/issues/')
 
-    def __unicode__(self):
+    def __str__(self):
         if any([self.volume, self.volume_month, self.volume_week]):
             return '%s: Vol. %s' % (self.magazine.romanized_name, self.get_volume())
         return '%s: %s' % (self.magazine.romanized_name, self.release_date)
@@ -112,7 +112,7 @@ class IssueImage(models.Model):
     image = models.ImageField(blank=True, upload_to='appearances/issues/')
     # Gallery will allow multiple images to be uploaded by users.
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Image of %s' % (self.magazine.romanized_name)
 
 
@@ -124,7 +124,7 @@ class CardSet(models.Model):
     # Gallery
     image = models.ImageField(blank=True, upload_to='appearances/cards/')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s %s' % (self.magazine.romanized_name, self.romanized_name)
 
 
@@ -147,7 +147,7 @@ class Card(models.Model):
     # Models must always be named, even if card features a group.
     # When the model is not a H!B idol, CharField to input name/romanized_name/group name/group romanized name.
 
-    def __unicode__(self):
+    def __str__(self):
         if self.number:
             return '%s card no. %s' % (self.issue, self.number)
         if self.group or self.other_group_romanized_name:

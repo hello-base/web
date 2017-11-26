@@ -29,7 +29,7 @@ class Label(models.Model):
     logo = models.ImageField(blank=True, null=True, upload_to='merchandise/music/labels/')
     slug = models.SlugField()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
 
@@ -55,7 +55,7 @@ class Base(Merchandise, AlternateAttributionMixin):
         get_latest_by = 'released'
         ordering = ('-released',)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
     def save(self, *args, **kwargs):
@@ -159,7 +159,7 @@ class Edition(models.Model):
         get_latest_by = 'released'
         ordering = ('kind', 'romanized_name')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s [%s]' % (self.parent.romanized_name, self.romanized_name)
 
     def get_absolute_url(self):
@@ -247,7 +247,7 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     slug = models.SlugField(blank=True, max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.is_alternate:
             if self.is_cover:
                 return u'%s %s [Cover]' % (self.romanized_name, self.romanized_name_alternate)
@@ -326,7 +326,7 @@ class TrackOrder(models.Model):
         ordering = ('disc', 'position')
         verbose_name = 'track'
 
-    def __unicode__(self):
+    def __str__(self):
         if self.is_instrumental:
             return u'%s (Instrumental) on %s' % (self.track, self.edition)
         return u'%s on %s' % (self.track, self.edition)
@@ -373,7 +373,7 @@ class Video(models.Model):
     class Meta:
         get_latest_by = 'released'
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.romanized_name)
 
     @property
@@ -406,7 +406,7 @@ class VideoTrackOrder(models.Model):
         unique_together = ('edition', 'video')
         verbose_name = 'video track'
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s on %s' % (self.video, self.edition)
 
 
