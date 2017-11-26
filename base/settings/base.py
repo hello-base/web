@@ -155,12 +155,7 @@ class Base(Configuration):
 
     # Authentication Configuration.
     # --------------------------------------------------------------------------
-    AUTHENTICATION_BACKENDS = (
-        'apps.accounts.backends.HelloBaseIDBackend',
-        'django.contrib.auth.backends.ModelBackend',
-    )
-    HELLO_BASE_CLIENT_ID = values.Value('', environ_prefix=None)
-    HELLO_BASE_CLIENT_SECRET = values.Value('', environ_prefix=None)
+    AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
     LOGIN_URL = reverse_lazy('oauth-authorize')
     # LOGOUT_URL = 'oauth-deauthorize'
 
