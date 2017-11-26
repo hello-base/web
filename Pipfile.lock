@@ -311,9 +311,9 @@
         },
         "ohashi": {
             "hashes": [
-                "sha256:30d96bc80152fbb6c97b86cb8fbc9f4a068148151a50025b753efb68ca232f30"
+                "sha256:dc7f48fb032fd32639cf30df334c9268da5b40d891ef9ced4f404b60ac481276"
             ],
-            "version": "==0.2.7"
+            "version": "==0.2.8"
         },
         "olefile": {
             "hashes": [
