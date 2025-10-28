@@ -1,8 +1,6 @@
 from model_utils import Choices
 
-# Was from ohashi.constants import OTHER
-# OTHER is used as a catch-all value in Choices
-OTHER = 99
+from apps.ohashi.constants import OTHER
 
 
 BLOOD_TYPE = Choices('A', 'B', 'O', 'AB')

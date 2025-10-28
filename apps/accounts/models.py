@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 
 from model_utils.models import TimeStampedModel
-from django.db import models
+from apps.ohashi.db import models
 
 
 class EditorManager(BaseUserManager):

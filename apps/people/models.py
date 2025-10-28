@@ -16,6 +16,8 @@ from model_utils import FieldTracker
 from model_utils.managers import QueryManager
 
 from apps.accounts.models import ContributorMixin
+from apps.ohashi.db.models import BirthdayField
+from apps.ohashi.db.models.managers import BirthdayManager
 
 from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
@@ -71,7 +73,7 @@ class Person(ContributorMixin):
 class Idol(Person):
     # Model Managers.
     objects = QueryManager.from_queryset(IdolQuerySet)()
-    # birthdays = ohashi.BirthdayManager()  # TEMPORARILY DISABLED - Custom ohashi manager
+    birthdays = BirthdayManager()
     tracker = FieldTracker()
 
     # Status.
@@ -93,7 +95,7 @@ class Idol(Person):
         help_text='The date this idol retired.')
 
     # Birth Information.
-    birthdate = models.DateField(blank=True, db_index=True, null=True)  # Was ohashi.BirthdayField
+    birthdate = BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True, max_length=200)
     birthplace_romanized = models.CharField(blank=True, max_length=200)
     birthplace_latitude = models.FloatField(blank=True, null=True)

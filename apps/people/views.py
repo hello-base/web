@@ -2,14 +2,8 @@ from operator import attrgetter
 
 from django.views.generic import DetailView
 
-# get_object_or_none was from ohashi - inline implementation
-def get_object_or_none(model, **kwargs):
-    try:
-        return model.objects.get(**kwargs)
-    except model.DoesNotExist:
-        return None
-
 from apps.accounts.views import QuicklinksMixin
+from apps.ohashi.shortcuts import get_object_or_none
 from .models import Group, Idol, Membership, Staff
 
 
