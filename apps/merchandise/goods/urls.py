@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, url
+from django.urls import re_path
 
 from .views import GoodsBrowseView, ShopDetailView, ShopListView
 
 
-urlpatterns = patterns('',
-    url(r'^goods/$', name='goods-browse', view=GoodsBrowseView.as_view()),
+urlpatterns = [
+    re_path(r'^goods/$', GoodsBrowseView.as_view(), name='goods-browse'),
 
-    url(r'^shop/(?P<slug>[-\w]+)/$', name='shop-detail', view=ShopDetailView.as_view()),
-    url(r'^shop/$', name='shop-list', view=ShopListView.as_view()),
-)
+    re_path(r'^shop/(?P<slug>[-\w]+)/$', ShopDetailView.as_view(), name='shop-detail'),
+    re_path(r'^shop/$', ShopListView.as_view(), name='shop-list'),
+]
