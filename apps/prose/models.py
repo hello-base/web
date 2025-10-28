@@ -40,13 +40,13 @@ class Fact(models.Model):
 for subject in FACT_SUBJECTS:
     Fact.add_to_class(
         subject._meta.model_name,
-        models.ForeignKey(subject, blank=True, null=True, related_name='%(class)ss')
+        models.ForeignKey(subject, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)ss')
     )
 
 
 class Summary(models.Model):
     body = models.TextField(blank=True)
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
+    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s_submissions')
 
     # Model Managers.
     tracker = FieldTracker()
@@ -69,5 +69,5 @@ class Summary(models.Model):
 for subject in SUMMARY_SUBJECTS:
     Summary.add_to_class(
         subject._meta.model_name,
-        models.ForeignKey(subject, blank=True, null=True, related_name='summaries')
+        models.ForeignKey(subject, on_delete=models.CASCADE, blank=True, null=True, related_name='summaries')
     )

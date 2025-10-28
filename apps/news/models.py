@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from itertools import chain
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils import timezone
 
@@ -46,7 +46,7 @@ class Item(models.Model):
         ('minor', 'Minor'),
     )
 
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s_submissions')
     category = models.CharField(choices=CATEGORIES, max_length=16)
     classification = models.CharField(choices=CLASSIFICATION, default=CLASSIFICATION.normal, max_length=16)
 
@@ -97,7 +97,7 @@ for subject in SUBJECTS:
 
 
 class ItemImage(models.Model):
-    parent = models.ForeignKey(Item, related_name='images')
+    parent = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='images')
 
     image = models.ImageField(blank=True, upload_to='news/')
     caption = models.CharField(blank=True, max_length=500)
@@ -108,8 +108,8 @@ class ItemImage(models.Model):
 
 
 class Update(models.Model):
-    parent = models.ForeignKey(Item, related_name='updates')
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='%(class)s_submissions')
+    parent = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='updates')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s_submissions')
     body = models.TextField(blank=True)
     published = models.DateField(default=timezone.now)
 

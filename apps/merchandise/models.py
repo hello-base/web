@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
+from uuid import uuid4
 from django_extensions.db import fields as extensions
 
 from apps.accounts.models import ContributorMixin
@@ -15,7 +16,7 @@ class Merchandise(ContributorMixin, ParticipationMixin):
     price = models.IntegerField(blank=True, null=True)
 
     # Secondary identifier.
-    uuid = extensions.UUIDField(auto=True)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)  # Was models.UUIDField(default=uuid4, editable=False, unique=True)
 
     class Meta:
         abstract = True

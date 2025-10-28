@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from itertools import chain
 from operator import attrgetter
+from uuid import uuid4
 
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -13,7 +14,7 @@ from django_extensions.db import fields as extensions
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import Choices
-from model_utils.managers import PassThroughManager
+from model_utils.managers import QueryManager
 
 from apps.merchandise.models import AlternateAttributionMixin, Merchandise
 from apps.people.models import ParticipationMixin
@@ -35,7 +36,7 @@ class Label(models.Model):
 class Base(Merchandise, AlternateAttributionMixin):
     # Music-specific shared metadata.
     number = models.CharField(blank=True, max_length=10)
-    label = models.ForeignKey(Label, blank=True, null=True, related_name='%(class)ss')
+    label = models.ForeignKey(Label, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)ss')
     slug = models.SlugField(blank=True)
     is_indie = models.BooleanField('indie release?', default=False)
 
@@ -137,8 +138,8 @@ class Edition(models.Model):
     # Model Managers.
     objects = EditionManager()
 
-    album = models.ForeignKey(Album, blank=True, null=True, related_name='editions')
-    single = models.ForeignKey(Single, blank=True, null=True, related_name='editions')
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True, related_name='editions')
+    single = models.ForeignKey(Single, on_delete=models.CASCADE, blank=True, null=True, related_name='editions')
 
     # Metadata
     romanized_name = models.CharField(blank=True, max_length=100)
@@ -204,10 +205,10 @@ class Edition(models.Model):
 
 class Track(ParticipationMixin, AlternateAttributionMixin):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(TrackQuerySet)()
+    objects = QueryManager.from_queryset(TrackQuerySet)()
 
-    album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks')
-    single = models.ForeignKey(Single, blank=True, null=True, related_name='tracks')
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True, related_name='tracks')
+    single = models.ForeignKey(Single, on_delete=models.CASCADE, blank=True, null=True, related_name='tracks')
 
     # Metadata.
     romanized_name = models.CharField(max_length=200)
@@ -215,7 +216,7 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     translated_name = models.CharField(blank=True, max_length=200)
 
     # Alternate Versions.
-    original_track = models.ForeignKey('self', blank=True, null=True, related_name='children',
+    original_track = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children',
         help_text='If this track is a cover or alternate, choose the original track it\'s based off of.')
     is_cover = models.BooleanField('cover?', default=False)
     is_alternate = models.BooleanField('alternate?', default=False)
@@ -243,7 +244,7 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
     note = models.TextField(blank=True)
 
     # Secondary identifier.
-    uuid = extensions.UUIDField(auto=True, blank=True, null=True)
+    uuid = models.UUIDField(default=uuid4, editable=False, blank=True, null=True)
     slug = models.SlugField(blank=True, max_length=200)
 
     def __unicode__(self):
@@ -308,10 +309,10 @@ class Track(ParticipationMixin, AlternateAttributionMixin):
 
 class TrackOrder(models.Model):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(TrackOrderQuerySet)()
+    objects = QueryManager.from_queryset(TrackOrderQuerySet)()
 
-    edition = models.ForeignKey(Edition, related_name='order')
-    track = models.ForeignKey(Track, related_name='appears_on')
+    edition = models.ForeignKey(Edition, on_delete=models.CASCADE, related_name='order')
+    track = models.ForeignKey(Track, on_delete=models.CASCADE, related_name='appears_on')
     disc = models.PositiveSmallIntegerField(default=1)
     position = models.PositiveSmallIntegerField(default=1)
 
@@ -356,8 +357,8 @@ class Video(models.Model):
         (99, 'other', 'Other'),
     )
 
-    album = models.ForeignKey(Album, blank=True, null=True, related_name='videos')
-    single = models.ForeignKey(Single, blank=True, null=True, related_name='videos')
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True, related_name='videos')
+    single = models.ForeignKey(Single, on_delete=models.CASCADE, blank=True, null=True, related_name='videos')
 
     # Metadata
     romanized_name = models.CharField(max_length=200)
@@ -396,8 +397,8 @@ class Video(models.Model):
 
 
 class VideoTrackOrder(models.Model):
-    edition = models.ForeignKey(Edition, related_name='video_order')
-    video = models.ForeignKey(Video, related_name='on_edition')
+    edition = models.ForeignKey(Edition, on_delete=models.CASCADE, related_name='video_order')
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='on_edition')
     position = models.PositiveSmallIntegerField()
 
     class Meta:

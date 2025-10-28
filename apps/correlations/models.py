@@ -30,7 +30,7 @@ class Correlation(models.Model):
     objects = CorrelationManager()
 
     # Correlation Object.
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.IntegerField('object ID')
     content_object = GenericForeignKey()
 

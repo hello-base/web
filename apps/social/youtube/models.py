@@ -11,8 +11,8 @@ class Channel(models.Model):
     ytid = models.CharField('YouTube ID', blank=True, max_length=60)
 
     # Optional relationships.
-    idol = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
-    group = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
+    idol = models.OneToOneField(Idol, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s')
+    group = models.OneToOneField(Group, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s')
 
     def __unicode__(self):
         return u'%s' % (self.username)
@@ -30,7 +30,7 @@ class Channel(models.Model):
 
 class Video(models.Model):
     ytid = models.CharField('YouTube ID', max_length=200, primary_key=True, unique=True)
-    channel = models.ForeignKey(Channel, related_name='videos')
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='videos')
 
     # Metadata.
     title = models.CharField(blank=True, max_length=200)
@@ -58,7 +58,7 @@ class Video(models.Model):
 
         # Save the thumbnails.
         thumbnails = entry['snippet']['thumbnails']
-        for key, value in thumbnails.iteritems():
+        for key, value in thumbnails.items():
             t, created = Thumbnail.objects.get_or_create(video=self, quality=key, url=value['url'])
             t.save()
 
@@ -70,7 +70,7 @@ class Video(models.Model):
 
 
 class Thumbnail(models.Model):
-    video = models.ForeignKey(Video, null=True, related_name='thumbnails')
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, related_name='thumbnails')
     quality = models.CharField(default='default', max_length=10)
     url = models.URLField('URL')
 

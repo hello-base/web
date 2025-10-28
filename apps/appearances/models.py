@@ -24,7 +24,7 @@ class Show(models.Model):
 
 
 class TimeSlot(models.Model):
-    show = models.ForeignKey(Show)
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
 
     # Broadcast Schedule (for Hello! Project shows only)
     start_time = models.DateTimeField(blank=True, null=True)
@@ -35,11 +35,11 @@ class TimeSlot(models.Model):
 
 
 class Episode(ParticipationMixin, models.Model):
-    show = models.ForeignKey(Show)
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
     air_date = models.DateField()
 
     # Continued Episodes (for episodes split into parts)
-    episode = models.ForeignKey('self', blank=True, null=True, related_name='continuation')
+    episode = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='continuation')
 
     # Optional Information
     is_coverage = models.BooleanField('is coverage?', default=False)
@@ -72,7 +72,7 @@ class Magazine(models.Model):
 
 
 class Issue(ParticipationMixin, models.Model):
-    magazine = models.ForeignKey(Magazine, related_name='issues')  # default: issue_set
+    magazine = models.ForeignKey(Magazine, on_delete=models.CASCADE, related_name='issues')  # default: issue_set
     price = models.IntegerField(blank=True, null=True,
         help_text='If different from magazine price.')
     volume = models.CharField(blank=True, max_length=10,
@@ -108,7 +108,7 @@ class Issue(ParticipationMixin, models.Model):
 
 
 class IssueImage(models.Model):
-    issue = models.ForeignKey(Issue, related_name='gallery')
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='gallery')
     image = models.ImageField(blank=True, upload_to='appearances/issues/')
     # Gallery will allow multiple images to be uploaded by users.
 
@@ -117,7 +117,7 @@ class IssueImage(models.Model):
 
 
 class CardSet(models.Model):
-    issue = models.ForeignKey(Issue, related_name='sets')
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='sets')
     romanized_name = models.CharField(max_length=200)
     name = models.CharField(blank=True, max_length=200)
 
@@ -129,11 +129,11 @@ class CardSet(models.Model):
 
 
 class Card(models.Model):
-    issue = models.ForeignKey(Issue, related_name='cards')
-    cardset = models.ForeignKey(CardSet, blank=True, null=True)
-    hp_model = models.ForeignKey(Idol, blank=True, null=True, related_name='cards', verbose_name='H!P model')
-    member_of = models.ForeignKey(Group, blank=True, null=True, related_name='idol')
-    group = models.ForeignKey(Group, blank=True, null=True, related_name='cards')
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='cards')
+    cardset = models.ForeignKey(CardSet, on_delete=models.CASCADE, blank=True, null=True)
+    hp_model = models.ForeignKey(Idol, on_delete=models.CASCADE, blank=True, null=True, related_name='cards', verbose_name='H!P model')
+    member_of = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True, related_name='idol')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True, related_name='cards')
     number = models.IntegerField(blank=True, null=True)
     image = models.ImageField(blank=True, upload_to='appearances/cards/')
 

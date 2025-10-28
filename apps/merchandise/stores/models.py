@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.db.models import get_model
 
 from apps.appearances.models import Issue
 from apps.merchandise.music.models import Album, Single
@@ -21,7 +20,7 @@ class Store(models.Model):
 
 
 class PurchaseLink(models.Model):
-    store = models.ForeignKey(Store)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
     url = models.URLField(blank=True)
 
     def __unicode__(self):
@@ -32,5 +31,5 @@ class PurchaseLink(models.Model):
 for subject in PURCHASE_SUBJECTS:
     PurchaseLink.add_to_class(
         subject._meta.model_name,
-        models.ForeignKey(subject, blank=True, null=True, related_name='purchase_links')
+        models.ForeignKey(subject, on_delete=models.CASCADE, blank=True, null=True, related_name='purchase_links')
     )
