@@ -4,100 +4,86 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Hello! Base is a Django-based database and web application for Hello! Project idol information. It uses PostgreSQL, Elasticsearch for search, and is deployed on Heroku.
+Hello! Base is a Django-based database and web application for Hello! Project idol information. It contains data on 207 idols, 91 groups, 615 singles, 219 albums, and 2,712 tracks spanning Hello! Project's history from 1997 to present.
+
+**Current State (2025)**: Recently modernized from Python 2.7/Django 1.8 (2015) to Python 3.11/Django 4.2. Currently undergoing migration to headless architecture (see `MODERNIZATION_PLAN.md`).
 
 ## Technology Stack
 
-- **Framework**: Django 1.8.2 with django-configurations
-- **Database**: PostgreSQL (via django-heroku-postgresify)
-- **Search**: Elasticsearch with django-haystack 2.4.0rc1
-- **Task Queue**: Celery 3.1.18
-- **Static Files**: WhiteNoise for serving, Compass for Sass, CoffeeScript for JS
-- **Image Processing**: django-imagekit
+### Backend (Current)
+- **Framework**: Django 4.2.17 LTS with django-configurations
+- **Python**: 3.11.11
+- **Database**: PostgreSQL 15
+- **Search**: Elasticsearch 8.16.0 (temporarily disabled during migration)
+- **Task Queue**: Celery 5.4.0 (temporarily disabled during migration)
+- **Static Files**: WhiteNoise 6.8.2 for serving
+- **Image Processing**: django-imagekit 5.0.0 + Pillow 11.0.0
 - **Authentication**: Custom OAuth backend (HelloBaseIDBackend)
+
+### Infrastructure
+- **Development**: Docker Compose (PostgreSQL 15, Redis 7, Elasticsearch 8)
+- **Testing**: pytest 8.3.4 + pytest-django 4.9.0
+- **Production**: Gunicorn 23.0.0 WSGI server
 
 ## Development Environment
 
-### Docker (Recommended for 2025)
+### Docker Setup (Primary Method)
 
 See [DOCKER.md](DOCKER.md) for full Docker setup instructions.
 
 ```bash
-# Quick start
-cp .env.example .env
-docker-compose up --build
+# Start all services (PostgreSQL, Redis, Elasticsearch, Django)
+docker-compose up
 
 # Run migrations
 docker-compose exec web python manage.py migrate
 
-# Run tests
-docker-compose exec web py.test tests/
+# Access Django shell
+docker-compose exec web python manage.py shell
+
+# Run management commands
+docker-compose exec web python manage.py <command>
 ```
 
-### Legacy Development Server (Pre-Docker)
-
-```fish
-# Start all development processes (web, elasticsearch, compass, coffee)
-invoke server
-# Or directly:
-foreman start -f Procfile.dev
-```
-
-The development server runs on `http://0.0.0.0:8001`.
+The development server runs on `http://localhost:8001`.
 
 ### Testing
 
-```fish
-# Run tests
-invoke test
-# Or directly:
-py.test tests/
-
-# Run tests with coverage report
-invoke test --coverage
+```bash
+# Run all tests
+docker-compose exec web pytest
 
 # Run specific test file
-py.test tests/people/test_managers.py
+docker-compose exec web pytest tests/people/test_managers.py
+
+# Run with coverage
+docker-compose exec web pytest --cov
+
+# Or locally (if you have Python 3.11 installed)
+pytest tests/
 ```
 
-Tests use pytest with `--nomigrations` flag. Configuration in setup.cfg.
-
-### Code Quality
-
-```fish
-# Run flake8 linting
-invoke flake
-# Or directly:
-flake8 --max-complexity 6 > flake8.txt
-```
-
-Flake8 config: excludes migrations, ignores E125/E128/E501, max complexity 6.
+Tests use pytest with `--nomigrations` flag. Configuration in `setup.cfg`.
 
 ### Database Management
 
-```fish
+```bash
 # Run migrations
-python manage.py migrate
+docker-compose exec web python manage.py migrate
 
-# Pull production database to local
-invoke heroku.pull --database=hello-base
+# Create new migration
+docker-compose exec web python manage.py makemigrations
 
-# Create database snapshot
-invoke heroku.capture
+# Load database dump (PostgreSQL custom format)
+docker-compose exec -T db pg_restore -U hellobase -d hellobase --clean --if-exists < dump.dump
+
+# Create database dump
+docker-compose exec -T db pg_dump -U hellobase -Fc hellobase > dump.dump
 ```
 
-### Heroku Deployment
+### Admin Interface
 
-```fish
-# Deploy to Heroku (runs tests first)
-invoke deploy
-
-# Deploy with migrations (disables preboot, runs migrations, re-enables preboot)
-invoke deploy --migrate
-
-# Generate ImageKit thumbnails on Heroku
-invoke heroku.imagekit
-```
+Access the Django admin at `http://localhost:8001/admin/` using django-grappelli enhanced UI.
 
 ## Architecture
 
@@ -147,30 +133,107 @@ Django apps are organized in the `apps/` directory:
 
 ### URL Structure
 
-Main URLs defined in `base/urls.py`. Most apps have their own `urls.py` included at root level (not prefixed). For example:
-- People: `/idols/`, `/groups/`
-- Music: `/albums/`, `/singles/`, `/tracks/`
-- Search: `/search/`, `/search/autocomplete/`
+**Flat URL Design**: Hello! Base uses a carefully designed flat URL structure to maximize simplicity and SEO.
+
+Main URLs defined in `base/urls.py`. Key patterns:
+- **People**: `/{slug}/` - Both idols AND groups at root level using `django-multiurl`
+  - Example: `/shinoda-miho/` (idol), `/morning-musume/` (group)
+  - The multiurl pattern tries idol first, then falls back to group
+- **Music**: `/music/{slug}/` - Both albums AND singles (multiurl pattern)
+  - Tracks: `/music/tracks/{slug}/`
+- **Events**: `/events/{slug}/`, `/venues/{slug}/`
+- **News**: `/news/{year}/{month}/{slug}/`
+- **Happenings**: `/happenings/{year}/`
+- **Search**: `/search/`, `/search/autocomplete/`
+
+This flat structure was painstakingly designed to avoid nested URLs and maximize URL clarity.
 
 ### Search Implementation
 
-Uses django-haystack with Elasticsearch backend. Search indexes defined per-app (e.g., `people/search_indexes.py`). Faceted search is enabled with results faceted by model type.
+**Status**: Temporarily disabled during modernization.
+
+Previously used django-haystack with Elasticsearch backend. Will be replaced with direct Elasticsearch integration using `elasticsearch-dsl-py` in the upcoming headless architecture migration.
 
 ### Image Management
 
-Uses django-imagekit for image processing. Images are processed into various sizes defined as ImageSpecField on models. Use `python manage.py generateimages` to generate thumbnails.
+Uses django-imagekit for image processing. Images are processed into various sizes defined as `ImageSpecField` on models:
+- `optimized_square`: 300x300 smart crop
+- `optimized_thumbnail`: 300px width
+
+Images stored in `media/people/idols/` and `media/people/groups/`.
 
 ### Static Assets
 
-- Source assets: `base/assets/`
-- Compiled output: `static/`
-- Compass (Sass) watches and compiles to `static/stylesheets/`
-- CoffeeScript compiles to `static/javascripts/application/`
+**Status**: Being modernized as part of headless architecture migration.
+
+Current state:
+- Static files served via WhiteNoise
+- CSS/JS in `static/` directory
+- Django templates in `templates/`
+
+**Future state** (see `MODERNIZATION_PLAN.md`):
+- Django becomes pure API backend
+- Astro frontend with modern build pipeline
+- React islands for interactive features
 
 ## Development Notes
 
 - **Time Zone**: Asia/Tokyo (TIME_ZONE setting)
-- **Custom User Model**: `accounts.editor` (AUTH_USER_MODEL)
-- **Admin Interface**: Uses django-grappelli for enhanced admin UI
-- **Deployment**: Heroku with Procfile, uses Gunicorn in production
-- **Static Files**: Collected to `staticfiles/`, served via WhiteNoise with GzipManifest
+- **Custom User Model**: `accounts.Editor` (AUTH_USER_MODEL)
+- **Admin Interface**: Uses django-grappelli 4.0.1 for enhanced admin UI
+- **Static Files**: Served via WhiteNoise 6.8.2 with CompressedManifestStaticFilesStorage
+- **Deployment**: Container-ready (Docker), production uses Gunicorn WSGI server
+
+## Data Model Highlights
+
+The database contains 10 years of Hello! Project history:
+- **207 idols** with birthdates, groups, career timelines
+- **91 groups** with member relationships via many-to-many through Membership model
+- **615 singles** + **219 albums** with full track listings
+- **2,712 tracks** with metadata and lyrics
+- **Events, venues, appearances** in magazines and TV shows
+- **Correlations timeline** system for "on this day" functionality
+
+## Modernization Roadmap
+
+**Current Phase**: Django 4.2 + Python 3.11 modernization complete (fukkatsu branch)
+
+**Next Phase**: Headless architecture migration (shinseiki branch)
+- Django Ninja REST API backend
+- Astro static site generator frontend
+- React islands for interactive features
+- See `MODERNIZATION_PLAN.md` for complete details
+
+## Important Patterns
+
+### Flat URL Structure with Multiurl
+
+The codebase uses `django-multiurl` to achieve flat URLs where both idols and groups share the root path (`/{slug}/`). When implementing new features, preserve this pattern:
+
+```python
+from multiurl import multiurl, ContinueResolving
+from django.http import Http404
+
+urlpatterns = [
+    multiurl(
+        re_path(r'^(?P<slug>[-\w]+)/$', IdolDetailView.as_view(), name='idol-detail'),
+        re_path(r'^(?P<slug>[-\w]+)/$', GroupDetailView.as_view(), name='group-detail'),
+        catch=(Http404, ContinueResolving)
+    ),
+]
+```
+
+### Custom Ohashi Library
+
+The `apps/ohashi` library provides special birthday field handling:
+
+```python
+from apps.ohashi.db.models import BirthdayField
+from apps.ohashi.db.models.managers import BirthdayManager
+
+class Idol(models.Model):
+    birthdate = BirthdayField(blank=True, null=True, db_index=True)
+    birthdays = BirthdayManager()  # Enables .this_month() queries
+```
+
+This automatically creates a `birthdate_dayofyear` field for querying birthdays regardless of year.
