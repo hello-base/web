@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: hellobase
+      POSTGRES_USER: hellobase
+      POSTGRES_PASSWORD: hellobase
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - DATABASE_URL=postgres://hellobase:hellobase@db:5432/hellobase
+      - REDIS_URL=redis://redis:6379/0
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+
+volumes:
+  postgres_data:
+  es_data:
