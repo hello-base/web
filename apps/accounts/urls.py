@@ -1,9 +1,9 @@
-from django.conf.urls import patterns, url
+from django.urls import re_path
 
 from .views import PreAuthorizationView, PostAuthorizationView
 
 
-urlpatterns = patterns('',
-    url(r'^authorize/$', name='oauth-authorize', view=PreAuthorizationView.as_view(permanent=True)),
-    url(r'^authenticated/$', name='oauth-callback', view=PostAuthorizationView.as_view()),
-)
+urlpatterns = [
+    re_path(r'^authorize/$', PreAuthorizationView.as_view(permanent=True), name='oauth-authorize'),
+    re_path(r'^authenticated/$', PostAuthorizationView.as_view(), name='oauth-callback'),
+]

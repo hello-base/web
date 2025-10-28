@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('romanized_name', models.CharField(max_length=60)),
                 ('started', models.DateField(db_index=True)),
                 ('ended', models.DateField(db_index=True, null=True, blank=True)),
-                ('group', models.ForeignKey(related_name=b'designations', to='people.Group')),
+                ('group', models.ForeignKey(on_delete=models.SET_NULL, related_name='designations', to='people.Group')),
             ],
             options={
                 'get_latest_by': 'started',

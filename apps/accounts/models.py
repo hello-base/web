@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 
 from model_utils.models import TimeStampedModel
-from ohashi.db import models
+from apps.ohashi.db import models
 
 
 class EditorManager(BaseUserManager):
@@ -72,7 +72,7 @@ class Editor(AbstractBaseUser):
 
 
 class ContributorMixin(TimeStampedModel):
-    submitted_by = models.ForeignKey(Editor, blank=True, null=True, related_name='%(class)s_submissions')
+    submitted_by = models.ForeignKey(Editor, on_delete=models.SET_NULL, blank=True, null=True, related_name='%(class)s_submissions')
     edited_by = models.ManyToManyField(Editor, blank=True, related_name='%(class)ss_edits')
 
     class Meta:

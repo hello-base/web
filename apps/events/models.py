@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 
 from model_utils import Choices
@@ -81,7 +81,7 @@ class Event(ContributorMixin, ParticipationMixin):
 
 
 class Activity(ContributorMixin):
-    event = models.ForeignKey(Event, related_name='activities')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='activities')
 
     # Details.
     day = models.DateField()
@@ -93,7 +93,7 @@ class Activity(ContributorMixin):
     is_performance = models.BooleanField('is a performance?', default=False)
 
     # Venue.
-    venue = models.ForeignKey('Venue', blank=True, null=True, related_name='activities')
+    venue = models.ForeignKey('Venue', on_delete=models.CASCADE, blank=True, null=True, related_name='activities')
     venue_known_as = models.CharField(max_length=200, blank=True,
         help_text='Did the venue go by another name at the time of this activity?')
     # Add 'set list' field with convoluted ordering and everything...

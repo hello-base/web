@@ -5,7 +5,7 @@ import os
 
 from celery import Celery
 from configurations import importer
-from dotenv import read_dotenv
+from dotenv import load_dotenv
 
 from django.conf import settings
 
@@ -17,7 +17,7 @@ os.environ.setdefault('DJANGO_CONFIGURATION', 'Production')
 try:
     env = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
     with open(env):
-        read_dotenv(env)
+        load_dotenv(env)
 except IOError:
     pass
 importer.install()

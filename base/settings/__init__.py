@@ -1,6 +1,7 @@
 from .development import Development
-from .production import Production
+# TEMPORARILY DISABLED - Production settings need modernization
+# from .production import Production
 from .testing import Testing
 
 
-__all__ = ['Development', 'Production', 'Testing']
+__all__ = ['Development', 'Testing']  # 'Production' temporarily disabled

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
-{% load cache correlation_tags humanize typogrify_tags %}
-{% load static from staticfiles %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{% load cache correlation_tags humanize  %}
+{% load static %}
 
 {% block title_override %}Discover everything about Hello! Project &middot; Welcome to Hello! Base, the Hello! Project Database{% endblock %}
 {% block body-class %}landing landing-home{% endblock %}
@@ -49,9 +50,9 @@
   <div class="container">
     <div class="correlation-happenings">
       <ul class="happening-date-list">
-      {% for year, months in happenings.iteritems %}
-      {% for month, days in months.iteritems %}
-      {% for day, events in days.iteritems %}
+      {% for year, months in happenings.items %}
+      {% for month, days in months.items %}
+      {% for day, events in days.items %}
       <li class="happening-date">
         <h3 class="happening-date-name"><span class="month-name">{{ month }}/</span>{{ day }}</h3>
         <ul class="happening-event-list">
@@ -87,7 +88,8 @@
   </div>
 </div>
 
-{% filter typogrify %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{# {% filter typogrify %} #}
 <div class="reasonings">
   <ul class="reasoning-list container">
     <li class="reasoning">
@@ -125,7 +127,7 @@
     </ul>
   </div>
 </div>
-{% endfilter %}
+{# {% endfilter %} #}
 
 {% include "partials/footer.html" %}
 {% endblock page %}

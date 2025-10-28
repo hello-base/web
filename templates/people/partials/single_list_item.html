@@ -1,4 +1,5 @@
-{% load humanize music_tags static typogrify_tags %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{% load humanize music_tags static  %}
 
 <li class="release {% if release.is_indie %}indie{% else %}{% if release.number %}major{% else %}minor{% endif %}{% endif %}-release">
   <div class="release-image object-image">

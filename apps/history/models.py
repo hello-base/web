@@ -12,7 +12,7 @@ class History(TimeStampedModel):
 
     tag = models.SlugField()
     datetime = models.DateTimeField()
-    source_type = models.ForeignKey(ContentType)
+    source_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     source_id = models.PositiveIntegerField(blank=True, null=True)
     source_object = GenericForeignKey('source_type', 'source_id')
 

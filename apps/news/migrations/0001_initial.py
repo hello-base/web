@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('via', models.CharField(max_length=200, blank=True)),
                 ('via_url', models.URLField(max_length=500, verbose_name='via URL', blank=True)),
                 ('albums', models.ManyToManyField(related_name='items', null=True, to='music.Album', blank=True)),
-                ('author', models.ForeignKey(related_name='item_submissions', blank=True, to='accounts.Editor', null=True)),
+                ('author', models.ForeignKey(on_delete=models.SET_NULL, related_name='item_submissions', blank=True, to='accounts.Editor', null=True)),
                 ('correlations', models.ManyToManyField(related_name='items', null=True, to='correlations.Correlation', blank=True)),
                 ('events', models.ManyToManyField(related_name='items', null=True, to='events.Event', blank=True)),
                 ('groups', models.ManyToManyField(related_name='items', null=True, to='people.Group', blank=True)),
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('image', models.ImageField(upload_to='news/', blank=True)),
                 ('caption', models.CharField(max_length=500, blank=True)),
-                ('parent', models.ForeignKey(related_name='images', to='news.Item')),
+                ('parent', models.ForeignKey(on_delete=models.SET_NULL, related_name='images', to='news.Item')),
             ],
             options={
             },
@@ -69,8 +69,8 @@ class Migration(migrations.Migration):
                 ('source_url', models.URLField(help_text='Seperate multiple URLs with comma (must have accompanying Source).', verbose_name='source URL', blank=True)),
                 ('via', models.CharField(max_length=200, blank=True)),
                 ('via_url', models.URLField(verbose_name='via URL', blank=True)),
-                ('author', models.ForeignKey(related_name='update_submissions', blank=True, to='accounts.Editor', null=True)),
-                ('parent', models.ForeignKey(related_name='updates', to='news.Item')),
+                ('author', models.ForeignKey(on_delete=models.SET_NULL, related_name='update_submissions', blank=True, to='accounts.Editor', null=True)),
+                ('parent', models.ForeignKey(on_delete=models.SET_NULL, related_name='updates', to='news.Item')),
             ],
             options={
                 'ordering': ('parent', 'published'),

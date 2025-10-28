@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 # Adds support for allowing Hello! Base ID-based authentication for

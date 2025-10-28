@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('year', models.PositiveSmallIntegerField(max_length=4)),
                 ('month', models.PositiveSmallIntegerField(max_length=2)),
                 ('day', models.PositiveSmallIntegerField(max_length=2)),
-                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+                ('content_type', models.ForeignKey(on_delete=models.SET_NULL, to='contenttypes.ContentType')),
             ],
             options={
                 'ordering': ('-timestamp',),

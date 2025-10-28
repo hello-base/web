@@ -1,3 +1,61 @@
-# Proxy Requirements File for Production
-# Include all the libraries we're using in production.
--r requirements/production.txt
+# Modern Hello! Base Requirements (2025)
+# Python 3.11+ | Django 4.2 LTS
+
+# Core Framework
+Django==4.2.17
+django-configurations==2.5.1
+python-dotenv==1.0.1
+
+# Database
+psycopg2-binary==2.9.10
+dj-database-url==2.2.0
+
+# Caching & Task Queue
+redis==5.2.1
+celery==5.4.0
+
+# Search
+django-haystack==3.3.0
+elasticsearch==8.16.0
+
+# Image Processing
+Pillow==11.0.0
+django-imagekit==5.0.0
+
+# Content & Markup
+markdown==3.7
+django-markdown-deux==1.0.5
+typogrify==2.0.7
+
+# Static Files
+whitenoise==6.8.2
+
+# Social APIs
+google-api-python-client==2.156.0
+twitter==1.19.6
+requests==2.32.3
+requests-oauthlib==2.0.0
+
+# Utilities
+django-model-utils==5.0.0
+django-braces==1.16.0
+pytz==2024.2
+
+# Date/Time utilities (ohashi replacement)
+python-dateutil==2.9.0.post0
+
+# Development & Testing
+pytest==8.3.4
+pytest-django==4.9.0
+pytest-cov==6.0.0
+factory-boy==3.3.1
+ruff==0.8.4
+django-extensions==3.2.3
+
+# Deployment
+gunicorn==23.0.0
+
+# Admin UI
+django-grappelli==4.0.1
+pandas==2.2.3
+django-multiurl==1.5.0

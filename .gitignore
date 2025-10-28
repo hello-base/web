@@ -41,6 +41,9 @@ nosetests.xml
 .sass-cache
 .venv
 
+# Docker
+*.dump
+
 *.sublime-*
 
 backups

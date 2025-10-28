@@ -22,7 +22,7 @@ class CorrelationManager(models.Manager):
             date_field=attribute,
             defaults=defaults
         )
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             setattr(correlation, key, value)
         correlation.save()
         return

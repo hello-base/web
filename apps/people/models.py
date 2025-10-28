@@ -2,7 +2,7 @@
 from collections import defaultdict
 from datetime import date
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
@@ -13,10 +13,11 @@ from django.utils.functional import cached_property
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit, SmartResize
 from model_utils import FieldTracker
-from model_utils.managers import PassThroughManager
-from ohashi.db import models as ohashi
+from model_utils.managers import QueryManager
 
 from apps.accounts.models import ContributorMixin
+from apps.ohashi.db.models import BirthdayField
+from apps.ohashi.db.models.managers import BirthdayManager
 
 from .constants import BLOOD_TYPE, CLASSIFICATIONS, PHOTO_SOURCES, SCOPE, STATUS
 from .managers import GroupQuerySet, IdolQuerySet, MembershipQuerySet
@@ -71,8 +72,8 @@ class Person(ContributorMixin):
 
 class Idol(Person):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(IdolQuerySet)()
-    birthdays = ohashi.BirthdayManager()
+    objects = QueryManager.from_queryset(IdolQuerySet)()
+    birthdays = BirthdayManager()
     tracker = FieldTracker()
 
     # Status.
@@ -94,7 +95,7 @@ class Idol(Person):
         help_text='The date this idol retired.')
 
     # Birth Information.
-    birthdate = ohashi.BirthdayField(blank=True, db_index=True, null=True)
+    birthdate = BirthdayField(blank=True, db_index=True, null=True)
     birthplace = models.CharField(blank=True, max_length=200)
     birthplace_romanized = models.CharField(blank=True, max_length=200)
     birthplace_latitude = models.FloatField(blank=True, null=True)
@@ -110,7 +111,7 @@ class Idol(Person):
     photo_thumbnail = models.ImageField(blank=True, upload_to='people/%(class)ss/')
     optimized_square = ImageSpecField(source='photo_thumbnail', processors=[SmartResize(width=300, height=300)], format='JPEG', options={'quality': 70})
     optimized_thumbnail = ImageSpecField(source='photo_thumbnail', processors=[ResizeToFit(width=300)], format='JPEG', options={'quality': 70})
-    primary_membership = models.ForeignKey('Membership', blank=True, null=True, related_name='primary')
+    primary_membership = models.ForeignKey('Membership', on_delete=models.SET_NULL, blank=True, null=True, related_name='primary')
 
     class Meta:
         ordering = ('birthdate',)
@@ -147,7 +148,7 @@ class Staff(Person):
 
 class Group(ContributorMixin):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(GroupQuerySet)()
+    objects = QueryManager.from_queryset(GroupQuerySet)()
     tracker = FieldTracker()
 
     name = models.CharField(max_length=60)
@@ -165,7 +166,7 @@ class Group(ContributorMixin):
     members = models.ManyToManyField(Idol, related_name='groups', through='Membership')
 
     # Parents & Children.
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='subgroups')
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='subgroups')
     groups = models.ManyToManyField('self', blank=True, related_name='supergroups', symmetrical=False)
 
     # Options & Extra Information.
@@ -251,7 +252,7 @@ class Group(ContributorMixin):
 class Designation(models.Model):
     # A designation a date-based name given to a group, used to handle the
     # complex nature around group name changes in Hello! Project.
-    group = models.ForeignKey(Group, related_name='designations')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='designations')
 
     # When was the name created/when was it retired?
     started = models.DateField(db_index=True)
@@ -271,11 +272,11 @@ class Designation(models.Model):
 
 class Membership(models.Model):
     # Model Managers.
-    objects = PassThroughManager.for_queryset_class(MembershipQuerySet)()
+    objects = QueryManager.from_queryset(MembershipQuerySet)()
     tracker = FieldTracker()
 
-    idol = models.ForeignKey(Idol, related_name='memberships')
-    group = ohashi.CustomManagerForeignKey(Group, blank=True, null=True, manager=Group.objects.unfiltered, related_name='memberships')
+    idol = models.ForeignKey(Idol, on_delete=models.CASCADE, related_name='memberships')
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, blank=True, null=True, related_name='memberships')  # Was ohashi.CustomManagerForeignKey
 
     # Group Involvement Details.
     is_primary = models.BooleanField('Primary?', db_index=True, default=False)
@@ -454,9 +455,9 @@ class Shot(models.Model):
 
 class Groupshot(Shot):
     category = 'groups'
-    subject = models.ForeignKey(Group, related_name='photos')
+    subject = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='photos')
 
 
 class Headshot(Shot):
     category = 'idols'
-    subject = models.ForeignKey(Idol, related_name='photos')
+    subject = models.ForeignKey(Idol, on_delete=models.CASCADE, related_name='photos')

@@ -2,9 +2,8 @@ from operator import attrgetter
 
 from django.views.generic import DetailView
 
-from ohashi.shortcuts import get_object_or_none
-
 from apps.accounts.views import QuicklinksMixin
+from apps.ohashi.shortcuts import get_object_or_none
 from .models import Group, Idol, Membership, Staff
 
 

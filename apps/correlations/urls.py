@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, url
+from django.urls import re_path
 
 from .views import AggregateJulianCorrelationView, HappeningsByYearView
 
 
-urlpatterns = patterns('',
-    url(r'^correlations/graphs/month/$', view=AggregateJulianCorrelationView.as_view(), name='correlations-aggregate-julian'),
-    url(r'^happenings/(?P<year>\d{4})/$', view=HappeningsByYearView.as_view(), name='happenings-by-year')
-)
+urlpatterns = [
+    re_path(r'^correlations/graphs/month/$', AggregateJulianCorrelationView.as_view(), name='correlations-aggregate-julian'),
+    re_path(r'^happenings/(?P<year>\d{4})/$', HappeningsByYearView.as_view(), name='happenings-by-year')
+]

@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.urls import re_path
 from django.http import Http404
 
 from multiurl import ContinueResolving, multiurl
@@ -7,20 +7,20 @@ from .views import (AlbumDetailView, SingleDetailView, TrackDetailView,
     TrackLyricsView)
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     # MultiURL allows us to unite all of the music under a simpler URL.
     multiurl(
-        url(r'^music/(?P<slug>[-\w]+)/$', name='single-detail', view=SingleDetailView.as_view()),
-        url(r'^music/(?P<slug>[-\w]+)/$', name='album-detail', view=AlbumDetailView.as_view()),
+        re_path(r'^music/(?P<slug>[-\w]+)/$', SingleDetailView.as_view(), name='single-detail'),
+        re_path(r'^music/(?P<slug>[-\w]+)/$', AlbumDetailView.as_view(), name='album-detail'),
         catch=(Http404, ContinueResolving)
     ),
 
-    # url(r'^music/albums/$', name='album-browse', view=AlbumBrowseView.as_view()),
-    # url(r'^music/singles/$', name='single-browse', view=SingleBrowseView.as_view()),
+    # re_path(r'^music/albums/$', AlbumBrowseView.as_view(), name='album-browse'),
+    # re_path(r'^music/singles/$', SingleBrowseView.as_view(), name='single-browse'),
 
-    url(r'^music/tracks/(?P<slug>[-\w]+)/lyrics/$', name='track-lyrics-detail', view=TrackLyricsView.as_view()),
-    url(r'^music/tracks/(?P<slug>[-\w]+)/$', name='track-detail', view=TrackDetailView.as_view()),
-    # url(r'^music/tracks/$', name='track-browse', view=TrackBrowseView.as_view()),
+    re_path(r'^music/tracks/(?P<slug>[-\w]+)/lyrics/$', TrackLyricsView.as_view(), name='track-lyrics-detail'),
+    re_path(r'^music/tracks/(?P<slug>[-\w]+)/$', TrackDetailView.as_view(), name='track-detail'),
+    # re_path(r'^music/tracks/$', TrackBrowseView.as_view(), name='track-browse'),
 
-    # url(r'^music/$', name='music-browse', view=MusicBrowseView.as_view()),
-)
+    # re_path(r'^music/$', MusicBrowseView.as_view(), name='music-browse'),
+]

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.urls import include, re_path, reverse_lazy
 from django.contrib import admin
-from django.core.urlresolvers import reverse_lazy
+from django.contrib.sitemaps import views as sitemap_views
 from django.views.generic import RedirectView, TemplateView
 
-from haystack.forms import FacetedSearchForm
-from haystack.query import SearchQuerySet
-from haystack.views import FacetedSearchView
+# TEMPORARILY DISABLED - Haystack/search will be rebuilt
+# from haystack.forms import FacetedSearchForm
+# from haystack.query import SearchQuerySet
+# from haystack.views import FacetedSearchView
 
 from apps.sitemaps import (AlbumSitemap, IdolSitemap, GroupSitemap,
     SingleSitemap, TrackSitemap)
@@ -24,57 +25,58 @@ sitemaps = {
     'tracks': TrackSitemap
 }
 
-# The switch to faceted search requires a custom SearchQuerySet.
-# By default we facet on "model" so the types of results can be
-# displayed on the search results page.
-sqs = SearchQuerySet().facet('model')
+# TEMPORARILY DISABLED - Search will be rebuilt
+# sqs = SearchQuerySet().facet('model')
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Home and Search.
-    url(r'^$', name='site-home', view=SiteView.as_view()),
-    url(r'^search/autocomplete/$', name='autocomplete', view=AutocompleteView.as_view()),
-    url(r'^search/', name='search', view=FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs)),
+    re_path(r'^$', SiteView.as_view(), name='site-home'),
+    re_path(r'^search/autocomplete/$', AutocompleteView.as_view(), name='autocomplete'),
+    # TEMPORARILY DISABLED - Search will be rebuilt
+    # re_path(r'^search/', FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs), name='search'),
+    re_path(r'^search/$', TemplateView.as_view(template_name='search/search.html'), name='search'),
 
     # Imagery.
-    url(r'^image/(?P<slug>([a-zA-Z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif)))/$', name='image-detail', view=ImageDetailView.as_view()),
+    re_path(r'^image/(?P<slug>([a-zA-Z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif)))/$', ImageDetailView.as_view(), name='image-detail'),
 
     # "Flatpages."
-    url(r'^404/$', name='404', view=TemplateView.as_view(template_name='404.html')),
-    url(r'^500/$', name='500', view=TemplateView.as_view(template_name='500.html')),
-    url(r'^about/$', name='about', view=TemplateView.as_view(template_name='landings/about.html')),
-    url(r'^privacy/$', name='privacy', view=TemplateView.as_view(template_name='landings/privacy.html')),
-    url(r'^terms/$', name='terms', view=TemplateView.as_view(template_name='landings/terms.html')),
+    re_path(r'^404/$', TemplateView.as_view(template_name='404.html'), name='404'),
+    re_path(r'^500/$', TemplateView.as_view(template_name='500.html'), name='500'),
+    re_path(r'^about/$', TemplateView.as_view(template_name='landings/about.html'), name='about'),
+    re_path(r'^privacy/$', TemplateView.as_view(template_name='landings/privacy.html'), name='privacy'),
+    re_path(r'^terms/$', TemplateView.as_view(template_name='landings/terms.html'), name='terms'),
 
     # J-Ongaku URL Override.
-    url(r'^wiki/.*$', name='wiki-override', view=WikiRedirectView.as_view()),
+    re_path(r'^wiki/.*$', WikiRedirectView.as_view(), name='wiki-override'),
 
     # Administration Modules.
-    url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    re_path(r'^grappelli/', include('grappelli.urls')),
+    re_path(r'^admin/', admin.site.urls),
 
     # Authentication aliases.
-    url(r'^signin/$', name='signin', view=RedirectView.as_view(url=reverse_lazy('oauth-authorize'), permanent=True)),
+    re_path(r'^signin/$', RedirectView.as_view(url=reverse_lazy('oauth-authorize'), permanent=True), name='signin'),
 
     # Core Modules.
-    url(r'^accounts/', include('apps.accounts.urls')),
-    url(r'^', include('apps.appearances.urls')),
-    url(r'^', include('apps.correlations.urls')),
-    url(r'^', include('apps.events.urls')),
-    url(r'^', include('apps.merchandise.goods.urls')),
-    url(r'^', include('apps.merchandise.media.urls')),
-    url(r'^', include('apps.merchandise.music.urls')),
-    url(r'^', include('apps.news.urls')),
-    url(r'^', include('apps.people.urls')),
+    re_path(r'^accounts/', include('apps.accounts.urls')),
+    re_path(r'^', include('apps.appearances.urls')),
+    re_path(r'^', include('apps.correlations.urls')),
+    re_path(r'^', include('apps.events.urls')),
+    re_path(r'^', include('apps.merchandise.goods.urls')),
+    re_path(r'^', include('apps.merchandise.media.urls')),
+    re_path(r'^', include('apps.merchandise.music.urls')),
+    re_path(r'^', include('apps.news.urls')),
+    re_path(r'^', include('apps.people.urls')),
 
     # Sitemaps, Favicons, Robots, and Humans.
-    url(r'^favicon.ico$', name='favicon', view=RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico', permanent=True)),
-    url(r'^humans.txt$', name='humans', view=PlainTextView.as_view(template_name='humans.txt')),
-    url(r'^opensearch.xml$', name='opensearch', view=XMLView.as_view(template_name='opensearch.xml')),
-    url(r'^robots.txt$', name='robots', view=PlainTextView.as_view(template_name='robots.txt')),
-    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-)
+    re_path(r'^favicon.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico', permanent=True), name='favicon'),
+    re_path(r'^humans.txt$', PlainTextView.as_view(template_name='humans.txt'), name='humans'),
+    re_path(r'^opensearch.xml$', XMLView.as_view(template_name='opensearch.xml'), name='opensearch'),
+    re_path(r'^robots.txt$', PlainTextView.as_view(template_name='robots.txt'), name='robots'),
+    re_path(r'^sitemap.xml$', sitemap_views.sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+]
 
+# TEMPORARILY DISABLED - Analytics initialization
 # Since this module will only be called at startup, initialize our
 # Segment.io analytics library here.
-import analytics
-analytics.write_key = 'qs70qk1'
+# import analytics
+# analytics.write_key = 'qs70qk1'

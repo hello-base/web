@@ -13,8 +13,8 @@ class TwitterUser(models.Model):
     url = models.URLField(blank=True)
 
     # Optional relationships.
-    idols = models.OneToOneField(Idol, blank=True, null=True, related_name='%(class)s')
-    groups = models.OneToOneField(Group, blank=True, null=True, related_name='%(class)s')
+    idols = models.OneToOneField(Idol, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s')
+    groups = models.OneToOneField(Group, on_delete=models.CASCADE, blank=True, null=True, related_name='%(class)s')
 
     def __unicode__(self):
         return u'%s' % (self.screen_name)
@@ -24,7 +24,7 @@ class TwitterUser(models.Model):
 
 
 class Tweet(models.Model):
-    user = models.ForeignKey(TwitterUser, related_name='tweets')
+    user = models.ForeignKey(TwitterUser, on_delete=models.CASCADE, related_name='tweets')
 
     tweet_id = models.BigIntegerField(blank=True, null=True)
     tweet_id_str = models.CharField(blank=True, max_length=200)

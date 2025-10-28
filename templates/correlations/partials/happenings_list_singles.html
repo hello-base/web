@@ -1,12 +1,14 @@
-{% load static people_tags typogrify_tags %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{% load static people_tags  %}
 
 {% with event.content_object as object %}
 <div class="happening-event" data-event="{{ object.released }}">
-  {% filter typogrify %}
+  {# TEMPORARILY DISABLED - typogrify not compatible #}
+{# {% filter typogrify %} #}
   {% for participant in object.participants %}
     <a class="actor" href="{{ participant.get_absolute_url }}">{% romanized_designation_for target=participant target_date=object.released %}</a>{% include "utilities/commaify.html" %}
   {% endfor %} releas{{ object.participants|length|pluralize:"es,e" }} <a class="subject" href="{{ object.get_absolute_url }}">"{{ object }}"</a>
-  {% endfilter %}
+  {# {% endfilter %} #}
   {% if event.items.exists %}{% include "correlations/partials/happenings_news.html" %}{% endif %}
 </div>
 <div class="happening-illustration">

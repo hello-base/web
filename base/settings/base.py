@@ -4,10 +4,11 @@ import datetime
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from configurations import Configuration, values
-from postgresify import postgresify
+# Replaced postgresify with dj-database-url
+# from postgresify import postgresify
 
 
 class Base(Configuration):
@@ -43,13 +44,16 @@ class Base(Configuration):
         'apps.merchandise.stores',
         'apps.news',
         'apps.people',
-        'apps.social.twitter',
-        'apps.social.youtube',
+        # TEMPORARILY DISABLED - Will rebuild with modern APIs
+        # 'apps.social.twitter',
+        # 'apps.social.youtube',
     ]
     PLUGINS = [
         'imagekit',
-        'markdown_deux',
-        'typogrify',
+        # 'markdown_deux',  # TEMPORARILY DISABLED - Not compatible with Django 4.2
+        # 'typogrify',  # TEMPORARILY DISABLED - Missing jinja2 dependency
+        # Temporarily disabled during modernization:
+        # 'haystack',  # Will be replaced with modern search solution
     ]
     ADMINISTRATION = [
         # 'grappelli.dashboard',
@@ -60,7 +64,7 @@ class Base(Configuration):
 
     # Middleware Configuration.
     # --------------------------------------------------------------------------
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE = [
         'django.middleware.gzip.GZipMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,12 +72,11 @@ class Base(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
+    ]
 
     # Debug Settings.
     # --------------------------------------------------------------------------
     DEBUG = values.BooleanValue(True)
-    TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
 
     # Secret Key Configuration.
     # --------------------------------------------------------------------------
@@ -86,7 +89,10 @@ class Base(Configuration):
 
     # Database Configuration.
     # --------------------------------------------------------------------------
-    DATABASES = postgresify()
+    DATABASES = values.DatabaseURLValue(
+        'postgres://hellobase:hellobase@localhost:5432/hellobase',
+        environ_prefix=None
+    )
 
     # Caching Configuration.
     # --------------------------------------------------------------------------
@@ -113,25 +119,37 @@ class Base(Configuration):
 
     # Template Configuration.
     # --------------------------------------------------------------------------
-    TEMPLATE_CONTEXT_PROCESSORS = (
-        'django.contrib.auth.context_processors.auth',
-        'django.core.context_processors.debug',
-        'django.core.context_processors.i18n',
-        'django.core.context_processors.media',
-        'django.core.context_processors.static',
-        'django.core.context_processors.request',
-        'django.core.context_processors.tz',
-        'django.contrib.messages.context_processors.messages',
-    )
-    TEMPLATE_DIRS = (normpath(join(PROJECT_ROOT, 'templates')),)
-    TEMPLATE_LOADERS = (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [normpath(join(PROJECT_ROOT, 'templates'))],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.template.context_processors.i18n',
+                    'django.template.context_processors.media',
+                    'django.template.context_processors.static',
+                    'django.template.context_processors.tz',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
 
     # Static File Configuration.
     # --------------------------------------------------------------------------
-    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    # Django 4.2+ uses STORAGES instead of STATICFILES_STORAGE
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [normpath(join(PROJECT_ROOT, 'static'))]
@@ -148,7 +166,7 @@ class Base(Configuration):
     # URL Configuration.
     # --------------------------------------------------------------------------
     ROOT_URLCONF = '%s.urls' % PROJECT_NAME
-    WSGI_APPLICATION = 'wsgi.application'
+    WSGI_APPLICATION = 'base.wsgi.application'
 
     # Authentication Configuration.
     # --------------------------------------------------------------------------
@@ -199,11 +217,12 @@ class Base(Configuration):
 
     # django-celery.
     # --------------------------------------------------------------------------
-    CELERY_ACCEPT_CONTENT = ['json']
-    CELERY_TASK_SERIALIZER = 'json'
-    CELERY_RESULT_SERIALIZER = 'json'
-    CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)  # http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
-    CELERY_CHORD_PROPAGATES = True  # http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
+    # TEMPORARILY DISABLED - Will re-enable after core Django is stable
+    # CELERY_ACCEPT_CONTENT = ['json']
+    # CELERY_TASK_SERIALIZER = 'json'
+    # CELERY_RESULT_SERIALIZER = 'json'
+    # CELERY_TASK_RESULT_EXPIRES = datetime.timedelta(minutes=30)
+    # CELERY_CHORD_PROPAGATES = True
 
     # django-grappelli.
     # --------------------------------------------------------------------------
@@ -212,14 +231,16 @@ class Base(Configuration):
 
     # django-haystack.
     # --------------------------------------------------------------------------
-    INSTALLED_APPS += ['haystack']
-    HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
-    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+    # TEMPORARILY DISABLED - Will rebuild search with modern Elasticsearch integration
+    # INSTALLED_APPS += ['haystack']
+    # HAYSTACK_SEARCH_RESULTS_PER_PAGE = 25
+    # HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
     # apps.socialize.
     # --------------------------------------------------------------------------
-    TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
-    TWITTER_CONSUMER_SECRET = values.SecretValue(environ_prefix=None)
-    TWITTER_OAUTH_TOKEN = values.SecretValue(environ_prefix=None)
-    TWITTER_OAUTH_SECRET = values.SecretValue(environ_prefix=None)
-    YOUTUBE_DEVELOPER_KEY = values.SecretValue(environ_prefix=None)
+    # TEMPORARILY DISABLED - Will rebuild with modern Twitter/YouTube APIs
+    # TWITTER_CONSUMER_KEY = values.SecretValue(environ_prefix=None)
+    # TWITTER_CONSUMER_SECRET = values.SecretValue(environ_prefix=None)
+    # TWITTER_OAUTH_TOKEN = values.SecretValue(environ_prefix=None)
+    # TWITTER_OAUTH_SECRET = values.SecretValue(environ_prefix=None)
+    # YOUTUBE_DEVELOPER_KEY = values.SecretValue(environ_prefix=None)

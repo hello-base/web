@@ -1,8 +1,8 @@
 from django.contrib.sitemaps import Sitemap
 
-from merchandise.music.models import Album, Single, Track
-from people.constants import STATUS
-from people.models import Group, Idol
+from apps.merchandise.music.models import Album, Single, Track
+from apps.people.constants import STATUS
+from apps.people.models import Group, Idol
 
 
 class BaseSitemap(Sitemap):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 
 from model_utils import Choices
@@ -34,7 +34,7 @@ class Videodisc(Merchandise):
 
 class VideodiscFormat(models.Model):
     FORMAT_TYPES = Choices((1, 'dvd', 'DVD'), (2, 'bluray', 'Blu-ray Disc'))
-    parent = models.ForeignKey(Videodisc, blank=True, null=True, related_name='formats')
+    parent = models.ForeignKey(Videodisc, on_delete=models.CASCADE, blank=True, null=True, related_name='formats')
 
     # Metadata
     kind = models.IntegerField(choices=FORMAT_TYPES, default=FORMAT_TYPES.dvd)
@@ -58,8 +58,8 @@ class Clip(ParticipationMixin):
     romanized_name = models.CharField(blank=True, max_length=200,
         help_text='This should be filled out if there is no coorresponding track or if the clip was an MC.')
     name = models.CharField(blank=True, max_length=200)
-    format = models.ForeignKey(VideodiscFormat, related_name='order')
-    track = models.ForeignKey('music.Track', blank=True, null=True, related_name='on_formats')
+    format = models.ForeignKey(VideodiscFormat, on_delete=models.CASCADE, related_name='order')
+    track = models.ForeignKey('music.Track', on_delete=models.CASCADE, blank=True, null=True, related_name='on_formats')
     disc = models.PositiveSmallIntegerField(default=1)
     position = models.PositiveSmallIntegerField()
 

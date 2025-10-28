@@ -1,5 +1,6 @@
 {% extends "layouts/site_base.html" %}
-{% load people_tags typogrify_tags static %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{% load people_tags  static %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Tracks{% endblock %}
 {% block meta %}
@@ -32,7 +33,8 @@
     <aside class="profile-vitals">
       <div class="container">
         <ul class="vitals-list">
-          {% filter typogrify %}
+          {# TEMPORARILY DISABLED - typogrify not compatible #}
+{# {% filter typogrify %} #}
           <li class="vital vital-by">
             <span class="vital-label"><span class="ss-icon ss-users"></span>{% if object.participants|length > 1 %} by{% endif %}</span>&nbsp;
             <div class="vital-participants">
@@ -41,7 +43,7 @@
             {% endfor %}
             </div>
           </li>
-          {% endfilter %}
+          {# {% endfilter %} #}
         </ul>
       </div>
     </aside>
