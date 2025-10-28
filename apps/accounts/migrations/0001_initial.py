@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('password', models.CharField(max_length=128, verbose_name='password')),
                 ('last_login', models.DateTimeField(default=django.utils.timezone.now, verbose_name='last login')),
-                ('base_id', models.IntegerField(unique=True, verbose_name=b'Hello! Base ID', db_index=True)),
+                ('base_id', models.IntegerField(unique=True, verbose_name='Hello! Base ID', db_index=True)),
                 ('username', apps.ohashi.db.models.fields.CharField(db_index=True, unique=True, blank=True)),
                 ('name', apps.ohashi.db.models.fields.CharField(blank=True)),
                 ('email', apps.ohashi.db.models.fields.EmailField(unique=True, db_index=True)),

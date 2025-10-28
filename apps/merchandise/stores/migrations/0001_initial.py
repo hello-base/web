@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('url', models.URLField(blank=True)),
-                ('album', models.ForeignKey(related_name=b'purchase_links', blank=True, to='music.Album', null=True)),
-                ('issue', models.ForeignKey(related_name=b'purchase_links', blank=True, to='appearances.Issue', null=True)),
-                ('single', models.ForeignKey(related_name=b'purchase_links', blank=True, to='music.Single', null=True)),
+                ('album', models.ForeignKey(on_delete=models.SET_NULL, related_name='purchase_links', blank=True, to='music.Album', null=True)),
+                ('issue', models.ForeignKey(on_delete=models.SET_NULL, related_name='purchase_links', blank=True, to='appearances.Issue', null=True)),
+                ('single', models.ForeignKey(on_delete=models.SET_NULL, related_name='purchase_links', blank=True, to='music.Single', null=True)),
             ],
             options={
             },
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='purchaselink',
             name='store',
-            field=models.ForeignKey(to='stores.Store'),
+            field=models.ForeignKey(on_delete=models.SET_NULL, to='stores.Store'),
             preserve_default=True,
         ),
     ]

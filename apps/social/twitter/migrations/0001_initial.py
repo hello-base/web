@@ -49,8 +49,8 @@ class Migration(migrations.Migration):
                 ('location', models.CharField(max_length=200, blank=True)),
                 ('profile_image_url', models.URLField(blank=True)),
                 ('url', models.URLField(blank=True)),
-                ('groups', models.OneToOneField(related_name=b'twitteruser', null=True, blank=True, to='people.Group')),
-                ('idols', models.OneToOneField(related_name=b'twitteruser', null=True, blank=True, to='people.Idol')),
+                ('groups', models.OneToOneField(related_name='twitteruser', on_delete=models.SET_NULL, null=True, blank=True, to='people.Group')),
+                ('idols', models.OneToOneField(related_name='twitteruser', on_delete=models.SET_NULL, null=True, blank=True, to='people.Idol')),
             ],
             options={
             },
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='tweet',
             name='user',
-            field=models.ForeignKey(related_name=b'tweets', to='twitter.TwitterUser'),
+            field=models.ForeignKey(on_delete=models.SET_NULL, related_name='tweets', to='twitter.TwitterUser'),
             preserve_default=True,
         ),
     ]
