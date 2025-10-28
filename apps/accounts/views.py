@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django import http
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model, login
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import RedirectView, View
 
