@@ -2,10 +2,10 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import ohashi.db.models.fields
+import apps.ohashi.db.models.fields
 import django.utils.timezone
 import model_utils.fields
-import ohashi.db.models.fields.birthdays
+import apps.ohashi.db.models.fields.birthdays
 
 
 class Migration(migrations.Migration):
@@ -97,7 +97,7 @@ class Migration(migrations.Migration):
                 ('started', models.DateField(help_text=b'The date this idol joined Hello! Project/became an idol.', null=True, db_index=True, blank=True)),
                 ('graduated', models.DateField(help_text=b'The date this idol graduated from Hello! Project.', null=True, db_index=True, blank=True)),
                 ('retired', models.DateField(help_text=b'The date this idol retired.', null=True, db_index=True, blank=True)),
-                ('birthdate', ohashi.db.models.fields.birthdays.BirthdayField(db_index=True, null=True, blank=True)),
+                ('birthdate', apps.ohashi.db.models.fields.birthdays.BirthdayField(db_index=True, null=True, blank=True)),
                 ('birthplace', models.CharField(max_length=200, blank=True)),
                 ('birthplace_romanized', models.CharField(max_length=200, blank=True)),
                 ('birthplace_latitude', models.FloatField(null=True, blank=True)),
@@ -123,7 +123,7 @@ class Migration(migrations.Migration):
                 ('is_leader', models.BooleanField(default=False, verbose_name=b'Leader?')),
                 ('leadership_started', models.DateField(null=True, blank=True)),
                 ('leadership_ended', models.DateField(null=True, blank=True)),
-                ('group', ohashi.db.models.fields.CustomManagerForeignKey(related_name=b'memberships', blank=True, to='people.Group', null=True)),
+                ('group', apps.ohashi.db.models.fields.CustomManagerForeignKey(related_name=b'memberships', blank=True, to='people.Group', null=True)),
                 ('idol', models.ForeignKey(related_name=b'memberships', to='people.Idol')),
             ],
             options={

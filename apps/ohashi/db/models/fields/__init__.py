@@ -3,6 +3,10 @@ from django.core import exceptions
 from django.db import models, router
 from django.db.models import Field, ForeignKey
 
+from .birthdays import BirthdayField
+
+__all__ = ['CharField', 'EmailField', 'SlugField', 'URLField', 'CustomManagerForeignKey', 'BirthdayField']
+
 
 class CharField(Field):
     def formfield(self, **kwargs):
