@@ -48,9 +48,9 @@ def regroup_correlations(queryset):
     # Remove the defaultdict-ness from the objects. Then, sort the nested
     # dictionaries and then finally the main dictionary--all in reverse.
     objects = dictify(objects)
-    for k, v in objects.iteritems():
-        objects[k] = OrderedDict(sorted(v.iteritems(), reverse=True))
-    return OrderedDict(sorted(objects.iteritems(), reverse=True))
+    for k, v in objects.items():
+        objects[k] = OrderedDict(sorted(v.items(), reverse=True))
+    return OrderedDict(sorted(objects.items(), reverse=True))
 
 
 def regroup_yearly_correlations(queryset):
@@ -61,6 +61,6 @@ def regroup_yearly_correlations(queryset):
     # Remove the defaultdict-ness from the objects. Then, sort the nested
     # dictionaries and then finally the main dictionary--all in reverse.
     objects = dictify(objects)
-    for k, v in objects.iteritems():
-        objects[k] = OrderedDict(sorted(v.iteritems(), reverse=True))
-    return OrderedDict(sorted(objects.iteritems(), reverse=True))
+    for k, v in objects.items():
+        objects[k] = OrderedDict(sorted(v.items(), reverse=True))
+    return OrderedDict(sorted(objects.items(), reverse=True))
