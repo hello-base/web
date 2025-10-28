@@ -1,5 +1,6 @@
 {% extends "layouts/site_base.html" %}
-{% load markdown_deux_tags typogrify_tags %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{% load markdown_deux_tags  %}
 
 {% block title %}{{ object.title }} ({{ object.published|date:"DATE_FORMAT" }}) &middot; News{% endblock %}
 {% block body-class %}override{% endblock %}

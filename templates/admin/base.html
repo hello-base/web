@@ -20,8 +20,8 @@
     {% block extrastyle %}{% endblock %}
     <!-- JAVASCRIPTS -->
     {% block javascripts %}
-        <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{{ STATIC_URL }}grappelli/{% endfilter %}";</script>
-        <script type="text/javascript">window.__admin_utc_offset__ = "{% filter escapejs %}{% now "Z" %}{% endfilter %}";</script>
+        <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{{ STATIC_URL }}grappelli/{# {% endfilter %} #}";</script>
+        <script type="text/javascript">window.__admin_utc_offset__ = "{% filter escapejs %}{% now "Z" %}{# {% endfilter %} #}";</script>
         <script type="text/javascript" charset="utf-8">
             // GLOBALS
             var grappelli = {},

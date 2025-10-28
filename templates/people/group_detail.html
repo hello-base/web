@@ -1,5 +1,6 @@
 {% extends "layouts/site_base.html" %}
-{% load humanize markdown_deux_tags static typogrify_tags %}
+{# TEMPORARILY DISABLED - typogrify not compatible #}
+{% load humanize markdown_deux_tags static  %}
 
 {% block title %}{{ object.romanized_name }} ({{ object.name }}) &middot; Groups{% endblock %}
 {% block meta %}
